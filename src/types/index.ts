@@ -5,11 +5,11 @@ export interface Translation {
   language: string;
   translation: string;
   gender: 'm' | 'f' | 'n';
-  frequency_in_lang?: number;
-  example_native?: string;
+  frequency?: number;
+  example?: string;
   pronunciation?: string;
-  usage_context?: string;
-  gender_reason?: string;
+  usage_notes?: string;
+  gender_explanation?: string;
 }
 
 export interface Word {
