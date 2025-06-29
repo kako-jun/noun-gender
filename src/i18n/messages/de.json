@@ -1,0 +1,85 @@
+{
+  "common": {
+    "search": "Suchen",
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "start": "Starten",
+    "finish": "Beenden",
+    "tryAgain": "Nochmal versuchen"
+  },
+  "header": {
+    "title": "Substantivgeschlecht",
+    "subtitle": "Meistern Sie Substantivgeschlechter in allen Sprachen",
+    "words": "Wörter",
+    "translations": "Übersetzungen",
+    "languages": "Sprachen",
+    "searchLanguages": "Suchsprachen",
+    "searchTerms": "Suchbegriffe",
+    "multilingualSearch": "Mehrsprachige Suche"
+  },
+  "search": {
+    "placeholder": "Nach einem Wort suchen... (Drücken Sie '/' zum Fokussieren)",
+    "searching": "Suchen...",
+    "languagesOptional": "Sprachen (optional):",
+    "noLanguagesSelected": "Keine Sprachen ausgewählt = alle Sprachen durchsuchen",
+    "noResultsFound": "Keine Ergebnisse gefunden. Versuchen Sie es mit Wörtern wie \"cat\", \"house\" oder \"book\".",
+    "resultsFound": "{count} Ergebnisse gefunden"
+  },
+  "gender": {
+    "masculine": "Maskulin",
+    "feminine": "Feminin",
+    "neuter": "Neutrum",
+    "m": "♂ Maskulin",
+    "f": "♀ Feminin",
+    "n": "○ Neutrum"
+  },
+  "languages": {
+    "Arabic": "Arabisch",
+    "French": "Französisch",
+    "German": "Deutsch",
+    "Hindi": "Hindi",
+    "Italian": "Italienisch",
+    "Portuguese": "Portugiesisch",
+    "Russian": "Russisch",
+    "Spanish": "Spanisch"
+  },
+  "audio": {
+    "play": "Audio für {word} abspielen",
+    "stop": "Audio für {word} stoppen"
+  },
+  "copy": {
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "copyWord": "Kopieren: {word}"
+  },
+  "theme": {
+    "light": "Helles Design → Dunkles Design",
+    "dark": "Dunkles Design → Systemeinstellung",
+    "system": "Systemeinstellung → Helles Design",
+    "toggle": "Design wechseln"
+  },
+  "shortcuts": {
+    "title": "Tastenkürzel",
+    "focusSearch": "Sucheingabe fokussieren",
+    "clearSearch": "Suche löschen",
+    "toggleTheme": "Design wechseln"
+  },
+  "quiz": {
+    "title": "Geschlechter-Quiz",
+    "description": "Testen Sie Ihr Wissen über Substantivgeschlechter! Sie erhalten 10 zufällige Wörter aus dem Französischen, Deutschen und Spanischen.",
+    "startQuiz": "Quiz starten",
+    "question": "Frage {current}/{total}",
+    "complete": "Quiz abgeschlossen!",
+    "correct": "richtig",
+    "score": "{score}/{total}",
+    "percentage": "{percentage}% richtig",
+    "loadingQuiz": "Quiz wird geladen..."
+  },
+  "footer": {
+    "copyright": "© 2025 kako-jun - Lernen Sie Substantivgeschlechter in allen Sprachen"
+  }
+}

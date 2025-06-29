@@ -1,0 +1,85 @@
+{
+  "common": {
+    "search": "Buscar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "start": "Comenzar",
+    "finish": "Terminar",
+    "tryAgain": "Intentar de nuevo"
+  },
+  "header": {
+    "title": "Género de Sustantivos",
+    "subtitle": "Domina los géneros de sustantivos en todos los idiomas",
+    "words": "palabras",
+    "translations": "traducciones",
+    "languages": "idiomas",
+    "searchLanguages": "idiomas de búsqueda",
+    "searchTerms": "términos de búsqueda",
+    "multilingualSearch": "Búsqueda multilingüe"
+  },
+  "search": {
+    "placeholder": "Buscar una palabra... (Presiona '/' para enfocar)",
+    "searching": "Buscando...",
+    "languagesOptional": "Idiomas (opcional):",
+    "noLanguagesSelected": "Ningún idioma seleccionado = buscar en todos los idiomas",
+    "noResultsFound": "No se encontraron resultados. Intenta buscar palabras como \"cat\", \"house\" o \"book\".",
+    "resultsFound": "{count} resultados encontrados"
+  },
+  "gender": {
+    "masculine": "Masculino",
+    "feminine": "Femenino",
+    "neuter": "Neutro",
+    "m": "♂ Masculino",
+    "f": "♀ Femenino",
+    "n": "○ Neutro"
+  },
+  "languages": {
+    "Arabic": "Arabic",
+    "French": "French",
+    "German": "German",
+    "Hindi": "Hindi",
+    "Italian": "Italian",
+    "Portuguese": "Portuguese",
+    "Russian": "Russian",
+    "Spanish": "Spanish"
+  },
+  "audio": {
+    "play": "Play audio for {word}",
+    "stop": "Stop audio for {word}"
+  },
+  "copy": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "copyWord": "Copy: {word}"
+  },
+  "theme": {
+    "light": "Light theme → Dark theme",
+    "dark": "Dark theme → System setting",
+    "system": "System setting → Light theme",
+    "toggle": "Toggle theme"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "focusSearch": "Focus search input",
+    "clearSearch": "Clear search",
+    "toggleTheme": "Toggle theme"
+  },
+  "quiz": {
+    "title": "Quiz de Género",
+    "description": "¡Pon a prueba tu conocimiento sobre géneros de sustantivos! Obtendrás 10 palabras aleatorias del francés, alemán y español.",
+    "startQuiz": "Comenzar Quiz",
+    "question": "Question {current}/{total}",
+    "complete": "Quiz Complete!",
+    "correct": "correct",
+    "score": "{score}/{total}",
+    "percentage": "{percentage}% correct",
+    "loadingQuiz": "Loading quiz..."
+  },
+  "footer": {
+    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
+  }
+}

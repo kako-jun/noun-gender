@@ -22,7 +22,7 @@ export function SearchResults({ results, isLoading }: SearchResultsProps) {
   if (results.length === 0) {
     return (
       <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-        <p>No results found. Try searching for a word like "cat", "house", or "book".</p>
+        <p>No results found. Try searching for a word like &quot;cat&quot;, &quot;house&quot;, or &quot;book&quot;.</p>
       </div>
     );
   }

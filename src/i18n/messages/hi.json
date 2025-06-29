@@ -1,0 +1,85 @@
+{
+  "common": {
+    "search": "खोजें",
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "cancel": "रद्द करें",
+    "close": "बंद करें",
+    "next": "Next",
+    "previous": "Previous",
+    "start": "Start",
+    "finish": "Finish",
+    "tryAgain": "Try Again"
+  },
+  "header": {
+    "title": "संज्ञा लिंग",
+    "subtitle": "सभी भाषाओं में संज्ञा लिंगों में महारत हासिल करें",
+    "words": "words",
+    "translations": "translations",
+    "languages": "languages",
+    "searchLanguages": "search languages",
+    "searchTerms": "search terms",
+    "multilingualSearch": "Multilingual search"
+  },
+  "search": {
+    "placeholder": "Search for a word... (Press '/' to focus)",
+    "searching": "Searching...",
+    "languagesOptional": "Languages (optional):",
+    "noLanguagesSelected": "No languages selected = search all languages",
+    "noResultsFound": "No results found. Try searching for a word like \"cat\", \"house\", or \"book\".",
+    "resultsFound": "Found {count} results"
+  },
+  "gender": {
+    "masculine": "Masculine",
+    "feminine": "Feminine",
+    "neuter": "Neuter",
+    "m": "♂ Masculine",
+    "f": "♀ Feminine",
+    "n": "○ Neuter"
+  },
+  "languages": {
+    "Arabic": "Arabic",
+    "French": "French",
+    "German": "German",
+    "Hindi": "Hindi",
+    "Italian": "Italian",
+    "Portuguese": "Portuguese",
+    "Russian": "Russian",
+    "Spanish": "Spanish"
+  },
+  "audio": {
+    "play": "Play audio for {word}",
+    "stop": "Stop audio for {word}"
+  },
+  "copy": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "copyWord": "Copy: {word}"
+  },
+  "theme": {
+    "light": "Light theme → Dark theme",
+    "dark": "Dark theme → System setting",
+    "system": "System setting → Light theme",
+    "toggle": "Toggle theme"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "focusSearch": "Focus search input",
+    "clearSearch": "Clear search",
+    "toggleTheme": "Toggle theme"
+  },
+  "quiz": {
+    "title": "Gender Quiz",
+    "description": "Test your knowledge of noun genders! You'll get 10 random words from French, German, and Spanish.",
+    "startQuiz": "Start Quiz",
+    "question": "Question {current}/{total}",
+    "complete": "Quiz Complete!",
+    "correct": "correct",
+    "score": "{score}/{total}",
+    "percentage": "{percentage}% correct",
+    "loadingQuiz": "Loading quiz..."
+  },
+  "footer": {
+    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
+  }
+}

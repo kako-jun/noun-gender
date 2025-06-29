@@ -121,7 +121,7 @@ export function Quiz({ onClose }: QuizProps) {
             Gender Quiz
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
-            Test your knowledge of noun genders! You'll get 10 random words from French, German, and Spanish.
+            Test your knowledge of noun genders! You&apos;ll get 10 random words from French, German, and Spanish.
           </p>
           <div className="flex space-x-3">
             <button
