@@ -19,7 +19,7 @@ export function useKeyboardShortcuts({
       const activeElement = document.activeElement;
       const isInputFocused = activeElement?.tagName === 'INPUT' || 
                            activeElement?.tagName === 'TEXTAREA' ||
-                           activeElement?.contentEditable === 'true';
+                           (activeElement as HTMLElement)?.contentEditable === 'true';
 
       // ESCキー: 検索クリア（入力フィールドでも有効）
       if (event.key === 'Escape') {

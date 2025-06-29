@@ -54,12 +54,12 @@ class DatabaseManager {
       searchTerm, searchTerm, searchTerm, // Search terms
       exactTerm, exactTerm, startsWith, startsWith, // Ranking terms
       limit
-    );
+    ) as Array<{ english: string; translation: string; language: string; gender: string; frequency?: number; example?: string; pronunciation?: string; usage_notes?: string; gender_explanation?: string; }>;
 
     // Group results by English word
     const grouped = new Map<string, SearchResult>();
     
-    rows.forEach((row: any) => {
+    rows.forEach((row) => {
       const englishWord = row.english;
       
       if (!grouped.has(englishWord)) {

@@ -7,8 +7,10 @@ import { Footer } from '@/components/Footer';
 import { StatsHeader } from '@/components/StatsHeader';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { KeyboardShortcuts } from '@/components/KeyboardShortcuts';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Quiz } from '@/components/Quiz';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { useTranslations } from '@/hooks/useTranslations';
 import { useTheme } from 'next-themes';
 import { Brain } from 'lucide-react';
 import type { SearchResult } from '@/types';
@@ -19,6 +21,7 @@ export default function Home() {
   const [showQuiz, setShowQuiz] = useState(false);
   const searchBoxRef = useRef<SearchBoxRef>(null);
   const { setTheme } = useTheme();
+  const { t, isLoading: translationsLoading } = useTranslations();
 
   const handleSearch = async (query: string, languages: string[]) => {
     if (!query.trim()) {
@@ -77,8 +80,8 @@ export default function Home() {
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-start mb-4">
             <div className="text-center flex-1">
-              <h1 className="text-4xl font-bold mb-2">Noun Gender</h1>
-              <p className="text-xl text-blue-100 mb-2">Master noun genders across languages</p>
+              <h1 className="text-4xl font-bold mb-2">{translationsLoading ? 'Noun Gender' : t('header.title')}</h1>
+              <p className="text-xl text-blue-100 mb-2">{translationsLoading ? 'Master noun genders across languages' : t('header.subtitle')}</p>
             </div>
             <div className="flex space-x-2">
               <button
@@ -88,11 +91,12 @@ export default function Home() {
                   bg-purple-500 hover:bg-purple-600
                   text-white
                 "
-                title="Start quiz"
+                title={translationsLoading ? 'Start quiz' : t('quiz.startQuiz')}
               >
                 <Brain className="w-5 h-5" />
               </button>
               <KeyboardShortcuts />
+              <LanguageSwitcher />
               <ThemeToggle />
             </div>
           </div>

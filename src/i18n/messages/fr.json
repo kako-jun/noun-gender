@@ -1,0 +1,85 @@
+{
+  "common": {
+    "search": "Rechercher",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "start": "Commencer",
+    "finish": "Terminer",
+    "tryAgain": "Réessayer"
+  },
+  "header": {
+    "title": "Genre des Noms",
+    "subtitle": "Maîtrisez les genres des noms dans toutes les langues",
+    "words": "mots",
+    "translations": "traductions",
+    "languages": "langues",
+    "searchLanguages": "langues de recherche",
+    "searchTerms": "termes de recherche",
+    "multilingualSearch": "Recherche multilingue"
+  },
+  "search": {
+    "placeholder": "Rechercher un mot... (Appuyez sur '/' pour cibler)",
+    "searching": "Recherche...",
+    "languagesOptional": "Langues (optionnel) :",
+    "noLanguagesSelected": "Aucune langue sélectionnée = rechercher toutes les langues",
+    "noResultsFound": "Aucun résultat trouvé. Essayez de rechercher un mot comme \"cat\", \"house\" ou \"book\".",
+    "resultsFound": "{count} résultats trouvés"
+  },
+  "gender": {
+    "masculine": "Masculin",
+    "feminine": "Féminin",
+    "neuter": "Neutre",
+    "m": "♂ Masculin",
+    "f": "♀ Féminin",
+    "n": "○ Neutre"
+  },
+  "languages": {
+    "Arabic": "Arabe",
+    "French": "Français",
+    "German": "Allemand",
+    "Hindi": "Hindi",
+    "Italian": "Italien",
+    "Portuguese": "Portugais",
+    "Russian": "Russe",
+    "Spanish": "Espagnol"
+  },
+  "audio": {
+    "play": "Lire l'audio pour {word}",
+    "stop": "Arrêter l'audio pour {word}"
+  },
+  "copy": {
+    "copy": "Copier",
+    "copied": "Copié !",
+    "copyWord": "Copier : {word}"
+  },
+  "theme": {
+    "light": "Thème clair → Thème sombre",
+    "dark": "Thème sombre → Paramètre système",
+    "system": "Paramètre système → Thème clair",
+    "toggle": "Changer de thème"
+  },
+  "shortcuts": {
+    "title": "Raccourcis Clavier",
+    "focusSearch": "Cibler l'entrée de recherche",
+    "clearSearch": "Effacer la recherche",
+    "toggleTheme": "Changer de thème"
+  },
+  "quiz": {
+    "title": "Quiz de Genre",
+    "description": "Testez vos connaissances des genres des noms ! Vous obtiendrez 10 mots aléatoires du français, de l'allemand et de l'espagnol.",
+    "startQuiz": "Commencer le Quiz",
+    "question": "Question {current}/{total}",
+    "complete": "Quiz Terminé !",
+    "correct": "correct",
+    "score": "{score}/{total}",
+    "percentage": "{percentage}% correct",
+    "loadingQuiz": "Chargement du quiz..."
+  },
+  "footer": {
+    "copyright": "© 2025 kako-jun - Apprenez les genres des noms dans toutes les langues"
+  }
+}

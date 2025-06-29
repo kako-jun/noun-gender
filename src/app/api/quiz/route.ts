@@ -20,10 +20,10 @@ export async function GET(request: Request) {
         AND gender IN ('m', 'f', 'n')
       ORDER BY RANDOM()
       LIMIT ?
-    `).all(...languages, count);
+    `).all(...languages, count) as Array<{ english: string; translation: string; language: string; gender: string; }>;
 
     // クイズ形式に変換
-    const questions = quizData.map((row: any, index: number) => {
+    const questions = quizData.map((row, index: number) => {
       const correctGender = row.gender;
       const incorrectGenders = ['m', 'f', 'n'].filter(g => g !== correctGender);
       
