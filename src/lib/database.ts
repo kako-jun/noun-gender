@@ -94,6 +94,8 @@ class DatabaseManager {
     const db = this.getDb();
     const totalWords = db.prepare('SELECT COUNT(DISTINCT english) as total FROM all_words').get() as { total: number };
     const totalTranslations = db.prepare('SELECT COUNT(*) as total FROM all_words').get() as { total: number };
+    const multilingualTerms = db.prepare('SELECT COUNT(*) as total FROM multilingual_search').get() as { total: number };
+    const searchLanguages = db.prepare('SELECT COUNT(DISTINCT language_code) as total FROM multilingual_search').get() as { total: number };
     const languageStats = db.prepare(`
       SELECT language, COUNT(*) as count 
       FROM all_words 
@@ -104,6 +106,8 @@ class DatabaseManager {
     return { 
       totalWords: totalWords.total,
       totalTranslations: totalTranslations.total,
+      multilingualTerms: multilingualTerms.total,
+      searchLanguages: searchLanguages.total,
       languageStats
     };
   }

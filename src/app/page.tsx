@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { SearchBox } from '@/components/SearchBox';
 import { SearchResults } from '@/components/SearchResults';
 import { Footer } from '@/components/Footer';
+import { StatsHeader } from '@/components/StatsHeader';
 import type { SearchResult } from '@/types';
 
 export default function Home() {
@@ -47,7 +48,8 @@ export default function Home() {
       <header className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
         <div className="container mx-auto px-4 py-8 text-center">
           <h1 className="text-4xl font-bold mb-2">Noun Gender</h1>
-          <p className="text-blue-100">Master noun genders across languages</p>
+          <p className="text-xl text-blue-100 mb-2">Master noun genders across languages</p>
+          <StatsHeader />
         </div>
       </header>
 
