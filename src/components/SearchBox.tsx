@@ -132,7 +132,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
           <p className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 text-center -mt-1">
             {translations?.languagesOptional || "Languages"}
           </p>
-          <div className="flex flex-wrap gap-2 justify-center mt-3">
+          <div className="grid grid-cols-4 gap-2 mt-3 max-w-md mx-auto">
             {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
               <Button
                 key={code}
@@ -140,7 +140,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                 variant={selectedLanguages.includes(code) ? 'selected' : 'secondary'}
                 size="sm"
                 onClick={() => handleLanguageToggle(code)}
-                className="rounded-full shadow-sm"
+                className="rounded-full shadow-sm text-xs px-2 py-1"
               >
                 {name}
               </Button>
