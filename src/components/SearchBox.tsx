@@ -9,6 +9,8 @@ import { Button } from './ui/Button';
 interface SearchBoxProps {
   onSearch: (query: string, languages: string[]) => void;
   isLoading: boolean;
+  initialQuery?: string;
+  initialLanguages?: string[];
   translations?: {
     placeholder?: string;
     languagesOptional?: string;
@@ -31,9 +33,15 @@ function debounce<T extends (...args: any[]) => void>(func: T, wait: number): T 
   }) as T;
 }
 
-export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function SearchBox({ onSearch, isLoading, translations }, ref) {
-  const [query, setQuery] = useState('');
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>(Object.keys(SUPPORTED_LANGUAGES));
+export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function SearchBox({ 
+  onSearch, 
+  isLoading, 
+  initialQuery = '', 
+  initialLanguages = Object.keys(SUPPORTED_LANGUAGES), 
+  translations 
+}, ref) {
+  const [query, setQuery] = useState(initialQuery);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>(initialLanguages);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useImperativeHandle(ref, () => ({
@@ -43,6 +51,20 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
       onSearch('', selectedLanguages);
     }
   }));
+
+  // 初期値の更新（初回のみ）
+  const [initialized, setInitialized] = useState(false);
+  useEffect(() => {
+    if (!initialized) {
+      if (initialQuery !== query) {
+        setQuery(initialQuery);
+      }
+      if (JSON.stringify(initialLanguages) !== JSON.stringify(selectedLanguages)) {
+        setSelectedLanguages(initialLanguages);
+      }
+      setInitialized(true);
+    }
+  }, [initialQuery, initialLanguages, initialized]);
 
   // デバウンス用のインクリメンタルサーチ
   const debouncedSearch = useCallback(

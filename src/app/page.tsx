@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { SearchBox, type SearchBoxRef } from '@/components/SearchBox';
 import { SearchResults } from '@/components/SearchResults';
 import { Footer } from '@/components/Footer';
@@ -14,6 +15,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/Button';
 import type { SearchResult } from '@/types';
+import { SUPPORTED_LANGUAGES } from '@/types';
 
 export default function Home() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -25,6 +27,8 @@ export default function Home() {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const searchBoxRef = useRef<SearchBoxRef>(null);
   const { t, isLoading: translationsLoading } = useTranslations();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   // 初期ブラウジングデータの読み込み
   const loadBrowseData = useCallback(async (offset: number = 0) => {
@@ -60,12 +64,22 @@ export default function Home() {
     }
   }, [isLoading, isLoadingMore]);
 
-  // 初期読み込み（一度だけ実行）
+  // URLからの初期状態復元と初期読み込み
   useEffect(() => {
-    if (browseResults.length === 0 && !isLoading) {
+    const query = searchParams.get('q');
+    const languages = searchParams.get('lang');
+    
+    if (query) {
+      // URLにクエリがある場合は検索実行
+      const langArray = languages ? languages.split(',').filter(Boolean) : [];
+      setMode('search');
+      handleSearch(query, langArray);
+    } else if (browseResults.length === 0 && !isLoading) {
+      // URLにクエリがない場合は通常のブラウズモード
       loadBrowseData();
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.get('q'), searchParams.get('lang')]);
 
   // 無限スクロール（スロットリング付き）
   const handleScroll = useCallback(() => {
@@ -96,19 +110,47 @@ export default function Home() {
     };
   }, [handleScroll]);
 
+  // URLを更新
+  const updateURL = useCallback((query: string, languages: string[]) => {
+    const params = new URLSearchParams();
+    if (query.trim()) {
+      params.set('q', query.trim());
+      // 言語が選択されていない場合はlangパラメータを設定しない（全言語検索なし）
+      if (languages.length > 0) {
+        params.set('lang', languages.join(','));
+      }
+    }
+    
+    const newUrl = params.toString() ? `/?${params.toString()}` : '/';
+    router.replace(newUrl, { scroll: false });
+  }, [router]);
+
   const handleSearch = async (query: string, languages: string[]) => {
     if (!query.trim()) {
       setSearchResults([]);
       setMode('browse');
+      updateURL('', []);
+      return;
+    }
+
+    // 言語が一つも選択されていない場合は検索しない
+    if (languages.length === 0) {
+      setSearchResults([]);
+      setMode('search');
+      updateURL(query, languages);
       return;
     }
 
     setMode('search');
     setIsLoading(true);
+    
+    // URLを更新
+    updateURL(query, languages);
+    
     try {
       const params = new URLSearchParams({
         q: query,
-        ...(languages.length > 0 && { languages: languages.join(',') }),
+        languages: languages.join(','),
         limit: '20'
       });
 
@@ -176,6 +218,8 @@ export default function Home() {
           ref={searchBoxRef} 
           onSearch={handleSearch} 
           isLoading={isLoading}
+          initialQuery={searchParams.get('q') || ''}
+          initialLanguages={searchParams.get('lang')?.split(',').filter(Boolean) || Object.keys(SUPPORTED_LANGUAGES)}
           translations={{
             placeholder: t('search.placeholder'),
             languagesOptional: t('search.languagesOptional'),
@@ -191,8 +235,10 @@ export default function Home() {
         
         {/* 無限スクロール用のローディングインジケーター */}
         {mode === 'browse' && isLoadingMore && (
-          <div className="flex justify-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-solarized-orange"></div>
+          <div className="flex justify-center items-center py-8 space-x-1">
+            <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0s' }}></div>
+            <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.3s' }}></div>
+            <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.6s' }}></div>
           </div>
         )}
       </main>
