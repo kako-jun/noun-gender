@@ -49,6 +49,16 @@ export function Quiz({ onClose }: QuizProps) {
     const newAnswers = [...answers];
     newAnswers[currentQuestion] = gender;
     setAnswers(newAnswers);
+    
+    // 自動的に次の問題へ進む
+    setTimeout(() => {
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+        setSelectedAnswer(newAnswers[currentQuestion + 1]);
+      } else {
+        setShowResult(true);
+      }
+    }, 500);
   };
 
   const nextQuestion = () => {
@@ -104,42 +114,56 @@ export function Quiz({ onClose }: QuizProps) {
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="text-center mt-4 text-gray-600 dark:text-gray-400">Loading quiz...</p>
+      <>
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-30 z-50" 
+          onClick={onClose}
+        />
+        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+          <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl p-8 border border-stone-200 dark:border-stone-700 pointer-events-auto">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+            <p className="text-center mt-4 text-stone-600 dark:text-stone-400">Loading quiz...</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (!quizStarted) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-8 m-4 max-w-md w-full">
-          <h2 className="text-2xl font-bold text-center mb-4 text-gray-800 dark:text-gray-200">
-            Gender Quiz
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
-            Test your knowledge of noun genders! You&apos;ll get 10 random words from French, German, and Spanish.
-          </p>
-          <div className="flex space-x-3">
-            <button
-              onClick={() => setQuizStarted(true)}
-              className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"
+      <>
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-30 z-50" 
+          onClick={onClose}
+        />
+        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+          <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl p-8 m-4 max-w-md w-full border border-stone-200 dark:border-stone-700 shadow-xl pointer-events-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100">
+                Gender Quiz
+              </h2>
+              <button
+                onClick={onClose}
+                className="text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 p-1 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-stone-600 dark:text-stone-400 text-center mb-6">
+              Test your knowledge of noun genders! You&apos;ll get 10 random words from French, German, and Spanish.
+            </p>
+            <div className="flex justify-center">
+              <button
+                onClick={() => setQuizStarted(true)}
+                className="bg-amber-800 text-white px-6 py-2 rounded-xl hover:bg-amber-900 transition-colors flex items-center justify-center font-bold"
             >
               <Play className="w-4 h-4 mr-2" />
               Start Quiz
             </button>
-            <button
-              onClick={onClose}
-              className="flex-1 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
-            >
-              Cancel
-            </button>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -148,16 +172,29 @@ export function Quiz({ onClose }: QuizProps) {
     const percentage = Math.round((score / questions.length) * 100);
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-8 m-4 max-w-md w-full">
-          <h2 className="text-2xl font-bold text-center mb-4 text-gray-800 dark:text-gray-200">
-            Quiz Complete!
-          </h2>
+      <>
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-30 z-50" 
+          onClick={onClose}
+        />
+        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+          <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl p-8 m-4 max-w-md w-full border border-stone-200 dark:border-stone-700 shadow-xl pointer-events-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100">
+                Quiz Complete!
+              </h2>
+              <button
+                onClick={onClose}
+                className="text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 p-1 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           <div className="text-center mb-6">
-            <div className="text-4xl font-bold text-blue-500 mb-2">
+            <div className="text-4xl font-bold text-amber-800 dark:text-amber-600 mb-2">
               {score}/{questions.length}
             </div>
-            <div className="text-lg text-gray-600 dark:text-gray-400">
+            <div className="text-lg text-stone-600 dark:text-stone-400">
               {percentage}% correct
             </div>
           </div>
@@ -165,7 +202,7 @@ export function Quiz({ onClose }: QuizProps) {
           <div className="space-y-2 mb-6 max-h-40 overflow-y-auto">
             {questions.map((q, index) => (
               <div key={index} className="flex items-center justify-between text-sm">
-                <span className="text-gray-600 dark:text-gray-400">
+                <span className="text-stone-600 dark:text-stone-400">
                   {getLanguageFlag(q.language)} {q.english} → {q.translation}
                 </span>
                 <div className="flex items-center">
@@ -182,20 +219,21 @@ export function Quiz({ onClose }: QuizProps) {
           <div className="flex space-x-3">
             <button
               onClick={restartQuiz}
-              className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"
+              className="flex-1 bg-amber-800 text-white px-4 py-2 rounded-xl hover:bg-amber-900 transition-colors flex items-center justify-center font-bold"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               Try Again
             </button>
             <button
               onClick={onClose}
-              className="flex-1 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+              className="flex-1 bg-stone-500 text-white px-4 py-2 rounded-xl hover:bg-stone-600 transition-colors font-bold"
             >
               Close
             </button>
           </div>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -203,28 +241,33 @@ export function Quiz({ onClose }: QuizProps) {
   if (!question) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-8 m-4 max-w-md w-full">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-            Question {currentQuestion + 1}/{questions.length}
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+    <>
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-30 z-50" 
+        onClick={onClose}
+      />
+      <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+        <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl p-8 m-4 max-w-md w-full border border-stone-200 dark:border-stone-700 shadow-xl pointer-events-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100">
+              Question {currentQuestion + 1}/{questions.length}
+            </h2>
+            <button
+              onClick={onClose}
+              className="text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 p-1 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
         <div className="text-center mb-6">
-          <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+          <div className="text-sm text-stone-500 dark:text-stone-400 mb-2">
             {getLanguageFlag(question.language)} {question.language.toUpperCase()}
           </div>
-          <div className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">
+          <div className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-2">
             {question.translation}
           </div>
-          <div className="text-lg text-gray-600 dark:text-gray-400">
+          <div className="text-lg text-stone-600 dark:text-stone-300">
             ({question.english})
           </div>
         </div>
@@ -234,10 +277,10 @@ export function Quiz({ onClose }: QuizProps) {
             <button
               key={option}
               onClick={() => handleAnswer(option)}
-              className={`w-full p-3 rounded-lg text-left transition-colors ${
+              className={`w-full p-3 rounded-xl text-left transition-colors font-medium ${
                 selectedAnswer === option
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  ? 'bg-amber-800 text-white'
+                  : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-600'
               }`}
             >
               {getGenderLabel(option)}
@@ -245,23 +288,8 @@ export function Quiz({ onClose }: QuizProps) {
           ))}
         </div>
 
-        <div className="flex justify-between">
-          <button
-            onClick={prevQuestion}
-            disabled={currentQuestion === 0}
-            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 transition-colors"
-          >
-            Previous
-          </button>
-          <button
-            onClick={nextQuestion}
-            disabled={!selectedAnswer}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600 transition-colors"
-          >
-            {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
