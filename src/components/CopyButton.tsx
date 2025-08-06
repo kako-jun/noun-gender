@@ -44,10 +44,12 @@ export function CopyButton({ text, label, className = '' }: CopyButtonProps) {
       className={`
         inline-flex items-center justify-center
         w-8 h-8 rounded-full
-        bg-gray-500 hover:bg-gray-600
-        text-white transition-colors
+        ${copied 
+          ? 'bg-green-500 hover:bg-green-600 text-white' 
+          : 'bg-solarized-base01 hover:bg-solarized-base00 dark:bg-solarized-base0 dark:hover:bg-solarized-base1 text-white'
+        }
+        transition-colors
         disabled:opacity-50 disabled:cursor-not-allowed
-        ${copied ? 'bg-green-500 hover:bg-green-600' : ''}
         ${className}
       `}
       title={copied ? 'コピー完了!' : 'コピー'}
