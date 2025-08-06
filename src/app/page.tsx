@@ -102,9 +102,9 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50 dark:bg-stone-900 transition-colors">
+    <div className="min-h-screen flex flex-col bg-solarized-base3 dark:bg-solarized-base03 transition-colors">
       {/* Header */}
-      <header className="bg-stone-100 dark:bg-stone-800 border-b border-stone-200 dark:border-stone-700 relative">
+      <header className="bg-solarized-base2 dark:bg-solarized-base02 border-b border-solarized-base1 dark:border-solarized-base01 relative">
         {/* ボタン群を右上に配置 */}
         <div className="absolute top-4 right-4 flex space-x-2">
           <LanguageSwitcher />
@@ -153,7 +153,7 @@ export default function Home() {
             onClick={() => setShowQuiz(true)}
             className="
               px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105
-              bg-amber-800 hover:bg-amber-900 dark:bg-amber-700 dark:hover:bg-amber-800
+              bg-solarized-orange hover:bg-solarized-red
               shadow-lg hover:shadow-xl
               text-white font-bold text-lg
             "
