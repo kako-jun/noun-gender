@@ -113,7 +113,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
               <Button
                 key={code}
                 type="button"
-                variant={selectedLanguages.includes(code) ? 'primary' : 'secondary'}
+                variant={selectedLanguages.includes(code) ? 'selected' : 'secondary'}
                 size="sm"
                 onClick={() => handleLanguageToggle(code)}
                 className="rounded-full shadow-sm"

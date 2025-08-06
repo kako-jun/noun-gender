@@ -123,30 +123,56 @@ class DatabaseManager {
     startsWith?: string;
   } = {}) {
     const db = this.getDb();
-    const { limit = 100, offset = 0, language, startsWith } = options;
+    const { limit = 50, offset = 0, language, startsWith } = options;
     
-    let query = `
-      SELECT DISTINCT english, language, translation, gender, frequency, example, pronunciation, usage_notes, gender_explanation
+    // First, get distinct English words with pagination
+    let englishWordsQuery = `
+      SELECT DISTINCT english
       FROM all_words 
       WHERE translation IS NOT NULL AND translation != ''
     `;
     
-    const params: any[] = [];
+    const englishParams: any[] = [];
     
     if (language) {
-      query += ` AND language = ?`;
-      params.push(language);
+      englishWordsQuery += ` AND language = ?`;
+      englishParams.push(language);
     }
     
     if (startsWith) {
-      query += ` AND LOWER(english) LIKE ?`;
-      params.push(`${startsWith.toLowerCase()}%`);
+      englishWordsQuery += ` AND LOWER(english) LIKE ?`;
+      englishParams.push(`${startsWith.toLowerCase()}%`);
     }
     
-    query += ` ORDER BY LOWER(english), language LIMIT ? OFFSET ?`;
-    params.push(limit, offset);
+    englishWordsQuery += ` ORDER BY LOWER(english) LIMIT ? OFFSET ?`;
+    englishParams.push(limit, offset);
     
-    const rows = db.prepare(query).all(...params) as any[];
+    const englishWords = db.prepare(englishWordsQuery).all(...englishParams) as { english: string }[];
+    
+    if (englishWords.length === 0) {
+      return [];
+    }
+    
+    // Then get all translations for these English words
+    const englishList = englishWords.map(row => row.english);
+    const placeholders = englishList.map(() => '?').join(',');
+    
+    let translationsQuery = `
+      SELECT english, language, translation, gender, frequency, example, pronunciation, usage_notes, gender_explanation
+      FROM all_words 
+      WHERE english IN (${placeholders}) AND translation IS NOT NULL AND translation != ''
+    `;
+    
+    const translationParams = [...englishList];
+    
+    if (language) {
+      translationsQuery += ` AND language = ?`;
+      translationParams.push(language);
+    }
+    
+    translationsQuery += ` ORDER BY LOWER(english), language`;
+    
+    const rows = db.prepare(translationsQuery).all(...translationParams) as any[];
     
     // Group by English word
     const grouped = new Map();
@@ -171,7 +197,8 @@ class DatabaseManager {
       });
     });
     
-    return Array.from(grouped.values());
+    // Maintain the order of English words from the first query
+    return englishList.map(englishWord => grouped.get(englishWord)).filter(Boolean);
   }
 
   close() {
