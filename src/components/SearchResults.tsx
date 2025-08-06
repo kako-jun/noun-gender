@@ -35,13 +35,17 @@ export function SearchResults({
   }
 
   if (results.length === 0) {
-    if (mode === 'browse') {
+    // 初回ロード中かどうかをisLoadingで判定
+    if (isLoading) {
       return (
-        <div className="text-center py-8 text-stone-500 dark:text-stone-400">
-          <p>Loading dictionary entries...</p>
+        <div className="flex justify-center items-center py-8 space-x-1">
+          <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0s' }}></div>
+          <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.3s' }}></div>
+          <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.6s' }}></div>
         </div>
       );
     }
+    
     return (
       <div className="text-center py-8 text-stone-500 dark:text-stone-400">
         <p className="whitespace-pre-line">{t('search.noResultsFound')}</p>

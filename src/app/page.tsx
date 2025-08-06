@@ -220,7 +220,7 @@ export default function Home() {
           isLoading={isLoading}
           initialQuery={searchParams.get('q') || ''}
           initialLanguages={searchParams.get('lang')?.split(',').filter(Boolean) || Object.keys(SUPPORTED_LANGUAGES)}
-          translations={{
+          translations={translationsLoading ? undefined : {
             placeholder: t('search.placeholder'),
             languagesOptional: t('search.languagesOptional'),
             searchButton: t('search.searchButton'),

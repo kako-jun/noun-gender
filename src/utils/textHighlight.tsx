@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 /**
  * 検索クエリにマッチする部分をハイライト表示するコンポーネント
@@ -10,6 +10,25 @@ interface HighlightedTextProps {
 }
 
 export function HighlightedText({ text, query, className = '' }: HighlightedTextProps) {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    // 初回レンダリング時とテーマ変更時にダークモードを検出
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    
+    checkDarkMode();
+    
+    // MutationObserverでクラスの変更を監視
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
   // クエリが空の場合はそのまま表示
   if (!query || query.trim() === '') {
     return <span className={className}>{text}</span>;
@@ -52,7 +71,12 @@ export function HighlightedText({ text, query, className = '' }: HighlightedText
         part.isMatch ? (
           <mark 
             key={index}
-            className="bg-solarized-yellow/60 text-solarized-base03 px-0.5 rounded font-semibold"
+            className="text-inherit px-0.5 rounded"
+            style={{ 
+              backgroundColor: isDark 
+                ? 'rgba(181, 137, 0, 0.7)'   // ダークテーマ: 70%
+                : 'rgba(181, 137, 0, 0.25)'  // ライトテーマ: 25%
+            }}
           >
             {part.text}
           </mark>

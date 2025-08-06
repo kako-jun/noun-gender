@@ -205,7 +205,6 @@ export function Quiz({ onClose }: QuizProps) {
 
   if (showResult) {
     const score = calculateScore();
-    const percentage = Math.round((score / questions.length) * 100);
 
     return (
       <>
@@ -227,21 +226,25 @@ export function Quiz({ onClose }: QuizProps) {
               </button>
             </div>
           <div className="text-center mb-6">
-            <div className="text-4xl font-bold text-solarized-orange mb-2">
+            <div className="text-4xl font-bold text-solarized-orange">
               {score}/{questions.length}
-            </div>
-            <div className="text-lg text-stone-600 dark:text-stone-400">
-              {percentage}% correct
             </div>
           </div>
           
-          <div className="space-y-2 mb-6 max-h-40 overflow-y-auto pr-4">
+          <div className="space-y-2 mb-6">
             {questions.map((q, index) => (
               <div key={index} className="flex items-center justify-between text-sm mr-2">
                 <span className="text-solarized-base01 dark:text-solarized-base1">
                   {getLanguageFlag(q.language)} {q.translation} ({q.english})
                 </span>
                 <div className="flex items-center ml-4">
+                  <span className={`mr-2 font-bold text-lg ${
+                    q.correctGender === 'm' ? 'text-blue-500' :
+                    q.correctGender === 'f' ? 'text-red-500' :
+                    'text-yellow-600'
+                  }`}>
+                    {getGenderSymbol(q.correctGender)}
+                  </span>
                   {answers[index] === q.correctGender ? (
                     <Check className="w-4 h-4 text-green-500" />
                   ) : (
