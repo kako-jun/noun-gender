@@ -96,7 +96,7 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
       className={`
         inline-flex items-center justify-center
         w-8 h-8 rounded-full
-        bg-blue-500 hover:bg-blue-600 
+        bg-solarized-orange hover:bg-solarized-yellow 
         text-white transition-colors
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}

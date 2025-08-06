@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { SearchBox, type SearchBoxRef } from '@/components/SearchBox';
 import { SearchResults } from '@/components/SearchResults';
 import { Footer } from '@/components/Footer';
@@ -21,14 +21,23 @@ export default function Home() {
   const [showQuiz, setShowQuiz] = useState(false);
   const [mode, setMode] = useState<'browse' | 'search'>('browse');
   const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const searchBoxRef = useRef<SearchBoxRef>(null);
   const { t, isLoading: translationsLoading } = useTranslations();
 
   // 初期ブラウジングデータの読み込み
-  const loadBrowseData = async (offset: number = 0) => {
-    setIsLoading(true);
+  const loadBrowseData = useCallback(async (offset: number = 0) => {
+    if (offset === 0 && isLoading) return; // 初期読み込み時の重複防止
+    if (offset > 0 && isLoadingMore) return; // 追加読み込み時の重複防止
+    
+    if (offset === 0) {
+      setIsLoading(true);
+    } else {
+      setIsLoadingMore(true);
+    }
+    
     try {
-      const response = await fetch(`/api/browse?limit=100&offset=${offset}`);
+      const response = await fetch(`/api/browse?limit=50&offset=${offset}`);
       const data = await response.json();
       
       if (data.success) {
@@ -42,14 +51,49 @@ export default function Home() {
     } catch (error) {
       console.error('Browse data load failed:', error);
     } finally {
-      setIsLoading(false);
+      if (offset === 0) {
+        setIsLoading(false);
+      } else {
+        setIsLoadingMore(false);
+      }
     }
-  };
+  }, [isLoading, isLoadingMore]);
 
-  // 初期読み込み
+  // 初期読み込み（一度だけ実行）
   useEffect(() => {
-    loadBrowseData();
+    if (browseResults.length === 0 && !isLoading) {
+      loadBrowseData();
+    }
   }, []);
+
+  // 無限スクロール（スロットリング付き）
+  const handleScroll = useCallback(() => {
+    if (isLoadingMore || !hasMore || mode !== 'browse') return;
+    
+    const scrollTop = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    // スクロール位置が下から200px以内に来たら次のデータを読み込み
+    if (scrollTop + windowHeight >= documentHeight - 200) {
+      loadBrowseData(browseResults.length);
+    }
+  }, [isLoadingMore, hasMore, mode, browseResults.length, loadBrowseData]);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    
+    const throttledScroll = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleScroll, 100); // 100ms間隔でスロットリング
+    };
+    
+    window.addEventListener('scroll', throttledScroll);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', throttledScroll);
+    };
+  }, [handleScroll]);
 
   const handleSearch = async (query: string, languages: string[]) => {
     if (!query.trim()) {
@@ -141,10 +185,15 @@ export default function Home() {
         <SearchResults 
           results={mode === 'search' ? searchResults : browseResults} 
           isLoading={isLoading} 
-          showLoadMore={mode === 'browse' && hasMore && !isLoading}
-          onLoadMore={() => loadBrowseData(browseResults.length)}
           mode={mode}
         />
+        
+        {/* 無限スクロール用のローディングインジケーター */}
+        {mode === 'browse' && isLoadingMore && (
+          <div className="flex justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-solarized-orange"></div>
+          </div>
+        )}
       </main>
 
       {/* ゲームボタン */}

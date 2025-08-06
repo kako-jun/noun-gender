@@ -10,16 +10,12 @@ import { Button } from './ui/Button';
 interface SearchResultsProps {
   results: SearchResult[];
   isLoading: boolean;
-  showLoadMore?: boolean;
-  onLoadMore?: () => void;
   mode?: 'browse' | 'search';
 }
 
 export function SearchResults({ 
   results, 
   isLoading, 
-  showLoadMore = false, 
-  onLoadMore, 
   mode = 'search' 
 }: SearchResultsProps) {
   const { t } = useTranslations();
@@ -126,20 +122,6 @@ export function SearchResults({
           </div>
         </div>
       ))}
-      
-      {/* Load More Button for Browse Mode */}
-      {showLoadMore && onLoadMore && (
-        <div className="text-center mt-8">
-          <Button
-            onClick={onLoadMore}
-            disabled={isLoading}
-            variant="primary"
-            size="lg"
-          >
-            {isLoading ? 'Loading...' : 'もっと見る'}
-          </Button>
-        </div>
-      )}
     </div>
   );
 }
