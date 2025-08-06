@@ -52,7 +52,7 @@ export function CopyButton({ text, label, className = '' }: CopyButtonProps) {
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}
       `}
-      title={copied ? 'コピー完了!' : 'コピー'}
+      title={copied ? 'コピー完了!' : 'クリップボードにコピー'}
       disabled={!text}
     >
       {copied ? (

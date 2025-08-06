@@ -16,8 +16,9 @@ export function KeyboardShortcuts() {
       <button
         onClick={() => setIsOpen(true)}
         className="
-          p-2 rounded-full transition-all duration-300 transform hover:scale-110
-          bg-solarized-base3 hover:bg-solarized-base1 shadow-md hover:shadow-lg border border-solarized-base1
+          w-9 h-9 flex items-center justify-center flex-shrink-0
+          rounded-full transition-all duration-300 transform hover:scale-105
+          bg-solarized-base3 hover:bg-solarized-base1 shadow-sm hover:shadow-md border border-solarized-base1
           dark:bg-solarized-base03 dark:hover:bg-solarized-base01 dark:border-solarized-base01
           text-solarized-base01 hover:text-solarized-base3 dark:text-solarized-base1 dark:hover:text-solarized-base03
         "

@@ -8,7 +8,45 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        'serif': ['var(--font-source-serif)', 'var(--font-ibm-plex)', 'Courier New', 'Consolas', 'Monaco', 'DejaVu Serif', 'Georgia', 'serif'],
+      },
       colors: {
+        // 標準色を追加（グラデーション用）
+        blue: {
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+        },
+        red: {
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+        },
+        pink: {
+          400: '#f472b6',
+          500: '#ec4899',
+          600: '#db2777',
+        },
+        green: {
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+        },
+        yellow: {
+          400: '#facc15',
+          500: '#eab308',
+          600: '#ca8a04',
+        },
+        cyan: {
+          400: '#22d3ee',
+          500: '#06b6d4',
+          600: '#0891b2',
+        },
+        gray: {
+          400: '#9ca3af',
+          500: '#6b7280',
+        },
         solarized: {
           // Base colors
           'base03': '#002b36',
