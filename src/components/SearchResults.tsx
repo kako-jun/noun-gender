@@ -6,6 +6,7 @@ import { AudioButton } from './AudioButton';
 import { CopyButton } from './CopyButton';
 import { useTranslations } from '@/hooks/useTranslations';
 import { Button } from './ui/Button';
+import { getGenderStyle, getGenderSymbol } from '@/utils/genderStyles';
 
 interface SearchResultsProps {
   results: SearchResult[];
@@ -22,8 +23,10 @@ export function SearchResults({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+      <div className="flex justify-center items-center py-8 space-x-1">
+        <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0s' }}></div>
+        <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.3s' }}></div>
+        <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.6s' }}></div>
       </div>
     );
   }
@@ -43,23 +46,6 @@ export function SearchResults({
     );
   }
 
-  const getGenderStyle = (gender: string) => {
-    switch (gender) {
-      case 'm': return 'bg-gradient-to-r from-solarized-base00 to-solarized-blue dark:from-solarized-base0 dark:to-solarized-blue';
-      case 'f': return 'bg-gradient-to-r from-solarized-base00 to-solarized-magenta dark:from-solarized-base0 dark:to-solarized-magenta';
-      case 'n': return 'bg-solarized-base00 dark:bg-solarized-base0';
-      default: return 'bg-solarized-base00 dark:bg-solarized-base0';
-    }
-  };
-
-  const getGenderSymbol = (gender: string) => {
-    switch (gender) {
-      case 'm': return '♂';
-      case 'f': return '♀';
-      case 'n': return '⚲';
-      default: return '?';
-    }
-  };
 
   return (
     <div className="space-y-4">
