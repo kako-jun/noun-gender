@@ -8,6 +8,7 @@ import { StatsHeader } from '@/components/StatsHeader';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Quiz } from '@/components/Quiz';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useTheme } from 'next-themes';
@@ -217,6 +218,9 @@ export default function Home() {
       {showQuiz && (
         <Quiz onClose={() => setShowQuiz(false)} />
       )}
+      
+      {/* Scroll to Top Button */}
+      <ScrollToTop />
     </div>
   );
 }

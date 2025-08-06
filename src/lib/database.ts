@@ -77,21 +77,24 @@ class DatabaseManager {
       }
       
       const result = grouped.get(englishWord)!;
-      result.translations.push({
-        id: 0,
-        word_id: 0,
-        language: row.language,
-        translation: row.translation,
-        gender: row.gender as 'm' | 'f' | 'n',
-        frequency: row.frequency,
-        example: row.example,
-        pronunciation: row.pronunciation,
-        usage_notes: row.usage_notes,
-        gender_explanation: row.gender_explanation
-      });
+      // 有効な翻訳データのみ追加
+      if (row.translation && row.translation.trim() !== '' && ['m', 'f', 'n'].includes(row.gender)) {
+        result.translations.push({
+          id: 0,
+          word_id: 0,
+          language: row.language,
+          translation: row.translation,
+          gender: row.gender as 'm' | 'f' | 'n',
+          frequency: row.frequency,
+          example: row.example,
+          pronunciation: row.pronunciation,
+          usage_notes: row.usage_notes,
+          gender_explanation: row.gender_explanation
+        });
+      }
     });
 
-    return Array.from(grouped.values());
+    return Array.from(grouped.values()).filter(word => word.translations.length > 0);
   }
 
   async getStats() {
@@ -185,20 +188,23 @@ class DatabaseManager {
         });
       }
       
-      grouped.get(row.english).translations.push({
-        language: row.language,
-        translation: row.translation,
-        gender: row.gender as 'm' | 'f' | 'n',
-        frequency: row.frequency,
-        example: row.example,
-        pronunciation: row.pronunciation,
-        usage_notes: row.usage_notes,
-        gender_explanation: row.gender_explanation
-      });
+      // 有効な翻訳データのみ追加
+      if (row.translation && row.translation.trim() !== '' && ['m', 'f', 'n'].includes(row.gender)) {
+        grouped.get(row.english).translations.push({
+          language: row.language,
+          translation: row.translation,
+          gender: row.gender as 'm' | 'f' | 'n',
+          frequency: row.frequency,
+          example: row.example,
+          pronunciation: row.pronunciation,
+          usage_notes: row.usage_notes,
+          gender_explanation: row.gender_explanation
+        });
+      }
     });
     
-    // Maintain the order of English words from the first query
-    return englishList.map(englishWord => grouped.get(englishWord)).filter(Boolean);
+    // Maintain the order of English words from the first query and filter out words with no valid translations
+    return englishList.map(englishWord => grouped.get(englishWord)).filter(word => word && word.translations.length > 0);
   }
 
   close() {
