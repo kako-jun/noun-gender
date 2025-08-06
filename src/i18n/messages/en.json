@@ -22,7 +22,7 @@
     "multilingualSearch": "Multilingual search"
   },
   "search": {
-    "placeholder": "Search for a word... (Press '/' to focus)",
+    "placeholder": "Search words...",
     "searching": "Searching...",
     "languagesOptional": "Languages",
     "searchButton": "Search",

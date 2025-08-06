@@ -21,26 +21,21 @@ export function StatsHeader() {
   }, []);
 
   if (!stats) {
-    // Static fallback while loading
     return (
       <div className="flex flex-wrap justify-center gap-3 text-sm text-stone-600 dark:text-stone-400">
-        <span className="bg-stone-200/60 dark:bg-stone-700/60 px-3 py-1 rounded-full">
-          4,541 words
-        </span>
-        <span className="bg-stone-200/60 dark:bg-stone-700/60 px-3 py-1 rounded-full">
-          9,860+ translations
-        </span>
-        <span className="bg-stone-200/60 dark:bg-stone-700/60 px-3 py-1 rounded-full">
-          8 languages
-        </span>
-        <span className="bg-stone-200/60 dark:bg-stone-700/60 px-3 py-1 rounded-full">
-          Multilingual search
-        </span>
+        {/* "4,541 words" = ~90px */}
+        <span className="bg-stone-200/60 dark:bg-stone-700/60 rounded-full animate-pulse px-3 py-1" style={{width: '90px', height: '28px'}}></span>
+        {/* "30,362+ translations" = ~155px */}
+        <span className="bg-stone-200/60 dark:bg-stone-700/60 rounded-full animate-pulse px-3 py-1" style={{width: '155px', height: '28px'}}></span>
+        {/* "8 languages" = ~95px */}
+        <span className="bg-stone-200/60 dark:bg-stone-700/60 rounded-full animate-pulse px-3 py-1" style={{width: '95px', height: '28px'}}></span>
+        {/* "Multilingual search" = ~135px */}
+        <span className="bg-stone-200/60 dark:bg-stone-700/60 rounded-full animate-pulse px-3 py-1" style={{width: '135px', height: '28px'}}></span>
       </div>
     );
   }
 
-  const { totalWords, totalTranslations, multilingualTerms, searchLanguages, languageStats } = stats;
+  const { totalWords, totalTranslations, multilingualTerms, languageStats } = stats;
   const languageCount = languageStats.length;
 
   return (
@@ -55,10 +50,7 @@ export function StatsHeader() {
         {languageCount} languages
       </span>
       <span className="bg-stone-200/60 dark:bg-stone-700/60 px-3 py-1 rounded-full">
-        {searchLanguages} search languages
-      </span>
-      <span className="bg-stone-200/60 dark:bg-stone-700/60 px-3 py-1 rounded-full">
-        {multilingualTerms}+ search terms
+        Multilingual search
       </span>
     </div>
   );

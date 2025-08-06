@@ -22,7 +22,7 @@
     "multilingualSearch": "多言語検索"
   },
   "search": {
-    "placeholder": "単語を検索してください... (/ キーで検索欄へ)",
+    "placeholder": "単語を検索...",
     "searching": "検索中...",
     "languagesOptional": "言語",
     "searchButton": "検索",

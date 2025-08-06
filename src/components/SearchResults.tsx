@@ -9,9 +9,18 @@ import { useTranslations } from '@/hooks/useTranslations';
 interface SearchResultsProps {
   results: SearchResult[];
   isLoading: boolean;
+  showLoadMore?: boolean;
+  onLoadMore?: () => void;
+  mode?: 'browse' | 'search';
 }
 
-export function SearchResults({ results, isLoading }: SearchResultsProps) {
+export function SearchResults({ 
+  results, 
+  isLoading, 
+  showLoadMore = false, 
+  onLoadMore, 
+  mode = 'search' 
+}: SearchResultsProps) {
   const { t } = useTranslations();
 
   if (isLoading) {
@@ -23,6 +32,13 @@ export function SearchResults({ results, isLoading }: SearchResultsProps) {
   }
 
   if (results.length === 0) {
+    if (mode === 'browse') {
+      return (
+        <div className="text-center py-8 text-stone-500 dark:text-stone-400">
+          <p>Loading dictionary entries...</p>
+        </div>
+      );
+    }
     return (
       <div className="text-center py-8 text-stone-500 dark:text-stone-400">
         <p className="whitespace-pre-line">{t('search.noResultsFound')}</p>
@@ -54,7 +70,9 @@ export function SearchResults({ results, isLoading }: SearchResultsProps) {
       
       {results.map((result, index) => (
         <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors">
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">{result.word.word_en}</h3>
+          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+            {result.english || result.word?.word_en}
+          </h3>
           
           <div className="grid gap-3">
             {result.translations.map((translation, tIndex) => (
@@ -86,6 +104,19 @@ export function SearchResults({ results, isLoading }: SearchResultsProps) {
           </div>
         </div>
       ))}
+      
+      {/* Load More Button for Browse Mode */}
+      {showLoadMore && onLoadMore && (
+        <div className="text-center mt-8">
+          <button
+            onClick={onLoadMore}
+            disabled={isLoading}
+            className="px-6 py-3 bg-amber-800 hover:bg-amber-900 text-white rounded-xl font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? 'Loading...' : 'もっと見る'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

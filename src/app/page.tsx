@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { SearchBox, type SearchBoxRef } from '@/components/SearchBox';
 import { SearchResults } from '@/components/SearchResults';
 import { Footer } from '@/components/Footer';
@@ -15,17 +15,49 @@ import type { SearchResult } from '@/types';
 
 export default function Home() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [browseResults, setBrowseResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [mode, setMode] = useState<'browse' | 'search'>('browse');
+  const [hasMore, setHasMore] = useState(true);
   const searchBoxRef = useRef<SearchBoxRef>(null);
   const { t, isLoading: translationsLoading } = useTranslations();
+
+  // 初期ブラウジングデータの読み込み
+  const loadBrowseData = async (offset: number = 0) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/browse?limit=100&offset=${offset}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        if (offset === 0) {
+          setBrowseResults(data.data);
+        } else {
+          setBrowseResults(prev => [...prev, ...data.data]);
+        }
+        setHasMore(data.pagination.hasMore);
+      }
+    } catch (error) {
+      console.error('Browse data load failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 初期読み込み
+  useEffect(() => {
+    loadBrowseData();
+  }, []);
 
   const handleSearch = async (query: string, languages: string[]) => {
     if (!query.trim()) {
       setSearchResults([]);
+      setMode('browse');
       return;
     }
 
+    setMode('search');
     setIsLoading(true);
     try {
       const params = new URLSearchParams({
@@ -82,7 +114,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-6">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-2 text-stone-800 dark:text-stone-100">
-              {translationsLoading ? 'Noun Gender' : t('header.title')}
+              Noun Gender
             </h1>
             <p className="text-lg text-stone-600 dark:text-stone-300 mb-3">
               {translationsLoading ? 'Master noun genders across languages' : t('header.subtitle')}
@@ -105,7 +137,13 @@ export default function Home() {
             searching: t('search.searching')
           }}
         />
-        <SearchResults results={searchResults} isLoading={isLoading} />
+        <SearchResults 
+          results={mode === 'search' ? searchResults : browseResults} 
+          isLoading={isLoading} 
+          showLoadMore={mode === 'browse' && hasMore && !isLoading}
+          onLoadMore={() => loadBrowseData(browseResults.length)}
+          mode={mode}
+        />
       </main>
 
       {/* ゲームボタン */}

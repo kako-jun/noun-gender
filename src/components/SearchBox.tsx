@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef, forwardRef, useImperativeHandle } from 'react';
-import { Search } from 'lucide-react';
+import { useState, useRef, forwardRef, useImperativeHandle, useEffect, useCallback } from 'react';
+import { Search, X } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { KeyboardShortcuts } from './KeyboardShortcuts';
 
@@ -21,6 +21,15 @@ export interface SearchBoxRef {
   clear: () => void;
 }
 
+// デバウンス関数
+function debounce<T extends (...args: any[]) => void>(func: T, wait: number): T {
+  let timeout: NodeJS.Timeout | null = null;
+  return ((...args: any[]) => {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  }) as T;
+}
+
 export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function SearchBox({ onSearch, isLoading, translations }, ref) {
   const [query, setQuery] = useState('');
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(Object.keys(SUPPORTED_LANGUAGES));
@@ -28,12 +37,27 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
 
   useImperativeHandle(ref, () => ({
     focus: () => inputRef.current?.focus(),
-    clear: () => setQuery('')
+    clear: () => {
+      setQuery('');
+      onSearch('', selectedLanguages);
+    }
   }));
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearch(query, selectedLanguages);
+  // デバウンス用のインクリメンタルサーチ
+  const debouncedSearch = useCallback(
+    debounce((query: string, languages: string[]) => {
+      onSearch(query, languages);
+    }, 300),
+    [onSearch]
+  );
+
+  useEffect(() => {
+    debouncedSearch(query, selectedLanguages);
+  }, [query, selectedLanguages, debouncedSearch]);
+
+  const handleClear = () => {
+    setQuery('');
+    onSearch('', selectedLanguages);
   };
 
   const handleLanguageToggle = (language: string) => {
@@ -46,7 +70,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
 
   return (
     <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl shadow-lg p-6 mb-8 transition-all duration-300 border border-stone-200 dark:border-stone-700 relative">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-4">
         {/* Search Input */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-500 dark:text-stone-400 w-5 h-5" />
@@ -55,22 +79,32 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={translations?.placeholder || "Search for a word... (Press '/' to focus)"}
-            className="w-full pl-10 pr-4 py-3 border border-stone-300 dark:border-stone-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-400 bg-white dark:bg-stone-900 transition-all duration-200"
+            placeholder={translations?.placeholder || "Search words..."}
+            className="w-full pl-10 pr-10 py-3 border border-stone-300 dark:border-stone-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-400 bg-white dark:bg-stone-900 transition-all duration-200"
             disabled={isLoading}
           />
+          {/* クリアボタン */}
+          {query && (
+            <button
+              type="button"
+              onClick={handleClear}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 p-1 rounded-full hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
           {/* キーボードショートカットボタンを入力欄の右下に配置 */}
-          <div className="absolute top-full right-0 mt-3">
+          <div className="absolute top-full right-0 mt-2">
             <KeyboardShortcuts />
           </div>
         </div>
 
         {/* Language Selection */}
         <div>
-          <p className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 text-center">
-            {translations?.languagesOptional || "Languages:"}
+          <p className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 text-center -mt-1">
+            {translations?.languagesOptional || "Languages"}
           </p>
-          <div className="flex flex-wrap gap-2 justify-center">
+          <div className="flex flex-wrap gap-2 justify-center mt-1">
             {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
               <button
                 key={code}
@@ -87,16 +121,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
             ))}
           </div>
         </div>
-
-        {/* Search Button */}
-        <button
-          type="submit"
-          disabled={!query.trim() || isLoading}
-          className="w-full bg-orange-500 text-white py-3 rounded-xl hover:bg-orange-600 disabled:bg-stone-300 disabled:text-stone-500 disabled:cursor-not-allowed transition-all duration-200 font-bold shadow-md hover:shadow-lg transform hover:scale-[1.02] disabled:transform-none"
-        >
-          {isLoading ? (translations?.searching || 'Searching...') : (translations?.searchButton || 'Search')}
-        </button>
-      </form>
+      </div>
     </div>
   );
 });
