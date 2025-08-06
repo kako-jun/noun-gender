@@ -39,11 +39,20 @@ class DatabaseManager {
         )
       )
       ORDER BY 
-        CASE WHEN aw.english = ? THEN 1
-             WHEN aw.translation = ? THEN 2
-             WHEN aw.english LIKE ? THEN 3
-             WHEN aw.translation LIKE ? THEN 4
-             ELSE 5 END,
+        CASE 
+          -- 完全一致は最優先
+          WHEN aw.english = ? THEN 1
+          WHEN aw.translation = ? THEN 2
+          -- 短い単語の部分一致を前方一致より優先
+          WHEN LENGTH(aw.english) <= 4 AND aw.english LIKE ? THEN 2.5
+          -- 前方一致
+          WHEN aw.english LIKE ? THEN 3
+          WHEN aw.translation LIKE ? THEN 4
+          -- その他の部分一致
+          ELSE 5 
+        END,
+        -- 短い単語ほど関連性が高い
+        LENGTH(aw.english),
         aw.frequency DESC,
         aw.english
       LIMIT ?
@@ -56,9 +65,10 @@ class DatabaseManager {
     const rows = db.prepare(sql).all(
       ...langFilter, // Language filter
       searchTerm, searchTerm, searchTerm, // Search terms
-      exactTerm, exactTerm, startsWith, startsWith, // Ranking terms
+      exactTerm, exactTerm, searchTerm, startsWith, startsWith, // Ranking terms (updated order)
       limit
     ) as Array<{ english: string; translation: string; language: string; gender: string; frequency?: number; example?: string; pronunciation?: string; usage_notes?: string; gender_explanation?: string; }>;
+
 
     // Group results by English word
     const grouped = new Map<string, SearchResult>();

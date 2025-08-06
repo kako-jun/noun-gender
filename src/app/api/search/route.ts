@@ -24,8 +24,8 @@ export async function GET(request: NextRequest) {
         ) as LanguageCode[]
       : [];
 
-    // Parse limit parameter
-    const limit = limitParam ? Math.min(parseInt(limitParam), 100) : 20;
+    // Parse limit parameter - allow unlimited results by default
+    const limit = limitParam ? Math.min(parseInt(limitParam), 1000) : 1000;
 
     // Perform search
     const results = await dbManager.search(query.trim(), languages, limit);
