@@ -150,8 +150,8 @@ export default function Home() {
     try {
       const params = new URLSearchParams({
         q: query,
-        languages: languages.join(','),
-        limit: '20'
+        languages: languages.join(',')
+        // limitパラメータを削除 - サーバー側のデフォルト（1000件）を使用
       });
 
       const response = await fetch(`/api/search?${params}`);
