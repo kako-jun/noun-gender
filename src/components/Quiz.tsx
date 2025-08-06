@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Play, RotateCcw, Check, X } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '@/types';
+import { AudioButton } from './AudioButton';
+import { Button } from './ui/Button';
 
 interface QuizQuestion {
   id: number;
@@ -184,26 +186,24 @@ export function Quiz({ onClose }: QuizProps) {
               </p>
               <div className="grid grid-cols-2 gap-2">
                 {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
-                  <button
+                  <Button
                     key={code}
+                    variant={selectedLanguage === code ? 'selected' : 'secondary'}
+                    size="sm"
                     onClick={() => setSelectedLanguage(code)}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      selectedLanguage === code
-                        ? 'bg-solarized-blue text-white'
-                        : 'bg-solarized-base3 dark:bg-solarized-base03 text-solarized-base01 dark:text-solarized-base1 hover:bg-solarized-base1 dark:hover:bg-solarized-base01 hover:text-solarized-base3 dark:hover:text-solarized-base03'
-                    }`}
                   >
                     {name}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
 
             <div className="flex justify-center">
-              <button
+              <Button
                 onClick={handleStartQuiz}
                 disabled={!selectedLanguage || isLoading}
-                className="bg-solarized-orange text-white px-6 py-2 rounded-xl hover:bg-solarized-red transition-colors flex items-center justify-center font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                variant="primary"
+                size="md"
             >
               {isLoading ? (
                 <>
@@ -216,7 +216,7 @@ export function Quiz({ onClose }: QuizProps) {
                   Start Quiz
                 </>
               )}
-            </button>
+            </Button>
             </div>
           </div>
         </div>
@@ -256,13 +256,13 @@ export function Quiz({ onClose }: QuizProps) {
             </div>
           </div>
           
-          <div className="space-y-2 mb-6 max-h-40 overflow-y-auto">
+          <div className="space-y-2 mb-6 max-h-40 overflow-y-auto pr-4">
             {questions.map((q, index) => (
-              <div key={index} className="flex items-center justify-between text-sm">
-                <span className="text-stone-600 dark:text-stone-400">
-                  {getLanguageFlag(q.language)} {q.english} → {q.translation}
+              <div key={index} className="flex items-center justify-between text-sm mr-2">
+                <span className="text-solarized-base01 dark:text-solarized-base1">
+                  {getLanguageFlag(q.language)} {q.translation} ({q.english})
                 </span>
-                <div className="flex items-center">
+                <div className="flex items-center ml-4">
                   {answers[index] === q.correctGender ? (
                     <Check className="w-4 h-4 text-green-500" />
                   ) : (
@@ -274,19 +274,21 @@ export function Quiz({ onClose }: QuizProps) {
           </div>
 
           <div className="flex space-x-3">
-            <button
+            <Button
               onClick={restartQuiz}
-              className="flex-1 bg-solarized-orange text-white px-4 py-2 rounded-xl hover:bg-solarized-red transition-colors flex items-center justify-center font-bold"
+              variant="primary"
+              className="flex-1"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               Try Again
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={onClose}
-              className="flex-1 bg-stone-500 text-white px-4 py-2 rounded-xl hover:bg-stone-600 transition-colors font-bold"
+              variant="secondary"
+              className="flex-1"
             >
               Close
-            </button>
+            </Button>
           </div>
           </div>
         </div>
@@ -321,8 +323,16 @@ export function Quiz({ onClose }: QuizProps) {
           <div className="text-sm text-solarized-base00 dark:text-solarized-base0 mb-2">
             {getLanguageFlag(question.language)}
           </div>
-          <div className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1 mb-2">
-            {question.translation}
+          <div className="relative mb-2">
+            <div className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1">
+              {question.translation}
+            </div>
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+              <AudioButton 
+                text={question.translation} 
+                language={question.language}
+              />
+            </div>
           </div>
           <div className="text-lg text-solarized-base00 dark:text-solarized-base0">
             ({question.english})

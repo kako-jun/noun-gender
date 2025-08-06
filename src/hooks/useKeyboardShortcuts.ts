@@ -28,8 +28,8 @@ export function useKeyboardShortcuts({
       // 以下のショートカットは入力フィールド以外で有効
       if (isInputFocused) return;
 
-      // /キー または Ctrl+K: 検索フィールドにフォーカス
-      if (event.key === '/' || (event.ctrlKey && event.key === 'k')) {
+      // /キー: 検索フィールドにフォーカス
+      if (event.key === '/') {
         event.preventDefault();
         onFocusSearch();
         return;
