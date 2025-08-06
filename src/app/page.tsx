@@ -231,6 +231,7 @@ export default function Home() {
           results={mode === 'search' ? searchResults : browseResults} 
           isLoading={isLoading} 
           mode={mode}
+          searchQuery={mode === 'search' ? searchParams.get('q') || '' : ''}
         />
         
         {/* 無限スクロール用のローディングインジケーター */}

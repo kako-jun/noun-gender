@@ -109,6 +109,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
               placeholder={translations?.placeholder || "Search words..."}
               className="w-full pl-10 pr-10 py-3 border border-stone-300 dark:border-stone-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-400 bg-white dark:bg-stone-900 transition-all duration-200"
               disabled={false}
+              spellCheck={false}
+              autoComplete="off"
             />
             {/* クリアボタン */}
             {query && (
