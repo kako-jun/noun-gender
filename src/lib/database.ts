@@ -112,6 +112,64 @@ class DatabaseManager {
     };
   }
 
+  async browseWords(options: {
+    limit?: number;
+    offset?: number;
+    language?: string;
+    startsWith?: string;
+  } = {}) {
+    const db = this.getDb();
+    const { limit = 100, offset = 0, language, startsWith } = options;
+    
+    let query = `
+      SELECT DISTINCT english, language, translation, gender, frequency, example, pronunciation, usage_notes, gender_explanation
+      FROM all_words 
+      WHERE translation IS NOT NULL AND translation != ''
+    `;
+    
+    const params: any[] = [];
+    
+    if (language) {
+      query += ` AND language = ?`;
+      params.push(language);
+    }
+    
+    if (startsWith) {
+      query += ` AND LOWER(english) LIKE ?`;
+      params.push(`${startsWith.toLowerCase()}%`);
+    }
+    
+    query += ` ORDER BY LOWER(english), language LIMIT ? OFFSET ?`;
+    params.push(limit, offset);
+    
+    const rows = db.prepare(query).all(...params) as any[];
+    
+    // Group by English word
+    const grouped = new Map();
+    
+    rows.forEach(row => {
+      if (!grouped.has(row.english)) {
+        grouped.set(row.english, {
+          english: row.english,
+          translations: []
+        });
+      }
+      
+      grouped.get(row.english).translations.push({
+        language: row.language,
+        translation: row.translation,
+        gender: row.gender as 'm' | 'f' | 'n',
+        frequency: row.frequency,
+        example: row.example,
+        pronunciation: row.pronunciation,
+        usage_notes: row.usage_notes,
+        gender_explanation: row.gender_explanation
+      });
+    });
+    
+    return Array.from(grouped.values());
+  }
+
   close() {
     if (this.db) {
       this.db.close();

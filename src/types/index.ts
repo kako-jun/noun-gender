@@ -22,7 +22,8 @@ export interface Word {
 }
 
 export interface SearchResult {
-  word: Word;
+  word?: Word;  // 既存の検索結果用
+  english?: string;  // 新しいブラウズ結果用
   translations: Translation[];
 }
 
