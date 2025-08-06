@@ -11,6 +11,7 @@ import { Quiz } from '@/components/Quiz';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useTheme } from 'next-themes';
+import { Button } from '@/components/ui/Button';
 import type { SearchResult } from '@/types';
 
 export default function Home() {
@@ -149,17 +150,14 @@ export default function Home() {
       {/* ゲームボタン */}
       <div className="container mx-auto px-4 pb-4">
         <div className="text-center">
-          <button
+          <Button
             onClick={() => setShowQuiz(true)}
-            className="
-              px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105
-              bg-solarized-orange hover:bg-solarized-red
-              shadow-lg hover:shadow-xl
-              text-white font-bold text-lg
-            "
+            variant="primary"
+            size="lg"
+            className="shadow-lg hover:shadow-xl"
           >
             {t('quiz.startQuiz')}
-          </button>
+          </Button>
         </div>
       </div>
 

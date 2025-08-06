@@ -5,6 +5,7 @@ import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
 import { CopyButton } from './CopyButton';
 import { useTranslations } from '@/hooks/useTranslations';
+import { Button } from './ui/Button';
 
 interface SearchResultsProps {
   results: SearchResult[];
@@ -129,13 +130,14 @@ export function SearchResults({
       {/* Load More Button for Browse Mode */}
       {showLoadMore && onLoadMore && (
         <div className="text-center mt-8">
-          <button
+          <Button
             onClick={onLoadMore}
             disabled={isLoading}
-            className="px-6 py-3 bg-solarized-orange hover:bg-solarized-red text-white rounded-xl font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="primary"
+            size="lg"
           >
             {isLoading ? 'Loading...' : 'もっと見る'}
-          </button>
+          </Button>
         </div>
       )}
     </div>

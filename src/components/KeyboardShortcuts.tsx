@@ -8,7 +8,6 @@ export function KeyboardShortcuts() {
 
   const shortcuts = [
     { key: '/', description: 'Focus search input' },
-    { key: 'Ctrl + K', description: 'Focus search input' },
     { key: 'Esc', description: 'Clear search' },
   ];
 
