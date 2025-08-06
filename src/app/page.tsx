@@ -158,7 +158,7 @@ export default function Home() {
               text-white font-bold text-lg
             "
           >
-            ゲーム
+            {t('quiz.startQuiz')}
           </button>
         </div>
       </div>
