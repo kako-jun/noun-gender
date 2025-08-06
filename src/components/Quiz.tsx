@@ -89,8 +89,26 @@ export function Quiz({ onClose }: QuizProps) {
     switch (gender) {
       case 'm': return '♂ Masculine';
       case 'f': return '♀ Feminine';
-      case 'n': return '○ Neuter';
+      case 'n': return '⚲ Neuter';
       default: return gender;
+    }
+  };
+
+  const getGenderStyle = (gender: string) => {
+    switch (gender) {
+      case 'm': return 'bg-gradient-to-r from-transparent to-blue-500 dark:to-blue-600';
+      case 'f': return 'bg-gradient-to-r from-transparent to-pink-500 dark:to-pink-600';
+      case 'n': return 'bg-gradient-to-r from-transparent to-gray-500 dark:to-gray-600';
+      default: return 'bg-gradient-to-r from-transparent to-gray-500 dark:to-gray-600';
+    }
+  };
+
+  const getGenderSymbol = (gender: string) => {
+    switch (gender) {
+      case 'm': return '♂';
+      case 'f': return '♀';
+      case 'n': return '⚲';
+      default: return '?';
     }
   };
 
@@ -262,7 +280,7 @@ export function Quiz({ onClose }: QuizProps) {
 
         <div className="text-center mb-6">
           <div className="text-sm text-stone-500 dark:text-stone-400 mb-2">
-            {getLanguageFlag(question.language)} {question.language.toUpperCase()}
+            {getLanguageFlag(question.language)}
           </div>
           <div className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-2">
             {question.translation}
@@ -277,13 +295,28 @@ export function Quiz({ onClose }: QuizProps) {
             <button
               key={option}
               onClick={() => handleAnswer(option)}
-              className={`w-full p-3 rounded-xl text-left transition-colors font-medium ${
+              className={`relative w-full p-3 rounded-xl text-left transition-colors font-medium overflow-hidden ${
                 selectedAnswer === option
                   ? 'bg-amber-800 text-white'
                   : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-600'
               }`}
             >
-              {getGenderLabel(option)}
+              {/* Gender gradient background */}
+              <div className={`absolute inset-0 ${getGenderStyle(option)} opacity-30`}></div>
+              
+              {/* Gender symbol background */}
+              <div className={`absolute top-1/2 transform -translate-y-1/2 pointer-events-none select-none ${
+                option === 'n' ? 'right-3' : 'right-2'
+              }`} style={{ transform: option === 'n' ? 'translateY(-50%) translateX(-2px)' : 'translateY(-50%)' }}>
+                <span className="text-white text-3xl font-bold opacity-40" aria-hidden="true">
+                  {getGenderSymbol(option)}
+                </span>
+              </div>
+              
+              {/* Main content */}
+              <div className="relative">
+                {getGenderLabel(option)}
+              </div>
             </button>
           ))}
         </div>

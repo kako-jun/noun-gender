@@ -48,10 +48,10 @@ export function SearchResults({
 
   const getGenderStyle = (gender: string) => {
     switch (gender) {
-      case 'm': return 'bg-gradient-to-r from-transparent via-transparent to-blue-500 dark:to-blue-600';
-      case 'f': return 'bg-gradient-to-r from-transparent via-transparent to-pink-500 dark:to-pink-600';
-      case 'n': return 'bg-gradient-to-r from-transparent via-transparent to-gray-500 dark:to-gray-600';
-      default: return 'bg-gradient-to-r from-transparent via-transparent to-gray-500 dark:to-gray-600';
+      case 'm': return 'bg-gradient-to-r from-transparent to-blue-500 dark:to-blue-600';
+      case 'f': return 'bg-gradient-to-r from-transparent to-pink-500 dark:to-pink-600';
+      case 'n': return 'bg-gradient-to-r from-transparent to-gray-500 dark:to-gray-600';
+      default: return 'bg-gradient-to-r from-transparent to-gray-500 dark:to-gray-600';
     }
   };
 
@@ -66,7 +66,9 @@ export function SearchResults({
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-gray-600 dark:text-gray-400">Found {results.length} results</p>
+      {mode === 'search' && (
+        <p className="text-sm text-gray-600 dark:text-gray-400">Found {results.length} results</p>
+      )}
       
       {results.map((result, index) => (
         <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors">

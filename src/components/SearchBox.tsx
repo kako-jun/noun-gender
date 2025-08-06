@@ -53,7 +53,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
 
   useEffect(() => {
     debouncedSearch(query, selectedLanguages);
-  }, [query, selectedLanguages, debouncedSearch]);
+  }, [query, selectedLanguages]);
 
   const handleClear = () => {
     setQuery('');
@@ -61,11 +61,14 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   };
 
   const handleLanguageToggle = (language: string) => {
-    setSelectedLanguages(prev => 
-      prev.includes(language)
+    setSelectedLanguages(prev => {
+      const newSelection = prev.includes(language)
         ? prev.filter(lang => lang !== language)
-        : [...prev, language]
-    );
+        : [...prev, language];
+      
+      // 何も選択されていない場合は空配列のまま（全言語検索はしない）
+      return newSelection;
+    });
   };
 
   return (
@@ -81,7 +84,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
             onChange={(e) => setQuery(e.target.value)}
             placeholder={translations?.placeholder || "Search words..."}
             className="w-full pl-10 pr-10 py-3 border border-stone-300 dark:border-stone-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-400 bg-white dark:bg-stone-900 transition-all duration-200"
-            disabled={isLoading}
+            disabled={false}
           />
           {/* クリアボタン */}
           {query && (

@@ -16,8 +16,12 @@ class DatabaseManager {
   async search(query: string, languages: LanguageCode[] = [], limit: number = 20): Promise<SearchResult[]> {
     const db = this.getDb();
     
-    // Build language filter
-    const langFilter = languages.length > 0 ? languages : ['ar', 'fr', 'de', 'hi', 'it', 'pt', 'ru', 'es'];
+    // Build language filter - empty array means no results (not all languages)
+    if (languages.length === 0) {
+      return [];
+    }
+    
+    const langFilter = languages;
     const langPlaceholders = langFilter.map(() => '?').join(',');
     
     // Enhanced search with multilingual support
