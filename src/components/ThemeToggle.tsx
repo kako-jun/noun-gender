@@ -14,7 +14,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-9 h-9 rounded-full bg-stone-200 dark:bg-stone-700 animate-pulse" />
+      <div className="w-9 h-9 rounded-full bg-solarized-base3 dark:bg-solarized-base03 border border-solarized-base1 dark:border-solarized-base01 animate-pulse" />
     );
   }
 
@@ -59,9 +59,9 @@ export function ThemeToggle() {
       onClick={cycleTheme}
       className="
         p-2 rounded-full transition-all duration-300 transform hover:scale-110
-        bg-stone-200 hover:bg-stone-300 shadow-md hover:shadow-lg
-        dark:bg-stone-700 dark:hover:bg-stone-600
-        text-stone-700 dark:text-stone-200
+        bg-solarized-base3 hover:bg-solarized-base1 shadow-md hover:shadow-lg border border-solarized-base1
+        dark:bg-solarized-base03 dark:hover:bg-solarized-base01 dark:border-solarized-base01
+        text-solarized-base01 hover:text-solarized-base3 dark:text-solarized-base1 dark:hover:text-solarized-base03
       "
       title={getTooltip()}
     >

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Play, RotateCcw, Check, X } from 'lucide-react';
+import { SUPPORTED_LANGUAGES } from '@/types';
 
 interface QuizQuestion {
   id: number;
@@ -23,24 +24,28 @@ export function Quiz({ onClose }: QuizProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [answers, setAnswers] = useState<(string | null)[]>([]);
   const [showResult, setShowResult] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [quizStarted, setQuizStarted] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('');
 
-  useEffect(() => {
-    loadQuestions();
-  }, []);
-
-  const loadQuestions = async () => {
+  const loadQuestions = async (language: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/quiz?languages=fr,de,es&count=10');
+      const response = await fetch(`/api/quiz?languages=${language}&count=10`);
       const data = await response.json();
       setQuestions(data.questions || []);
       setAnswers(new Array(data.questions?.length || 0).fill(null));
+      setQuizStarted(true);
     } catch (error) {
       console.error('Failed to load quiz:', error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleStartQuiz = () => {
+    if (selectedLanguage) {
+      loadQuestions(selectedLanguage);
     }
   };
 
@@ -96,10 +101,10 @@ export function Quiz({ onClose }: QuizProps) {
 
   const getGenderStyle = (gender: string) => {
     switch (gender) {
-      case 'm': return 'bg-gradient-to-r from-transparent to-blue-500 dark:to-blue-600';
-      case 'f': return 'bg-gradient-to-r from-transparent to-pink-500 dark:to-pink-600';
-      case 'n': return 'bg-gradient-to-r from-transparent to-gray-500 dark:to-gray-600';
-      default: return 'bg-gradient-to-r from-transparent to-gray-500 dark:to-gray-600';
+      case 'm': return 'bg-gradient-to-r from-solarized-base00 to-solarized-blue dark:from-solarized-base0 dark:to-solarized-blue';
+      case 'f': return 'bg-gradient-to-r from-solarized-base00 to-solarized-magenta dark:from-solarized-base0 dark:to-solarized-magenta';
+      case 'n': return 'bg-solarized-base00 dark:bg-solarized-base0';
+      default: return 'bg-solarized-base00 dark:bg-solarized-base0';
     }
   };
 
@@ -138,9 +143,9 @@ export function Quiz({ onClose }: QuizProps) {
           onClick={onClose}
         />
         <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-          <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl p-8 border border-stone-200 dark:border-stone-700 pointer-events-auto">
+          <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 border border-solarized-base1 dark:border-solarized-base01 pointer-events-auto">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="text-center mt-4 text-stone-600 dark:text-stone-400">Loading quiz...</p>
+            <p className="text-center mt-4 text-solarized-base00 dark:text-solarized-base0">Loading quiz...</p>
           </div>
         </div>
       </>
@@ -155,28 +160,62 @@ export function Quiz({ onClose }: QuizProps) {
           onClick={onClose}
         />
         <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-          <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl p-8 m-4 max-w-md w-full border border-stone-200 dark:border-stone-700 shadow-xl pointer-events-auto">
+          <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 m-4 max-w-md w-full border border-solarized-base1 dark:border-solarized-base01 shadow-xl pointer-events-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100">
+              <h2 className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1">
                 Gender Quiz
               </h2>
               <button
                 onClick={onClose}
-                className="text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 p-1 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
+                className="text-solarized-base00 hover:text-solarized-base01 dark:text-solarized-base0 dark:hover:text-solarized-base1 p-1 rounded-full hover:bg-solarized-base3 dark:hover:bg-solarized-base03 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-stone-600 dark:text-stone-400 text-center mb-6">
-              Test your knowledge of noun genders! You&apos;ll get 10 random words from French, German, and Spanish.
+            <p className="text-solarized-base00 dark:text-solarized-base0 mb-6">
+              Test your knowledge of noun genders!<br />
+              Choose a language and get 10 random words to identify their gender.
             </p>
+            
+            {/* Language Selection */}
+            <div className="mb-6">
+              <p className="text-sm font-medium text-solarized-base01 dark:text-solarized-base1 mb-3 text-center">
+                Select Language
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
+                  <button
+                    key={code}
+                    onClick={() => setSelectedLanguage(code)}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      selectedLanguage === code
+                        ? 'bg-solarized-blue text-white'
+                        : 'bg-solarized-base3 dark:bg-solarized-base03 text-solarized-base01 dark:text-solarized-base1 hover:bg-solarized-base1 dark:hover:bg-solarized-base01 hover:text-solarized-base3 dark:hover:text-solarized-base03'
+                    }`}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="flex justify-center">
               <button
-                onClick={() => setQuizStarted(true)}
-                className="bg-amber-800 text-white px-6 py-2 rounded-xl hover:bg-amber-900 transition-colors flex items-center justify-center font-bold"
+                onClick={handleStartQuiz}
+                disabled={!selectedLanguage || isLoading}
+                className="bg-solarized-orange text-white px-6 py-2 rounded-xl hover:bg-solarized-red transition-colors flex items-center justify-center font-bold disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Play className="w-4 h-4 mr-2" />
-              Start Quiz
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Loading...
+                </>
+              ) : (
+                <>
+                  <Play className="w-4 h-4 mr-2" />
+                  Start Quiz
+                </>
+              )}
             </button>
             </div>
           </div>
@@ -196,9 +235,9 @@ export function Quiz({ onClose }: QuizProps) {
           onClick={onClose}
         />
         <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-          <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl p-8 m-4 max-w-md w-full border border-stone-200 dark:border-stone-700 shadow-xl pointer-events-auto">
+          <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 m-4 max-w-md w-full border border-solarized-base1 dark:border-solarized-base01 shadow-xl pointer-events-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100">
+              <h2 className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1">
                 Quiz Complete!
               </h2>
               <button
@@ -209,7 +248,7 @@ export function Quiz({ onClose }: QuizProps) {
               </button>
             </div>
           <div className="text-center mb-6">
-            <div className="text-4xl font-bold text-amber-800 dark:text-amber-600 mb-2">
+            <div className="text-4xl font-bold text-solarized-orange mb-2">
               {score}/{questions.length}
             </div>
             <div className="text-lg text-stone-600 dark:text-stone-400">
@@ -237,7 +276,7 @@ export function Quiz({ onClose }: QuizProps) {
           <div className="flex space-x-3">
             <button
               onClick={restartQuiz}
-              className="flex-1 bg-amber-800 text-white px-4 py-2 rounded-xl hover:bg-amber-900 transition-colors flex items-center justify-center font-bold"
+              className="flex-1 bg-solarized-orange text-white px-4 py-2 rounded-xl hover:bg-solarized-red transition-colors flex items-center justify-center font-bold"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               Try Again
@@ -265,9 +304,9 @@ export function Quiz({ onClose }: QuizProps) {
         onClick={onClose}
       />
       <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-        <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl p-8 m-4 max-w-md w-full border border-stone-200 dark:border-stone-700 shadow-xl pointer-events-auto">
+        <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 m-4 max-w-md w-full border border-solarized-base1 dark:border-solarized-base01 shadow-xl pointer-events-auto">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100">
+            <h2 className="text-xl font-bold text-solarized-base01 dark:text-solarized-base1">
               Question {currentQuestion + 1}/{questions.length}
             </h2>
             <button
@@ -279,13 +318,13 @@ export function Quiz({ onClose }: QuizProps) {
           </div>
 
         <div className="text-center mb-6">
-          <div className="text-sm text-stone-500 dark:text-stone-400 mb-2">
+          <div className="text-sm text-solarized-base00 dark:text-solarized-base0 mb-2">
             {getLanguageFlag(question.language)}
           </div>
-          <div className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-2">
+          <div className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1 mb-2">
             {question.translation}
           </div>
-          <div className="text-lg text-stone-600 dark:text-stone-300">
+          <div className="text-lg text-solarized-base00 dark:text-solarized-base0">
             ({question.english})
           </div>
         </div>
@@ -297,7 +336,7 @@ export function Quiz({ onClose }: QuizProps) {
               onClick={() => handleAnswer(option)}
               className={`relative w-full p-3 rounded-xl text-left transition-colors font-medium overflow-hidden ${
                 selectedAnswer === option
-                  ? 'bg-amber-800 text-white'
+                  ? 'bg-solarized-orange text-white'
                   : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-600'
               }`}
             >

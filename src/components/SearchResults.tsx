@@ -48,10 +48,10 @@ export function SearchResults({
 
   const getGenderStyle = (gender: string) => {
     switch (gender) {
-      case 'm': return 'bg-gradient-to-r from-transparent to-blue-500 dark:to-blue-600';
-      case 'f': return 'bg-gradient-to-r from-transparent to-pink-500 dark:to-pink-600';
-      case 'n': return 'bg-gradient-to-r from-transparent to-gray-500 dark:to-gray-600';
-      default: return 'bg-gradient-to-r from-transparent to-gray-500 dark:to-gray-600';
+      case 'm': return 'bg-gradient-to-r from-solarized-base00 to-solarized-blue dark:from-solarized-base0 dark:to-solarized-blue';
+      case 'f': return 'bg-gradient-to-r from-solarized-base00 to-solarized-magenta dark:from-solarized-base0 dark:to-solarized-magenta';
+      case 'n': return 'bg-solarized-base00 dark:bg-solarized-base0';
+      default: return 'bg-solarized-base00 dark:bg-solarized-base0';
     }
   };
 
@@ -67,18 +67,18 @@ export function SearchResults({
   return (
     <div className="space-y-4">
       {mode === 'search' && (
-        <p className="text-sm text-gray-600 dark:text-gray-400">Found {results.length} results</p>
+        <p className="text-sm text-solarized-base00 dark:text-solarized-base0">Found {results.length} results</p>
       )}
       
       {results.map((result, index) => (
-        <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors">
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+        <div key={index} className="bg-solarized-base2 dark:bg-solarized-base02 rounded-lg shadow-lg border border-solarized-base1 dark:border-solarized-base01 p-6 transition-colors">
+          <h3 className="text-xl font-bold text-solarized-base01 dark:text-solarized-base1 mb-4">
             {result.english || result.word?.word_en}
           </h3>
           
           <div className="grid gap-3">
             {result.translations.map((translation, tIndex) => (
-              <div key={tIndex} className="relative bg-gray-50 dark:bg-gray-700 rounded-lg transition-colors overflow-hidden">
+              <div key={tIndex} className="relative bg-solarized-base3 dark:bg-solarized-base03 rounded-lg transition-colors overflow-hidden border border-solarized-base2 dark:border-solarized-base02">
                 {/* Gender background - spans full container */}
                 <div className={`absolute inset-0 ${getGenderStyle(translation.gender)} opacity-30`}></div>
                 
@@ -99,10 +99,10 @@ export function SearchResults({
                 {/* Main content */}
                 <div className="relative flex items-center justify-between p-3">
                   <div className="flex items-center space-x-6">
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400 w-20">
+                    <span className="text-sm font-medium text-solarized-base00 dark:text-solarized-base0 w-20">
                       {SUPPORTED_LANGUAGES[translation.language as keyof typeof SUPPORTED_LANGUAGES]}
                     </span>
-                    <span className="font-semibold text-lg text-gray-800 dark:text-gray-200">{translation.translation}</span>
+                    <span className="font-semibold text-lg text-solarized-base01 dark:text-solarized-base1">{translation.translation}</span>
                   </div>
                   
                   <div className="flex items-center mr-16">
@@ -132,7 +132,7 @@ export function SearchResults({
           <button
             onClick={onLoadMore}
             disabled={isLoading}
-            className="px-6 py-3 bg-amber-800 hover:bg-amber-900 text-white rounded-xl font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-solarized-orange hover:bg-solarized-red text-white rounded-xl font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Loading...' : 'もっと見る'}
           </button>
