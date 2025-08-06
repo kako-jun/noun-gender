@@ -50,7 +50,7 @@ export function CopyButton({ text, label, className = '' }: CopyButtonProps) {
         ${copied ? 'bg-green-500 hover:bg-green-600' : ''}
         ${className}
       `}
-      title={copied ? 'コピー完了!' : `コピー${label ? ': ' + label : ''}`}
+      title={copied ? 'コピー完了!' : 'コピー'}
       disabled={!text}
     >
       {copied ? (

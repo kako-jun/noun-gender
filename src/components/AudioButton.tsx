@@ -101,7 +101,7 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}
       `}
-      title={isPlaying ? `停止 (${text})` : `読み上げ (${text})`}
+      title={isPlaying ? '停止' : '読み上げ'}
       disabled={!text || text.trim() === ''}
     >
       {isPlaying ? (

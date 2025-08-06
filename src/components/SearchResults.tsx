@@ -46,12 +46,12 @@ export function SearchResults({
     );
   }
 
-  const getGenderColor = (gender: string) => {
+  const getGenderStyle = (gender: string) => {
     switch (gender) {
-      case 'm': return 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100';
-      case 'f': return 'bg-pink-100 text-pink-800 dark:bg-pink-800 dark:text-pink-100';
-      case 'n': return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+      case 'm': return 'bg-gradient-to-r from-transparent via-transparent to-blue-500 dark:to-blue-600';
+      case 'f': return 'bg-gradient-to-r from-transparent via-transparent to-pink-500 dark:to-pink-600';
+      case 'n': return 'bg-gradient-to-r from-transparent via-transparent to-gray-500 dark:to-gray-600';
+      default: return 'bg-gradient-to-r from-transparent via-transparent to-gray-500 dark:to-gray-600';
     }
   };
 
@@ -59,7 +59,7 @@ export function SearchResults({
     switch (gender) {
       case 'm': return '♂';
       case 'f': return '♀';
-      case 'n': return '○';
+      case 'n': return '⚲';
       default: return '?';
     }
   };
@@ -76,28 +76,47 @@ export function SearchResults({
           
           <div className="grid gap-3">
             {result.translations.map((translation, tIndex) => (
-              <div key={tIndex} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg transition-colors">
-                <div className="flex items-center space-x-3">
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400 w-16">
-                    {SUPPORTED_LANGUAGES[translation.language as keyof typeof SUPPORTED_LANGUAGES]}
+              <div key={tIndex} className="relative bg-gray-50 dark:bg-gray-700 rounded-lg transition-colors overflow-hidden">
+                {/* Gender background - spans full container */}
+                <div className={`absolute inset-0 ${getGenderStyle(translation.gender)} opacity-30`}></div>
+                
+                {/* Gender symbol - large background text */}
+                <div className={`absolute top-1/2 transform -translate-y-1/2 pointer-events-none select-none ${
+                  translation.gender === 'n' ? 'right-5 -translate-x-px' : 'right-2'
+                }`}>
+                  <span className="text-white text-6xl font-bold opacity-40" aria-hidden="true">
+                    {getGenderSymbol(translation.gender)}
                   </span>
-                  <span className="font-semibold text-lg text-gray-800 dark:text-gray-200">{translation.translation}</span>
                 </div>
                 
-                <div className="flex items-center space-x-2">
-                  <AudioButton 
-                    text={translation.translation} 
-                    language={translation.language}
-                    className="mr-1"
-                  />
-                  <CopyButton 
-                    text={translation.translation}
-                    label={translation.translation}
-                    className="mr-2"
-                  />
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getGenderColor(translation.gender)}`}>
-                    {getGenderSymbol(translation.gender)} {translation.gender.toUpperCase()}
-                  </span>
+                {/* Screen reader only gender info */}
+                <span className="sr-only">
+                  性別: {translation.gender === 'm' ? '男性' : translation.gender === 'f' ? '女性' : '中性'}
+                </span>
+                
+                {/* Main content */}
+                <div className="relative flex items-center justify-between p-3">
+                  <div className="flex items-center space-x-6">
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400 w-20">
+                      {SUPPORTED_LANGUAGES[translation.language as keyof typeof SUPPORTED_LANGUAGES]}
+                    </span>
+                    <span className="font-semibold text-lg text-gray-800 dark:text-gray-200">{translation.translation}</span>
+                  </div>
+                  
+                  <div className="flex items-center mr-16">
+                    <div className="w-8 flex justify-center">
+                      <AudioButton 
+                        text={translation.translation} 
+                        language={translation.language}
+                      />
+                    </div>
+                    <div className="w-8 flex justify-center ml-3">
+                      <CopyButton 
+                        text={translation.translation}
+                        label={translation.translation}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
