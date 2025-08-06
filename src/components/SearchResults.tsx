@@ -4,6 +4,7 @@ import type { SearchResult } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
 import { CopyButton } from './CopyButton';
+import { useTranslations } from '@/hooks/useTranslations';
 
 interface SearchResultsProps {
   results: SearchResult[];
@@ -11,6 +12,8 @@ interface SearchResultsProps {
 }
 
 export function SearchResults({ results, isLoading }: SearchResultsProps) {
+  const { t } = useTranslations();
+
   if (isLoading) {
     return (
       <div className="flex justify-center py-8">
@@ -21,8 +24,8 @@ export function SearchResults({ results, isLoading }: SearchResultsProps) {
 
   if (results.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-        <p>No results found. Try searching for a word like &quot;cat&quot;, &quot;house&quot;, or &quot;book&quot;.</p>
+      <div className="text-center py-8 text-stone-500 dark:text-stone-400">
+        <p className="whitespace-pre-line">{t('search.noResultsFound')}</p>
       </div>
     );
   }

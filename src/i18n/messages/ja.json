@@ -12,8 +12,8 @@
     "tryAgain": "もう一度"
   },
   "header": {
-    "title": "名詞の性",
-    "subtitle": "多言語の名詞の性をマスターしよう",
+    "title": "名詞ジェンダー辞典",
+    "subtitle": "世界の言語で名詞の性別を学ぼう",
     "words": "単語",
     "translations": "翻訳",
     "languages": "言語",
@@ -22,12 +22,13 @@
     "multilingualSearch": "多言語検索"
   },
   "search": {
-    "placeholder": "単語を検索... (「/」キーでフォーカス)",
+    "placeholder": "単語を検索してください... (/ キーで検索欄へ)",
     "searching": "検索中...",
-    "languagesOptional": "言語（任意）:",
-    "noLanguagesSelected": "言語未選択 = 全言語を検索",
-    "noResultsFound": "結果が見つかりません。「cat」「house」「book」などで検索してみてください。",
-    "resultsFound": "{count}件の結果が見つかりました"
+    "languagesOptional": "言語",
+    "searchButton": "検索",
+    "noLanguagesSelected": "すべての言語から検索",
+    "noResultsFound": "該当する単語が見つかりませんでした。\n「cat」「book」「house」などでお試しください。",
+    "resultsFound": "{count}件見つかりました"
   },
   "gender": {
     "masculine": "男性",
@@ -69,9 +70,9 @@
     "toggleTheme": "テーマ切り替え"
   },
   "quiz": {
-    "title": "性別クイズ",
-    "description": "名詞の性に関する知識をテストしてください！フランス語、ドイツ語、スペイン語からランダムに10単語出題されます。",
-    "startQuiz": "クイズ開始",
+    "title": "ジェンダークイズ",
+    "description": "名詞の性別に関する知識をテストしましょう！フランス語、ドイツ語、スペイン語から10問をランダムに出題します。",
+    "startQuiz": "クイズを始める",
     "question": "問題 {current}/{total}",
     "complete": "クイズ完了！",
     "correct": "正解",

@@ -24,9 +24,10 @@
   "search": {
     "placeholder": "Search for a word... (Press '/' to focus)",
     "searching": "Searching...",
-    "languagesOptional": "Languages (optional):",
+    "languagesOptional": "Languages",
+    "searchButton": "Search",
     "noLanguagesSelected": "No languages selected = search all languages",
-    "noResultsFound": "No results found. Try searching for a word like \"cat\", \"house\", or \"book\".",
+    "noResultsFound": "No results found.\nTry searching for a word like \"cat\", \"book\", or \"house\".",
     "resultsFound": "Found {count} results"
   },
   "gender": {

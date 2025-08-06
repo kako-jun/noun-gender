@@ -1,25 +1,17 @@
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
 
 > noun-gender@0.1.0 dev
-> next dev --turbopack
+> next dev
 
-   ▲ Next.js 15.3.4 (Turbopack)
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
+   ▲ Next.js 15.3.4
    - Local:        http://localhost:3000
-   - Network:      http://192.168.0.49:3000
+   - Network:      http://10.10.252.12:3000
 
  ✓ Starting...
- ✓ Ready in 1119ms
- ⚠ Webpack is configured while Turbopack is not, which may cause problems.
- ⚠ See instructions if you need to configure Turbopack:
-  https://nextjs.org/docs/app/api-reference/next-config-js/turbo
-
- ○ Compiling / ...
- ✓ Compiled / in 2.6s
- GET / 200 in 2912ms
- GET / 200 in 102ms
- ⚠ Cross origin request detected from 192.168.0.49 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
-Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
- ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 555ms
- GET /favicon.ico?favicon.45db1c09.ico 200 in 835ms
- ✓ Compiled in 105ms
+ ✓ Ready in 2.8s
 [?25h

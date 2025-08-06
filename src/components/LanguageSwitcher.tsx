@@ -19,16 +19,15 @@ export function LanguageSwitcher() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="
-          p-2 rounded-lg transition-colors
-          bg-gray-200 hover:bg-gray-300
-          dark:bg-gray-700 dark:hover:bg-gray-600
-          text-gray-800 dark:text-gray-200
+          p-2 rounded-full transition-all duration-300 transform hover:scale-110
+          bg-stone-200 hover:bg-stone-300 shadow-md hover:shadow-lg
+          dark:bg-stone-700 dark:hover:bg-stone-600
+          text-stone-700 dark:text-stone-200
           flex items-center space-x-1
         "
         title="Change language"
       >
         <Globe className="w-4 h-4" />
-        <span className="text-sm">{localeFlags[currentLocale]}</span>
       </button>
 
       {isOpen && (

@@ -14,7 +14,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-9 h-9 rounded-lg bg-gray-200 dark:bg-gray-700 animate-pulse" />
+      <div className="w-9 h-9 rounded-full bg-stone-200 dark:bg-stone-700 animate-pulse" />
     );
   }
 
@@ -31,13 +31,13 @@ export function ThemeToggle() {
   const getIcon = () => {
     switch (theme) {
       case 'light':
-        return <Sun className="w-5 h-5" />;
+        return <Sun className="w-4 h-4" />;
       case 'dark':
-        return <Moon className="w-5 h-5" />;
+        return <Moon className="w-4 h-4" />;
       case 'system':
-        return <Monitor className="w-5 h-5" />;
+        return <Monitor className="w-4 h-4" />;
       default:
-        return <Sun className="w-5 h-5" />;
+        return <Sun className="w-4 h-4" />;
     }
   };
 
@@ -58,10 +58,10 @@ export function ThemeToggle() {
     <button
       onClick={cycleTheme}
       className="
-        p-2 rounded-lg transition-colors
-        bg-gray-200 hover:bg-gray-300
-        dark:bg-gray-700 dark:hover:bg-gray-600
-        text-gray-800 dark:text-gray-200
+        p-2 rounded-full transition-all duration-300 transform hover:scale-110
+        bg-stone-200 hover:bg-stone-300 shadow-md hover:shadow-lg
+        dark:bg-stone-700 dark:hover:bg-stone-600
+        text-stone-700 dark:text-stone-200
       "
       title={getTooltip()}
     >

@@ -50,15 +50,24 @@ export function useTranslations() {
   const changeLanguage = async (newLocale: Locale) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/messages/${newLocale}`);
+      const response = await fetch(`/api/messages/${newLocale}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
       if (response.ok) {
         const newMessages = await response.json();
         setMessages(newMessages);
         setLocale(newLocale);
         localStorage.setItem('preferred-locale', newLocale);
+        console.log('Language changed to:', newLocale);
+      } else {
+        console.error('Failed to load language:', response.status, response.statusText);
       }
     } catch (error) {
-      console.error('Failed to change language:', error);
+      console.error('Network error changing language:', error);
     } finally {
       setIsLoading(false);
     }

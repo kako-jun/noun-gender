@@ -5,13 +5,11 @@ import { useEffect } from 'react';
 interface UseKeyboardShortcutsProps {
   onFocusSearch: () => void;
   onClearSearch: () => void;
-  onToggleTheme?: () => void;
 }
 
 export function useKeyboardShortcuts({
   onFocusSearch,
-  onClearSearch,
-  onToggleTheme
+  onClearSearch
 }: UseKeyboardShortcutsProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -37,12 +35,6 @@ export function useKeyboardShortcuts({
         return;
       }
 
-      // Ctrl+Shift+T: テーマ切り替え
-      if (event.ctrlKey && event.shiftKey && event.key === 'T' && onToggleTheme) {
-        event.preventDefault();
-        onToggleTheme();
-        return;
-      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -50,5 +42,5 @@ export function useKeyboardShortcuts({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [onFocusSearch, onClearSearch, onToggleTheme]);
+  }, [onFocusSearch, onClearSearch]);
 }
