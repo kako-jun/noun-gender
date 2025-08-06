@@ -4,7 +4,7 @@ import { Home } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-stone-100 dark:bg-stone-800 border-t border-stone-200 dark:border-stone-700">
+    <footer className="bg-solarized-base2 dark:bg-solarized-base02 border-t border-solarized-base1 dark:border-solarized-base01">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-center space-x-2">
           <a 

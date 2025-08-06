@@ -7,17 +7,20 @@ import { CopyButton } from './CopyButton';
 import { useTranslations } from '@/hooks/useTranslations';
 import { Button } from './ui/Button';
 import { getGenderStyle, getGenderSymbol } from '@/utils/genderStyles';
+import { HighlightedText } from '@/utils/textHighlight';
 
 interface SearchResultsProps {
   results: SearchResult[];
   isLoading: boolean;
   mode?: 'browse' | 'search';
+  searchQuery?: string;
 }
 
 export function SearchResults({ 
   results, 
   isLoading, 
-  mode = 'search' 
+  mode = 'search',
+  searchQuery = ''
 }: SearchResultsProps) {
   const { t } = useTranslations();
 
@@ -56,7 +59,14 @@ export function SearchResults({
       {results.map((result, index) => (
         <div key={index} className="bg-solarized-base2 dark:bg-solarized-base02 rounded-lg shadow-lg border border-solarized-base1 dark:border-solarized-base01 p-6 transition-colors">
           <h3 className="text-xl font-bold text-solarized-base01 dark:text-solarized-base1 mb-4">
-            {result.english || result.word?.word_en}
+            {mode === 'search' && searchQuery ? (
+              <HighlightedText 
+                text={result.english || result.word?.word_en || ''} 
+                query={searchQuery}
+              />
+            ) : (
+              result.english || result.word?.word_en
+            )}
           </h3>
           
           <div className="grid gap-3">
@@ -87,7 +97,16 @@ export function SearchResults({
                     <span className="text-sm font-medium text-solarized-base00 dark:text-solarized-base0 w-20">
                       {SUPPORTED_LANGUAGES[translation.language as keyof typeof SUPPORTED_LANGUAGES]}
                     </span>
-                    <span className="font-semibold text-lg text-solarized-base01 dark:text-solarized-base1">{translation.translation}</span>
+                    <span className="font-semibold text-lg text-solarized-base01 dark:text-solarized-base1">
+                      {mode === 'search' && searchQuery ? (
+                        <HighlightedText 
+                          text={translation.translation} 
+                          query={searchQuery}
+                        />
+                      ) : (
+                        translation.translation
+                      )}
+                    </span>
                   </div>
                   
                   <div className="flex items-center mr-16">
