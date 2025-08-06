@@ -33,7 +33,6 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
     // Web Speech API サポートチェック
     if (!('speechSynthesis' in window)) {
       setIsSupported(false);
-      console.warn('Web Speech API is not supported');
       return;
     }
 
@@ -48,42 +47,61 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
       return;
     }
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voiceLang = getVoiceLang(language);
-    
-    // 音声設定
-    utterance.lang = voiceLang;
-    utterance.rate = 0.9; // 少しゆっくり
-    utterance.pitch = 1.0;
-    utterance.volume = 0.8;
+    try {
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voiceLang = getVoiceLang(language);
+      
+      // 音声設定
+      utterance.lang = voiceLang;
+      utterance.rate = 0.9;
+      utterance.pitch = 1.0;
+      utterance.volume = 0.8;
 
-    // 利用可能な音声から最適なものを選択
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(voice => 
-      voice.lang.startsWith(voiceLang.split('-')[0])
-    );
-    
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
+      // 音声リストの取得（非同期の場合があるため待機）
+      const loadVoices = () => {
+        const voices = window.speechSynthesis.getVoices();
+        
+        // 言語に合致する音声を探す
+        const preferredVoice = voices.find(voice => 
+          voice.lang.toLowerCase().startsWith(voiceLang.split('-')[0].toLowerCase())
+        );
+        
+        if (preferredVoice) {
+          utterance.voice = preferredVoice;
+        }
+
+        // イベントハンドラ
+        utterance.onstart = () => {
+          setIsPlaying(true);
+        };
+
+        utterance.onend = () => {
+          setIsPlaying(false);
+        };
+
+        utterance.onerror = (event) => {
+          console.warn('Speech synthesis failed for:', text, 'in language:', voiceLang);
+          setIsPlaying(false);
+          // エラーが発生してもボタンは表示したまま
+        };
+
+        // 読み上げ開始
+        window.speechSynthesis.speak(utterance);
+      };
+
+      // 音声リストが既に読み込まれている場合
+      if (window.speechSynthesis.getVoices().length > 0) {
+        loadVoices();
+      } else {
+        // 音声リストの読み込み待機
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+        // フォールバック: 500ms後に実行
+        setTimeout(loadVoices, 500);
+      }
+    } catch (error) {
+      console.warn('Speech synthesis initialization failed:', error);
+      setIsPlaying(false);
     }
-
-    // イベントハンドラ
-    utterance.onstart = () => {
-      setIsPlaying(true);
-    };
-
-    utterance.onend = () => {
-      setIsPlaying(false);
-    };
-
-    utterance.onerror = (event) => {
-      console.error('Speech synthesis error:', event);
-      setIsPlaying(false);
-      setIsSupported(false);
-    };
-
-    // 読み上げ開始
-    window.speechSynthesis.speak(utterance);
   };
 
   if (!isSupported) {

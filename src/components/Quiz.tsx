@@ -330,13 +330,15 @@ export function Quiz({ onClose }: QuizProps) {
               }`}
             >
               {/* Gender gradient background */}
-              <div className={`absolute inset-0 ${getGenderStyle(option)} opacity-30`}></div>
+              <div className="absolute inset-0 opacity-40" style={getGenderStyle(option)}></div>
               
               {/* Gender symbol background */}
               <div className={`absolute top-1/2 transform -translate-y-1/2 pointer-events-none select-none ${
-                option === 'n' ? 'right-3' : 'right-2'
-              }`} style={{ transform: option === 'n' ? 'translateY(-50%) translateX(-2px)' : 'translateY(-50%)' }}>
-                <span className="text-white text-3xl font-bold opacity-40" aria-hidden="true">
+                option === 'n' ? 'right-4' : 'right-2'
+              }`} style={option === 'n' ? { marginLeft: '-4px' } : {}}>
+                <span className={`text-white font-bold opacity-40 ${
+                  option === 'n' ? 'text-2xl' : 'text-5xl'
+                }`} aria-hidden="true">
                   {getGenderSymbol(option)}
                 </span>
               </div>

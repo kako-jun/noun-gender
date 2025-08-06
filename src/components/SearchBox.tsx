@@ -97,32 +97,32 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   return (
     <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl shadow-lg p-6 mb-8 transition-all duration-300 border border-stone-200 dark:border-stone-700 relative">
       <div className="space-y-4">
-        {/* Search Input */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-500 dark:text-stone-400 w-5 h-5" />
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={translations?.placeholder || "Search words..."}
-            className="w-full pl-10 pr-10 py-3 border border-stone-300 dark:border-stone-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-400 bg-white dark:bg-stone-900 transition-all duration-200"
-            disabled={false}
-          />
-          {/* クリアボタン */}
-          {query && (
-            <button
-              type="button"
-              onClick={handleClear}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 p-1 rounded-full hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-          {/* キーボードショートカットボタンを入力欄の右下に配置 */}
-          <div className="absolute top-full right-0 mt-2">
-            <KeyboardShortcuts />
+        {/* Search Input with Keyboard Shortcuts */}
+        <div className="flex gap-2 items-center">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-500 dark:text-stone-400 w-5 h-5" />
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={translations?.placeholder || "Search words..."}
+              className="w-full pl-10 pr-10 py-3 border border-stone-300 dark:border-stone-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-400 bg-white dark:bg-stone-900 transition-all duration-200"
+              disabled={false}
+            />
+            {/* クリアボタン */}
+            {query && (
+              <button
+                type="button"
+                onClick={handleClear}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 p-1 rounded-full hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
+          {/* キーボードショートカットボタンを検索ボックスの右に配置 */}
+          <KeyboardShortcuts />
         </div>
 
         {/* Language Selection */}

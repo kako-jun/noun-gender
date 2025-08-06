@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Source_Serif_4, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { TranslationsProvider } from '@/contexts/TranslationsContext';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// モダンで技術的なセリフフォント（メイン）
+const sourceSerif = Source_Serif_4({
+  weight: ['400', '600', '700', '900'],
+  variable: "--font-source-serif",
   subsets: ["latin"],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// IBM的なコンソール風セリフフォント
+const ibmPlexSerif = IBM_Plex_Serif({
+  weight: ['400', '500', '600', '700'],
+  variable: "--font-ibm-plex",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -27,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${sourceSerif.variable} ${ibmPlexSerif.variable} font-serif antialiased`}
       >
         <ThemeProvider
           attribute="class"

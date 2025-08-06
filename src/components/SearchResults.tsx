@@ -63,13 +63,15 @@ export function SearchResults({
             {result.translations.map((translation, tIndex) => (
               <div key={tIndex} className="relative bg-solarized-base3 dark:bg-solarized-base03 rounded-lg transition-colors overflow-hidden border border-solarized-base2 dark:border-solarized-base02">
                 {/* Gender background - spans full container */}
-                <div className={`absolute inset-0 ${getGenderStyle(translation.gender)} opacity-30`}></div>
+                <div className="absolute inset-0 opacity-40" style={getGenderStyle(translation.gender)}></div>
                 
                 {/* Gender symbol - large background text */}
                 <div className={`absolute top-1/2 transform -translate-y-1/2 pointer-events-none select-none ${
-                  translation.gender === 'n' ? 'right-5 -translate-x-px' : 'right-2'
-                }`}>
-                  <span className="text-white text-6xl font-bold opacity-40" aria-hidden="true">
+                  translation.gender === 'n' ? 'right-3' : 'right-2'
+                }`} style={translation.gender === 'n' ? { marginLeft: '-6px' } : {}}>
+                  <span className={`text-white font-bold opacity-40 ${
+                    translation.gender === 'n' ? 'text-4xl' : 'text-6xl'
+                  }`} aria-hidden="true">
                     {getGenderSymbol(translation.gender)}
                   </span>
                 </div>
