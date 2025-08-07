@@ -11,6 +11,7 @@ interface SearchBoxProps {
   onBrowse: (letter?: string, languages?: string[], offset?: number) => void;
   onQuiz: () => void;
   onTabChange?: (tab: 'search' | 'browse' | 'quiz') => void;
+  onSearchResultsClear?: () => void; // 検索結果のクリア専用
   isLoading: boolean;
   initialQuery?: string;
   initialLanguages?: string[];
@@ -52,6 +53,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   onBrowse,
   onQuiz,
   onTabChange,
+  onSearchResultsClear,
   isLoading, 
   initialQuery = '', 
   initialLanguages = Object.keys(SUPPORTED_LANGUAGES), 
@@ -64,7 +66,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(initialLanguages);
   const [selectedLetter, setSelectedLetter] = useState<string>(initialLetter);
   const [letterStats, setLetterStats] = useState<{letter: string, count: number}[]>([]);
-  const [letterHierarchy, setLetterHierarchy] = useState<string[]>([]); // 階層管理 ["S", "C"] = SC
+  const [letterHierarchy, setLetterHierarchy] = useState<string[]>([]);
   const [sliderValue, setSliderValue] = useState(0);
   const [wordRange, setWordRange] = useState<{firstWord: string, lastWord: string, totalCount: number}>({
     firstWord: '',
@@ -109,9 +111,26 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
       if (JSON.stringify(initialLanguages) !== JSON.stringify(selectedLanguages)) {
         setSelectedLanguages(initialLanguages);
       }
+      // initialLetterから階層を復元
+      if (initialLetter && initialLetter !== selectedLetter) {
+        const lowerLetter = initialLetter.toLowerCase();
+        setSelectedLetter(lowerLetter);
+        // 単一文字の場合はトップレベル（階層なし）、複数文字の場合は階層あり
+        if (lowerLetter.length === 1) {
+          setLetterHierarchy([]); // トップレベル
+        } else {
+          // 複数文字の場合は、最後の文字以外を階層とする
+          setLetterHierarchy(lowerLetter.slice(0, -1).split(''));
+        }
+      }
       setInitialized(true);
     }
-  }, [initialQuery, initialLanguages, initialized]);
+  }, [initialQuery, initialLanguages, initialLetter, initialized]);
+
+  // currentModeが変わった時にactiveTabを同期
+  useEffect(() => {
+    setActiveTab(currentMode);
+  }, [currentMode]);
 
   // デバウンス用のインクリメンタルサーチ
   const debouncedSearch = useCallback(
@@ -122,14 +141,16 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   );
 
   useEffect(() => {
-    // 空クエリの場合は検索を実行しない（初期化時やクリア時の不要な検索を防ぐ）
-    if (query.trim()) {
-      debouncedSearch(query, selectedLanguages);
-    } else {
-      // 空クエリの場合は明示的に空文字列で検索を呼び出してブラウズモードに戻す
-      onSearch('', selectedLanguages);
+    // 検索タブの時のみ検索を実行
+    if (activeTab === 'search') {
+      if (query.trim()) {
+        debouncedSearch(query, selectedLanguages);
+      } else if (onSearchResultsClear) {
+        // 検索タブで空クエリの場合は検索結果をクリアするだけ（ブラウズモードには切り替えない）
+        onSearchResultsClear();
+      }
     }
-  }, [query, selectedLanguages]);
+  }, [query, selectedLanguages, activeTab]);
 
   const handleClear = () => {
     setQuery('');
@@ -149,24 +170,27 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   const handleTabChange = (tab: 'search' | 'browse' | 'quiz') => {
     setActiveTab(tab);
     
-    // 親コンポーネントにタブ変更を通知
+    // 親コンポーネントにタブ変更を通知（URL復元を先に実行）
     if (onTabChange) {
       onTabChange(tab);
     }
     
-    switch (tab) {
-      case 'search':
-        if (query.trim()) {
-          onSearch(query, selectedLanguages);
-        }
-        break;
-      case 'browse':
-        onBrowse(selectedLetter || undefined, selectedLanguages);
-        break;
-      case 'quiz':
-        // クイズタブ選択時は何もしない（開始ボタンを押したときのみ実行）
-        break;
-    }
+    // URL復元後に必要な処理を実行（少し遅延させる）
+    setTimeout(() => {
+      switch (tab) {
+        case 'search':
+          // 検索タブではURLからqueryを読み取り、必要に応じて検索実行
+          // （親コンポーネントのuseEffectで自動実行されるため、ここでは何もしない）
+          break;
+        case 'browse':
+          // ブラウズタブでもURLからletterを読み取り、必要に応じてブラウズ実行
+          // （親コンポーネントのuseEffectで自動実行されるため、ここでは何もしない）
+          break;
+        case 'quiz':
+          // クイズタブ選択時は何もしない（開始ボタンを押したときのみ実行）
+          break;
+      }
+    }, 10);
   };
 
   const handleLetterSelect = (letter: string) => {
@@ -192,16 +216,16 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     }
   };
 
-  // アルファベット配列
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  // アルファベット配列（内部は小文字）
+  const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
   // 現在の階層に応じた文字リストを取得
   const getCurrentLetters = () => {
     if (letterHierarchy.length === 0) {
-      // 最上位: A-Z
+      // 最上位: a-z
       return letters;
     } else {
-      // 下位階層: 現在の文字 + A-Z（例: SA, SB, SC...）
+      // 下位階層: 現在の文字 + a-z（例: sa, sb, sc...）
       return letters.map(l => letterHierarchy.join('') + l);
     }
   };
@@ -340,7 +364,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                 {translations?.browse?.index || 'Index'}
                 {letterHierarchy.length > 0 && (
                   <span className="ml-2 text-solarized-blue">
-                    ({letterHierarchy.join('')})
+                    ({letterHierarchy.join('').toUpperCase()})
                   </span>
                 )}
               </p>
@@ -390,7 +414,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                                 index === 0 ? '' : '-ml-px'
                               } ${count === 0 ? 'opacity-30' : 'cursor-pointer'}`}
                             >
-                              <div className="font-bold text-sm">{displayLetter}</div>
+                              <div className="font-bold text-sm">{displayLetter.toUpperCase()}</div>
                               <div className="text-[9px] opacity-60 leading-none">{count}</div>
                             </Button>
                           );

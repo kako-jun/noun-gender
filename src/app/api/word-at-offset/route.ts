@@ -18,11 +18,11 @@ export async function GET(request: NextRequest) {
         SELECT DISTINCT english 
         FROM all_words 
         WHERE english IS NOT NULL 
-          AND UPPER(english) LIKE ? || '%'
+          AND english LIKE ? || '%'
         ORDER BY english ASC
       )
       LIMIT 1 OFFSET ?
-    `).get(prefix.toUpperCase(), offset);
+    `).get(prefix, offset);
 
     return NextResponse.json({
       success: true,

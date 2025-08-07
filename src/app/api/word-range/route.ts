@@ -17,11 +17,11 @@ export async function GET(request: NextRequest) {
         SELECT DISTINCT english 
         FROM all_words 
         WHERE english IS NOT NULL 
-          AND UPPER(english) LIKE ? || '%'
+          AND english LIKE ? || '%'
         ORDER BY english ASC
       )
       LIMIT 1
-    `).get(prefix.toUpperCase());
+    `).get(prefix);
     
     const lastWord = await db.prepare(`
       SELECT english 
@@ -29,19 +29,19 @@ export async function GET(request: NextRequest) {
         SELECT DISTINCT english 
         FROM all_words 
         WHERE english IS NOT NULL 
-          AND UPPER(english) LIKE ? || '%'
+          AND english LIKE ? || '%'
         ORDER BY english DESC
       )
       LIMIT 1
-    `).get(prefix.toUpperCase());
+    `).get(prefix);
     
     // 総数を取得
     const countResult = await db.prepare(`
       SELECT COUNT(DISTINCT english) as total
       FROM all_words 
       WHERE english IS NOT NULL 
-        AND UPPER(english) LIKE ? || '%'
-    `).get(prefix.toUpperCase());
+        AND english LIKE ? || '%'
+    `).get(prefix);
 
     return NextResponse.json({
       success: true,
