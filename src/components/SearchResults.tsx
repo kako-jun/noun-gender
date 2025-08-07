@@ -24,7 +24,7 @@ export function SearchResults({
   searchQuery = '',
   searchError = null
 }: SearchResultsProps) {
-  const { t } = useTranslations();
+  const { t, locale } = useTranslations();
 
   if (isLoading) {
     return (
@@ -107,17 +107,32 @@ export function SearchResults({
               </div>
             </div>
             
-            {/* サンプル: catの意味説明 */}
-            {(result.english || result.word?.word_en) === 'cat' && (
-              <div className="text-sm text-solarized-base00 dark:text-solarized-base0 mb-3">
-                <span className="inline-block mr-4">
-                  <span className="inline-flex items-center justify-center w-5 h-5 bg-solarized-base2 dark:bg-solarized-base02 text-solarized-base01 dark:text-solarized-base1 text-xs font-bold rounded-full mr-1 border border-solarized-base01 dark:border-solarized-base1">1</span> 動物・猫
-                </span>
-                <span className="inline-block">
-                  <span className="inline-flex items-center justify-center w-5 h-5 bg-solarized-base2 dark:bg-solarized-base02 text-solarized-base01 dark:text-solarized-base1 text-xs font-bold rounded-full mr-1 border border-solarized-base01 dark:border-solarized-base1">2</span> 意地悪な人
-                </span>
-              </div>
-            )}
+            {/* 意味の表示 */}
+            {(() => {
+              // Check for meanings in both word object and result object (for browse mode)
+              const meaning = locale === 'ja' ? (result.word?.meaning_ja || result.meaning_ja) : 
+                             locale === 'zh' ? (result.word?.meaning_zh || result.meaning_zh) : 
+                             (result.word?.meaning_en || result.meaning_en);
+              
+              if (meaning) {
+                // セミコロンで意味を分割（複数意味対応）- 半角・全角両対応
+                const meanings = meaning.split(/[;；]/).map(m => m.trim()).filter(m => m.length > 0);
+                
+                return (
+                  <div className="text-sm text-solarized-base00 dark:text-solarized-base0 mb-3">
+                    {meanings.map((meaningText, index) => (
+                      <span key={index} className="inline-block mr-4 mb-1">
+                        <span className="inline-flex items-center justify-center w-5 h-5 text-solarized-base01 dark:text-solarized-base1 text-xs font-bold rounded-full mr-1 border border-solarized-base01 dark:border-solarized-base1">
+                          {index + 1}
+                        </span>
+                        {meaningText}
+                      </span>
+                    ))}
+                  </div>
+                );
+              }
+              return null;
+            })()}
           </div>
           
           <div className="grid gap-3">
@@ -164,24 +179,6 @@ export function SearchResults({
                       </span>
                     </div>
                     
-                    {/* サンプル: catの翻訳の番号表示 - 右端に配置 */}
-                    {(result.english || result.word?.word_en) === 'cat' && (
-                      <span className="mr-20">
-                        {(() => {
-                          // サンプル: 翻訳ごとの番号マッピング
-                          const catMeanings: { [key: string]: string } = {
-                            'chat': '1', 'Katze': '1', 'gato': '1', 'gatto': '1',
-                            'chameau': '2', 'Typ': '2', 'tío': '2', 'tipo': '2'
-                          };
-                          const number = catMeanings[translation.translation] || '1';
-                          return (
-                            <span className="inline-flex items-center justify-center w-5 h-5 bg-solarized-base3 dark:bg-solarized-base03 text-solarized-base01 dark:text-solarized-base1 text-xs font-bold rounded-full border border-solarized-base01 dark:border-solarized-base1">
-                              {number}
-                            </span>
-                          );
-                        })()}
-                      </span>
-                    )}
                   </div>
                   
                   <div className="flex items-center mr-16">

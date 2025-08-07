@@ -19,11 +19,17 @@ export interface Word {
   frequency_score?: number;
   category?: string;
   example_en?: string;
+  meaning_en?: string;
+  meaning_ja?: string;
+  meaning_zh?: string;
 }
 
 export interface SearchResult {
   word?: Word;  // 既存の検索結果用
   english?: string;  // 新しいブラウズ結果用
+  meaning_en?: string;  // Browse result meanings
+  meaning_ja?: string;
+  meaning_zh?: string;
   translations: Translation[];
 }
 

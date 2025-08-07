@@ -27,7 +27,8 @@ class DatabaseManager {
     // Enhanced search with multilingual support
     const sql = `
       SELECT DISTINCT aw.english, aw.translation, aw.language, aw.gender,
-             aw.frequency, aw.example, aw.pronunciation, aw.usage_notes, aw.gender_explanation
+             aw.frequency, aw.example, aw.pronunciation, aw.usage_notes, aw.gender_explanation,
+             aw.meaning_en, aw.meaning_ja, aw.meaning_zh
       FROM all_words aw
       WHERE (aw.language IN (${langPlaceholders})) AND (
         aw.english LIKE ? 
@@ -81,6 +82,9 @@ class DatabaseManager {
           word: {
             id: 0,
             word_en: englishWord,
+            meaning_en: row.meaning_en,
+            meaning_ja: row.meaning_ja,
+            meaning_zh: row.meaning_zh
           },
           translations: []
         });
@@ -171,7 +175,8 @@ class DatabaseManager {
     const placeholders = englishList.map(() => '?').join(',');
     
     let translationsQuery = `
-      SELECT english, language, translation, gender, frequency, example, pronunciation, usage_notes, gender_explanation
+      SELECT english, language, translation, gender, frequency, example, pronunciation, usage_notes, gender_explanation,
+             meaning_en, meaning_ja, meaning_zh
       FROM all_words 
       WHERE english IN (${placeholders}) AND translation IS NOT NULL AND translation != ''
     `;
@@ -194,6 +199,9 @@ class DatabaseManager {
       if (!grouped.has(row.english)) {
         grouped.set(row.english, {
           english: row.english,
+          meaning_en: row.meaning_en,
+          meaning_ja: row.meaning_ja,
+          meaning_zh: row.meaning_zh,
           translations: []
         });
       }
@@ -201,6 +209,8 @@ class DatabaseManager {
       // 有効な翻訳データのみ追加
       if (row.translation && row.translation.trim() !== '' && ['m', 'f', 'n'].includes(row.gender)) {
         grouped.get(row.english).translations.push({
+          id: 0,
+          word_id: 0,
           language: row.language,
           translation: row.translation,
           gender: row.gender as 'm' | 'f' | 'n',
