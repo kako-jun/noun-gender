@@ -63,7 +63,7 @@
     "title": "ジェンダークイズ",
     "description": "名詞の性別に関する知識をテストしましょう！\n言語を選んで、10個のランダムな単語の性別を当ててください。",
     "startQuiz": "クイズを始める",
-    "question": "問題 {current}/{total}",
+    "question": "問題 {current} / {total}",
     "complete": "クイズ完了！",
     "loadingQuiz": "クイズを読み込み中..."
   }

@@ -63,7 +63,7 @@
     "title": "Quiz di Genere",
     "description": "Testa la tua conoscenza dei generi dei sostantivi!\nScegli una lingua e ottieni 10 parole casuali per identificarne il genere.",
     "startQuiz": "Inizia Quiz",
-    "question": "Domanda {current}/{total}",
+    "question": "Domanda {current} / {total}",
     "complete": "Quiz Completato!",
     "loadingQuiz": "Caricamento quiz..."
   }

@@ -363,7 +363,7 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
         ${sizeClasses} rounded-full
         bg-solarized-orange hover:bg-solarized-yellow 
         text-white transition-colors
-        disabled:opacity-50 disabled:cursor-not-allowed
+        disabled:opacity-50
         ${className}
       `}
       title={isPlaying ? t('audio.stop') : t('audio.play')}

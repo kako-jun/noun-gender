@@ -63,7 +63,7 @@
     "title": "Quiz de Género",
     "description": "¡Pon a prueba tu conocimiento sobre géneros de sustantivos!\nElige un idioma y obtén 10 palabras aleatorias para identificar su género.",
     "startQuiz": "Comenzar Quiz",
-    "question": "Pregunta {current}/{total}",
+    "question": "Pregunta {current} / {total}",
     "complete": "¡Quiz Completo!",
     "loadingQuiz": "Cargando quiz..."
   }

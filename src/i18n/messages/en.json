@@ -63,7 +63,7 @@
     "title": "Gender Quiz",
     "description": "Test your knowledge of noun genders!\nChoose a language and get 10 random words to identify their gender.",
     "startQuiz": "Start Quiz",
-    "question": "Question {current}/{total}",
+    "question": "Question {current} / {total}",
     "complete": "Quiz Complete!",
     "loadingQuiz": "Loading quiz..."
   }

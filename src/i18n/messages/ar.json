@@ -63,7 +63,7 @@
     "title": "اختبار الجنس",
     "description": "اختبر معرفتك بأجناس الأسماء!\nاختر لغة واحصل على 10 كلمات عشوائية لتحديد جنسها.",
     "startQuiz": "بدء الاختبار",
-    "question": "سؤال {current}/{total}",
+    "question": "سؤال {current} / {total}",
     "complete": "اكتمل الاختبار!",
     "loadingQuiz": "تحميل الاختبار..."
   }
