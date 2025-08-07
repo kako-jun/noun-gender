@@ -30,6 +30,8 @@ export function Quiz({ onClose }: QuizProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [quizStarted, setQuizStarted] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string>('');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | 'center'>('center');
 
   const loadQuestions = async (language: string) => {
     setIsLoading(true);
@@ -58,15 +60,28 @@ export function Quiz({ onClose }: QuizProps) {
     newAnswers[currentQuestion] = gender;
     setAnswers(newAnswers);
     
-    // 自動的に次の問題へ進む
-    setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < questions.length - 1) {
+      // 現在の問題を左にスライドアウト
+      setSlideDirection('left');
+      setIsTransitioning(true);
+      
+      setTimeout(() => {
+        // 問題を切り替えて右から開始
         setCurrentQuestion(currentQuestion + 1);
         setSelectedAnswer(newAnswers[currentQuestion + 1]);
-      } else {
+        setSlideDirection('right');
+        
+        // すぐに中央にスライドイン
+        setTimeout(() => {
+          setSlideDirection('center');
+          setIsTransitioning(false);
+        }, 50);
+      }, 400);
+    } else {
+      setTimeout(() => {
         setShowResult(true);
-      }
-    }, 500);
+      }, 500);
+    }
   };
 
   const nextQuestion = () => {
@@ -91,6 +106,8 @@ export function Quiz({ onClose }: QuizProps) {
     setAnswers(new Array(questions.length).fill(null));
     setShowResult(false);
     setQuizStarted(true);
+    setIsTransitioning(false);
+    setSlideDirection('center');
   };
 
 
@@ -163,7 +180,7 @@ export function Quiz({ onClose }: QuizProps) {
               <p className="text-sm font-medium text-solarized-base01 dark:text-solarized-base1 mb-3 text-center">
                 Select Language
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
                   <Button
                     key={code}
@@ -288,7 +305,7 @@ export function Quiz({ onClose }: QuizProps) {
         onClick={onClose}
       />
       <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-        <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 m-4 max-w-md w-full border border-solarized-base1 dark:border-solarized-base01 shadow-xl pointer-events-auto">
+        <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 m-4 max-w-md w-full min-h-[500px] border border-solarized-base1 dark:border-solarized-base01 shadow-xl pointer-events-auto animate-in slide-in-from-bottom-4 fade-in duration-300">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-solarized-base01 dark:text-solarized-base1">
               Question {currentQuestion + 1}/{questions.length}
@@ -301,57 +318,67 @@ export function Quiz({ onClose }: QuizProps) {
             </button>
           </div>
 
-        <div className="text-center mb-6">
-          <div className="text-sm text-solarized-base00 dark:text-solarized-base0 mb-2">
-            {getLanguageFlag(question.language)}
-          </div>
-          <div className="relative mb-2">
-            <div className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1">
-              {question.translation}
+        {/* Question content with slide animation */}
+        <div className="overflow-hidden min-h-[350px] flex items-center">
+          <div className={`w-full transition-all duration-400 ease-in-out ${
+            slideDirection === 'left' ? '-translate-x-full opacity-0' :
+            slideDirection === 'right' ? 'translate-x-full opacity-0' :
+            'translate-x-0 opacity-100'
+          }`}>
+            <div className="text-center mb-6">
+              <div className="text-sm text-solarized-base00 dark:text-solarized-base0 mb-2">
+                {getLanguageFlag(question.language)}
+              </div>
+              <div className="relative mb-2">
+                <div className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1">
+                  {question.translation}
+                </div>
+                <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+                  <AudioButton 
+                    text={question.translation} 
+                    language={question.language}
+                  />
+                </div>
+              </div>
+              <div className="text-lg text-solarized-base00 dark:text-solarized-base0">
+                ({question.english})
+              </div>
             </div>
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-              <AudioButton 
-                text={question.translation} 
-                language={question.language}
-              />
-            </div>
-          </div>
-          <div className="text-lg text-solarized-base00 dark:text-solarized-base0">
-            ({question.english})
-          </div>
-        </div>
 
-        <div className="space-y-3 mb-6">
-          {question.options.map((option) => (
-            <button
-              key={option}
-              onClick={() => handleAnswer(option)}
-              className={`relative w-full p-3 rounded-xl text-left transition-colors font-medium overflow-hidden ${
-                selectedAnswer === option
-                  ? 'bg-solarized-orange text-white'
-                  : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-600'
-              }`}
-            >
-              {/* Gender gradient background */}
-              <div className="absolute inset-0 opacity-40" style={getGenderStyle(option)}></div>
-              
-              {/* Gender symbol background */}
-              <div className={`absolute top-1/2 transform -translate-y-1/2 pointer-events-none select-none ${
-                option === 'n' ? 'right-4' : 'right-2'
-              }`} style={option === 'n' ? { marginLeft: '-4px' } : {}}>
-                <span className={`text-white font-bold opacity-40 ${
-                  option === 'n' ? 'text-2xl' : 'text-5xl'
-                }`} aria-hidden="true">
-                  {getGenderSymbol(option)}
-                </span>
-              </div>
-              
-              {/* Main content */}
-              <div className="relative">
-                {getGenderLabel(option)}
-              </div>
-            </button>
-          ))}
+            <div className="space-y-3 mb-6">
+              {question.options.map((option) => (
+                <button
+                  key={option}
+                  onClick={() => handleAnswer(option)}
+                  disabled={isTransitioning}
+                  className={`relative w-full p-3 rounded-xl text-left transition-all duration-300 font-medium overflow-hidden transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed ${
+                    selectedAnswer === option
+                      ? 'bg-solarized-orange text-white scale-[1.02]'
+                      : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-600'
+                  }`}
+                >
+                  {/* Gender gradient background */}
+                  <div className="absolute inset-0 opacity-40" style={getGenderStyle(option)}></div>
+                  
+                  {/* Gender symbol background */}
+                  <div className={`absolute top-1/2 transform -translate-y-1/2 pointer-events-none select-none ${
+                    option === 'n' ? 'right-4' : 'right-2'
+                  }`} style={option === 'n' ? { marginLeft: '-4px' } : {}}>
+                    <span className={`text-white font-bold opacity-40 ${
+                      option === 'n' ? 'text-2xl' : 'text-5xl'
+                    }`} aria-hidden="true">
+                      {getGenderSymbol(option)}
+                    </span>
+                  </div>
+                  
+                  {/* Main content */}
+                  <div className="relative">
+                    {getGenderLabel(option)}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         </div>

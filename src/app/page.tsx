@@ -25,6 +25,7 @@ export default function Home() {
   const [mode, setMode] = useState<'browse' | 'search'>('browse');
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const searchBoxRef = useRef<SearchBoxRef>(null);
   const { t, isLoading: translationsLoading } = useTranslations();
   const searchParams = useSearchParams();
@@ -128,6 +129,7 @@ export default function Home() {
   const handleSearch = async (query: string, languages: string[]) => {
     if (!query.trim()) {
       setSearchResults([]);
+      setSearchError(null);
       setMode('browse');
       updateURL('', []);
       return;
@@ -136,6 +138,7 @@ export default function Home() {
     // 言語が一つも選択されていない場合は検索しない
     if (languages.length === 0) {
       setSearchResults([]);
+      setSearchError(null);
       setMode('search');
       updateURL(query, languages);
       return;
@@ -143,6 +146,7 @@ export default function Home() {
 
     setMode('search');
     setIsLoading(true);
+    setSearchError(null);
     
     // URLを更新
     updateURL(query, languages);
@@ -155,16 +159,22 @@ export default function Home() {
       });
 
       const response = await fetch(`/api/search?${params}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
       const data = await response.json();
       
       if (data.error) {
-        console.error('Search error:', data.error);
+        setSearchError(data.error);
         setSearchResults([]);
       } else {
         setSearchResults(data.data || []);
       }
     } catch (error) {
       console.error('Search failed:', error);
+      setSearchError(error instanceof Error ? error.message : '通信エラーが発生しました');
       setSearchResults([]);
     } finally {
       setIsLoading(false);
@@ -232,6 +242,7 @@ export default function Home() {
           isLoading={isLoading} 
           mode={mode}
           searchQuery={mode === 'search' ? searchParams.get('q') || '' : ''}
+          searchError={mode === 'search' ? searchError : null}
         />
         
         {/* 無限スクロール用のローディングインジケーター */}
