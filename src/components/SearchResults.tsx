@@ -88,16 +88,24 @@ export function SearchResults({
           style={{ animationDelay: `${index * 50}ms` }}
         >
           <div className="mb-4">
-            <h3 className="text-xl font-bold text-solarized-base01 dark:text-solarized-base1 mb-2">
-              {mode === 'search' && searchQuery ? (
-                <HighlightedText 
+            <div className="flex items-center gap-3 mb-2">
+              <h3 className="text-xl font-bold text-solarized-base01 dark:text-solarized-base1">
+                {mode === 'search' && searchQuery ? (
+                  <HighlightedText 
+                    text={result.english || result.word?.word_en || ''} 
+                    query={searchQuery}
+                  />
+                ) : (
+                  result.english || result.word?.word_en
+                )}
+              </h3>
+              <div className="transform transition-transform duration-200 hover:scale-110">
+                <AudioButton 
                   text={result.english || result.word?.word_en || ''} 
-                  query={searchQuery}
+                  language="en"
                 />
-              ) : (
-                result.english || result.word?.word_en
-              )}
-            </h3>
+              </div>
+            </div>
             
             {/* サンプル: catの意味説明 */}
             {(result.english || result.word?.word_en) === 'cat' && (

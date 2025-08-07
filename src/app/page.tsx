@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer';
 import { StatsHeader } from '@/components/StatsHeader';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { VoiceSelector } from '@/components/VoiceSelector';
 import { Quiz } from '@/components/Quiz';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
@@ -203,6 +204,11 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-solarized-base3 dark:bg-solarized-base03 transition-colors">
       {/* Header */}
       <header className="bg-solarized-base2 dark:bg-solarized-base02 border-b border-solarized-base1 dark:border-solarized-base01 relative">
+        {/* VoiceSelectorを左上に配置 */}
+        <div className="absolute top-4 left-4">
+          <VoiceSelector onVoiceGenderChange={() => {}} />
+        </div>
+
         {/* ボタン群を右上に配置 */}
         <div className="absolute top-4 right-4 flex space-x-2">
           <LanguageSwitcher />
