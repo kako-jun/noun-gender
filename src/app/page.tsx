@@ -71,14 +71,17 @@ export default function Home() {
     const query = searchParams.get('q');
     const languages = searchParams.get('lang');
     
-    if (query) {
-      // URLにクエリがある場合は検索実行
+    if (query && query.trim()) {
+      // URLにクエリがある場合のみ検索実行
       const langArray = languages ? languages.split('-').filter(Boolean) : [];
       setMode('search');
       handleSearch(query, langArray);
-    } else if (browseResults.length === 0 && !isLoading) {
-      // URLにクエリがない場合は通常のブラウズモード
-      loadBrowseData();
+    } else {
+      // URLにクエリがない場合は常にブラウズモード
+      setMode('browse');
+      if (browseResults.length === 0 && !isLoading) {
+        loadBrowseData();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('q'), searchParams.get('lang')]);
@@ -133,6 +136,10 @@ export default function Home() {
       setSearchError(null);
       setMode('browse');
       updateURL('', []);
+      // ブラウズデータがない場合は初期読み込み
+      if (browseResults.length === 0 && !isLoading) {
+        loadBrowseData();
+      }
       return;
     }
 
