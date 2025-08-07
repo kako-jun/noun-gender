@@ -6,6 +6,7 @@ import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
 import { Button } from './ui/Button';
 import { getGenderStyle, getGenderSymbol, getGenderLabel } from '@/utils/genderStyles';
+import { useTranslations } from '@/contexts/TranslationsContext';
 
 interface QuizQuestion {
   id: number;
@@ -22,6 +23,7 @@ interface QuizProps {
 }
 
 export function Quiz({ onClose }: QuizProps) {
+  const { t } = useTranslations();
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -143,7 +145,7 @@ export function Quiz({ onClose }: QuizProps) {
               <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.3s' }}></div>
               <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.6s' }}></div>
             </div>
-            <p className="text-center mt-4 text-solarized-base00 dark:text-solarized-base0">Loading quiz...</p>
+            <p className="text-center mt-4 text-solarized-base00 dark:text-solarized-base0">{t('quiz.loadingQuiz')}</p>
           </div>
         </div>
       </>
@@ -161,7 +163,7 @@ export function Quiz({ onClose }: QuizProps) {
           <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 m-4 max-w-md w-full border border-solarized-base1 dark:border-solarized-base01 shadow-xl pointer-events-auto">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1">
-                Gender Quiz
+                {t('quiz.title')}
               </h2>
               <button
                 onClick={onClose}
@@ -170,15 +172,14 @@ export function Quiz({ onClose }: QuizProps) {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-solarized-base00 dark:text-solarized-base0 mb-6">
-              Test your knowledge of noun genders!<br />
-              Choose a language and get 10 random words to identify their gender.
+            <p className="text-solarized-base00 dark:text-solarized-base0 mb-6 whitespace-pre-line">
+              {t('quiz.description')}
             </p>
             
             {/* Language Selection */}
             <div className="mb-6">
               <p className="text-sm font-medium text-solarized-base01 dark:text-solarized-base1 mb-3 text-center">
-                Select Language
+Select Language
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
@@ -209,7 +210,7 @@ export function Quiz({ onClose }: QuizProps) {
               ) : (
                 <>
                   <Play className="w-4 h-4 mr-2" />
-                  Start Quiz
+                  {t('quiz.startQuiz')}
                 </>
               )}
             </Button>
@@ -233,7 +234,7 @@ export function Quiz({ onClose }: QuizProps) {
           <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 m-4 max-w-md w-full border border-solarized-base1 dark:border-solarized-base01 shadow-xl pointer-events-auto">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-solarized-base01 dark:text-solarized-base1">
-                Quiz Complete!
+                {t('quiz.complete')}
               </h2>
               <button
                 onClick={onClose}
@@ -279,14 +280,14 @@ export function Quiz({ onClose }: QuizProps) {
               className="flex-1"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
-              Try Again
+              {t('common.tryAgain')}
             </Button>
             <Button
               onClick={onClose}
               variant="secondary"
               className="flex-1"
             >
-              Close
+              {t('common.close')}
             </Button>
           </div>
           </div>
@@ -308,7 +309,7 @@ export function Quiz({ onClose }: QuizProps) {
         <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-8 m-4 max-w-md w-full min-h-[500px] border border-solarized-base1 dark:border-solarized-base01 shadow-xl pointer-events-auto animate-in slide-in-from-bottom-4 fade-in duration-300">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-solarized-base01 dark:text-solarized-base1">
-              Question {currentQuestion + 1}/{questions.length}
+              {t('quiz.question', { current: currentQuestion + 1, total: questions.length })}
             </h2>
             <button
               onClick={onClose}

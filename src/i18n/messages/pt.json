@@ -5,81 +5,73 @@
     "error": "Erro",
     "cancel": "Cancelar",
     "close": "Fechar",
-    "next": "Next",
-    "previous": "Previous",
-    "start": "Start",
-    "finish": "Finish",
-    "tryAgain": "Try Again"
+    "next": "Próximo",
+    "previous": "Anterior",
+    "start": "Iniciar",
+    "finish": "Finalizar",
+    "tryAgain": "Tentar novamente",
+    "changeLanguage": "Alterar idioma"
   },
   "header": {
-    "title": "Gênero dos Substantivos",
-    "subtitle": "Domine os gêneros dos substantivos em todos os idiomas",
-    "words": "words",
-    "translations": "translations",
-    "languages": "languages",
-    "searchLanguages": "search languages",
-    "searchTerms": "search terms",
-    "multilingualSearch": "Multilingual search"
+    "subtitle": "Domine os gêneros dos substantivos em todos os idiomas"
   },
   "search": {
-    "placeholder": "Search for a word... (Press '/' to focus)",
-    "searching": "Searching...",
-    "languagesOptional": "Languages (optional):",
-    "noLanguagesSelected": "No languages selected = search all languages",
-    "noResultsFound": "No results found. Try searching for a word like \"cat\", \"house\", or \"book\".",
-    "resultsFound": "Found {count} results"
+    "placeholder": "Pesquisar palavras...",
+    "searching": "Pesquisando...",
+    "languagesOptional": "Idiomas",
+    "searchButton": "Pesquisar",
+    "noLanguagesSelected": "Nenhum idioma selecionado = pesquisar em todos os idiomas",
+    "noResultsFound": "Nenhum resultado encontrado.\nTente pesquisar palavras como \"cat\", \"book\" ou \"house\".",
+    "resultsFound": "Encontrados {count} resultados",
+    "networkError": "Erro de rede",
+    "networkErrorMessage": "Verifique sua conexão de rede e tente novamente"
   },
   "gender": {
-    "masculine": "Masculine",
-    "feminine": "Feminine",
-    "neuter": "Neuter",
-    "m": "♂ Masculine",
-    "f": "♀ Feminine",
-    "n": "○ Neuter"
+    "masculine": "Masculino",
+    "feminine": "Feminino",
+    "neuter": "Neutro",
+    "m": "♂ Masculino",
+    "f": "♀ Feminino",
+    "n": "⚲ Neutro"
   },
   "languages": {
-    "Arabic": "Arabic",
-    "French": "French",
-    "German": "German",
+    "Arabic": "Árabe",
+    "French": "Francês",
+    "German": "Alemão",
     "Hindi": "Hindi",
-    "Italian": "Italian",
-    "Portuguese": "Portuguese",
-    "Russian": "Russian",
-    "Spanish": "Spanish"
+    "Italian": "Italiano",
+    "Portuguese": "Português",
+    "Russian": "Russo",
+    "Spanish": "Espanhol"
   },
   "audio": {
-    "play": "Play audio for {word}",
-    "stop": "Stop audio for {word}"
+    "play": "Reproduzir áudio para {word}",
+    "stop": "Parar áudio para {word}",
+    "selectVoiceGender": "Selecionar gênero da voz",
+    "maleVoice": "Voz masculina",
+    "femaleVoice": "Voz feminina"
   },
   "copy": {
-    "copy": "Copy",
-    "copied": "Copied!",
-    "copyWord": "Copy: {word}"
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "copyWord": "Copiar: {word}"
   },
   "theme": {
-    "light": "Light theme → Dark theme",
-    "dark": "Dark theme → System setting",
-    "system": "System setting → Light theme",
-    "toggle": "Toggle theme"
+    "toggle": "Alternar tema"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "focusSearch": "Focus search input",
-    "clearSearch": "Clear search",
-    "toggleTheme": "Toggle theme"
+    "title": "Atalhos do Teclado",
+    "focusSearch": "Focar pesquisa",
+    "clearSearch": "Limpar pesquisa",
+    "toggleTheme": "Alternar tema"
   },
   "quiz": {
-    "title": "Gender Quiz",
-    "description": "Test your knowledge of noun genders! You'll get 10 random words from French, German, and Spanish.",
-    "startQuiz": "Start Quiz",
-    "question": "Question {current}/{total}",
-    "complete": "Quiz Complete!",
-    "correct": "correct",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% correct",
-    "loadingQuiz": "Loading quiz..."
+    "title": "Quiz de Gênero",
+    "description": "Teste seu conhecimento sobre gêneros de substantivos!\nEscolha um idioma e obtenha 10 palavras aleatórias para identificar seu gênero.",
+    "startQuiz": "Iniciar Quiz",
+    "question": "Pergunta {current}/{total}",
+    "complete": "Quiz Completo!",
+    "loadingQuiz": "Carregando quiz..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
-  }
+  "footer": {}
 }

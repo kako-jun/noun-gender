@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { useVoice } from '@/contexts/VoiceContext';
+import { useTranslations } from '@/hooks/useTranslations';
 
 interface AudioButtonProps {
   text: string;
@@ -31,6 +32,7 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
   const [isSupported, setIsSupported] = useState(true);
   const { preferFemaleVoice } = useVoice();
   const [hasSpoken, setHasSpoken] = useState(false); // 重複実行防止フラグ
+  const { t } = useTranslations();
 
   const handleSpeak = () => {
     // Web Speech API サポートチェック
@@ -82,29 +84,186 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
         let preferredVoice = null;
         
         if (matchingVoices.length > 0) {
-          // ブラウザ・OS別の推奨音声を定義
-          const recommendedVoices = {
-            // Microsoft Edge / Windows
-            microsoft: {
-              male: ['Microsoft Mark - English (United States)', 'Microsoft David - English (United States)', 'Microsoft Guy Online (Natural) - English (United States)'],
-              female: ['Microsoft Zira - English (United States)', 'Microsoft Aria Online (Natural) - English (United States)', 'Microsoft Jenny Online (Natural) - English (United States)']
-            },
-            // Google Chrome
-            google: {
-              male: ['Google UK English Male', 'Google US English Male', 'Google Australian English Male'],
-              female: ['Google UK English Female', 'Google US English Female', 'Google Australian English Female']
-            },
-            // Apple Safari / macOS
-            apple: {
-              male: ['Alex', 'Fred', 'Daniel'],
-              female: ['Samantha', 'Victoria', 'Allison']
-            },
-            // Mozilla Firefox (eSpeak-NG engine)
-            firefox: {
-              male: ['English (Great Britain)', 'English (America)', 'English Male'],
-              female: ['English (Great Britain)+f3', 'English (America)+f3', 'English Female']
-            }
+          // 言語・ブラウザ別の推奨音声を定義
+          const getRecommendedVoices = (lang: string) => {
+            const voiceMap: { [key: string]: any } = {
+              // English
+              'en': {
+                microsoft: {
+                  male: ['Microsoft Mark - English (United States)', 'Microsoft David - English (United States)', 'Microsoft Guy Online (Natural) - English (United States)'],
+                  female: ['Microsoft Zira - English (United States)', 'Microsoft Aria Online (Natural) - English (United States)', 'Microsoft Jenny Online (Natural) - English (United States)']
+                },
+                google: {
+                  male: ['Google UK English Male', 'Google US English Male', 'Google Australian English Male'],
+                  female: ['Google UK English Female', 'Google US English Female', 'Google Australian English Female']
+                },
+                apple: {
+                  male: ['Alex', 'Fred', 'Daniel'],
+                  female: ['Samantha', 'Victoria', 'Allison']
+                },
+                firefox: {
+                  male: ['English (Great Britain)', 'English (America)', 'English Male'],
+                  female: ['English (Great Britain)+f3', 'English (America)+f3', 'English Female']
+                }
+              },
+              // French
+              'fr': {
+                microsoft: {
+                  male: ['Microsoft Paul - French (France)', 'Microsoft Claude Online (Natural) - French (France)', 'Microsoft Henri Online (Natural) - French (France)'],
+                  female: ['Microsoft Hortense - French (France)', 'Microsoft Brigitte Online (Natural) - French (France)', 'Microsoft Jacqueline Online (Natural) - French (France)']
+                },
+                google: {
+                  male: ['Google français Male', 'Google French Male'],
+                  female: ['Google français Female', 'Google French Female']
+                },
+                apple: {
+                  male: ['Thomas', 'Olivier'],
+                  female: ['Amélie', 'Audrey']
+                },
+                firefox: {
+                  male: ['French (France)', 'Français'],
+                  female: ['French (France)+f3', 'Français+f3']
+                }
+              },
+              // German
+              'de': {
+                microsoft: {
+                  male: ['Microsoft Stefan - German (Germany)', 'Microsoft Conrad Online (Natural) - German (Germany)', 'Microsoft Klaus Online (Natural) - German (Germany)'],
+                  female: ['Microsoft Hedda - German (Germany)', 'Microsoft Katja Online (Natural) - German (Germany)', 'Microsoft Ingrid Online (Natural) - German (Germany)']
+                },
+                google: {
+                  male: ['Google Deutsch Male', 'Google German Male'],
+                  female: ['Google Deutsch Female', 'Google German Female']
+                },
+                apple: {
+                  male: ['Yannick', 'Viktor'],
+                  female: ['Anna', 'Petra']
+                },
+                firefox: {
+                  male: ['German (Germany)', 'Deutsch'],
+                  female: ['German (Germany)+f3', 'Deutsch+f3']
+                }
+              },
+              // Spanish
+              'es': {
+                microsoft: {
+                  male: ['Microsoft Pablo - Spanish (Spain)', 'Microsoft Alvaro Online (Natural) - Spanish (Spain)', 'Microsoft Jorge Online (Natural) - Spanish (Mexico)'],
+                  female: ['Microsoft Helena - Spanish (Spain)', 'Microsoft Elvira Online (Natural) - Spanish (Spain)', 'Microsoft Dalia Online (Natural) - Spanish (Mexico)']
+                },
+                google: {
+                  male: ['Google español Male', 'Google Spanish Male'],
+                  female: ['Google español Female', 'Google Spanish Female']
+                },
+                apple: {
+                  male: ['Diego', 'Juan'],
+                  female: ['Monica', 'Paulina']
+                },
+                firefox: {
+                  male: ['Spanish (Spain)', 'Español'],
+                  female: ['Spanish (Spain)+f3', 'Español+f3']
+                }
+              },
+              // Italian
+              'it': {
+                microsoft: {
+                  male: ['Microsoft Cosimo - Italian (Italy)', 'Microsoft Diego Online (Natural) - Italian (Italy)', 'Microsoft Giuseppe Online (Natural) - Italian (Italy)'],
+                  female: ['Microsoft Elsa - Italian (Italy)', 'Microsoft Isabella Online (Natural) - Italian (Italy)', 'Microsoft Fiamma Online (Natural) - Italian (Italy)']
+                },
+                google: {
+                  male: ['Google italiano Male', 'Google Italian Male'],
+                  female: ['Google italiano Female', 'Google Italian Female']
+                },
+                apple: {
+                  male: ['Luca', 'Paolo'],
+                  female: ['Alice', 'Federica']
+                },
+                firefox: {
+                  male: ['Italian (Italy)', 'Italiano'],
+                  female: ['Italian (Italy)+f3', 'Italiano+f3']
+                }
+              },
+              // Portuguese
+              'pt': {
+                microsoft: {
+                  male: ['Microsoft Helio - Portuguese (Brazil)', 'Microsoft Daniel Online (Natural) - Portuguese (Brazil)', 'Microsoft Antonio Online (Natural) - Portuguese (Portugal)'],
+                  female: ['Microsoft Maria - Portuguese (Brazil)', 'Microsoft Francisca Online (Natural) - Portuguese (Brazil)', 'Microsoft Fernanda Online (Natural) - Portuguese (Portugal)']
+                },
+                google: {
+                  male: ['Google português Male', 'Google Portuguese Male'],
+                  female: ['Google português Female', 'Google Portuguese Female']
+                },
+                apple: {
+                  male: ['Joaquim', 'Rafael'],
+                  female: ['Joana', 'Luciana']
+                },
+                firefox: {
+                  male: ['Portuguese (Brazil)', 'Português'],
+                  female: ['Portuguese (Brazil)+f3', 'Português+f3']
+                }
+              },
+              // Russian
+              'ru': {
+                microsoft: {
+                  male: ['Microsoft Pavel - Russian (Russia)', 'Microsoft Dmitry Online (Natural) - Russian (Russia)'],
+                  female: ['Microsoft Irina - Russian (Russia)', 'Microsoft Svetlana Online (Natural) - Russian (Russia)']
+                },
+                google: {
+                  male: ['Google русский Male', 'Google Russian Male'],
+                  female: ['Google русский Female', 'Google Russian Female']
+                },
+                apple: {
+                  male: ['Yuri', 'Maxim'],
+                  female: ['Katarina', 'Milena']
+                },
+                firefox: {
+                  male: ['Russian (Russia)', 'Русский'],
+                  female: ['Russian (Russia)+f3', 'Русский+f3']
+                }
+              },
+              // Arabic
+              'ar': {
+                microsoft: {
+                  male: ['Microsoft Naayf - Arabic (Saudi Arabia)', 'Microsoft Hamed Online (Natural) - Arabic (Saudi Arabia)'],
+                  female: ['Microsoft Hoda - Arabic (Egypt)', 'Microsoft Zariyah Online (Natural) - Arabic (Saudi Arabia)']
+                },
+                google: {
+                  male: ['Google العربية Male', 'Google Arabic Male'],
+                  female: ['Google العربية Female', 'Google Arabic Female']
+                },
+                apple: {
+                  male: ['Majed', 'Maged'],
+                  female: ['Tarik', 'Laith'] // Note: Arabic voice names may vary
+                },
+                firefox: {
+                  male: ['Arabic (Saudi Arabia)', 'العربية'],
+                  female: ['Arabic (Saudi Arabia)+f3', 'العربية+f3']
+                }
+              },
+              // Hindi
+              'hi': {
+                microsoft: {
+                  male: ['Microsoft Prabhat - Hindi (India)', 'Microsoft Madhur Online (Natural) - Hindi (India)'],
+                  female: ['Microsoft Kalpana - Hindi (India)', 'Microsoft Swara Online (Natural) - Hindi (India)']
+                },
+                google: {
+                  male: ['Google हिन्दी Male', 'Google Hindi Male'],
+                  female: ['Google हिन्दी Female', 'Google Hindi Female']
+                },
+                apple: {
+                  male: ['Ravi', 'Sangeeta'], // Note: Hindi voice names may vary
+                  female: ['Lekha', 'Veena']
+                },
+                firefox: {
+                  male: ['Hindi (India)', 'हिन्दी'],
+                  female: ['Hindi (India)+f3', 'हिन्दी+f3']
+                }
+              }
+            };
+            
+            return voiceMap[lang] || voiceMap['en']; // フォールバック: 英語
           };
+
+          const recommendedVoices = getRecommendedVoices(targetLang);
           
           const targetVoices = preferFemaleVoice 
             ? [...recommendedVoices.microsoft.female, ...recommendedVoices.google.female, ...recommendedVoices.apple.female, ...recommendedVoices.firefox.female]
@@ -191,7 +350,7 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}
       `}
-      title={isPlaying ? '停止' : '読み上げ'}
+      title={isPlaying ? t('audio.stop', { word: text }) : t('audio.play', { word: text })}
       disabled={!text || text.trim() === ''}
     >
       {isPlaying ? (

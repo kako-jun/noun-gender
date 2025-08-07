@@ -5,81 +5,73 @@
     "error": "Ошибка",
     "cancel": "Отмена",
     "close": "Закрыть",
-    "next": "Next",
-    "previous": "Previous",
-    "start": "Start",
-    "finish": "Finish",
-    "tryAgain": "Try Again"
+    "next": "Далее",
+    "previous": "Назад",
+    "start": "Начать",
+    "finish": "Завершить",
+    "tryAgain": "Попробовать снова",
+    "changeLanguage": "Изменить язык"
   },
   "header": {
-    "title": "Род Существительных",
-    "subtitle": "Освойте роды существительных во всех языках",
-    "words": "words",
-    "translations": "translations",
-    "languages": "languages",
-    "searchLanguages": "search languages",
-    "searchTerms": "search terms",
-    "multilingualSearch": "Multilingual search"
+    "subtitle": "Освойте роды существительных во всех языках"
   },
   "search": {
-    "placeholder": "Search for a word... (Press '/' to focus)",
-    "searching": "Searching...",
-    "languagesOptional": "Languages (optional):",
-    "noLanguagesSelected": "No languages selected = search all languages",
-    "noResultsFound": "No results found. Try searching for a word like \"cat\", \"house\", or \"book\".",
-    "resultsFound": "Found {count} results"
+    "placeholder": "Поиск слов...",
+    "searching": "Поиск...",
+    "languagesOptional": "Языки",
+    "searchButton": "Поиск",
+    "noLanguagesSelected": "Языки не выбраны = поиск по всем языкам",
+    "noResultsFound": "Результаты не найдены.\nПопробуйте поискать такие слова как \"cat\", \"book\" или \"house\".",
+    "resultsFound": "Найдено {count} результатов",
+    "networkError": "Ошибка сети",
+    "networkErrorMessage": "Проверьте подключение к сети и попробуйте снова"
   },
   "gender": {
-    "masculine": "Masculine",
-    "feminine": "Feminine",
-    "neuter": "Neuter",
-    "m": "♂ Masculine",
-    "f": "♀ Feminine",
-    "n": "○ Neuter"
+    "masculine": "Мужской",
+    "feminine": "Женский",
+    "neuter": "Средний",
+    "m": "♂ Мужской",
+    "f": "♀ Женский",
+    "n": "⚲ Средний"
   },
   "languages": {
-    "Arabic": "Arabic",
-    "French": "French",
-    "German": "German",
-    "Hindi": "Hindi",
-    "Italian": "Italian",
-    "Portuguese": "Portuguese",
-    "Russian": "Russian",
-    "Spanish": "Spanish"
+    "Arabic": "Арабский",
+    "French": "Французский",
+    "German": "Немецкий",
+    "Hindi": "Хинди",
+    "Italian": "Итальянский",
+    "Portuguese": "Португальский",
+    "Russian": "Русский",
+    "Spanish": "Испанский"
   },
   "audio": {
-    "play": "Play audio for {word}",
-    "stop": "Stop audio for {word}"
+    "play": "Воспроизвести аудио для {word}",
+    "stop": "Остановить аудио для {word}",
+    "selectVoiceGender": "Выберите пол голоса",
+    "maleVoice": "Мужской голос",
+    "femaleVoice": "Женский голос"
   },
   "copy": {
-    "copy": "Copy",
-    "copied": "Copied!",
-    "copyWord": "Copy: {word}"
+    "copy": "Копировать",
+    "copied": "Скопировано!",
+    "copyWord": "Копировать: {word}"
   },
   "theme": {
-    "light": "Light theme → Dark theme",
-    "dark": "Dark theme → System setting",
-    "system": "System setting → Light theme",
-    "toggle": "Toggle theme"
+    "toggle": "Переключить тему"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "focusSearch": "Focus search input",
-    "clearSearch": "Clear search",
-    "toggleTheme": "Toggle theme"
+    "title": "Клавиатурные сокращения",
+    "focusSearch": "Фокус на поиске",
+    "clearSearch": "Очистить поиск",
+    "toggleTheme": "Переключить тему"
   },
   "quiz": {
-    "title": "Gender Quiz",
-    "description": "Test your knowledge of noun genders! You'll get 10 random words from French, German, and Spanish.",
-    "startQuiz": "Start Quiz",
-    "question": "Question {current}/{total}",
-    "complete": "Quiz Complete!",
-    "correct": "correct",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% correct",
-    "loadingQuiz": "Loading quiz..."
+    "title": "Викторина по родам",
+    "description": "Проверьте свои знания о родах существительных!\nВыберите язык и получите 10 случайных слов для определения их рода.",
+    "startQuiz": "Начать викторину",
+    "question": "Вопрос {current}/{total}",
+    "complete": "Викторина завершена!",
+    "loadingQuiz": "Загрузка викторины..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
-  }
+  "footer": {}
 }

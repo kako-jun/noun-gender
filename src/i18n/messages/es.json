@@ -9,25 +9,22 @@
     "previous": "Anterior",
     "start": "Comenzar",
     "finish": "Terminar",
-    "tryAgain": "Intentar de nuevo"
+    "tryAgain": "Intentar de nuevo",
+    "changeLanguage": "Cambiar idioma"
   },
   "header": {
-    "title": "Género de Sustantivos",
-    "subtitle": "Domina los géneros de sustantivos en todos los idiomas",
-    "words": "palabras",
-    "translations": "traducciones",
-    "languages": "idiomas",
-    "searchLanguages": "idiomas de búsqueda",
-    "searchTerms": "términos de búsqueda",
-    "multilingualSearch": "Búsqueda multilingüe"
+    "subtitle": "Domina los géneros de sustantivos en todos los idiomas"
   },
   "search": {
-    "placeholder": "Buscar una palabra... (Presiona '/' para enfocar)",
+    "placeholder": "Buscar palabras...",
     "searching": "Buscando...",
-    "languagesOptional": "Idiomas (opcional):",
+    "languagesOptional": "Idiomas",
+    "searchButton": "Buscar",
     "noLanguagesSelected": "Ningún idioma seleccionado = buscar en todos los idiomas",
-    "noResultsFound": "No se encontraron resultados. Intenta buscar palabras como \"cat\", \"house\" o \"book\".",
-    "resultsFound": "{count} resultados encontrados"
+    "noResultsFound": "No se encontraron resultados.\nIntenta buscar palabras como \"cat\", \"book\" o \"house\".",
+    "resultsFound": "Se encontraron {count} resultados",
+    "networkError": "Error de red",
+    "networkErrorMessage": "Verifique su conexión de red e intente nuevamente"
   },
   "gender": {
     "masculine": "Masculino",
@@ -35,51 +32,46 @@
     "neuter": "Neutro",
     "m": "♂ Masculino",
     "f": "♀ Femenino",
-    "n": "○ Neutro"
+    "n": "⚲ Neutro"
   },
   "languages": {
-    "Arabic": "Arabic",
-    "French": "French",
-    "German": "German",
+    "Arabic": "Árabe",
+    "French": "Francés",
+    "German": "Alemán",
     "Hindi": "Hindi",
-    "Italian": "Italian",
-    "Portuguese": "Portuguese",
-    "Russian": "Russian",
-    "Spanish": "Spanish"
+    "Italian": "Italiano",
+    "Portuguese": "Portugués",
+    "Russian": "Ruso",
+    "Spanish": "Español"
   },
   "audio": {
-    "play": "Play audio for {word}",
-    "stop": "Stop audio for {word}"
+    "play": "Reproducir audio para {word}",
+    "stop": "Detener audio para {word}",
+    "selectVoiceGender": "Seleccionar género de voz",
+    "maleVoice": "Voz masculina",
+    "femaleVoice": "Voz femenina"
   },
   "copy": {
-    "copy": "Copy",
-    "copied": "Copied!",
-    "copyWord": "Copy: {word}"
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "copyWord": "Copiar: {word}"
   },
   "theme": {
-    "light": "Light theme → Dark theme",
-    "dark": "Dark theme → System setting",
-    "system": "System setting → Light theme",
-    "toggle": "Toggle theme"
+    "toggle": "Cambiar tema"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "focusSearch": "Focus search input",
-    "clearSearch": "Clear search",
-    "toggleTheme": "Toggle theme"
+    "title": "Atajos de Teclado",
+    "focusSearch": "Enfocar búsqueda",
+    "clearSearch": "Limpiar búsqueda",
+    "toggleTheme": "Cambiar tema"
   },
   "quiz": {
     "title": "Quiz de Género",
-    "description": "¡Pon a prueba tu conocimiento sobre géneros de sustantivos! Obtendrás 10 palabras aleatorias del francés, alemán y español.",
+    "description": "¡Pon a prueba tu conocimiento sobre géneros de sustantivos!\nElige un idioma y obtén 10 palabras aleatorias para identificar su género.",
     "startQuiz": "Comenzar Quiz",
-    "question": "Question {current}/{total}",
-    "complete": "Quiz Complete!",
-    "correct": "correct",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% correct",
-    "loadingQuiz": "Loading quiz..."
+    "question": "Pregunta {current}/{total}",
+    "complete": "¡Quiz Completo!",
+    "loadingQuiz": "Cargando quiz..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
-  }
+  "footer": {}
 }

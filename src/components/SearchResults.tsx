@@ -54,14 +54,14 @@ export function SearchResults({
         <div className="text-center py-8">
           <div className="bg-solarized-red/10 border border-solarized-red/30 rounded-lg p-4 mb-4">
             <h3 className="font-semibold text-solarized-red dark:text-red-400 mb-2">
-              通信エラー
+              {t('search.networkError')}
             </h3>
             <p className="text-solarized-base00 dark:text-solarized-base0">
               {searchError}
             </p>
           </div>
           <p className="text-sm text-solarized-base00 dark:text-solarized-base0">
-            ネットワーク接続を確認してから再度お試しください
+            {t('search.networkErrorMessage')}
           </p>
         </div>
       );

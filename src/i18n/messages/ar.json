@@ -5,81 +5,73 @@
     "error": "خطأ",
     "cancel": "إلغاء",
     "close": "إغلاق",
-    "next": "Next",
-    "previous": "Previous",
-    "start": "Start",
-    "finish": "Finish",
-    "tryAgain": "Try Again"
+    "next": "التالي",
+    "previous": "السابق",
+    "start": "ابدأ",
+    "finish": "إنهاء",
+    "tryAgain": "حاول مرة أخرى",
+    "changeLanguage": "تغيير اللغة"
   },
   "header": {
-    "title": "جنس الأسماء",
-    "subtitle": "أتقن أجناس الأسماء في جميع اللغات",
-    "words": "words",
-    "translations": "translations",
-    "languages": "languages",
-    "searchLanguages": "search languages",
-    "searchTerms": "search terms",
-    "multilingualSearch": "Multilingual search"
+    "subtitle": "أتقن أجناس الأسماء في جميع اللغات"
   },
   "search": {
-    "placeholder": "Search for a word... (Press '/' to focus)",
-    "searching": "Searching...",
-    "languagesOptional": "Languages (optional):",
-    "noLanguagesSelected": "No languages selected = search all languages",
-    "noResultsFound": "No results found. Try searching for a word like \"cat\", \"house\", or \"book\".",
-    "resultsFound": "Found {count} results"
+    "placeholder": "ابحث عن كلمات...",
+    "searching": "البحث جاري...",
+    "languagesOptional": "اللغات",
+    "searchButton": "بحث",
+    "noLanguagesSelected": "لم يتم اختيار لغات = البحث في جميع اللغات",
+    "noResultsFound": "لم يتم العثور على نتائج.\nجرب البحث عن كلمات مثل \"cat\" أو \"book\" أو \"house\".",
+    "resultsFound": "تم العثور على {count} نتائج",
+    "networkError": "خطأ في الشبكة",
+    "networkErrorMessage": "يرجى فحص اتصالك بالإنترنت والمحاولة مرة أخرى"
   },
   "gender": {
-    "masculine": "Masculine",
-    "feminine": "Feminine",
-    "neuter": "Neuter",
-    "m": "♂ Masculine",
-    "f": "♀ Feminine",
-    "n": "○ Neuter"
+    "masculine": "مذكر",
+    "feminine": "مؤنث",
+    "neuter": "محايد",
+    "m": "♂ مذكر",
+    "f": "♀ مؤنث",
+    "n": "⚲ محايد"
   },
   "languages": {
-    "Arabic": "Arabic",
-    "French": "French",
-    "German": "German",
-    "Hindi": "Hindi",
-    "Italian": "Italian",
-    "Portuguese": "Portuguese",
-    "Russian": "Russian",
-    "Spanish": "Spanish"
+    "Arabic": "عربي",
+    "French": "فرنسي",
+    "German": "ألماني",
+    "Hindi": "هندي",
+    "Italian": "إيطالي",
+    "Portuguese": "برتغالي",
+    "Russian": "روسي",
+    "Spanish": "إسباني"
   },
   "audio": {
-    "play": "Play audio for {word}",
-    "stop": "Stop audio for {word}"
+    "play": "تشغيل الصوت لـ {word}",
+    "stop": "إيقاف الصوت لـ {word}",
+    "selectVoiceGender": "اختر جنس الصوت",
+    "maleVoice": "صوت ذكوري",
+    "femaleVoice": "صوت أنثوي"
   },
   "copy": {
-    "copy": "Copy",
-    "copied": "Copied!",
-    "copyWord": "Copy: {word}"
+    "copy": "نسخ",
+    "copied": "تم النسخ!",
+    "copyWord": "نسخ: {word}"
   },
   "theme": {
-    "light": "Light theme → Dark theme",
-    "dark": "Dark theme → System setting",
-    "system": "System setting → Light theme",
-    "toggle": "Toggle theme"
+    "toggle": "تغيير المظهر"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "focusSearch": "Focus search input",
-    "clearSearch": "Clear search",
-    "toggleTheme": "Toggle theme"
+    "title": "اختصارات لوحة المفاتيح",
+    "focusSearch": "تركيز البحث",
+    "clearSearch": "محو البحث",
+    "toggleTheme": "تغيير المظهر"
   },
   "quiz": {
-    "title": "Gender Quiz",
-    "description": "Test your knowledge of noun genders! You'll get 10 random words from French, German, and Spanish.",
-    "startQuiz": "Start Quiz",
-    "question": "Question {current}/{total}",
-    "complete": "Quiz Complete!",
-    "correct": "correct",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% correct",
-    "loadingQuiz": "Loading quiz..."
+    "title": "اختبار الجنس",
+    "description": "اختبر معرفتك بأجناس الأسماء!\nاختر لغة واحصل على 10 كلمات عشوائية لتحديد جنسها.",
+    "startQuiz": "بدء الاختبار",
+    "question": "سؤال {current}/{total}",
+    "complete": "اكتمل الاختبار!",
+    "loadingQuiz": "تحميل الاختبار..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
-  }
+  "footer": {}
 }

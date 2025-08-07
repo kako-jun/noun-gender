@@ -9,25 +9,22 @@
     "previous": "Précédent",
     "start": "Commencer",
     "finish": "Terminer",
-    "tryAgain": "Réessayer"
+    "tryAgain": "Réessayer",
+    "changeLanguage": "Changer de langue"
   },
   "header": {
-    "title": "Genre des Noms",
-    "subtitle": "Maîtrisez les genres des noms dans toutes les langues",
-    "words": "mots",
-    "translations": "traductions",
-    "languages": "langues",
-    "searchLanguages": "langues de recherche",
-    "searchTerms": "termes de recherche",
-    "multilingualSearch": "Recherche multilingue"
+    "subtitle": "Maîtrisez les genres des noms dans toutes les langues"
   },
   "search": {
-    "placeholder": "Rechercher un mot... (Appuyez sur '/' pour cibler)",
+    "placeholder": "Rechercher un mot...",
     "searching": "Recherche...",
-    "languagesOptional": "Langues (optionnel) :",
+    "languagesOptional": "Langues",
+    "searchButton": "Rechercher",
     "noLanguagesSelected": "Aucune langue sélectionnée = rechercher toutes les langues",
-    "noResultsFound": "Aucun résultat trouvé. Essayez de rechercher un mot comme \"cat\", \"house\" ou \"book\".",
-    "resultsFound": "{count} résultats trouvés"
+    "noResultsFound": "Aucun résultat trouvé.\nEssayez de rechercher un mot comme \"cat\", \"book\" ou \"house\".",
+    "resultsFound": "Trouvé {count} résultats",
+    "networkError": "Erreur de réseau",
+    "networkErrorMessage": "Veuillez vérifier votre connexion réseau et réessayer"
   },
   "gender": {
     "masculine": "Masculin",
@@ -35,7 +32,7 @@
     "neuter": "Neutre",
     "m": "♂ Masculin",
     "f": "♀ Féminin",
-    "n": "○ Neutre"
+    "n": "⚲ Neutre"
   },
   "languages": {
     "Arabic": "Arabe",
@@ -49,7 +46,10 @@
   },
   "audio": {
     "play": "Lire l'audio pour {word}",
-    "stop": "Arrêter l'audio pour {word}"
+    "stop": "Arrêter l'audio pour {word}",
+    "selectVoiceGender": "Sélectionner le genre de la voix",
+    "maleVoice": "Voix masculine",
+    "femaleVoice": "Voix féminine"
   },
   "copy": {
     "copy": "Copier",
@@ -57,9 +57,6 @@
     "copyWord": "Copier : {word}"
   },
   "theme": {
-    "light": "Thème clair → Thème sombre",
-    "dark": "Thème sombre → Paramètre système",
-    "system": "Paramètre système → Thème clair",
     "toggle": "Changer de thème"
   },
   "shortcuts": {
@@ -70,16 +67,11 @@
   },
   "quiz": {
     "title": "Quiz de Genre",
-    "description": "Testez vos connaissances des genres des noms ! Vous obtiendrez 10 mots aléatoires du français, de l'allemand et de l'espagnol.",
+    "description": "Testez vos connaissances des genres des noms !\nChoisissez une langue et obtenez 10 mots aléatoires pour identifier leur genre.",
     "startQuiz": "Commencer le Quiz",
     "question": "Question {current}/{total}",
     "complete": "Quiz Terminé !",
-    "correct": "correct",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% correct",
     "loadingQuiz": "Chargement du quiz..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - Apprenez les genres des noms dans toutes les langues"
-  }
+  "footer": {}
 }

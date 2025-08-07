@@ -5,81 +5,73 @@
     "error": "Errore",
     "cancel": "Annulla",
     "close": "Chiudi",
-    "next": "Next",
-    "previous": "Previous",
-    "start": "Start",
-    "finish": "Finish",
-    "tryAgain": "Try Again"
+    "next": "Avanti",
+    "previous": "Precedente",
+    "start": "Inizia",
+    "finish": "Termina",
+    "tryAgain": "Riprova",
+    "changeLanguage": "Cambia lingua"
   },
   "header": {
-    "title": "Genere dei Sostantivi",
-    "subtitle": "Padroneggia i generi dei sostantivi in tutte le lingue",
-    "words": "words",
-    "translations": "translations",
-    "languages": "languages",
-    "searchLanguages": "search languages",
-    "searchTerms": "search terms",
-    "multilingualSearch": "Multilingual search"
+    "subtitle": "Padroneggia i generi dei sostantivi in tutte le lingue"
   },
   "search": {
-    "placeholder": "Cerca una parola... (Premi '/' per focalizzare)",
+    "placeholder": "Cerca parole...",
     "searching": "Ricerca...",
-    "languagesOptional": "Languages (optional):",
-    "noLanguagesSelected": "No languages selected = search all languages",
-    "noResultsFound": "No results found. Try searching for a word like \"cat\", \"house\", or \"book\".",
-    "resultsFound": "Found {count} results"
+    "languagesOptional": "Lingue",
+    "searchButton": "Cerca",
+    "noLanguagesSelected": "Nessuna lingua selezionata = cerca in tutte le lingue",
+    "noResultsFound": "Nessun risultato trovato.\nProva a cercare parole come \"cat\", \"book\" o \"house\".",
+    "resultsFound": "Trovati {count} risultati",
+    "networkError": "Errore di rete",
+    "networkErrorMessage": "Controlla la connessione di rete e riprova"
   },
   "gender": {
-    "masculine": "Masculine",
-    "feminine": "Feminine",
-    "neuter": "Neuter",
-    "m": "♂ Masculine",
-    "f": "♀ Feminine",
-    "n": "○ Neuter"
+    "masculine": "Maschile",
+    "feminine": "Femminile",
+    "neuter": "Neutro",
+    "m": "♂ Maschile",
+    "f": "♀ Femminile",
+    "n": "⚲ Neutro"
   },
   "languages": {
-    "Arabic": "Arabic",
-    "French": "French",
-    "German": "German",
+    "Arabic": "Arabo",
+    "French": "Francese",
+    "German": "Tedesco",
     "Hindi": "Hindi",
-    "Italian": "Italian",
-    "Portuguese": "Portuguese",
-    "Russian": "Russian",
-    "Spanish": "Spanish"
+    "Italian": "Italiano",
+    "Portuguese": "Portoghese",
+    "Russian": "Russo",
+    "Spanish": "Spagnolo"
   },
   "audio": {
-    "play": "Play audio for {word}",
-    "stop": "Stop audio for {word}"
+    "play": "Riproduci audio per {word}",
+    "stop": "Ferma audio per {word}",
+    "selectVoiceGender": "Seleziona genere della voce",
+    "maleVoice": "Voce maschile",
+    "femaleVoice": "Voce femminile"
   },
   "copy": {
-    "copy": "Copy",
-    "copied": "Copied!",
-    "copyWord": "Copy: {word}"
+    "copy": "Copia",
+    "copied": "Copiato!",
+    "copyWord": "Copia: {word}"
   },
   "theme": {
-    "light": "Light theme → Dark theme",
-    "dark": "Dark theme → System setting",
-    "system": "System setting → Light theme",
-    "toggle": "Toggle theme"
+    "toggle": "Cambia tema"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "focusSearch": "Focus search input",
-    "clearSearch": "Clear search",
-    "toggleTheme": "Toggle theme"
+    "title": "Scorciatoie da Tastiera",
+    "focusSearch": "Focalizza ricerca",
+    "clearSearch": "Cancella ricerca",
+    "toggleTheme": "Cambia tema"
   },
   "quiz": {
-    "title": "Gender Quiz",
-    "description": "Test your knowledge of noun genders! You'll get 10 random words from French, German, and Spanish.",
-    "startQuiz": "Start Quiz",
-    "question": "Question {current}/{total}",
-    "complete": "Quiz Complete!",
-    "correct": "correct",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% correct",
-    "loadingQuiz": "Loading quiz..."
+    "title": "Quiz di Genere",
+    "description": "Testa la tua conoscenza dei generi dei sostantivi!\nScegli una lingua e ottieni 10 parole casuali per identificarne il genere.",
+    "startQuiz": "Inizia Quiz",
+    "question": "Domanda {current}/{total}",
+    "complete": "Quiz Completato!",
+    "loadingQuiz": "Caricamento quiz..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
-  }
+  "footer": {}
 }

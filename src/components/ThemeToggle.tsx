@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Sun, Moon, Monitor } from 'lucide-react';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { t } = useTranslations();
 
   useEffect(() => {
     setMounted(true);
@@ -41,18 +43,6 @@ export function ThemeToggle() {
     }
   };
 
-  const getTooltip = () => {
-    switch (theme) {
-      case 'light':
-        return 'ライトテーマ → ダークテーマ';
-      case 'dark':
-        return 'ダークテーマ → システム設定';
-      case 'system':
-        return 'システム設定 → ライトテーマ';
-      default:
-        return 'テーマ切り替え';
-    }
-  };
 
   return (
     <button
@@ -63,7 +53,7 @@ export function ThemeToggle() {
         dark:bg-solarized-base03 dark:hover:bg-solarized-base01 dark:border-solarized-base01
         text-solarized-base01 hover:text-solarized-base3 dark:text-solarized-base1 dark:hover:text-solarized-base03
       "
-      title={getTooltip()}
+      title={t('theme.toggle')}
     >
       {getIcon()}
     </button>

@@ -9,17 +9,11 @@
     "previous": "前へ",
     "start": "開始",
     "finish": "完了",
-    "tryAgain": "もう一度"
+    "tryAgain": "もう一度",
+    "changeLanguage": "言語を変更"
   },
   "header": {
-    "title": "名詞ジェンダー辞典",
-    "subtitle": "世界の言語で名詞の性別を学ぼう",
-    "words": "単語",
-    "translations": "翻訳",
-    "languages": "言語",
-    "searchLanguages": "検索言語",
-    "searchTerms": "検索語",
-    "multilingualSearch": "多言語検索"
+    "subtitle": "世界の言語で名詞の性別を学ぼう"
   },
   "search": {
     "placeholder": "単語を検索...",
@@ -28,7 +22,9 @@
     "searchButton": "検索",
     "noLanguagesSelected": "すべての言語から検索",
     "noResultsFound": "該当する単語が見つかりませんでした。\n「cat」「book」「house」などでお試しください。",
-    "resultsFound": "{count}件見つかりました"
+    "resultsFound": "{count}件見つかりました",
+    "networkError": "通信エラー",
+    "networkErrorMessage": "ネットワーク接続を確認してから再度お試しください"
   },
   "gender": {
     "masculine": "男性",
@@ -36,7 +32,7 @@
     "neuter": "中性",
     "m": "♂ 男性",
     "f": "♀ 女性",
-    "n": "○ 中性"
+    "n": "⚲ 中性"
   },
   "languages": {
     "Arabic": "アラビア語",
@@ -50,7 +46,10 @@
   },
   "audio": {
     "play": "{word}の音声を再生",
-    "stop": "{word}の音声を停止"
+    "stop": "{word}の音声を停止",
+    "selectVoiceGender": "音声の性別を選択",
+    "maleVoice": "男性の声",
+    "femaleVoice": "女性の声"
   },
   "copy": {
     "copy": "コピー",
@@ -58,10 +57,7 @@
     "copyWord": "コピー: {word}"
   },
   "theme": {
-    "light": "ライトテーマ → ダークテーマ",
-    "dark": "ダークテーマ → システム設定",
-    "system": "システム設定 → ライトテーマ",
-    "toggle": "テーマ切り替え"
+    "toggle": "テーマを変更"
   },
   "shortcuts": {
     "title": "キーボードショートカット",
@@ -71,16 +67,11 @@
   },
   "quiz": {
     "title": "ジェンダークイズ",
-    "description": "名詞の性別に関する知識をテストしましょう！フランス語、ドイツ語、スペイン語から10問をランダムに出題します。",
+    "description": "名詞の性別に関する知識をテストしましょう！\n言語を選んで、10個のランダムな単語の性別を当ててください。",
     "startQuiz": "クイズを始める",
     "question": "問題 {current}/{total}",
     "complete": "クイズ完了！",
-    "correct": "正解",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% 正解",
     "loadingQuiz": "クイズを読み込み中..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - 多言語の名詞の性を学習"
-  }
+  "footer": {}
 }
