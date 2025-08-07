@@ -17,6 +17,14 @@
     "networkError": "Netzwerkfehler",
     "networkErrorMessage": "Bitte überprüfen Sie Ihre Netzwerkverbindung und versuchen Sie es erneut"
   },
+  "tabs": {
+    "search": "Suchen",
+    "browse": "Durchsuchen",
+    "quiz": "Quiz"
+  },
+  "browse": {
+    "index": "Index"
+  },
   "gender": {
     "masculine": "Maskulin",
     "feminine": "Feminin",

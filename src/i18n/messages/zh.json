@@ -17,6 +17,14 @@
     "networkError": "网络错误",
     "networkErrorMessage": "请检查网络连接并重试"
   },
+  "tabs": {
+    "search": "搜索",
+    "browse": "浏览",
+    "quiz": "测验"
+  },
+  "browse": {
+    "index": "索引"
+  },
   "gender": {
     "masculine": "阳性",
     "feminine": "阴性",

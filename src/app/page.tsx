@@ -25,13 +25,14 @@ export default function Home() {
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [currentBrowseLetter, setCurrentBrowseLetter] = useState<string | null>(null);
   const searchBoxRef = useRef<SearchBoxRef>(null);
   const { t, isLoading: translationsLoading } = useTranslations();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   // 初期ブラウジングデータの読み込み
-  const loadBrowseData = useCallback(async (offset: number = 0) => {
+  const loadBrowseData = useCallback(async (offset: number = 0, startsWith?: string) => {
     if (offset === 0 && isLoading) return; // 初期読み込み時の重複防止
     if (offset > 0 && isLoadingMore) return; // 追加読み込み時の重複防止
     
@@ -42,7 +43,12 @@ export default function Home() {
     }
     
     try {
-      const response = await fetch(`/api/browse?limit=50&offset=${offset}`);
+      let url = `/api/browse?limit=50&offset=${offset}`;
+      if (startsWith) {
+        url += `&startsWith=${startsWith.toLowerCase()}`;
+      }
+      
+      const response = await fetch(url);
       const data = await response.json();
       
       if (data.success) {
@@ -68,6 +74,7 @@ export default function Home() {
   useEffect(() => {
     const query = searchParams.get('q');
     const languages = searchParams.get('lang');
+    const letter = searchParams.get('letter');
     
     if (query && query.trim()) {
       // URLにクエリがある場合のみ検索実行
@@ -77,12 +84,14 @@ export default function Home() {
     } else {
       // URLにクエリがない場合は常にブラウズモード
       setMode('browse');
+      setCurrentBrowseLetter(letter || null);
+      
       if (browseResults.length === 0 && !isLoading) {
-        loadBrowseData();
+        loadBrowseData(0, letter || undefined);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams.get('q'), searchParams.get('lang')]);
+  }, [searchParams]);
 
   // 無限スクロール（スロットリング付き）
   const handleScroll = useCallback(() => {
@@ -94,9 +103,9 @@ export default function Home() {
     
     // スクロール位置が下から200px以内に来たら次のデータを読み込み
     if (scrollTop + windowHeight >= documentHeight - 200) {
-      loadBrowseData(browseResults.length);
+      loadBrowseData(browseResults.length, currentBrowseLetter || undefined);
     }
-  }, [isLoadingMore, hasMore, mode, browseResults.length, loadBrowseData]);
+  }, [isLoadingMore, hasMore, mode, browseResults.length, loadBrowseData, currentBrowseLetter]);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -240,6 +249,8 @@ export default function Home() {
           onSearch={handleSearch}
           onBrowse={async (letter, languages) => {
             setMode('browse');
+            setCurrentBrowseLetter(letter || null);
+            
             // URLを更新（ブラウズモードでは言語フィルターは不要）
             const params = new URLSearchParams();
             if (letter) {
@@ -294,6 +305,7 @@ export default function Home() {
             } else if (tab === 'browse') {
               setMode('browse');
               setSearchResults([]);
+              setCurrentBrowseLetter(null);
               // ブラウズタブに切り替え時は基本ルートに戻る（文字フィルターなし）
               router.replace('/', { scroll: false });
             } else if (tab === 'quiz') {
@@ -315,7 +327,15 @@ export default function Home() {
             languagesOptional: t('search.languagesOptional'),
             searchButton: t('search.searchButton'),
             searching: t('search.searching'),
-            startQuiz: t('quiz.startQuiz')
+            startQuiz: t('quiz.startQuiz'),
+            tabs: {
+              search: t('tabs.search'),
+              browse: t('tabs.browse'),
+              quiz: t('tabs.quiz')
+            },
+            browse: {
+              index: t('browse.index')
+            }
           }}
         />
         {/* クイズタブの時は検索結果を表示しない */}

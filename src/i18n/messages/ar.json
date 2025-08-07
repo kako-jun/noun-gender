@@ -17,6 +17,14 @@
     "networkError": "خطأ في الشبكة",
     "networkErrorMessage": "يرجى فحص اتصالك بالإنترنت والمحاولة مرة أخرى"
   },
+  "tabs": {
+    "search": "بحث",
+    "browse": "تصفح",
+    "quiz": "اختبار"
+  },
+  "browse": {
+    "index": "فهرس"
+  },
   "gender": {
     "masculine": "مذكر",
     "feminine": "مؤنث",

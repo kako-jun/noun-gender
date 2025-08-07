@@ -17,6 +17,14 @@
     "networkError": "Ошибка сети",
     "networkErrorMessage": "Проверьте подключение к сети и попробуйте снова"
   },
+  "tabs": {
+    "search": "Поиск",
+    "browse": "Обзор",
+    "quiz": "Викторина"
+  },
+  "browse": {
+    "index": "Индекс"
+  },
   "gender": {
     "masculine": "Мужской",
     "feminine": "Женский",

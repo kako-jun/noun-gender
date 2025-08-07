@@ -17,6 +17,14 @@
     "networkError": "通信エラー",
     "networkErrorMessage": "ネットワーク接続を確認してから再度お試しください"
   },
+  "tabs": {
+    "search": "検索",
+    "browse": "ブラウズ",
+    "quiz": "クイズ"
+  },
+  "browse": {
+    "index": "索引"
+  },
   "gender": {
     "masculine": "男性",
     "feminine": "女性",
