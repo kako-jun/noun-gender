@@ -33,8 +33,8 @@
     "Spanish": "西班牙语"
   },
   "audio": {
-    "play": "播放 {word} 的音频",
-    "stop": "停止 {word} 的音频",
+    "play": "播放音频",
+    "stop": "停止音频",
     "selectVoiceGender": "选择语音性别",
     "maleVoice": "男声",
     "femaleVoice": "女声"
