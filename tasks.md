@@ -21,16 +21,16 @@ Next.js + TypeScript + SQLite構成で実装済み。現在はデータ品質向
 **目標**: 全4,541英語単語に意味定義を追加（meaning_en, meaning_ja, meaning_zh）
 
 **進捗状況**:
-- ✅ 完了: 188語 / 4,541語 (4.1%)
-- 🔄 残り: 4,353語
+- ✅ 完了: 1,517語 / 4,541語 (33.4%)
+- 🔄 残り: 3,024語
 
 **バッチ処理履歴**:
-1. **Batch 1** (28語): ability～accountability等 - 2025-06-29完了
-2. **Batch 2** (10語): accord～acre等 - 2025-06-29完了  
-3. **Batch 3** (10語): addition～advantage等 - 2025-06-29完了
-4. **Batch 4** (50語): agenda～amnesty等 - 2025-08-06完了
-5. **Batch 5** (50語): aquatic～astrophysics等 - 2025-08-06完了
-6. **Batch 6** (50語): baggage～bean等 - **2025-08-06実行完了** ← 最新
+1. **Batch 1-6** (188語): ability～bean等 - 2025-06-29～2025-08-06完了
+2. **Batch 7-36** (1,329語): beard～conundrum等 - 2025-08-07完了 ← 最新
+
+**大規模バッチ処理実績**:
+- 効率的なバッチスクリプトにより、1日で1,329語を処理完了
+- 残り約61バッチで完了見込み
 
 **効率化戦略**:
 - 10語バッチ → **50語バッチに変更**（効率化実現）
@@ -63,6 +63,89 @@ node scripts/generate-meanings-batch-7-large.js
 ```sql
 SELECT COUNT(*) as completed FROM words_fr WHERE meaning_en IS NOT NULL AND meaning_en != '';
 SELECT COUNT(*) as remaining FROM words_fr WHERE meaning_en IS NULL OR meaning_en = '';
+```
+
+### Phase 2.5: 例文機能設計 🆕 計画中
+
+#### 例文表示機能の設計案
+
+**1. データベース拡張案**
+```sql
+-- 英語基本の例文テーブル（新規作成）
+CREATE TABLE example_sentences (
+  id INTEGER PRIMARY KEY,
+  english_word TEXT UNIQUE REFERENCES words(english),
+  example_en TEXT NOT NULL,     -- 英語基本例文
+  example_ja TEXT,              -- 日本語訳
+  example_zh TEXT,              -- 中国語訳
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 各言語テーブルには翻訳例文のみ追加
+ALTER TABLE words_fr ADD COLUMN example_native TEXT;  -- フランス語例文（英語例文の翻訳）
+ALTER TABLE words_de ADD COLUMN example_native TEXT;  -- ドイツ語例文（英語例文の翻訳）
+-- 他の言語も同様
+```
+
+**2. UI設計案**
+- **配置**: 各単語カードの意味定義の下、翻訳カードの上に例文セクション追加
+- **表示レイアウト**: 
+  ```
+  [単語カード]
+  ├── 英単語 + 音声ボタン
+  ├── 意味定義（日本語/中国語/英語）
+  ├── 【例文セクション】← ここに追加（常時表示）
+  │   ├── 英語例文（太字で単語をハイライト）
+  │   └── UI言語での翻訳（日本語/中国語）- 薄い文字色
+  └── [各言語の翻訳カード] × 8言語
+      └── （各翻訳カード内に）ネイティブ例文を小さく表示
+  ```
+- **常時表示**: 折りたたみなし、すべての例文を最初から表示
+- **視覚的階層**: 英語例文は通常サイズ、翻訳は少し小さく薄い色で表示
+- **各言語カードの例文**: 性別に応じた冠詞を色分けハイライト
+
+**3. 実装優先順位**
+1. **Phase 1**: 基本語彙500語に例文追加（高頻度・重要単語）
+2. **Phase 2**: 中頻度単語1000語に例文追加
+3. **Phase 3**: 残りの単語に段階的に追加
+
+**4. 例文生成ガイドライン**
+- **英語基本主義**: 英語例文を基本とし、各言語はその翻訳
+- **簡潔性**: 10単語以内の短い文
+- **実用性**: 日常会話で使える自然な文
+- **性別強調**: 冠詞・形容詞で性別を明確に示す
+- **文法的特徴**: 各言語の格変化・冠詞使用を含む
+- **文化的中立性**: 特定文化に偏らない普遍的な内容
+
+**5. 技術的実装案**
+```typescript
+// コンポーネント拡張
+interface WordExample {
+  example_en: string;
+  example_native: string;
+  example_ja: string;
+  example_zh: string;
+}
+
+// 例文表示コンポーネント
+const ExampleSection: React.FC<{word: string, examples: WordExample, locale: string}> = ({word, examples, locale}) => {
+  const uiTranslation = locale === 'ja' ? examples.example_ja : 
+                       locale === 'zh' ? examples.example_zh :
+                       null;
+  
+  return (
+    <div className="mt-3 mb-4 p-3 bg-solarized-base3 dark:bg-solarized-base03 rounded-lg">
+      <p className="text-sm font-medium text-solarized-base01 dark:text-solarized-base1">
+        {highlightWord(examples.example_en, word)}
+      </p>
+      {uiTranslation && (
+        <p className="text-xs text-solarized-base00 dark:text-solarized-base0 opacity-70 mt-1">
+          {uiTranslation}
+        </p>
+      )}
+    </div>
+  );
+};
 ```
 
 ### Phase 3: 空翻訳補完 ⏳ 待機中
@@ -120,4 +203,4 @@ sqlite3 data/noun_gender.db "SELECT english FROM words_fr WHERE meaning_en IS NU
 - **最終目標**: データ品質100%、全機能完備の公開版リリース
 
 ---
-最終更新: 2025-08-06 - Batch 6完了、188語/4,541語 (4.1%)
+最終更新: 2025-08-07 - Batch 36完了、1,517語/4,541語 (33.4%)、例文機能設計追加

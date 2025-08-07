@@ -8,6 +8,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 import { Button } from './ui/Button';
 import { getGenderStyle, getGenderSymbol } from '@/utils/genderStyles';
 import { HighlightedText } from '@/utils/textHighlight';
+import { ExampleSection } from './ExampleSection';
 
 interface SearchResultsProps {
   results: SearchResult[];
@@ -133,6 +134,12 @@ export function SearchResults({
               }
               return null;
             })()}
+
+            {/* 例文セクション */}
+            <ExampleSection 
+              word={result.english || result.word?.word_en || ''} 
+              example={result.example}
+            />
           </div>
           
           <div className="grid gap-3">
@@ -161,8 +168,8 @@ export function SearchResults({
                 </span>
                 
                 {/* Main content */}
-                <div className="relative flex items-center justify-between p-3">
-                  <div className="flex items-center justify-between w-full">
+                <div className="relative p-3">
+                  <div className="flex items-center justify-between w-full mb-1">
                     <div className="flex items-center space-x-3 sm:space-x-6">
                       <span className="text-sm font-medium text-solarized-base00 dark:text-solarized-base0 w-20">
                         {SUPPORTED_LANGUAGES[translation.language as keyof typeof SUPPORTED_LANGUAGES]}
@@ -179,22 +186,40 @@ export function SearchResults({
                       </span>
                     </div>
                     
+                    <div className="flex items-center mr-16">
+                      <div className="w-8 flex justify-center transform transition-transform duration-200 hover:scale-110">
+                        <AudioButton 
+                          text={translation.translation} 
+                          language={translation.language}
+                        />
+                      </div>
+                      <div className="w-8 flex justify-center ml-3 transform transition-transform duration-200 hover:scale-110">
+                        <CopyButton 
+                          text={translation.translation}
+                          label={translation.translation}
+                        />
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="flex items-center mr-16">
-                    <div className="w-8 flex justify-center transform transition-transform duration-200 hover:scale-110">
-                      <AudioButton 
-                        text={translation.translation} 
-                        language={translation.language}
-                      />
+                  {/* ネイティブ例文 - 翻訳の下の2行目として表示 */}
+                  {translation.example_native && (
+                    <div className="flex items-start space-x-3 sm:space-x-6">
+                      <span className="text-sm font-medium text-transparent w-20"></span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-solarized-base00 dark:text-solarized-base0 opacity-60">
+                          {translation.example_native}
+                        </span>
+                        <div className="transform transition-transform duration-200 hover:scale-110">
+                          <AudioButton 
+                            text={translation.example_native} 
+                            language={translation.language}
+                            size="small"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="w-8 flex justify-center ml-3 transform transition-transform duration-200 hover:scale-110">
-                      <CopyButton 
-                        text={translation.translation}
-                        label={translation.translation}
-                      />
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             ))}

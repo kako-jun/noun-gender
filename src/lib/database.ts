@@ -24,12 +24,20 @@ class DatabaseManager {
     const langFilter = languages;
     const langPlaceholders = langFilter.map(() => '?').join(',');
     
-    // Enhanced search with multilingual support
+    // Enhanced search with multilingual support and examples
     const sql = `
       SELECT DISTINCT aw.english, aw.translation, aw.language, aw.gender,
              aw.frequency, aw.example, aw.pronunciation, aw.usage_notes, aw.gender_explanation,
-             aw.meaning_en, aw.meaning_ja, aw.meaning_zh
+             aw.meaning_en, aw.meaning_ja, aw.meaning_zh,
+             ee.example_en,
+             et_ja.example_translation as example_ja,
+             et_zh.example_translation as example_zh,
+             et_native.example_translation as example_native
       FROM all_words aw
+      LEFT JOIN english_examples ee ON aw.english = ee.english_word
+      LEFT JOIN example_translations et_ja ON aw.english = et_ja.english_word AND et_ja.language = 'ja'
+      LEFT JOIN example_translations et_zh ON aw.english = et_zh.english_word AND et_zh.language = 'zh'
+      LEFT JOIN example_translations et_native ON aw.english = et_native.english_word AND et_native.language = aw.language
       WHERE (aw.language IN (${langPlaceholders})) AND (
         aw.english LIKE ? 
         OR aw.translation LIKE ?
@@ -68,7 +76,24 @@ class DatabaseManager {
       searchTerm, searchTerm, searchTerm, // Search terms
       exactTerm, exactTerm, searchTerm, startsWith, startsWith, // Ranking terms (updated order)
       limit
-    ) as Array<{ english: string; translation: string; language: string; gender: string; frequency?: number; example?: string; pronunciation?: string; usage_notes?: string; gender_explanation?: string; }>;
+    ) as Array<{ 
+      english: string; 
+      translation: string; 
+      language: string; 
+      gender: string; 
+      frequency?: number; 
+      example?: string; 
+      pronunciation?: string; 
+      usage_notes?: string; 
+      gender_explanation?: string;
+      meaning_en?: string;
+      meaning_ja?: string;
+      meaning_zh?: string;
+      example_en?: string;
+      example_ja?: string;
+      example_zh?: string;
+      example_native?: string;
+    }>;
 
 
     // Group results by English word
@@ -86,7 +111,12 @@ class DatabaseManager {
             meaning_ja: row.meaning_ja,
             meaning_zh: row.meaning_zh
           },
-          translations: []
+          translations: [],
+          example: row.example_en ? {
+            example_en: row.example_en,
+            example_ja: row.example_ja,
+            example_zh: row.example_zh
+          } : undefined
         });
       }
       
@@ -101,6 +131,7 @@ class DatabaseManager {
           gender: row.gender as 'm' | 'f' | 'n',
           frequency: row.frequency,
           example: row.example,
+          example_native: row.example_native,
           pronunciation: row.pronunciation,
           usage_notes: row.usage_notes,
           gender_explanation: row.gender_explanation
@@ -175,10 +206,19 @@ class DatabaseManager {
     const placeholders = englishList.map(() => '?').join(',');
     
     let translationsQuery = `
-      SELECT english, language, translation, gender, frequency, example, pronunciation, usage_notes, gender_explanation,
-             meaning_en, meaning_ja, meaning_zh
-      FROM all_words 
-      WHERE english IN (${placeholders}) AND translation IS NOT NULL AND translation != ''
+      SELECT aw.english, aw.language, aw.translation, aw.gender, aw.frequency, aw.example, 
+             aw.pronunciation, aw.usage_notes, aw.gender_explanation,
+             aw.meaning_en, aw.meaning_ja, aw.meaning_zh,
+             ee.example_en,
+             et_ja.example_translation as example_ja,
+             et_zh.example_translation as example_zh,
+             et_native.example_translation as example_native
+      FROM all_words aw
+      LEFT JOIN english_examples ee ON aw.english = ee.english_word
+      LEFT JOIN example_translations et_ja ON aw.english = et_ja.english_word AND et_ja.language = 'ja'
+      LEFT JOIN example_translations et_zh ON aw.english = et_zh.english_word AND et_zh.language = 'zh'
+      LEFT JOIN example_translations et_native ON aw.english = et_native.english_word AND et_native.language = aw.language
+      WHERE aw.english IN (${placeholders}) AND aw.translation IS NOT NULL AND aw.translation != ''
     `;
     
     const translationParams = [...englishList];
@@ -202,7 +242,12 @@ class DatabaseManager {
           meaning_en: row.meaning_en,
           meaning_ja: row.meaning_ja,
           meaning_zh: row.meaning_zh,
-          translations: []
+          translations: [],
+          example: row.example_en ? {
+            example_en: row.example_en,
+            example_ja: row.example_ja,
+            example_zh: row.example_zh
+          } : undefined
         });
       }
       
@@ -216,6 +261,7 @@ class DatabaseManager {
           gender: row.gender as 'm' | 'f' | 'n',
           frequency: row.frequency,
           example: row.example,
+          example_native: row.example_native,
           pronunciation: row.pronunciation,
           usage_notes: row.usage_notes,
           gender_explanation: row.gender_explanation

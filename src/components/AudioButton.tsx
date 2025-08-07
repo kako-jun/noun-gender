@@ -9,6 +9,7 @@ interface AudioButtonProps {
   text: string;
   language: string;
   className?: string;
+  size?: 'normal' | 'small';
 }
 
 // 言語コードをWeb Speech API用に変換
@@ -27,7 +28,7 @@ const getVoiceLang = (langCode: string): string => {
   return voiceMap[langCode] || 'en-US';
 };
 
-export function AudioButton({ text, language, className = '' }: AudioButtonProps) {
+export function AudioButton({ text, language, className = '', size = 'normal' }: AudioButtonProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSupported, setIsSupported] = useState(true);
   const { preferFemaleVoice } = useVoice();
@@ -49,12 +50,12 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
       return;
     }
 
-    // 重複実行防止
-    if (hasSpoken) {
+    if (!text || text.trim() === '') {
       return;
     }
 
-    if (!text || text.trim() === '') {
+    // 重複実行防止 - 再生中または直前にトリガーされた場合はスキップ
+    if (hasSpoken || isPlaying) {
       return;
     }
 
@@ -315,18 +316,25 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
         loadVoices();
       } else {
         // 音声リストの読み込み待機（現代ブラウザでは即座に利用可能）
-        window.speechSynthesis.onvoiceschanged = () => {
+        let voicesLoaded = false;
+        
+        const handleVoicesChanged = () => {
+          if (voicesLoaded) return; // 重複実行防止
+          voicesLoaded = true;
           loadVoices();
-          // イベントリスナーをクリアして重複実行を防止
           window.speechSynthesis.onvoiceschanged = null;
         };
         
-        // 念のため100ms後にチェック（軽量フォールバック）
+        window.speechSynthesis.onvoiceschanged = handleVoicesChanged;
+        
+        // 念のため200ms後にチェック（フォールバック）- ただし重複チェック
         setTimeout(() => {
-          if (window.speechSynthesis.getVoices().length > 0) {
+          if (!voicesLoaded && window.speechSynthesis.getVoices().length > 0) {
+            voicesLoaded = true;
+            window.speechSynthesis.onvoiceschanged = null;
             loadVoices();
           }
-        }, 100);
+        }, 200);
       }
     } catch (error) {
       console.warn('Speech synthesis initialization failed:', error);
@@ -339,12 +347,20 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
     return null; // サポートされていない場合は非表示
   }
 
+  const sizeClasses = size === 'small' 
+    ? 'w-6 h-6' 
+    : 'w-8 h-8';
+  
+  const iconClasses = size === 'small' 
+    ? 'w-3 h-3' 
+    : 'w-4 h-4';
+
   return (
     <button
       onClick={handleSpeak}
       className={`
         inline-flex items-center justify-center
-        w-8 h-8 rounded-full
+        ${sizeClasses} rounded-full
         bg-solarized-orange hover:bg-solarized-yellow 
         text-white transition-colors
         disabled:opacity-50 disabled:cursor-not-allowed
@@ -354,9 +370,9 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
       disabled={!text || text.trim() === ''}
     >
       {isPlaying ? (
-        <VolumeX className="w-4 h-4" />
+        <VolumeX className={iconClasses} />
       ) : (
-        <Volume2 className="w-4 h-4" />
+        <Volume2 className={iconClasses} />
       )}
     </button>
   );

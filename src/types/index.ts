@@ -7,6 +7,7 @@ export interface Translation {
   gender: 'm' | 'f' | 'n';
   frequency?: number;
   example?: string;
+  example_native?: string;
   pronunciation?: string;
   usage_notes?: string;
   gender_explanation?: string;
@@ -24,6 +25,12 @@ export interface Word {
   meaning_zh?: string;
 }
 
+export interface ExampleSentence {
+  example_en: string;
+  example_ja?: string;
+  example_zh?: string;
+}
+
 export interface SearchResult {
   word?: Word;  // 既存の検索結果用
   english?: string;  // 新しいブラウズ結果用
@@ -31,6 +38,7 @@ export interface SearchResult {
   meaning_ja?: string;
   meaning_zh?: string;
   translations: Translation[];
+  example?: ExampleSentence;  // 例文データ
 }
 
 // API types
