@@ -33,8 +33,8 @@
     "Spanish": "Espagnol"
   },
   "audio": {
-    "play": "Lire l'audio pour {word}",
-    "stop": "Arrêter l'audio pour {word}",
+    "play": "Lire l'audio",
+    "stop": "Arrêter l'audio",
     "selectVoiceGender": "Sélectionner le genre de la voix",
     "maleVoice": "Voix masculine",
     "femaleVoice": "Voix féminine"

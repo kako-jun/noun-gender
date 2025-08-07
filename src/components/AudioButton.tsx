@@ -350,7 +350,7 @@ export function AudioButton({ text, language, className = '' }: AudioButtonProps
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}
       `}
-      title={isPlaying ? t('audio.stop', { word: text }) : t('audio.play', { word: text })}
+      title={isPlaying ? t('audio.stop') : t('audio.play')}
       disabled={!text || text.trim() === ''}
     >
       {isPlaying ? (
