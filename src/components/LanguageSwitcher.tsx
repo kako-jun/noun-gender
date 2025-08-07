@@ -48,15 +48,15 @@ export function LanguageSwitcher() {
                   disabled={isLoading}
                   className={`
                     w-full px-3 py-2 text-left flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
-                    ${currentLocale === locale ? 'bg-blue-50 dark:bg-blue-900' : ''}
+                    ${currentLocale === locale ? 'bg-solarized-blue text-white' : ''}
                   `}
                 >
                   <span className="text-lg">{localeFlags[locale]}</span>
-                  <span className="text-sm text-gray-800 dark:text-gray-200">
+                  <span className={`text-sm ${currentLocale === locale ? 'text-white' : 'text-gray-800 dark:text-gray-200'}`}>
                     {localeNames[locale]}
                   </span>
                   {currentLocale === locale && (
-                    <span className="ml-auto text-blue-500 text-xs">✓</span>
+                    <span className="ml-auto text-white text-xs">✓</span>
                   )}
                 </button>
               ))}

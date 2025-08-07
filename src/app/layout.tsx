@@ -3,6 +3,7 @@ import { Source_Serif_4, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { TranslationsProvider } from '@/contexts/TranslationsContext';
+import { VoiceProvider } from '@/contexts/VoiceContext';
 
 // モダンで技術的なセリフフォント（メイン）
 const sourceSerif = Source_Serif_4({
@@ -42,7 +43,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TranslationsProvider>
-            {children}
+            <VoiceProvider>
+              {children}
+            </VoiceProvider>
           </TranslationsProvider>
         </ThemeProvider>
       </body>
