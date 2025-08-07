@@ -9,7 +9,6 @@ import { StatsHeader } from '@/components/StatsHeader';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { VoiceSelector } from '@/components/VoiceSelector';
-import { Quiz } from '@/components/Quiz';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -22,7 +21,6 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [browseResults, setBrowseResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [showQuiz, setShowQuiz] = useState(false);
   const [mode, setMode] = useState<'browse' | 'search' | 'quiz'>('browse');
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -240,41 +238,71 @@ export default function Home() {
         <SearchBox 
           ref={searchBoxRef} 
           onSearch={handleSearch}
-          onBrowse={(letter, languages) => {
+          onBrowse={async (letter, languages) => {
             setMode('browse');
-            // URLを更新
+            // URLを更新（ブラウズモードでは言語フィルターは不要）
             const params = new URLSearchParams();
             if (letter) {
-              params.set('letter', letter);
-            }
-            if (languages && languages.length > 0 && languages.length < Object.keys(SUPPORTED_LANGUAGES).length) {
-              params.set('lang', languages.join('-'));
+              params.set('letter', letter.toLowerCase());
             }
             const newUrl = params.toString() ? `/?${params.toString()}` : '/';
             router.replace(newUrl, { scroll: false });
             
-            // ブラウズデータを読み込む（一旦初期データクリア）
+            // 特定の文字でブラウズデータを読み込む
             setSearchResults([]);
             setBrowseResults([]);
-            loadBrowseData();
+            setIsLoading(true);
+            
+            try {
+              let url = '/api/browse?limit=50&offset=0';
+              if (letter) {
+                url += `&startsWith=${letter.toLowerCase()}`;
+              }
+              
+              const response = await fetch(url);
+              const data = await response.json();
+              
+              if (data.success) {
+                setBrowseResults(data.data);
+                setHasMore(data.pagination?.hasMore || false);
+              }
+            } catch (error) {
+              console.error('Browse data load failed:', error);
+            } finally {
+              setIsLoading(false);
+            }
           }}
-          onQuiz={() => setShowQuiz(true)}
+          onQuiz={() => {
+            router.push('/quiz');
+          }}
           onTabChange={(tab) => {
-            // タブ切り替え時に適切な状態に設定
+            // タブ切り替え時に適切な状態に設定とURL更新
             if (tab === 'search') {
               setMode('search');
-              // 検索クエリがない場合は結果をクリア
-              if (!searchParams.get('q')?.trim()) {
+              // 検索クエリがある場合はそのURLを維持、ない場合はルートに戻る
+              const query = searchParams.get('q');
+              const lang = searchParams.get('lang');
+              if (query?.trim()) {
+                const params = new URLSearchParams();
+                params.set('q', query);
+                if (lang) params.set('lang', lang);
+                router.replace(`/?${params.toString()}`, { scroll: false });
+              } else {
+                router.replace('/', { scroll: false });
                 setSearchResults([]);
               }
             } else if (tab === 'browse') {
               setMode('browse');
               setSearchResults([]);
+              // ブラウズタブに切り替え時は基本ルートに戻る（文字フィルターなし）
+              router.replace('/', { scroll: false });
             } else if (tab === 'quiz') {
               // クイズタブでは結果表示を隠す
               setMode('quiz');
               setSearchResults([]);
               setBrowseResults([]);
+              // クイズタブに切り替え時もルートに戻る
+              router.replace('/', { scroll: false });
             }
           }}
           isLoading={isLoading}
@@ -315,10 +343,6 @@ export default function Home() {
       {/* Footer */}
       <Footer />
       
-      {/* Quiz Modal */}
-      {showQuiz && (
-        <Quiz onClose={() => setShowQuiz(false)} />
-      )}
       
       {/* Scroll to Top Button */}
       <ScrollToTop />
