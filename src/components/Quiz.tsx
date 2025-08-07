@@ -5,7 +5,7 @@ import { Play, RotateCcw, Check, X } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
 import { Button } from './ui/Button';
-import { getGenderStyle, getGenderSymbol, getGenderLabel } from '@/utils/genderStyles';
+import { getGenderStyle, getGenderSymbol } from '@/utils/genderStyles';
 import { useTranslations } from '@/contexts/TranslationsContext';
 
 interface QuizQuestion {
@@ -374,7 +374,7 @@ Select Language
                   
                   {/* Main content */}
                   <div className="relative">
-                    {getGenderLabel(option)}
+                    {option === 'm' ? t('gender.masculine') : option === 'f' ? t('gender.feminine') : t('gender.neuter')}
                   </div>
                 </button>
               ))}

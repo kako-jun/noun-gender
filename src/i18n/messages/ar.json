@@ -1,14 +1,6 @@
 {
   "common": {
-    "search": "بحث",
-    "loading": "جاري التحميل...",
-    "error": "خطأ",
-    "cancel": "إلغاء",
     "close": "إغلاق",
-    "next": "التالي",
-    "previous": "السابق",
-    "start": "ابدأ",
-    "finish": "إنهاء",
     "tryAgain": "حاول مرة أخرى",
     "changeLanguage": "تغيير اللغة"
   },
@@ -20,7 +12,6 @@
     "searching": "البحث جاري...",
     "languagesOptional": "اللغات",
     "searchButton": "بحث",
-    "noLanguagesSelected": "لم يتم اختيار لغات = البحث في جميع اللغات",
     "noResultsFound": "لم يتم العثور على نتائج.\nجرب البحث عن كلمات مثل \"cat\" أو \"book\" أو \"house\".",
     "resultsFound": "تم العثور على {count} نتائج",
     "networkError": "خطأ في الشبكة",
@@ -29,10 +20,7 @@
   "gender": {
     "masculine": "مذكر",
     "feminine": "مؤنث",
-    "neuter": "محايد",
-    "m": "♂ مذكر",
-    "f": "♀ مؤنث",
-    "n": "⚲ محايد"
+    "neuter": "محايد"
   },
   "languages": {
     "Arabic": "عربي",
@@ -52,9 +40,8 @@
     "femaleVoice": "صوت أنثوي"
   },
   "copy": {
-    "copy": "نسخ",
-    "copied": "تم النسخ!",
-    "copyWord": "نسخ: {word}"
+    "copy": "نسخ إلى الحافظة",
+    "copied": "تم النسخ!"
   },
   "theme": {
     "toggle": "تغيير المظهر"
@@ -62,8 +49,7 @@
   "shortcuts": {
     "title": "اختصارات لوحة المفاتيح",
     "focusSearch": "تركيز البحث",
-    "clearSearch": "محو البحث",
-    "toggleTheme": "تغيير المظهر"
+    "clearSearch": "محو البحث"
   },
   "quiz": {
     "title": "اختبار الجنس",
@@ -72,6 +58,5 @@
     "question": "سؤال {current}/{total}",
     "complete": "اكتمل الاختبار!",
     "loadingQuiz": "تحميل الاختبار..."
-  },
-  "footer": {}
+  }
 }

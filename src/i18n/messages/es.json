@@ -1,14 +1,6 @@
 {
   "common": {
-    "search": "Buscar",
-    "loading": "Cargando...",
-    "error": "Error",
-    "cancel": "Cancelar",
     "close": "Cerrar",
-    "next": "Siguiente",
-    "previous": "Anterior",
-    "start": "Comenzar",
-    "finish": "Terminar",
     "tryAgain": "Intentar de nuevo",
     "changeLanguage": "Cambiar idioma"
   },
@@ -20,7 +12,6 @@
     "searching": "Buscando...",
     "languagesOptional": "Idiomas",
     "searchButton": "Buscar",
-    "noLanguagesSelected": "Ningún idioma seleccionado = buscar en todos los idiomas",
     "noResultsFound": "No se encontraron resultados.\nIntenta buscar palabras como \"cat\", \"book\" o \"house\".",
     "resultsFound": "Se encontraron {count} resultados",
     "networkError": "Error de red",
@@ -29,10 +20,7 @@
   "gender": {
     "masculine": "Masculino",
     "feminine": "Femenino",
-    "neuter": "Neutro",
-    "m": "♂ Masculino",
-    "f": "♀ Femenino",
-    "n": "⚲ Neutro"
+    "neuter": "Neutro"
   },
   "languages": {
     "Arabic": "Árabe",
@@ -52,9 +40,8 @@
     "femaleVoice": "Voz femenina"
   },
   "copy": {
-    "copy": "Copiar",
-    "copied": "¡Copiado!",
-    "copyWord": "Copiar: {word}"
+    "copy": "Copiar al portapapeles",
+    "copied": "¡Copiado!"
   },
   "theme": {
     "toggle": "Cambiar tema"
@@ -62,8 +49,7 @@
   "shortcuts": {
     "title": "Atajos de Teclado",
     "focusSearch": "Enfocar búsqueda",
-    "clearSearch": "Limpiar búsqueda",
-    "toggleTheme": "Cambiar tema"
+    "clearSearch": "Limpiar búsqueda"
   },
   "quiz": {
     "title": "Quiz de Género",
@@ -72,6 +58,5 @@
     "question": "Pregunta {current}/{total}",
     "complete": "¡Quiz Completo!",
     "loadingQuiz": "Cargando quiz..."
-  },
-  "footer": {}
+  }
 }

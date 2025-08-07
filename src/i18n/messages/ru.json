@@ -1,14 +1,6 @@
 {
   "common": {
-    "search": "Поиск",
-    "loading": "Загрузка...",
-    "error": "Ошибка",
-    "cancel": "Отмена",
     "close": "Закрыть",
-    "next": "Далее",
-    "previous": "Назад",
-    "start": "Начать",
-    "finish": "Завершить",
     "tryAgain": "Попробовать снова",
     "changeLanguage": "Изменить язык"
   },
@@ -20,7 +12,6 @@
     "searching": "Поиск...",
     "languagesOptional": "Языки",
     "searchButton": "Поиск",
-    "noLanguagesSelected": "Языки не выбраны = поиск по всем языкам",
     "noResultsFound": "Результаты не найдены.\nПопробуйте поискать такие слова как \"cat\", \"book\" или \"house\".",
     "resultsFound": "Найдено {count} результатов",
     "networkError": "Ошибка сети",
@@ -29,10 +20,7 @@
   "gender": {
     "masculine": "Мужской",
     "feminine": "Женский",
-    "neuter": "Средний",
-    "m": "♂ Мужской",
-    "f": "♀ Женский",
-    "n": "⚲ Средний"
+    "neuter": "Средний"
   },
   "languages": {
     "Arabic": "Арабский",
@@ -52,9 +40,8 @@
     "femaleVoice": "Женский голос"
   },
   "copy": {
-    "copy": "Копировать",
-    "copied": "Скопировано!",
-    "copyWord": "Копировать: {word}"
+    "copy": "Копировать в буфер обмена",
+    "copied": "Скопировано!"
   },
   "theme": {
     "toggle": "Переключить тему"
@@ -62,8 +49,7 @@
   "shortcuts": {
     "title": "Клавиатурные сокращения",
     "focusSearch": "Фокус на поиске",
-    "clearSearch": "Очистить поиск",
-    "toggleTheme": "Переключить тему"
+    "clearSearch": "Очистить поиск"
   },
   "quiz": {
     "title": "Викторина по родам",
@@ -72,6 +58,5 @@
     "question": "Вопрос {current}/{total}",
     "complete": "Викторина завершена!",
     "loadingQuiz": "Загрузка викторины..."
-  },
-  "footer": {}
+  }
 }
