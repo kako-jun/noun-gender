@@ -11,6 +11,9 @@ export interface Translation {
   pronunciation?: string;
   usage_notes?: string;
   gender_explanation?: string;
+  memory_trick_ja?: string;
+  memory_trick_en?: string;
+  memory_trick_zh?: string;
 }
 
 export interface Word {
