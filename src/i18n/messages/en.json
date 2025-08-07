@@ -9,17 +9,11 @@
     "previous": "Previous",
     "start": "Start",
     "finish": "Finish",
-    "tryAgain": "Try Again"
+    "tryAgain": "Try Again",
+    "changeLanguage": "Change language"
   },
   "header": {
-    "title": "Noun Gender",
-    "subtitle": "Master noun genders across languages",
-    "words": "words",
-    "translations": "translations",
-    "languages": "languages",
-    "searchLanguages": "search languages",
-    "searchTerms": "search terms",
-    "multilingualSearch": "Multilingual search"
+    "subtitle": "Master noun genders across languages"
   },
   "search": {
     "placeholder": "Search words...",
@@ -28,7 +22,9 @@
     "searchButton": "Search",
     "noLanguagesSelected": "No languages selected = search all languages",
     "noResultsFound": "No results found.\nTry searching for a word like \"cat\", \"book\", or \"house\".",
-    "resultsFound": "Found {count} results"
+    "resultsFound": "Found {count} results",
+    "networkError": "Network Error",
+    "networkErrorMessage": "Please check your network connection and try again"
   },
   "gender": {
     "masculine": "Masculine",
@@ -36,7 +32,7 @@
     "neuter": "Neuter",
     "m": "♂ Masculine",
     "f": "♀ Feminine",
-    "n": "○ Neuter"
+    "n": "⚲ Neuter"
   },
   "languages": {
     "Arabic": "Arabic",
@@ -50,7 +46,10 @@
   },
   "audio": {
     "play": "Play audio for {word}",
-    "stop": "Stop audio for {word}"
+    "stop": "Stop audio for {word}",
+    "selectVoiceGender": "Select voice gender",
+    "maleVoice": "Male Voice",
+    "femaleVoice": "Female Voice"
   },
   "copy": {
     "copy": "Copy",
@@ -58,9 +57,6 @@
     "copyWord": "Copy: {word}"
   },
   "theme": {
-    "light": "Light theme → Dark theme",
-    "dark": "Dark theme → System setting",
-    "system": "System setting → Light theme",
     "toggle": "Toggle theme"
   },
   "shortcuts": {
@@ -71,16 +67,11 @@
   },
   "quiz": {
     "title": "Gender Quiz",
-    "description": "Test your knowledge of noun genders! You'll get 10 random words from French, German, and Spanish.",
+    "description": "Test your knowledge of noun genders!\nChoose a language and get 10 random words to identify their gender.",
     "startQuiz": "Start Quiz",
     "question": "Question {current}/{total}",
     "complete": "Quiz Complete!",
-    "correct": "correct",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% correct",
     "loadingQuiz": "Loading quiz..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
-  }
+  "footer": {}
 }

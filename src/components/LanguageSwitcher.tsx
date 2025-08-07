@@ -6,7 +6,7 @@ import { locales, localeNames, localeFlags, type Locale } from '@/i18n/config';
 import { useTranslations } from '@/hooks/useTranslations';
 
 export function LanguageSwitcher() {
-  const { locale: currentLocale, changeLanguage, isLoading } = useTranslations();
+  const { locale: currentLocale, changeLanguage, isLoading, t } = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLanguageChange = async (locale: Locale) => {
@@ -25,7 +25,7 @@ export function LanguageSwitcher() {
           text-solarized-base01 hover:text-solarized-base3 dark:text-solarized-base1 dark:hover:text-solarized-base03
           flex items-center space-x-1
         "
-        title="Change language"
+        title={t('common.changeLanguage')}
       >
         <Globe className="w-4 h-4" />
       </button>

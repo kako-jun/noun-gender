@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Volume2 } from 'lucide-react';
 import { useVoice } from '@/contexts/VoiceContext';
+import { useTranslations } from '@/hooks/useTranslations';
 
 interface VoiceSelectorProps {
   onVoiceGenderChange: (isFemale: boolean) => void;
@@ -11,6 +12,7 @@ interface VoiceSelectorProps {
 export function VoiceSelector({ onVoiceGenderChange }: VoiceSelectorProps) {
   const { preferFemaleVoice, setPreferFemaleVoice } = useVoice();
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslations();
 
   return (
     <div className="relative">
@@ -22,7 +24,7 @@ export function VoiceSelector({ onVoiceGenderChange }: VoiceSelectorProps) {
           dark:bg-solarized-base03 dark:hover:bg-solarized-base01 dark:border-solarized-base01
           text-solarized-base01 hover:text-solarized-base3 dark:text-solarized-base1 dark:hover:text-solarized-base03
         "
-        title="Select voice gender"
+        title={t('audio.selectVoiceGender')}
       >
         <Volume2 className="w-4 h-4" />
       </button>
@@ -49,7 +51,7 @@ export function VoiceSelector({ onVoiceGenderChange }: VoiceSelectorProps) {
                 `}
               >
                 <span className="text-lg">♂</span>
-                <span className={`text-sm ${!preferFemaleVoice ? 'text-white' : 'text-gray-800 dark:text-gray-200'}`}>Male Voice</span>
+                <span className={`text-sm ${!preferFemaleVoice ? 'text-white' : 'text-gray-800 dark:text-gray-200'}`}>{t('audio.maleVoice')}</span>
                 {!preferFemaleVoice && (
                   <span className="ml-auto text-white text-xs">✓</span>
                 )}
@@ -66,7 +68,7 @@ export function VoiceSelector({ onVoiceGenderChange }: VoiceSelectorProps) {
                 `}
               >
                 <span className="text-lg">♀</span>
-                <span className={`text-sm ${preferFemaleVoice ? 'text-white' : 'text-gray-800 dark:text-gray-200'}`}>Female Voice</span>
+                <span className={`text-sm ${preferFemaleVoice ? 'text-white' : 'text-gray-800 dark:text-gray-200'}`}>{t('audio.femaleVoice')}</span>
                 {preferFemaleVoice && (
                   <span className="ml-auto text-white text-xs">✓</span>
                 )}

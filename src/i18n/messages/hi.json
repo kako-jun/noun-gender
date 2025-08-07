@@ -5,81 +5,73 @@
     "error": "त्रुटि",
     "cancel": "रद्द करें",
     "close": "बंद करें",
-    "next": "Next",
-    "previous": "Previous",
-    "start": "Start",
-    "finish": "Finish",
-    "tryAgain": "Try Again"
+    "next": "अगला",
+    "previous": "पिछला",
+    "start": "शुरू करें",
+    "finish": "समाप्त करें",
+    "tryAgain": "फिर से कोशिश करें",
+    "changeLanguage": "भाषा बदलें"
   },
   "header": {
-    "title": "संज्ञा लिंग",
-    "subtitle": "सभी भाषाओं में संज्ञा लिंगों में महारत हासिल करें",
-    "words": "words",
-    "translations": "translations",
-    "languages": "languages",
-    "searchLanguages": "search languages",
-    "searchTerms": "search terms",
-    "multilingualSearch": "Multilingual search"
+    "subtitle": "सभी भाषाओं में संज्ञा लिंगों में महारत हासिल करें"
   },
   "search": {
-    "placeholder": "Search for a word... (Press '/' to focus)",
-    "searching": "Searching...",
-    "languagesOptional": "Languages (optional):",
-    "noLanguagesSelected": "No languages selected = search all languages",
-    "noResultsFound": "No results found. Try searching for a word like \"cat\", \"house\", or \"book\".",
-    "resultsFound": "Found {count} results"
+    "placeholder": "शब्द खोजें...",
+    "searching": "खोज रहे हैं...",
+    "languagesOptional": "भाषाएं",
+    "searchButton": "खोजें",
+    "noLanguagesSelected": "कोई भाषा नहीं चुनी गई = सभी भाषाओं में खोजें",
+    "noResultsFound": "कोई परिणाम नहीं मिला।\n\"cat\", \"book\", या \"house\" जैसे शब्द खोजने का प्रयास करें।",
+    "resultsFound": "{count} परिणाम मिले",
+    "networkError": "नेटवर्क त्रुटि",
+    "networkErrorMessage": "कृपया अपना नेटवर्क कनेक्शन जांचें और पुनः प्रयास करें"
   },
   "gender": {
-    "masculine": "Masculine",
-    "feminine": "Feminine",
-    "neuter": "Neuter",
-    "m": "♂ Masculine",
-    "f": "♀ Feminine",
-    "n": "○ Neuter"
+    "masculine": "पुल्लिंग",
+    "feminine": "स्त्रीलिंग",
+    "neuter": "नपुंसकलिंग",
+    "m": "♂ पुल्लिंग",
+    "f": "♀ स्त्रीलिंग",
+    "n": "⚲ नपुंसकलिंग"
   },
   "languages": {
-    "Arabic": "Arabic",
-    "French": "French",
-    "German": "German",
-    "Hindi": "Hindi",
-    "Italian": "Italian",
-    "Portuguese": "Portuguese",
-    "Russian": "Russian",
-    "Spanish": "Spanish"
+    "Arabic": "अरबी",
+    "French": "फ्रेंच",
+    "German": "जर्मन",
+    "Hindi": "हिंदी",
+    "Italian": "इतालवी",
+    "Portuguese": "पुर्तगाली",
+    "Russian": "रूसी",
+    "Spanish": "स्पेनिश"
   },
   "audio": {
-    "play": "Play audio for {word}",
-    "stop": "Stop audio for {word}"
+    "play": "{word} के लिए ऑडियो चलाएं",
+    "stop": "{word} के लिए ऑडियो रोकें",
+    "selectVoiceGender": "आवाज़ का लिंग चुनें",
+    "maleVoice": "पुरुष आवाज़",
+    "femaleVoice": "महिला आवाज़"
   },
   "copy": {
-    "copy": "Copy",
-    "copied": "Copied!",
-    "copyWord": "Copy: {word}"
+    "copy": "कॉपी करें",
+    "copied": "कॉपी हो गया!",
+    "copyWord": "कॉपी: {word}"
   },
   "theme": {
-    "light": "Light theme → Dark theme",
-    "dark": "Dark theme → System setting",
-    "system": "System setting → Light theme",
-    "toggle": "Toggle theme"
+    "toggle": "थीम बदलें"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "focusSearch": "Focus search input",
-    "clearSearch": "Clear search",
-    "toggleTheme": "Toggle theme"
+    "title": "कीबोर्ड शॉर्टकट",
+    "focusSearch": "खोज पर फ़ोकस",
+    "clearSearch": "खोज साफ़ करें",
+    "toggleTheme": "थीम बदलें"
   },
   "quiz": {
-    "title": "Gender Quiz",
-    "description": "Test your knowledge of noun genders! You'll get 10 random words from French, German, and Spanish.",
-    "startQuiz": "Start Quiz",
-    "question": "Question {current}/{total}",
-    "complete": "Quiz Complete!",
-    "correct": "correct",
-    "score": "{score}/{total}",
-    "percentage": "{percentage}% correct",
-    "loadingQuiz": "Loading quiz..."
+    "title": "लिंग क्विज़",
+    "description": "संज्ञा लिंगों के आपके ज्ञान का परीक्षण करें!\nकोई भाषा चुनें और 10 यादृच्छिक शब्दों का लिंग पहचानें।",
+    "startQuiz": "क्विज़ शुरू करें",
+    "question": "प्रश्न {current}/{total}",
+    "complete": "क्विज़ पूरा हो गया!",
+    "loadingQuiz": "क्विज़ लोड हो रहा है..."
   },
-  "footer": {
-    "copyright": "© 2025 kako-jun - Learn noun genders across languages"
-  }
+  "footer": {}
 }
