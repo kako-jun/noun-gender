@@ -8,7 +8,7 @@ import { Button } from './ui/Button';
 
 interface SearchBoxProps {
   onSearch: (query: string, languages: string[]) => void;
-  onBrowse: (letter?: string, languages?: string[]) => void;
+  onBrowse: (letter?: string, languages?: string[], offset?: number) => void;
   onQuiz: () => void;
   onTabChange?: (tab: 'search' | 'browse' | 'quiz') => void;
   isLoading: boolean;
@@ -64,7 +64,32 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(initialLanguages);
   const [selectedLetter, setSelectedLetter] = useState<string>(initialLetter);
   const [letterStats, setLetterStats] = useState<{letter: string, count: number}[]>([]);
+  const [letterHierarchy, setLetterHierarchy] = useState<string[]>([]); // 階層管理 ["S", "C"] = SC
+  const [sliderValue, setSliderValue] = useState(0);
+  const [wordRange, setWordRange] = useState<{firstWord: string, lastWord: string, totalCount: number}>({
+    firstWord: '',
+    lastWord: '',
+    totalCount: 0
+  });
+  const [previewWord, setPreviewWord] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // スライダープレビュー更新関数
+  const updateSliderPreview = async (value: number) => {
+    setSliderValue(value);
+    
+    // プレビュー単語を更新
+    try {
+      const prefix = letterHierarchy.join('');
+      const response = await fetch(`/api/word-at-offset?prefix=${prefix}&offset=${value}`);
+      const data = await response.json();
+      if (data.success && data.data.word) {
+        setPreviewWord(data.data.word);
+      }
+    } catch (error) {
+      console.error('Failed to get preview word:', error);
+    }
+  };
 
   useImperativeHandle(ref, () => ({
     focus: () => inputRef.current?.focus(),
@@ -145,18 +170,52 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   };
 
   const handleLetterSelect = (letter: string) => {
-    setSelectedLetter(letter);
-    onBrowse(letter, selectedLanguages);
+    // 新しい階層に入る
+    setLetterHierarchy([...letterHierarchy, letter]);
+    setSliderValue(0); // スライダーをリセット
+    
+    // 完全な文字列を構築（例: ["S", "C"] → "SC"）
+    const fullLetter = [...letterHierarchy, letter].join('');
+    setSelectedLetter(fullLetter);
+    onBrowse(fullLetter, selectedLanguages);
+  };
+
+  const handleGoBack = () => {
+    if (letterHierarchy.length > 0) {
+      const newHierarchy = letterHierarchy.slice(0, -1);
+      setLetterHierarchy(newHierarchy);
+      setSliderValue(0); // スライダーをリセット
+      
+      const fullLetter = newHierarchy.join('');
+      setSelectedLetter(fullLetter || '');
+      onBrowse(fullLetter || undefined, selectedLanguages);
+    }
   };
 
   // アルファベット配列
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
+  // 現在の階層に応じた文字リストを取得
+  const getCurrentLetters = () => {
+    if (letterHierarchy.length === 0) {
+      // 最上位: A-Z
+      return letters;
+    } else {
+      // 下位階層: 現在の文字 + A-Z（例: SA, SB, SC...）
+      return letters.map(l => letterHierarchy.join('') + l);
+    }
+  };
+
   // 文字別統計の読み込み
   useEffect(() => {
     const loadLetterStats = async () => {
       try {
-        const response = await fetch('/api/letter-stats');
+        const prefix = letterHierarchy.join('');
+        const url = prefix 
+          ? `/api/letter-stats-detailed?prefix=${prefix}`
+          : '/api/letter-stats';
+          
+        const response = await fetch(url);
         const data = await response.json();
         if (data.success) {
           setLetterStats(data.data);
@@ -169,7 +228,28 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     if (activeTab === 'browse') {
       loadLetterStats();
     }
-  }, [activeTab]);
+  }, [activeTab, letterHierarchy]);
+
+  // 単語範囲の読み込み
+  useEffect(() => {
+    const loadWordRange = async () => {
+      try {
+        const prefix = letterHierarchy.join('');
+        const response = await fetch(`/api/word-range?prefix=${prefix}`);
+        const data = await response.json();
+        if (data.success) {
+          setWordRange(data.data);
+          setPreviewWord(data.data.firstWord); // 初期プレビューを最初の単語に
+        }
+      } catch (error) {
+        console.error('Failed to load word range:', error);
+      }
+    };
+
+    if (activeTab === 'browse' && letterHierarchy.length > 0) {
+      loadWordRange();
+    }
+  }, [activeTab, letterHierarchy]);
 
   return (
     <div className="bg-stone-100 dark:bg-stone-800 rounded-2xl shadow-lg mb-8 transition-all duration-300 border border-stone-200 dark:border-stone-700 relative">
@@ -258,108 +338,141 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
             <div>
               <p className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 text-center">
                 {translations?.browse?.index || 'Index'}
+                {letterHierarchy.length > 0 && (
+                  <span className="ml-2 text-solarized-blue">
+                    ({letterHierarchy.join('')})
+                  </span>
+                )}
               </p>
-              <div className="flex flex-col items-center gap-1 max-w-4xl mx-auto">
-                {/* A-G */}
-                <div className="flex gap-0">
-                  {letters.slice(0, 7).map((letter, index) => {
-                    const stat = letterStats.find(s => s.letter === letter);
-                    const count = stat?.count || 0;
-                    const isLast = index === 6;
-                    
-                    return (
-                      <Button
-                        key={letter}
-                        type="button"
-                        variant={selectedLetter === letter ? 'selected' : 'secondary'}
-                        size="sm"
-                        onClick={() => handleLetterSelect(letter)}
-                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
-                          index === 0 ? '' : '-ml-px'
-                        }`}
-                      >
-                        <div className="font-bold text-sm">{letter}</div>
-                        <div className="text-[9px] opacity-60 leading-none">{count}</div>
-                      </Button>
-                    );
-                  })}
+              <div className="flex justify-center gap-1 max-w-4xl mx-auto">
+                {/* 戻るボタン（常に表示、最上位では無効） */}
+                <div className="w-12 h-12">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleGoBack}
+                    disabled={letterHierarchy.length === 0}
+                    className="w-12 h-12 p-0 text-lg rounded-none border border-solarized-base1 dark:border-solarized-base01"
+                  >
+                    ←
+                  </Button>
                 </div>
                 
-                {/* H-N */}
-                <div className="flex gap-0">
-                  {letters.slice(7, 14).map((letter, index) => {
-                    const stat = letterStats.find(s => s.letter === letter);
-                    const count = stat?.count || 0;
-                    const isLast = index === 6;
+                {/* 文字ボタングリッド */}
+                <div className="flex flex-col items-center gap-1">
+                  {/* 現在の階層に応じた文字を4行で表示 */}
+                  {[0, 7, 14, 21].map((startIndex) => {
+                    const endIndex = startIndex === 21 ? 26 : startIndex + 7;
+                    const currentLetters = getCurrentLetters();
+                    const rowLetters = currentLetters.slice(startIndex, endIndex);
+                    
+                    if (rowLetters.length === 0) return null;
                     
                     return (
-                      <Button
-                        key={letter}
-                        type="button"
-                        variant={selectedLetter === letter ? 'selected' : 'secondary'}
-                        size="sm"
-                        onClick={() => handleLetterSelect(letter)}
-                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
-                          index === 0 ? '' : '-ml-px'
-                        }`}
-                      >
-                        <div className="font-bold text-sm">{letter}</div>
-                        <div className="text-[9px] opacity-60 leading-none">{count}</div>
-                      </Button>
-                    );
-                  })}
-                </div>
-                
-                {/* O-U */}
-                <div className="flex gap-0">
-                  {letters.slice(14, 21).map((letter, index) => {
-                    const stat = letterStats.find(s => s.letter === letter);
-                    const count = stat?.count || 0;
-                    const isLast = index === 6;
-                    
-                    return (
-                      <Button
-                        key={letter}
-                        type="button"
-                        variant={selectedLetter === letter ? 'selected' : 'secondary'}
-                        size="sm"
-                        onClick={() => handleLetterSelect(letter)}
-                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
-                          index === 0 ? '' : '-ml-px'
-                        }`}
-                      >
-                        <div className="font-bold text-sm">{letter}</div>
-                        <div className="text-[9px] opacity-60 leading-none">{count}</div>
-                      </Button>
-                    );
-                  })}
-                </div>
-                
-                {/* V-Z */}
-                <div className="flex gap-0">
-                  {letters.slice(21).map((letter, index) => {
-                    const stat = letterStats.find(s => s.letter === letter);
-                    const count = stat?.count || 0;
-                    const isLast = index === 4; // V-Z has 5 letters (0-4)
-                    
-                    return (
-                      <Button
-                        key={letter}
-                        type="button"
-                        variant={selectedLetter === letter ? 'selected' : 'secondary'}
-                        size="sm"
-                        onClick={() => handleLetterSelect(letter)}
-                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
-                          index === 0 ? '' : '-ml-px'
-                        }`}
-                      >
-                        <div className="font-bold text-sm">{letter}</div>
-                        <div className="text-[9px] opacity-60 leading-none">{count}</div>
-                      </Button>
+                      <div key={startIndex} className="flex gap-0">
+                        {rowLetters.map((letter, index) => {
+                          const displayLetter = letterHierarchy.length > 0 
+                            ? letter.slice(-1) // 最後の文字のみ表示
+                            : letter;
+                          const stat = letterStats.find(s => s.letter === letter);
+                          const count = stat?.count || 0;
+                          
+                          return (
+                            <Button
+                              key={letter}
+                              type="button"
+                              variant={selectedLetter === letter ? 'selected' : 'secondary'}
+                              size="sm"
+                              onClick={() => handleLetterSelect(displayLetter)}
+                              disabled={count === 0}
+                              className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
+                                index === 0 ? '' : '-ml-px'
+                              } ${count === 0 ? 'opacity-30' : 'cursor-pointer'}`}
+                            >
+                              <div className="font-bold text-sm">{displayLetter}</div>
+                              <div className="text-[9px] opacity-60 leading-none">{count}</div>
+                            </Button>
+                          );
+                        })}
+                      </div>
                     );
                   })}
                 </div>
               </div>
+              
+              {/* スライダー - 階層が選択されている場合のみ表示 */}
+              {letterHierarchy.length > 0 && wordRange.totalCount > 0 && (
+                <div className="mt-4 px-4">
+                  <div className="bg-solarized-base3 dark:bg-solarized-base03 rounded-lg p-4 border border-solarized-base1 dark:border-solarized-base01">
+                    <div className="flex items-center justify-between text-xs text-solarized-base00 dark:text-solarized-base0 mb-2">
+                      <span>{wordRange.firstWord}</span>
+                      <span className="font-medium text-solarized-blue">{previewWord}</span>
+                      <span>{wordRange.lastWord}</span>
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="range"
+                        min="0"
+                        max={wordRange.totalCount - 1}
+                        value={sliderValue}
+                        onChange={async (e) => {
+                          const value = parseInt(e.target.value);
+                          await updateSliderPreview(value);
+                        }}
+                        onInput={async (e) => {
+                          const value = parseInt((e.target as HTMLInputElement).value);
+                          await updateSliderPreview(value);
+                        }}
+                        onMouseUp={() => {
+                          // スライダーを離したときに実際にジャンプ
+                          const offset = sliderValue;
+                          onBrowse(letterHierarchy.join(''), selectedLanguages, offset);
+                        }}
+                        onKeyUp={(e) => {
+                          // キーボード操作後にジャンプ（左右キーの場合）
+                          if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                            const offset = sliderValue;
+                            onBrowse(letterHierarchy.join(''), selectedLanguages, offset);
+                          }
+                        }}
+                        className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-solarized-base2 dark:bg-solarized-base02"
+                        style={{
+                          background: `linear-gradient(to right, #268bd2 0%, #268bd2 ${(sliderValue / (wordRange.totalCount - 1)) * 100}%, #93a1a1 ${(sliderValue / (wordRange.totalCount - 1)) * 100}%, #93a1a1 100%)`,
+                          WebkitAppearance: 'none',
+                        }}
+                      />
+                      <style jsx>{`
+                        input[type="range"]::-webkit-slider-thumb {
+                          -webkit-appearance: none;
+                          appearance: none;
+                          width: 16px;
+                          height: 16px;
+                          background: #268bd2;
+                          border-radius: 50%;
+                          cursor: pointer;
+                          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                        }
+                        input[type="range"]::-moz-range-thumb {
+                          width: 16px;
+                          height: 16px;
+                          background: #268bd2;
+                          border-radius: 50%;
+                          cursor: pointer;
+                          border: none;
+                          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                        }
+                        .dark input[type="range"] {
+                          background: linear-gradient(to right, #268bd2 0%, #268bd2 ${(sliderValue / (wordRange.totalCount - 1)) * 100}%, #586e75 ${(sliderValue / (wordRange.totalCount - 1)) * 100}%, #586e75 100%) !important;
+                        }
+                      `}</style>
+                    </div>
+                    <div className="text-center text-xs text-solarized-base00 dark:text-solarized-base0 mt-2">
+                      {sliderValue + 1} / {wordRange.totalCount}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

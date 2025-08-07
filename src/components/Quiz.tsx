@@ -245,7 +245,7 @@ Select Language
             </div>
           <div className="text-center mb-6">
             <div className="text-4xl font-bold text-solarized-orange">
-              {score}/{questions.length}
+              {score} / {questions.length}
             </div>
           </div>
           
@@ -352,7 +352,7 @@ Select Language
                   key={option}
                   onClick={() => handleAnswer(option)}
                   disabled={isTransitioning}
-                  className={`relative w-full p-3 rounded-xl text-left transition-all duration-300 font-medium overflow-hidden transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed ${
+                  className={`relative w-full p-3 rounded-xl text-left transition-all duration-300 font-medium overflow-hidden transform hover:scale-[1.02] disabled:opacity-50 ${
                     selectedAnswer === option
                       ? 'bg-solarized-orange text-white scale-[1.02]'
                       : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-600'

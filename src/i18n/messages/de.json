@@ -63,7 +63,7 @@
     "title": "Geschlechter-Quiz",
     "description": "Testen Sie Ihr Wissen über Substantivgeschlechter!\nWählen Sie eine Sprache und identifizieren Sie das Geschlecht von 10 zufälligen Wörtern.",
     "startQuiz": "Quiz starten",
-    "question": "Frage {current}/{total}",
+    "question": "Frage {current} / {total}",
     "complete": "Quiz abgeschlossen!",
     "loadingQuiz": "Quiz wird geladen..."
   }

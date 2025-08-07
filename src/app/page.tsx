@@ -247,7 +247,7 @@ export default function Home() {
         <SearchBox 
           ref={searchBoxRef} 
           onSearch={handleSearch}
-          onBrowse={async (letter, languages) => {
+          onBrowse={async (letter, languages, offset = 0) => {
             setMode('browse');
             setCurrentBrowseLetter(letter || null);
             
@@ -255,6 +255,9 @@ export default function Home() {
             const params = new URLSearchParams();
             if (letter) {
               params.set('letter', letter.toLowerCase());
+            }
+            if (offset > 0) {
+              params.set('offset', offset.toString());
             }
             const newUrl = params.toString() ? `/?${params.toString()}` : '/';
             router.replace(newUrl, { scroll: false });
@@ -265,7 +268,7 @@ export default function Home() {
             setIsLoading(true);
             
             try {
-              let url = '/api/browse?limit=50&offset=0';
+              let url = `/api/browse?limit=50&offset=${offset}`;
               if (letter) {
                 url += `&startsWith=${letter.toLowerCase()}`;
               }

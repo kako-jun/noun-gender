@@ -63,7 +63,7 @@
     "title": "性别测验",
     "description": "测试您对名词性别的了解！\n选择一种语言，获得10个随机单词来识别它们的性别。",
     "startQuiz": "开始测验",
-    "question": "问题 {current}/{total}",
+    "question": "问题 {current} / {total}",
     "complete": "测验完成！",
     "loadingQuiz": "加载测验中..."
   }
