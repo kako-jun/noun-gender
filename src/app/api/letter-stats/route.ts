@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/database';
+import dbManager from '@/lib/database';
 
 export async function GET(request: NextRequest) {
   try {
-    const db = getDb();
+    // DatabaseManagerのgetDb()メソッドを使用してデータベースにアクセス
+    const db = (dbManager as any).getDb();
     
     // A-Z各文字の単語数をカウント
     const letterStats = await db.prepare(`
       SELECT 
         UPPER(SUBSTR(english, 1, 1)) as letter,
-        COUNT(*) as count
-      FROM words 
+        COUNT(DISTINCT english) as count
+      FROM all_words 
       WHERE english IS NOT NULL 
         AND LENGTH(english) > 0
         AND UPPER(SUBSTR(english, 1, 1)) BETWEEN 'A' AND 'Z'

@@ -266,8 +266,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                         variant={selectedLetter === letter ? 'selected' : 'secondary'}
                         size="sm"
                         onClick={() => handleLetterSelect(letter)}
-                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 ${
-                          isLast ? '' : 'border-r border-solarized-base1 dark:border-solarized-base01'
+                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
+                          index === 0 ? '' : '-ml-px'
                         }`}
                       >
                         <div className="font-bold text-sm">{letter}</div>
@@ -291,8 +291,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                         variant={selectedLetter === letter ? 'selected' : 'secondary'}
                         size="sm"
                         onClick={() => handleLetterSelect(letter)}
-                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 ${
-                          isLast ? '' : 'border-r border-solarized-base1 dark:border-solarized-base01'
+                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
+                          index === 0 ? '' : '-ml-px'
                         }`}
                       >
                         <div className="font-bold text-sm">{letter}</div>
@@ -316,8 +316,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                         variant={selectedLetter === letter ? 'selected' : 'secondary'}
                         size="sm"
                         onClick={() => handleLetterSelect(letter)}
-                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 ${
-                          isLast ? '' : 'border-r border-solarized-base1 dark:border-solarized-base01'
+                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
+                          index === 0 ? '' : '-ml-px'
                         }`}
                       >
                         <div className="font-bold text-sm">{letter}</div>
@@ -341,8 +341,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                         variant={selectedLetter === letter ? 'selected' : 'secondary'}
                         size="sm"
                         onClick={() => handleLetterSelect(letter)}
-                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 ${
-                          isLast ? '' : 'border-r border-solarized-base1 dark:border-solarized-base01'
+                        className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
+                          index === 0 ? '' : '-ml-px'
                         }`}
                       >
                         <div className="font-bold text-sm">{letter}</div>
