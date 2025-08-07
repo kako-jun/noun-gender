@@ -15,7 +15,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', ...props }, ref) => {
     return (
       <button
-        className={`inline-flex items-center justify-center rounded-xl font-bold transition-all duration-200 transform hover:scale-105 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
+        className={`inline-flex items-center justify-center rounded-xl font-medium transition-all duration-200 transform hover:scale-105 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
           variant === 'primary' ? 'bg-solarized-orange hover:bg-solarized-yellow text-white shadow-md hover:shadow-lg focus:ring-solarized-orange' :
           variant === 'secondary' ? 'bg-solarized-base3 dark:bg-solarized-base03 text-solarized-base01 dark:text-solarized-base1 hover:bg-solarized-base1 dark:hover:bg-solarized-base01 hover:text-solarized-base3 dark:hover:text-solarized-base03 border border-solarized-base1 dark:border-solarized-base01' :
           variant === 'ghost' ? 'text-solarized-base01 dark:text-solarized-base1 hover:bg-solarized-base2 dark:hover:bg-solarized-base02' :

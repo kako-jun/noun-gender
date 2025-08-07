@@ -23,7 +23,7 @@ export default function Home() {
   const [browseResults, setBrowseResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
-  const [mode, setMode] = useState<'browse' | 'search'>('browse');
+  const [mode, setMode] = useState<'browse' | 'search' | 'quiz'>('browse');
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -239,24 +239,67 @@ export default function Home() {
       <main className="flex-1 container mx-auto px-4 py-8">
         <SearchBox 
           ref={searchBoxRef} 
-          onSearch={handleSearch} 
+          onSearch={handleSearch}
+          onBrowse={(letter, languages) => {
+            setMode('browse');
+            // URLを更新
+            const params = new URLSearchParams();
+            if (letter) {
+              params.set('letter', letter);
+            }
+            if (languages && languages.length > 0 && languages.length < Object.keys(SUPPORTED_LANGUAGES).length) {
+              params.set('lang', languages.join('-'));
+            }
+            const newUrl = params.toString() ? `/?${params.toString()}` : '/';
+            router.replace(newUrl, { scroll: false });
+            
+            // ブラウズデータを読み込む（一旦初期データクリア）
+            setSearchResults([]);
+            setBrowseResults([]);
+            loadBrowseData();
+          }}
+          onQuiz={() => setShowQuiz(true)}
+          onTabChange={(tab) => {
+            // タブ切り替え時に適切な状態に設定
+            if (tab === 'search') {
+              setMode('search');
+              // 検索クエリがない場合は結果をクリア
+              if (!searchParams.get('q')?.trim()) {
+                setSearchResults([]);
+              }
+            } else if (tab === 'browse') {
+              setMode('browse');
+              setSearchResults([]);
+            } else if (tab === 'quiz') {
+              // クイズタブでは結果表示を隠す
+              setMode('quiz');
+              setSearchResults([]);
+              setBrowseResults([]);
+            }
+          }}
           isLoading={isLoading}
           initialQuery={searchParams.get('q') || ''}
           initialLanguages={searchParams.get('lang')?.split('-').filter(Boolean) || Object.keys(SUPPORTED_LANGUAGES)}
+          currentMode={mode}
+          initialLetter={searchParams.get('letter') || ''}
           translations={translationsLoading ? undefined : {
             placeholder: t('search.placeholder'),
             languagesOptional: t('search.languagesOptional'),
             searchButton: t('search.searchButton'),
-            searching: t('search.searching')
+            searching: t('search.searching'),
+            startQuiz: t('quiz.startQuiz')
           }}
         />
-        <SearchResults 
-          results={mode === 'search' ? searchResults : browseResults} 
-          isLoading={isLoading} 
-          mode={mode}
-          searchQuery={mode === 'search' ? searchParams.get('q') || '' : ''}
-          searchError={mode === 'search' ? searchError : null}
-        />
+        {/* クイズタブの時は検索結果を表示しない */}
+        {mode !== 'quiz' && (
+          <SearchResults 
+            results={mode === 'search' ? searchResults : browseResults} 
+            isLoading={isLoading} 
+            mode={mode === 'search' ? 'search' : 'browse'}
+            searchQuery={mode === 'search' ? searchParams.get('q') || '' : ''}
+            searchError={mode === 'search' ? searchError : null}
+          />
+        )}
         
         {/* 無限スクロール用のローディングインジケーター */}
         {mode === 'browse' && isLoadingMore && (
@@ -268,19 +311,6 @@ export default function Home() {
         )}
       </main>
 
-      {/* ゲームボタン */}
-      <div className="container mx-auto px-4 pb-4">
-        <div className="text-center">
-          <Button
-            onClick={() => setShowQuiz(true)}
-            variant="primary"
-            size="lg"
-            className="shadow-lg hover:shadow-xl"
-          >
-            {t('quiz.startQuiz')}
-          </Button>
-        </div>
-      </div>
 
       {/* Footer */}
       <Footer />
