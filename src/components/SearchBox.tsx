@@ -132,7 +132,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
           <p className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 text-center -mt-1">
             {translations?.languagesOptional || "Languages"}
           </p>
-          <div className="grid grid-cols-4 gap-2 mt-3 max-w-md mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 max-w-md mx-auto">
             {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
               <Button
                 key={code}
