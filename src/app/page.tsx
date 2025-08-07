@@ -27,6 +27,10 @@ export default function Home() {
   const [searchError, setSearchError] = useState<string | null>(null);
   const [currentBrowseLetter, setCurrentBrowseLetter] = useState<string | null>(null);
   const searchBoxRef = useRef<SearchBoxRef>(null);
+  
+  // 各タブの最後のURL状態を記憶
+  const [lastSearchUrl, setLastSearchUrl] = useState<string>('/');
+  const [lastBrowseUrl, setLastBrowseUrl] = useState<string>('/');
   const { t, isLoading: translationsLoading } = useTranslations();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -70,20 +74,23 @@ export default function Home() {
     }
   }, [isLoading, isLoadingMore]);
 
-  // URLからの初期状態復元と初期読み込み
+  // URLからの初期状態復元と初期読み込み、URL状態記憶
   useEffect(() => {
     const query = searchParams.get('q');
     const languages = searchParams.get('lang');
     const letter = searchParams.get('letter');
+    const currentUrl = window.location.pathname + window.location.search;
     
     if (query && query.trim()) {
       // URLにクエリがある場合のみ検索実行
       const langArray = languages ? languages.split('-').filter(Boolean) : [];
       setMode('search');
+      setLastSearchUrl(currentUrl); // 検索URLを記憶
       handleSearch(query, langArray);
     } else {
       // URLにクエリがない場合は常にブラウズモード
       setMode('browse');
+      setLastBrowseUrl(currentUrl); // ブラウズURLを記憶
       setCurrentBrowseLetter(letter || null);
       
       if (browseResults.length === 0 && !isLoading) {
@@ -247,6 +254,10 @@ export default function Home() {
         <SearchBox 
           ref={searchBoxRef} 
           onSearch={handleSearch}
+          onSearchResultsClear={() => {
+            setSearchResults([]);
+            setSearchError(null);
+          }}
           onBrowse={async (letter, languages, offset = 0) => {
             setMode('browse');
             setCurrentBrowseLetter(letter || null);
@@ -290,33 +301,23 @@ export default function Home() {
             router.push('/quiz');
           }}
           onTabChange={(tab) => {
-            // タブ切り替え時に適切な状態に設定とURL更新
+            // タブ切り替え時に適切な状態に設定とURLを記憶されたものに復元
             if (tab === 'search') {
               setMode('search');
-              // 検索クエリがある場合はそのURLを維持、ない場合はルートに戻る
-              const query = searchParams.get('q');
-              const lang = searchParams.get('lang');
-              if (query?.trim()) {
-                const params = new URLSearchParams();
-                params.set('q', query);
-                if (lang) params.set('lang', lang);
-                router.replace(`/?${params.toString()}`, { scroll: false });
-              } else {
-                router.replace('/', { scroll: false });
-                setSearchResults([]);
-              }
+              setBrowseResults([]); // ブラウズ結果をクリア
+              // 記憶された検索URLに復元
+              router.replace(lastSearchUrl, { scroll: false });
             } else if (tab === 'browse') {
               setMode('browse');
-              setSearchResults([]);
-              setCurrentBrowseLetter(null);
-              // ブラウズタブに切り替え時は基本ルートに戻る（文字フィルターなし）
-              router.replace('/', { scroll: false });
+              setSearchResults([]); // 検索結果をクリア
+              // 記憶されたブラウズURLに復元
+              router.replace(lastBrowseUrl, { scroll: false });
             } else if (tab === 'quiz') {
               // クイズタブでは結果表示を隠す
               setMode('quiz');
               setSearchResults([]);
               setBrowseResults([]);
-              // クイズタブに切り替え時もルートに戻る
+              // クイズは常にルートに
               router.replace('/', { scroll: false });
             }
           }}
@@ -341,14 +342,23 @@ export default function Home() {
             }
           }}
         />
-        {/* クイズタブの時は検索結果を表示しない */}
-        {mode !== 'quiz' && (
+        {/* 各タブでの結果表示制御 */}
+        {mode === 'search' && (searchResults.length > 0 || searchParams.get('q')?.trim()) && (
           <SearchResults 
-            results={mode === 'search' ? searchResults : browseResults} 
+            results={searchResults} 
             isLoading={isLoading} 
-            mode={mode === 'search' ? 'search' : 'browse'}
-            searchQuery={mode === 'search' ? searchParams.get('q') || '' : ''}
-            searchError={mode === 'search' ? searchError : null}
+            mode="search"
+            searchQuery={searchParams.get('q') || ''}
+            searchError={searchError}
+          />
+        )}
+        {mode === 'browse' && browseResults.length > 0 && (
+          <SearchResults 
+            results={browseResults} 
+            isLoading={isLoading} 
+            mode="browse"
+            searchQuery=""
+            searchError={null}
           />
         )}
         

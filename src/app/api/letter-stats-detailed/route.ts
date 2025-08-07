@@ -12,19 +12,19 @@ export async function GET(request: NextRequest) {
     // 指定されたプレフィックスで始まる単語の、次の文字ごとの統計を取得
     const letterStats = await db.prepare(`
       SELECT 
-        UPPER(SUBSTR(english, ${prefix.length + 1}, 1)) as next_letter,
+        SUBSTR(english, ${prefix.length + 1}, 1) as next_letter,
         COUNT(DISTINCT english) as count
       FROM all_words 
       WHERE english IS NOT NULL 
         AND LENGTH(english) > ${prefix.length}
-        AND UPPER(english) LIKE ? || '%'
-        AND UPPER(SUBSTR(english, ${prefix.length + 1}, 1)) BETWEEN 'A' AND 'Z'
-      GROUP BY UPPER(SUBSTR(english, ${prefix.length + 1}, 1))
+        AND english LIKE ? || '%'
+        AND SUBSTR(english, ${prefix.length + 1}, 1) BETWEEN 'a' AND 'z'
+      GROUP BY SUBSTR(english, ${prefix.length + 1}, 1)
       ORDER BY next_letter
-    `).all(prefix.toUpperCase());
+    `).all(prefix);
 
-    // A-Zすべての文字を含む配列を作成（0件の文字も含む）
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    // a-zすべての文字を含む配列を作成（0件の文字も含む）
+    const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
     const statsMap = Object.fromEntries(
       letterStats.map(stat => [stat.next_letter, stat.count])
     );

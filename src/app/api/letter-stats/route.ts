@@ -6,27 +6,27 @@ export async function GET(request: NextRequest) {
     // DatabaseManagerのgetDb()メソッドを使用してデータベースにアクセス
     const db = (dbManager as any).getDb();
     
-    // A-Z各文字の単語数をカウント
+    // a-z各文字の単語数をカウント
     const letterStats = await db.prepare(`
       SELECT 
-        UPPER(SUBSTR(english, 1, 1)) as letter,
+        SUBSTR(english, 1, 1) as letter,
         COUNT(DISTINCT english) as count
       FROM all_words 
       WHERE english IS NOT NULL 
         AND LENGTH(english) > 0
-        AND UPPER(SUBSTR(english, 1, 1)) BETWEEN 'A' AND 'Z'
-      GROUP BY UPPER(SUBSTR(english, 1, 1))
+        AND SUBSTR(english, 1, 1) BETWEEN 'a' AND 'z'
+      GROUP BY SUBSTR(english, 1, 1)
       ORDER BY letter
     `).all();
 
-    // A-Zすべての文字を含む配列を作成（0件の文字も含む）
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    // a-zすべての文字を含む配列を作成（0件の文字も含む）
+    const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
     const statsMap = Object.fromEntries(
       letterStats.map(stat => [stat.letter, stat.count])
     );
     
     const result = letters.map(letter => ({
-      letter,
+      letter: letter,
       count: statsMap[letter] || 0
     }));
 
