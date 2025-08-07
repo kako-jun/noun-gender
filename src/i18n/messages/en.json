@@ -1,14 +1,6 @@
 {
   "common": {
-    "search": "Search",
-    "loading": "Loading...",
-    "error": "Error",
-    "cancel": "Cancel",
     "close": "Close",
-    "next": "Next",
-    "previous": "Previous",
-    "start": "Start",
-    "finish": "Finish",
     "tryAgain": "Try Again",
     "changeLanguage": "Change language"
   },
@@ -20,7 +12,6 @@
     "searching": "Searching...",
     "languagesOptional": "Languages",
     "searchButton": "Search",
-    "noLanguagesSelected": "No languages selected = search all languages",
     "noResultsFound": "No results found.\nTry searching for a word like \"cat\", \"book\", or \"house\".",
     "resultsFound": "Found {count} results",
     "networkError": "Network Error",
@@ -29,10 +20,7 @@
   "gender": {
     "masculine": "Masculine",
     "feminine": "Feminine",
-    "neuter": "Neuter",
-    "m": "♂ Masculine",
-    "f": "♀ Feminine",
-    "n": "⚲ Neuter"
+    "neuter": "Neuter"
   },
   "languages": {
     "Arabic": "Arabic",
@@ -52,9 +40,8 @@
     "femaleVoice": "Female Voice"
   },
   "copy": {
-    "copy": "Copy",
-    "copied": "Copied!",
-    "copyWord": "Copy: {word}"
+    "copy": "Copy to clipboard",
+    "copied": "Copied!"
   },
   "theme": {
     "toggle": "Toggle theme"
@@ -62,8 +49,7 @@
   "shortcuts": {
     "title": "Keyboard Shortcuts",
     "focusSearch": "Focus search input",
-    "clearSearch": "Clear search",
-    "toggleTheme": "Toggle theme"
+    "clearSearch": "Clear search"
   },
   "quiz": {
     "title": "Gender Quiz",
@@ -72,6 +58,5 @@
     "question": "Question {current}/{total}",
     "complete": "Quiz Complete!",
     "loadingQuiz": "Loading quiz..."
-  },
-  "footer": {}
+  }
 }

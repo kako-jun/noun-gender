@@ -1,14 +1,6 @@
 {
   "common": {
-    "search": "खोजें",
-    "loading": "लोड हो रहा है...",
-    "error": "त्रुटि",
-    "cancel": "रद्द करें",
     "close": "बंद करें",
-    "next": "अगला",
-    "previous": "पिछला",
-    "start": "शुरू करें",
-    "finish": "समाप्त करें",
     "tryAgain": "फिर से कोशिश करें",
     "changeLanguage": "भाषा बदलें"
   },
@@ -20,7 +12,6 @@
     "searching": "खोज रहे हैं...",
     "languagesOptional": "भाषाएं",
     "searchButton": "खोजें",
-    "noLanguagesSelected": "कोई भाषा नहीं चुनी गई = सभी भाषाओं में खोजें",
     "noResultsFound": "कोई परिणाम नहीं मिला।\n\"cat\", \"book\", या \"house\" जैसे शब्द खोजने का प्रयास करें।",
     "resultsFound": "{count} परिणाम मिले",
     "networkError": "नेटवर्क त्रुटि",
@@ -29,10 +20,7 @@
   "gender": {
     "masculine": "पुल्लिंग",
     "feminine": "स्त्रीलिंग",
-    "neuter": "नपुंसकलिंग",
-    "m": "♂ पुल्लिंग",
-    "f": "♀ स्त्रीलिंग",
-    "n": "⚲ नपुंसकलिंग"
+    "neuter": "नपुंसकलिंग"
   },
   "languages": {
     "Arabic": "अरबी",
@@ -52,9 +40,8 @@
     "femaleVoice": "महिला आवाज़"
   },
   "copy": {
-    "copy": "कॉपी करें",
-    "copied": "कॉपी हो गया!",
-    "copyWord": "कॉपी: {word}"
+    "copy": "क्लिपबोर्ड में कॉपी करें",
+    "copied": "कॉपी हो गया!"
   },
   "theme": {
     "toggle": "थीम बदलें"
@@ -62,8 +49,7 @@
   "shortcuts": {
     "title": "कीबोर्ड शॉर्टकट",
     "focusSearch": "खोज पर फ़ोकस",
-    "clearSearch": "खोज साफ़ करें",
-    "toggleTheme": "थीम बदलें"
+    "clearSearch": "खोज साफ़ करें"
   },
   "quiz": {
     "title": "लिंग क्विज़",
@@ -72,6 +58,5 @@
     "question": "प्रश्न {current}/{total}",
     "complete": "क्विज़ पूरा हो गया!",
     "loadingQuiz": "क्विज़ लोड हो रहा है..."
-  },
-  "footer": {}
+  }
 }

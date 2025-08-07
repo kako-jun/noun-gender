@@ -78,7 +78,7 @@ export function SearchResults({
   return (
     <div className="space-y-4">
       {mode === 'search' && (
-        <p className="text-sm text-solarized-base00 dark:text-solarized-base0 animate-in fade-in duration-300">Found {results.length} results</p>
+        <p className="text-sm text-solarized-base00 dark:text-solarized-base0 animate-in fade-in duration-300">{t('search.resultsFound', { count: results.length })}</p>
       )}
       
       {results.map((result, index) => (

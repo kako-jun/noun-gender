@@ -2,13 +2,15 @@
 
 import { useState } from 'react';
 import { Keyboard, X } from 'lucide-react';
+import { useTranslations } from '@/contexts/TranslationsContext';
 
 export function KeyboardShortcuts() {
+  const { t } = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
 
   const shortcuts = [
-    { key: '/', description: 'Focus search input' },
-    { key: 'Esc', description: 'Clear search' },
+    { key: '/', description: t('shortcuts.focusSearch') },
+    { key: 'Esc', description: t('shortcuts.clearSearch') },
   ];
 
   return (
@@ -22,7 +24,7 @@ export function KeyboardShortcuts() {
           dark:bg-solarized-base03 dark:hover:bg-solarized-base01 dark:border-solarized-base01
           text-solarized-base01 hover:text-solarized-base3 dark:text-solarized-base1 dark:hover:text-solarized-base03
         "
-        title="Keyboard shortcuts"
+        title={t('shortcuts.title')}
       >
         <Keyboard className="w-4 h-4" />
       </button>
@@ -37,7 +39,7 @@ export function KeyboardShortcuts() {
             <div className="bg-solarized-base2 dark:bg-solarized-base02 rounded-2xl p-6 m-4 max-w-md w-full shadow-xl border border-solarized-base1 dark:border-solarized-base01 pointer-events-auto">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-solarized-base01 dark:text-solarized-base1">
-                  Keyboard Shortcuts
+                  {t('shortcuts.title')}
                 </h3>
                 <button
                   onClick={() => setIsOpen(false)}

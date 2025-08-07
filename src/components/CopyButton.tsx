@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
+import { useTranslations } from '@/contexts/TranslationsContext';
 
 interface CopyButtonProps {
   text: string;
@@ -10,6 +11,7 @@ interface CopyButtonProps {
 }
 
 export function CopyButton({ text, label, className = '' }: CopyButtonProps) {
+  const { t } = useTranslations();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -52,7 +54,7 @@ export function CopyButton({ text, label, className = '' }: CopyButtonProps) {
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}
       `}
-      title={copied ? 'コピー完了!' : 'クリップボードにコピー'}
+      title={copied ? t('copy.copied') : t('copy.copy')}
       disabled={!text}
     >
       {copied ? (
