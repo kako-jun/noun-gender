@@ -24,7 +24,7 @@ class DatabaseManager {
     const langFilter = languages;
     const langPlaceholders = langFilter.map(() => '?').join(',');
     
-    // Enhanced search with multilingual support and examples
+    // Enhanced search with multilingual support, examples, and memory tricks
     const sql = `
       SELECT DISTINCT aw.english, aw.translation, aw.language, aw.gender,
              aw.frequency, aw.example, aw.pronunciation, aw.usage_notes, aw.gender_explanation,
@@ -32,12 +32,18 @@ class DatabaseManager {
              ee.example_en,
              et_ja.example_translation as example_ja,
              et_zh.example_translation as example_zh,
-             et_native.example_translation as example_native
+             et_native.example_translation as example_native,
+             mt_ja.trick_text as memory_trick_ja,
+             mt_en.trick_text as memory_trick_en,
+             mt_zh.trick_text as memory_trick_zh
       FROM all_words aw
       LEFT JOIN english_examples ee ON aw.english = ee.english_word
       LEFT JOIN example_translations et_ja ON aw.english = et_ja.english_word AND et_ja.language = 'ja'
       LEFT JOIN example_translations et_zh ON aw.english = et_zh.english_word AND et_zh.language = 'zh'
       LEFT JOIN example_translations et_native ON aw.english = et_native.english_word AND et_native.language = aw.language
+      LEFT JOIN memory_tricks mt_ja ON aw.english = mt_ja.english_word AND aw.language = mt_ja.target_language AND mt_ja.ui_language = 'ja'
+      LEFT JOIN memory_tricks mt_en ON aw.english = mt_en.english_word AND aw.language = mt_en.target_language AND mt_en.ui_language = 'en'
+      LEFT JOIN memory_tricks mt_zh ON aw.english = mt_zh.english_word AND aw.language = mt_zh.target_language AND mt_zh.ui_language = 'zh'
       WHERE (aw.language IN (${langPlaceholders})) AND (
         aw.english LIKE ? 
         OR aw.translation LIKE ?
@@ -93,6 +99,9 @@ class DatabaseManager {
       example_ja?: string;
       example_zh?: string;
       example_native?: string;
+      memory_trick_ja?: string;
+      memory_trick_en?: string;
+      memory_trick_zh?: string;
     }>;
 
 
@@ -134,7 +143,10 @@ class DatabaseManager {
           example_native: row.example_native,
           pronunciation: row.pronunciation,
           usage_notes: row.usage_notes,
-          gender_explanation: row.gender_explanation
+          gender_explanation: row.gender_explanation,
+          memory_trick_ja: row.memory_trick_ja,
+          memory_trick_en: row.memory_trick_en,
+          memory_trick_zh: row.memory_trick_zh
         });
       }
     });
@@ -206,12 +218,18 @@ class DatabaseManager {
     const placeholders = englishList.map(() => '?').join(',');
     
     let translationsQuery = `
-      SELECT english, language, translation, gender, frequency, example, 
-             pronunciation, usage_notes, gender_explanation,
-             meaning_en, meaning_ja, meaning_zh,
-             example_en, example_ja, example_zh
-      FROM all_words 
-      WHERE english IN (${placeholders}) AND translation IS NOT NULL AND translation != ''
+      SELECT aw.english, aw.language, aw.translation, aw.gender, aw.frequency, aw.example, 
+             aw.pronunciation, aw.usage_notes, aw.gender_explanation,
+             aw.meaning_en, aw.meaning_ja, aw.meaning_zh,
+             aw.example_en, aw.example_ja, aw.example_zh,
+             mt_ja.trick_text as memory_trick_ja,
+             mt_en.trick_text as memory_trick_en,
+             mt_zh.trick_text as memory_trick_zh
+      FROM all_words aw
+      LEFT JOIN memory_tricks mt_ja ON aw.english = mt_ja.english_word AND aw.language = mt_ja.target_language AND mt_ja.ui_language = 'ja'
+      LEFT JOIN memory_tricks mt_en ON aw.english = mt_en.english_word AND aw.language = mt_en.target_language AND mt_en.ui_language = 'en'
+      LEFT JOIN memory_tricks mt_zh ON aw.english = mt_zh.english_word AND aw.language = mt_zh.target_language AND mt_zh.ui_language = 'zh'
+      WHERE aw.english IN (${placeholders}) AND aw.translation IS NOT NULL AND aw.translation != ''
     `;
     
     const translationParams = [...englishList];
@@ -256,13 +274,48 @@ class DatabaseManager {
           example: row.example,
           pronunciation: row.pronunciation,
           usage_notes: row.usage_notes,
-          gender_explanation: row.gender_explanation
+          gender_explanation: row.gender_explanation,
+          memory_trick_ja: row.memory_trick_ja,
+          memory_trick_en: row.memory_trick_en,
+          memory_trick_zh: row.memory_trick_zh
         });
       }
     });
     
     // Maintain the order of English words from the first query and filter out words with no valid translations
     return englishList.map(englishWord => grouped.get(englishWord)).filter(word => word && word.translations.length > 0);
+  }
+
+  async getMemoryTrick(englishWord: string, targetLanguage: string, uiLanguage: string): Promise<string | null> {
+    const db = this.getDb();
+    
+    const sql = `
+      SELECT trick_text 
+      FROM memory_tricks 
+      WHERE english_word = ? AND target_language = ? AND ui_language = ?
+    `;
+    
+    const result = db.prepare(sql).get(englishWord, targetLanguage, uiLanguage) as { trick_text: string } | undefined;
+    return result?.trick_text || null;
+  }
+
+  async getMemoryTricksForWord(englishWord: string, uiLanguage: string): Promise<Record<string, string>> {
+    const db = this.getDb();
+    
+    const sql = `
+      SELECT target_language, trick_text 
+      FROM memory_tricks 
+      WHERE english_word = ? AND ui_language = ?
+    `;
+    
+    const results = db.prepare(sql).all(englishWord, uiLanguage) as { target_language: string; trick_text: string }[];
+    
+    const tricks: Record<string, string> = {};
+    results.forEach(row => {
+      tricks[row.target_language] = row.trick_text;
+    });
+    
+    return tricks;
   }
 
   close() {

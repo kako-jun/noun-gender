@@ -9,41 +9,7 @@ import { Button } from './ui/Button';
 import { getGenderStyle, getGenderSymbol } from '@/utils/genderStyles';
 import { HighlightedText } from '@/utils/textHighlight';
 import { ExampleSection } from './ExampleSection';
-import { useState } from 'react';
-
-// 性別記憶術データ（多言語対応）
-const MEMORY_TRICKS: Record<string, Record<string, string>> = {
-  'cat-fr': {
-    ja: 'フランス語では「シャッ」という鋭い鳴き声が男性的に聞こえることから男性名詞とされています。',
-    en: 'In French, the sharp "chat" sound is perceived as masculine, making it a masculine noun.',
-    zh: '在法语中，"chat"的尖锐发音听起来很男性化，因此是阳性名词。'
-  },
-  'cat-de': {
-    ja: 'ドイツ語では家庭的で母性的な動物として捉えられ、子猫を育てる姿から女性名詞とされています。',
-    en: 'In German, cats are seen as domestic, maternal animals, making them feminine due to their nurturing nature.',
-    zh: '在德语中，猫被视为家庭化、母性的动物，因其养育幼崽的特性而成为阴性名词。'
-  },
-  'dog-fr': {
-    ja: 'フランス語では忠実で力強い番犬のイメージから男性名詞とされています。',
-    en: 'In French, dogs are associated with loyalty and strength as guard dogs, making them masculine.',
-    zh: '在法语中，狗与忠诚和强壮的看门狗形象相关联，因此是阳性名词。'
-  },
-  'dog-de': {
-    ja: '古高ドイツ語時代から男性的な狩猟動物として扱われてきた歴史があります。',
-    en: 'Dogs have been treated as masculine hunting animals since Old High German times.',
-    zh: '自古高地德语时代起，狗就被视为男性化的狩猎动物。'
-  },
-  'house-fr': {
-    ja: 'フランス語では家族の住む場所、母なる場所として女性名詞で表現されます。',
-    en: 'In French, houses are seen as family homes, motherly places, expressed as feminine nouns.',
-    zh: '在法语中，房屋被视为家庭居住的地方、母性的场所，因此是阴性名词。'
-  },
-  'house-de': {
-    ja: 'ドイツ語では建物という物体・構造物として中性的に扱われています。',
-    en: 'In German, houses are treated neutrally as objects and structures.',
-    zh: '在德语中，房屋作为物体和结构被中性地对待。'
-  }
-};
+import { useState, useEffect } from 'react';
 
 interface SearchResultsProps {
   results: SearchResult[];
@@ -76,52 +42,22 @@ function TranslationCard({
     setIsExpanded(!isExpanded);
   };
 
-  const getMemoryTrick = (word: string, language: string, gender: string, locale: string): string | null => {
-    const key = `${word}-${language}`;
-    const tricks = MEMORY_TRICKS[key];
-    
-    // 該当する記憶術データがある場合
-    if (tricks && tricks[locale]) {
-      return tricks[locale];
+  // 記憶術データを既存のtranslationデータから取得
+  const getMemoryTrick = (): string | null => {
+    switch (locale) {
+      case 'ja':
+        return translation.memory_trick_ja || null;
+      case 'en':
+        return translation.memory_trick_en || null;
+      case 'zh':
+        return translation.memory_trick_zh || null;
+      default:
+        // フォールバック：英語→日本語の順で試す
+        return translation.memory_trick_en || translation.memory_trick_ja || null;
     }
-    
-    // 他の言語の場合は英語にフォールバック
-    if (tricks && tricks['en']) {
-      return tricks['en'];
-    }
-    
-    // どうしても表示する必要がある場合のみデフォルトメッセージ
-    const genderText = {
-      ja: gender === 'm' ? '男性' : gender === 'f' ? '女性' : '中性',
-      en: gender === 'm' ? 'masculine' : gender === 'f' ? 'feminine' : 'neuter',
-      zh: gender === 'm' ? '阳性' : gender === 'f' ? '阴性' : '中性',
-      ar: gender === 'm' ? 'مذكر' : gender === 'f' ? 'مؤنث' : 'محايد',
-      fr: gender === 'm' ? 'masculin' : gender === 'f' ? 'féminin' : 'neutre',
-      de: gender === 'm' ? 'maskulin' : gender === 'f' ? 'feminin' : 'neutrum',
-      es: gender === 'm' ? 'masculino' : gender === 'f' ? 'femenino' : 'neutro',
-      it: gender === 'm' ? 'maschile' : gender === 'f' ? 'femminile' : 'neutro',
-      pt: gender === 'm' ? 'masculino' : gender === 'f' ? 'feminino' : 'neutro',
-      ru: gender === 'm' ? 'мужской' : gender === 'f' ? 'женский' : 'средний',
-      hi: gender === 'm' ? 'पुल्लिंग' : gender === 'f' ? 'स्त्रीलिंग' : 'नपुंसकलिंग'
-    };
-    
-    const defaultMessages = {
-      ja: `${language}語では${genderText.ja}名詞として分類されています。`,
-      en: `In ${language}, this is classified as a ${genderText.en} noun.`,
-      zh: `在${language === 'fr' ? '法语' : language === 'de' ? '德语' : language === 'es' ? '西班牙语' : language}中，这是${genderText.zh}名词。`
-      // 他の8言語は後で追加
-    };
-    
-    return defaultMessages[locale as keyof typeof defaultMessages] || null;
   };
 
-  // 記憶術テキストを事前計算（展開時の遅延を回避）
-  const memoryTrick = getMemoryTrick(
-    result.english || result.word?.word_en || '', 
-    translation.language, 
-    translation.gender,
-    locale
-  );
+  const memoryTrick = getMemoryTrick();
 
   return (
     <div 
