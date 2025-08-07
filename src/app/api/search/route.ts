@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
     // Parse languages parameter
     const languages: LanguageCode[] = languagesParam 
-      ? languagesParam.split(',').filter(lang => 
+      ? languagesParam.split('-').filter(lang => 
           ['ar', 'fr', 'de', 'hi', 'it', 'pt', 'ru', 'es'].includes(lang)
         ) as LanguageCode[]
       : [];

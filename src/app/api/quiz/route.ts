@@ -4,7 +4,7 @@ import dbManager from '@/lib/database';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const languages = searchParams.get('languages')?.split(',') || ['fr', 'de', 'es'];
+    const languages = searchParams.get('languages')?.split('-') || ['fr', 'de', 'es'];
     const count = Math.min(parseInt(searchParams.get('count') || '10'), 20);
 
     const db = dbManager['getDb'](); // Access private method for quiz

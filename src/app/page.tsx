@@ -73,7 +73,7 @@ export default function Home() {
     
     if (query) {
       // URLにクエリがある場合は検索実行
-      const langArray = languages ? languages.split(',').filter(Boolean) : [];
+      const langArray = languages ? languages.split('-').filter(Boolean) : [];
       setMode('search');
       handleSearch(query, langArray);
     } else if (browseResults.length === 0 && !isLoading) {
@@ -119,7 +119,7 @@ export default function Home() {
       params.set('q', query.trim());
       // 言語が選択されていない場合はlangパラメータを設定しない（全言語検索なし）
       if (languages.length > 0) {
-        params.set('lang', languages.join(','));
+        params.set('lang', languages.join('-'));
       }
     }
     
@@ -155,7 +155,7 @@ export default function Home() {
     try {
       const params = new URLSearchParams({
         q: query,
-        languages: languages.join(',')
+        languages: languages.join('-')
         // limitパラメータを削除 - サーバー側のデフォルト（1000件）を使用
       });
 
@@ -235,7 +235,7 @@ export default function Home() {
           onSearch={handleSearch} 
           isLoading={isLoading}
           initialQuery={searchParams.get('q') || ''}
-          initialLanguages={searchParams.get('lang')?.split(',').filter(Boolean) || Object.keys(SUPPORTED_LANGUAGES)}
+          initialLanguages={searchParams.get('lang')?.split('-').filter(Boolean) || Object.keys(SUPPORTED_LANGUAGES)}
           translations={translationsLoading ? undefined : {
             placeholder: t('search.placeholder'),
             languagesOptional: t('search.languagesOptional'),
