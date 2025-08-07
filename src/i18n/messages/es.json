@@ -17,6 +17,14 @@
     "networkError": "Error de red",
     "networkErrorMessage": "Verifique su conexión de red e intente nuevamente"
   },
+  "tabs": {
+    "search": "Buscar",
+    "browse": "Navegar",
+    "quiz": "Quiz"
+  },
+  "browse": {
+    "index": "Índice"
+  },
   "gender": {
     "masculine": "Masculino",
     "feminine": "Femenino",

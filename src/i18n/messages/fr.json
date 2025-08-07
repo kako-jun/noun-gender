@@ -17,6 +17,14 @@
     "networkError": "Erreur de réseau",
     "networkErrorMessage": "Veuillez vérifier votre connexion réseau et réessayer"
   },
+  "tabs": {
+    "search": "Rechercher",
+    "browse": "Parcourir",
+    "quiz": "Quiz"
+  },
+  "browse": {
+    "index": "Index"
+  },
   "gender": {
     "masculine": "Masculin",
     "feminine": "Féminin",

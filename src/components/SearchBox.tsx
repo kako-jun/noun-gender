@@ -22,6 +22,14 @@ interface SearchBoxProps {
     searchButton?: string;
     searching?: string;
     startQuiz?: string;
+    tabs?: {
+      search?: string;
+      browse?: string;
+      quiz?: string;
+    };
+    browse?: {
+      index?: string;
+    };
   };
 }
 
@@ -168,9 +176,9 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
       {/* タブ */}
       <div className="flex rounded-t-2xl border-b border-stone-200 dark:border-stone-700">
         {[
-          { key: 'search', label: '検索' },
-          { key: 'browse', label: 'ブラウズ' },
-          { key: 'quiz', label: 'クイズ' }
+          { key: 'search', label: translations?.tabs?.search || 'Search' },
+          { key: 'browse', label: translations?.tabs?.browse || 'Browse' },
+          { key: 'quiz', label: translations?.tabs?.quiz || 'Quiz' }
         ].map((tab, index) => (
           <button
             key={tab.key}
@@ -249,7 +257,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
             {/* A-Z Letters */}
             <div>
               <p className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 text-center">
-                索引
+                {translations?.browse?.index || 'Index'}
               </p>
               <div className="flex flex-col items-center gap-1 max-w-4xl mx-auto">
                 {/* A-G */}

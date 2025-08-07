@@ -17,6 +17,14 @@
     "networkError": "नेटवर्क त्रुटि",
     "networkErrorMessage": "कृपया अपना नेटवर्क कनेक्शन जांचें और पुनः प्रयास करें"
   },
+  "tabs": {
+    "search": "खोज",
+    "browse": "ब्राउज़",
+    "quiz": "प्रश्नोत्तरी"
+  },
+  "browse": {
+    "index": "सूची"
+  },
   "gender": {
     "masculine": "पुल्लिंग",
     "feminine": "स्त्रीलिंग",
