@@ -202,7 +202,8 @@ export function SearchResults({
                     </div>
                   </div>
                   
-                  {/* ネイティブ例文 - 翻訳の下の2行目として表示 */}
+                  {/* ネイティブ例文 - 一時的にコメントアウト */}
+                  {/*
                   {translation.example_native && (
                     <div className="flex items-start space-x-3 sm:space-x-6">
                       <span className="text-sm font-medium text-transparent w-20"></span>
@@ -220,6 +221,7 @@ export function SearchResults({
                       </div>
                     </div>
                   )}
+                  */}
                 </div>
               </div>
             ))}

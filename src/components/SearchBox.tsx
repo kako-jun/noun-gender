@@ -75,7 +75,13 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   );
 
   useEffect(() => {
-    debouncedSearch(query, selectedLanguages);
+    // 空クエリの場合は検索を実行しない（初期化時やクリア時の不要な検索を防ぐ）
+    if (query.trim()) {
+      debouncedSearch(query, selectedLanguages);
+    } else {
+      // 空クエリの場合は明示的に空文字列で検索を呼び出してブラウズモードに戻す
+      onSearch('', selectedLanguages);
+    }
   }, [query, selectedLanguages]);
 
   const handleClear = () => {

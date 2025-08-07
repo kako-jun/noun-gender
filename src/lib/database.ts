@@ -206,19 +206,12 @@ class DatabaseManager {
     const placeholders = englishList.map(() => '?').join(',');
     
     let translationsQuery = `
-      SELECT aw.english, aw.language, aw.translation, aw.gender, aw.frequency, aw.example, 
-             aw.pronunciation, aw.usage_notes, aw.gender_explanation,
-             aw.meaning_en, aw.meaning_ja, aw.meaning_zh,
-             ee.example_en,
-             et_ja.example_translation as example_ja,
-             et_zh.example_translation as example_zh,
-             et_native.example_translation as example_native
-      FROM all_words aw
-      LEFT JOIN english_examples ee ON aw.english = ee.english_word
-      LEFT JOIN example_translations et_ja ON aw.english = et_ja.english_word AND et_ja.language = 'ja'
-      LEFT JOIN example_translations et_zh ON aw.english = et_zh.english_word AND et_zh.language = 'zh'
-      LEFT JOIN example_translations et_native ON aw.english = et_native.english_word AND et_native.language = aw.language
-      WHERE aw.english IN (${placeholders}) AND aw.translation IS NOT NULL AND aw.translation != ''
+      SELECT english, language, translation, gender, frequency, example, 
+             pronunciation, usage_notes, gender_explanation,
+             meaning_en, meaning_ja, meaning_zh,
+             example_en, example_ja, example_zh
+      FROM all_words 
+      WHERE english IN (${placeholders}) AND translation IS NOT NULL AND translation != ''
     `;
     
     const translationParams = [...englishList];
@@ -261,7 +254,6 @@ class DatabaseManager {
           gender: row.gender as 'm' | 'f' | 'n',
           frequency: row.frequency,
           example: row.example,
-          example_native: row.example_native,
           pronunciation: row.pronunciation,
           usage_notes: row.usage_notes,
           gender_explanation: row.gender_explanation
