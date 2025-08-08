@@ -14,6 +14,7 @@ Next.js 15 + TypeScript + SQLite で実装された、4,651語の多言語翻訳
 ### 📊 プロジェクト管理
 - **[作業進捗・タスク管理](.claude/tasks.md)**: 現在の作業状況・Phase別進捗・次ステップ
 - **[データベース設計](.claude/er-diagram.md)**: 正規化スキーマ・ER図・テーブル構造
+- **[CSV管理システム手順書](.claude/csv-management.md)**: 3つのCSVファイルによるデータ管理・更新手順
 
 ### 🏗️ 技術仕様
 - **[システムアーキテクチャ](docs/architecture.md)**: 技術スタック・設計原則・パフォーマンス
