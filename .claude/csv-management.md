@@ -132,7 +132,16 @@ meaning_en: "Lack; not being present; missing; vacancy."
 
 ## データベース更新手順
 
+**⚠️ 重要: 以下の手順では必ず専用スクリプトを使用してください**
+
 ### 1. word_meaning_translations → word_meanings テーブル
+
+**推奨方法（スクリプト使用）:**
+```bash
+python scripts/sync_meaning_translations.py
+```
+
+**手動実装（参考用）:**
 ```python
 import sqlite3, csv
 
@@ -157,6 +166,13 @@ conn.close()
 ```
 
 ### 2. word_examples → examples テーブル
+
+**推奨方法（スクリプト使用）:**
+```bash
+python scripts/sync_examples.py
+```
+
+**手動実装（参考用）:**
 ```python
 with open('data/word_examples.csv', 'r', encoding='utf-8') as f:
     reader = csv.reader(f, delimiter='\t')
@@ -171,6 +187,18 @@ with open('data/word_examples.csv', 'r', encoding='utf-8') as f:
 ```
 
 ### 3. word_gender_translations → words_fr等 テーブル
+
+**推奨方法（スクリプト使用）:**
+```bash
+python scripts/sync_gender_translations.py
+```
+
+**一括同期（全CSVを順次処理）:**
+```bash
+python scripts/sync_all.py
+```
+
+**手動実装（参考用）:**
 ```python
 languages = {
     'fr': 2,  'de': 4,  'es': 6,  'it': 8,
@@ -196,6 +224,24 @@ with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
                     ''', (en, translation, gender))
 ```
 
+## 汎用スクリプト一覧
+
+プロジェクトルートから実行してください：
+
+### 個別同期スクリプト
+- `python scripts/sync_meaning_translations.py` - 意味翻訳同期
+- `python scripts/sync_examples.py` - 例文同期
+- `python scripts/sync_gender_translations.py` - 性別翻訳同期
+
+### 一括処理スクリプト
+- `python scripts/sync_all.py` - 全CSV一括同期（推奨）
+
+### スクリプト特徴
+- エラーハンドリング完備
+- 進捗表示・統計情報出力
+- INSERT OR REPLACE による重複自動解決
+- 列数チェック・品質検証
+
 ## 段階的作業手順
 
 ### Phase 1: CSV基盤整備
@@ -207,7 +253,7 @@ with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
 2. **B語以降**: 順次追加予定
 
 ### Phase 3: データベース同期
-1. 各CSVからデータベース更新
+1. **必須**: `python scripts/sync_all.py` で一括同期実行
 2. 品質確認・エラー修正
 
 ## トラブルシューティング
