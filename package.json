@@ -2,11 +2,35 @@
   "name": "noun-gender",
   "version": "0.1.0",
   "private": true,
+  "description": "名詞の性別がある言語（フランス語、ドイツ語、スペイン語等）の学習・検索用Webアプリケーション",
+  "author": "kako-jun",
+  "license": "MIT",
+  "homepage": "https://noun-gender.llll-ll.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kako-jun/noun-gender.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kako-jun/noun-gender/issues"
+  },
+  "keywords": [
+    "language-learning",
+    "noun-gender",
+    "french",
+    "german",
+    "spanish",
+    "italian",
+    "nextjs",
+    "typescript",
+    "sqlite",
+    "education"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@types/better-sqlite3": "^7.6.13",
