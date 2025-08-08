@@ -24,52 +24,50 @@ class DatabaseManager {
     const langFilter = languages;
     const langPlaceholders = langFilter.map(() => '?').join(',');
     
-    // Enhanced search with multilingual support, examples, and memory tricks
+    // Search using v_all_translations view
     const sql = `
-      SELECT DISTINCT aw.english, aw.translation, aw.language, aw.gender,
-             aw.frequency, aw.example, aw.pronunciation, aw.usage_notes, aw.gender_explanation,
-             aw.meaning_en, aw.meaning_ja, aw.meaning_zh,
-             ee.example_en,
-             et_ja.example_translation as example_ja,
-             et_zh.example_translation as example_zh,
-             et_native.example_translation as example_native,
+      SELECT DISTINCT vat.en, vat.translation, vat.lang, vat.gender,
+             vat.meaning_en, vat.meaning_ja, vat.meaning_zh,
+             ex.example_en,
+             et_ja.translation as example_ja,
+             et_zh.translation as example_zh,
+             et_native.translation as example_native,
              mt_ja.trick_text as memory_trick_ja,
              mt_en.trick_text as memory_trick_en,
              mt_zh.trick_text as memory_trick_zh
-      FROM all_words aw
-      LEFT JOIN english_examples ee ON aw.english = ee.english_word
-      LEFT JOIN example_translations et_ja ON aw.english = et_ja.english_word AND et_ja.language = 'ja'
-      LEFT JOIN example_translations et_zh ON aw.english = et_zh.english_word AND et_zh.language = 'zh'
-      LEFT JOIN example_translations et_native ON aw.english = et_native.english_word AND et_native.language = aw.language
-      LEFT JOIN memory_tricks mt_ja ON aw.english = mt_ja.english_word AND aw.language = mt_ja.target_language AND mt_ja.ui_language = 'ja'
-      LEFT JOIN memory_tricks mt_en ON aw.english = mt_en.english_word AND aw.language = mt_en.target_language AND mt_en.ui_language = 'en'
-      LEFT JOIN memory_tricks mt_zh ON aw.english = mt_zh.english_word AND aw.language = mt_zh.target_language AND mt_zh.ui_language = 'zh'
-      WHERE (aw.language IN (${langPlaceholders})) AND (
-        aw.english LIKE ? 
-        OR aw.translation LIKE ?
+      FROM v_all_translations vat
+      LEFT JOIN examples ex ON vat.en = ex.en
+      LEFT JOIN example_translations et_ja ON ex.example_en = et_ja.example_en AND et_ja.lang = 'ja'
+      LEFT JOIN example_translations et_zh ON ex.example_en = et_zh.example_en AND et_zh.lang = 'zh'
+      LEFT JOIN example_translations et_native ON ex.example_en = et_native.example_en AND et_native.lang = vat.lang
+      LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
+      LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
+      LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
+      WHERE (vat.lang IN (${langPlaceholders})) AND (
+        vat.en LIKE ? 
+        OR vat.translation LIKE ?
         OR EXISTS (
-          SELECT 1 FROM multilingual_search ms 
+          SELECT 1 FROM v_multilingual_search ms 
           WHERE ms.search_term LIKE ? 
-          AND ms.english_word = aw.english
+          AND ms.en = vat.en
         )
       )
       ORDER BY 
         CASE 
           -- 完全一致は最優先
-          WHEN aw.english = ? THEN 1
-          WHEN aw.translation = ? THEN 2
+          WHEN vat.en = ? THEN 1
+          WHEN vat.translation = ? THEN 2
           -- 短い単語の部分一致を前方一致より優先
-          WHEN LENGTH(aw.english) <= 4 AND aw.english LIKE ? THEN 2.5
+          WHEN LENGTH(vat.en) <= 4 AND vat.en LIKE ? THEN 2.5
           -- 前方一致
-          WHEN aw.english LIKE ? THEN 3
-          WHEN aw.translation LIKE ? THEN 4
+          WHEN vat.en LIKE ? THEN 3
+          WHEN vat.translation LIKE ? THEN 4
           -- その他の部分一致
           ELSE 5 
         END,
         -- 短い単語ほど関連性が高い
-        LENGTH(aw.english),
-        aw.frequency DESC,
-        aw.english
+        LENGTH(vat.en),
+        vat.en
       LIMIT ?
     `;
     
@@ -80,18 +78,13 @@ class DatabaseManager {
     const rows = db.prepare(sql).all(
       ...langFilter, // Language filter
       searchTerm, searchTerm, searchTerm, // Search terms
-      exactTerm, exactTerm, searchTerm, startsWith, startsWith, // Ranking terms (updated order)
+      exactTerm, exactTerm, searchTerm, startsWith, startsWith, // Ranking terms
       limit
     ) as Array<{ 
-      english: string; 
+      en: string; 
       translation: string; 
-      language: string; 
+      lang: string; 
       gender: string; 
-      frequency?: number; 
-      example?: string; 
-      pronunciation?: string; 
-      usage_notes?: string; 
-      gender_explanation?: string;
       meaning_en?: string;
       meaning_ja?: string;
       meaning_zh?: string;
@@ -104,12 +97,11 @@ class DatabaseManager {
       memory_trick_zh?: string;
     }>;
 
-
     // Group results by English word
     const grouped = new Map<string, SearchResult>();
     
     rows.forEach((row) => {
-      const englishWord = row.english;
+      const englishWord = row.en;
       
       if (!grouped.has(englishWord)) {
         grouped.set(englishWord, {
@@ -135,15 +127,9 @@ class DatabaseManager {
         result.translations.push({
           id: 0,
           word_id: 0,
-          language: row.language,
+          language: row.lang,
           translation: row.translation,
           gender: row.gender as 'm' | 'f' | 'n',
-          frequency: row.frequency,
-          example: row.example,
-          example_native: row.example_native,
-          pronunciation: row.pronunciation,
-          usage_notes: row.usage_notes,
-          gender_explanation: row.gender_explanation,
           memory_trick_ja: row.memory_trick_ja,
           memory_trick_en: row.memory_trick_en,
           memory_trick_zh: row.memory_trick_zh
@@ -156,14 +142,14 @@ class DatabaseManager {
 
   async getStats() {
     const db = this.getDb();
-    const totalWords = db.prepare('SELECT COUNT(DISTINCT english) as total FROM all_words').get() as { total: number };
-    const totalTranslations = db.prepare('SELECT COUNT(*) as total FROM all_words').get() as { total: number };
-    const multilingualTerms = db.prepare('SELECT COUNT(*) as total FROM multilingual_search').get() as { total: number };
-    const searchLanguages = db.prepare('SELECT COUNT(DISTINCT language_code) as total FROM multilingual_search').get() as { total: number };
+    const totalWords = db.prepare('SELECT COUNT(DISTINCT en) as total FROM v_all_translations').get() as { total: number };
+    const totalTranslations = db.prepare('SELECT COUNT(*) as total FROM v_all_translations').get() as { total: number };
+    const multilingualTerms = db.prepare('SELECT COUNT(*) as total FROM v_multilingual_search').get() as { total: number };
+    const searchLanguages = db.prepare('SELECT COUNT(DISTINCT lang) as total FROM v_multilingual_search').get() as { total: number };
     const languageStats = db.prepare(`
-      SELECT language, COUNT(*) as count 
-      FROM all_words 
-      GROUP BY language 
+      SELECT lang as language, COUNT(*) as count 
+      FROM v_all_translations 
+      GROUP BY lang 
       ORDER BY count DESC
     `).all() as { language: string; count: number }[];
     
@@ -187,59 +173,63 @@ class DatabaseManager {
     
     // First, get distinct English words with pagination
     let englishWordsQuery = `
-      SELECT DISTINCT english
-      FROM all_words 
+      SELECT DISTINCT en
+      FROM v_all_translations 
       WHERE translation IS NOT NULL AND translation != ''
     `;
     
     const englishParams: any[] = [];
     
     if (language) {
-      englishWordsQuery += ` AND language = ?`;
+      englishWordsQuery += ` AND lang = ?`;
       englishParams.push(language);
     }
     
     if (startsWith) {
-      englishWordsQuery += ` AND LOWER(english) LIKE ?`;
+      englishWordsQuery += ` AND LOWER(en) LIKE ?`;
       englishParams.push(`${startsWith.toLowerCase()}%`);
     }
     
-    englishWordsQuery += ` ORDER BY LOWER(english) LIMIT ? OFFSET ?`;
+    englishWordsQuery += ` ORDER BY LOWER(en) LIMIT ? OFFSET ?`;
     englishParams.push(limit, offset);
     
-    const englishWords = db.prepare(englishWordsQuery).all(...englishParams) as { english: string }[];
+    const englishWords = db.prepare(englishWordsQuery).all(...englishParams) as { en: string }[];
     
     if (englishWords.length === 0) {
       return [];
     }
     
     // Then get all translations for these English words
-    const englishList = englishWords.map(row => row.english);
+    const englishList = englishWords.map(row => row.en);
     const placeholders = englishList.map(() => '?').join(',');
     
     let translationsQuery = `
-      SELECT aw.english, aw.language, aw.translation, aw.gender, aw.frequency, aw.example, 
-             aw.pronunciation, aw.usage_notes, aw.gender_explanation,
-             aw.meaning_en, aw.meaning_ja, aw.meaning_zh,
-             aw.example_en, aw.example_ja, aw.example_zh,
+      SELECT vat.en, vat.lang, vat.translation, vat.gender,
+             vat.meaning_en, vat.meaning_ja, vat.meaning_zh,
+             ex.example_en,
+             et_ja.translation as example_ja,
+             et_zh.translation as example_zh,
              mt_ja.trick_text as memory_trick_ja,
              mt_en.trick_text as memory_trick_en,
              mt_zh.trick_text as memory_trick_zh
-      FROM all_words aw
-      LEFT JOIN memory_tricks mt_ja ON aw.english = mt_ja.english_word AND aw.language = mt_ja.target_language AND mt_ja.ui_language = 'ja'
-      LEFT JOIN memory_tricks mt_en ON aw.english = mt_en.english_word AND aw.language = mt_en.target_language AND mt_en.ui_language = 'en'
-      LEFT JOIN memory_tricks mt_zh ON aw.english = mt_zh.english_word AND aw.language = mt_zh.target_language AND mt_zh.ui_language = 'zh'
-      WHERE aw.english IN (${placeholders}) AND aw.translation IS NOT NULL AND aw.translation != ''
+      FROM v_all_translations vat
+      LEFT JOIN examples ex ON vat.en = ex.en
+      LEFT JOIN example_translations et_ja ON ex.example_en = et_ja.example_en AND et_ja.lang = 'ja'
+      LEFT JOIN example_translations et_zh ON ex.example_en = et_zh.example_en AND et_zh.lang = 'zh'
+      LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
+      LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
+      LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
+      WHERE vat.en IN (${placeholders}) AND vat.translation IS NOT NULL AND vat.translation != ''
     `;
     
     const translationParams = [...englishList];
     
     if (language) {
-      translationsQuery += ` AND language = ?`;
+      translationsQuery += ` AND vat.lang = ?`;
       translationParams.push(language);
     }
     
-    translationsQuery += ` ORDER BY LOWER(english), language`;
+    translationsQuery += ` ORDER BY LOWER(vat.en), vat.lang`;
     
     const rows = db.prepare(translationsQuery).all(...translationParams) as any[];
     
@@ -247,9 +237,9 @@ class DatabaseManager {
     const grouped = new Map();
     
     rows.forEach(row => {
-      if (!grouped.has(row.english)) {
-        grouped.set(row.english, {
-          english: row.english,
+      if (!grouped.has(row.en)) {
+        grouped.set(row.en, {
+          english: row.en,
           meaning_en: row.meaning_en,
           meaning_ja: row.meaning_ja,
           meaning_zh: row.meaning_zh,
@@ -264,17 +254,12 @@ class DatabaseManager {
       
       // 有効な翻訳データのみ追加
       if (row.translation && row.translation.trim() !== '' && ['m', 'f', 'n'].includes(row.gender)) {
-        grouped.get(row.english).translations.push({
+        grouped.get(row.en).translations.push({
           id: 0,
           word_id: 0,
-          language: row.language,
+          language: row.lang,
           translation: row.translation,
           gender: row.gender as 'm' | 'f' | 'n',
-          frequency: row.frequency,
-          example: row.example,
-          pronunciation: row.pronunciation,
-          usage_notes: row.usage_notes,
-          gender_explanation: row.gender_explanation,
           memory_trick_ja: row.memory_trick_ja,
           memory_trick_en: row.memory_trick_en,
           memory_trick_zh: row.memory_trick_zh
@@ -292,7 +277,7 @@ class DatabaseManager {
     const sql = `
       SELECT trick_text 
       FROM memory_tricks 
-      WHERE english_word = ? AND target_language = ? AND ui_language = ?
+      WHERE en = ? AND translation_lang = ? AND ui_lang = ?
     `;
     
     const result = db.prepare(sql).get(englishWord, targetLanguage, uiLanguage) as { trick_text: string } | undefined;
@@ -303,16 +288,16 @@ class DatabaseManager {
     const db = this.getDb();
     
     const sql = `
-      SELECT target_language, trick_text 
+      SELECT translation_lang, trick_text 
       FROM memory_tricks 
-      WHERE english_word = ? AND ui_language = ?
+      WHERE en = ? AND ui_lang = ?
     `;
     
-    const results = db.prepare(sql).all(englishWord, uiLanguage) as { target_language: string; trick_text: string }[];
+    const results = db.prepare(sql).all(englishWord, uiLanguage) as { translation_lang: string; trick_text: string }[];
     
     const tricks: Record<string, string> = {};
     results.forEach(row => {
-      tricks[row.target_language] = row.trick_text;
+      tricks[row.translation_lang] = row.trick_text;
     });
     
     return tricks;
