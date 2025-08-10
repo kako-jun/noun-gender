@@ -167,6 +167,56 @@
 - Tokyo Ghoul（東京喰種）
 - Mob Psycho 100（モブサイコ100）
 
+###### 長寿・国民的漫画
+- Doraemon（ドラえもん）
+- Detective Conan（名探偵コナン）
+- Sazae-san（サザエさん）
+- Chibi Maruko-chan（ちびまる子ちゃん）
+- Crayon Shin-chan（クレヨンしんちゃん）
+- Anpanman（アンパンマン）
+
+###### 少女・女性向け漫画
+- Sailor Moon（美少女戦士セーラームーン）
+- Cardcaptor Sakura（カードキャプターさくら）
+- Fruits Basket（フルーツバスケット）
+- Ouran High School Host Club（桜蘭高校ホスト部）
+- Nana（ナナ）
+- Paradise Kiss（パラダイス・キス）
+
+###### 青年・大人向け漫画
+- Berserk（ベルセルク）
+- Ghost in the Shell（攻殻機動隊）
+- Akira（アキラ）
+- Monster（モンスター）
+- 20th Century Boys（20世紀少年）
+- Pluto（プルートウ）
+- Vagabond（バガボンド）
+
+###### スポーツ漫画
+- Captain Tsubasa（キャプテン翼）
+- Slam Dunk（スラムダンク）
+- Prince of Tennis（テニスの王子様）
+- Haikyuu（ハイキュー!!）
+- Kuroko's Basketball（黒子のバスケ）
+- Yuri on Ice（ユーリ!!! on ICE）
+
+###### ギャグ・コメディ漫画
+- Gintama（銀魂）
+- Osomatsu-san（おそ松さん）
+- Daily Lives of High School Boys（男子高校生の日常）
+- Nichijou（日常）
+
+###### 料理・グルメ漫画
+- Cooking Master Boy（中華一番!）
+- Food Wars（食戟のソーマ）
+- Yakitate!! Japan（焼きたて!! ジャぱん）
+
+###### 日常・癒し系漫画
+- Yotsuba&!（よつばと!）
+- Chi's Sweet Home（チーズスイートホーム）
+- Barakamon（ばらかもん）
+- Silver Spoon（銀の匙）
+
 ###### ロボット・メカ
 - Gundam（ガンダム）
 - Evangelion（エヴァンゲリオン）
@@ -5493,6 +5543,29 @@
 - Toy Story（トイ・ストーリー）
 - Finding Nemo（ファインディング・ニモ）
 - Shrek（シュレック）
+
+#### 日本の特撮・怪獣映画
+- Godzilla（ゴジラ）
+- Gamera（ガメラ）
+- Mothra（モスラ）
+- Rodan（ラドン）
+- King Ghidorah（キングギドラ）
+- Mechagodzilla（メカゴジラ）
+- Ultraman（ウルトラマン）
+- Kamen Rider（仮面ライダー）
+- Super Sentai（スーパー戦隊）
+- Power Rangers（パワーレンジャー）
+- Akira Kurosawa films（黒澤明映画）
+- Seven Samurai（七人の侍）
+- Yojimbo（用心棒）
+- Rashomon（羅生門）
+
+#### 日本のホラー映画
+- Ring（リング）
+- Ju-on: The Grudge（呪怨）
+- Dark Water（仄暗い水の底から）
+- Battle Royale（バトル・ロワイアル）
+- Audition（オーディション）
 
 #### 有名TV番組
 - Friends（フレンズ）
