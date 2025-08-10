@@ -52,6 +52,132 @@
 - notification（通知）
 - screenshot（スクリーンショット）
 
+#### OS・プラットフォーム名
+- Windows（ウィンドウズ）
+- macOS（マックOS）
+- iOS（アイオーエス）
+- Android（アンドロイド）
+- Linux（リナックス）
+- Ubuntu（ウブントゥ）
+- Chrome OS（クロームOS）
+
+#### デバイス・製品名
+- iPhone（アイフォン）
+- iPad（アイパッド）
+- MacBook（マックブック）
+- iMac（アイマック）
+- Surface（サーフェス）
+- Galaxy（ギャラクシー）
+- Pixel（ピクセル）
+- Kindle（キンドル）
+- PlayStation（プレイステーション）
+- Xbox（エックスボックス）
+- Nintendo Switch（ニンテンドースイッチ）
+
+#### ソフトウェア・アプリ名
+- Chrome（クローム）
+- Safari（サファリ）
+- Firefox（ファイアフォックス）
+- Edge（エッジ）
+- Photoshop（フォトショップ）
+- Excel（エクセル）
+- Word（ワード）
+- PowerPoint（パワーポイント）
+- Zoom（ズーム）
+- Skype（スカイプ）
+- Teams（チームス）
+- Slack（スラック）
+- Discord（ディスコード）
+- WhatsApp（ワッツアップ）
+- LINE（ライン）
+- Instagram（インスタグラム）
+- Facebook（フェイスブック）
+- Twitter（ツイッター）
+- YouTube（ユーチューブ）
+- TikTok（ティックトック）
+- Netflix（ネットフリックス）
+- Spotify（スポティファイ）
+
+#### エンターテインメント・IP（知的財産）
+
+##### 映画・TV シリーズ
+- Star Wars（スター・ウォーズ）
+- Marvel（マーベル）
+- Batman（バットマン）
+- Superman（スーパーマン）
+- Spider-Man（スパイダーマン）
+- Iron Man（アイアンマン）
+- Avengers（アベンジャーズ）
+- X-Men（エックスメン）
+- Transformers（トランスフォーマー）
+- Harry Potter（ハリー・ポッター）
+- Lord of the Rings（ロード・オブ・ザ・リング）
+- Game of Thrones（ゲーム・オブ・スローンズ）
+- Breaking Bad（ブレイキング・バッド）
+- Friends（フレンズ）
+- The Simpsons（ザ・シンプソンズ）
+- Mickey Mouse（ミッキーマウス）
+- Disney（ディズニー）
+- Pixar（ピクサー）
+
+##### ゲーム・ゲームシリーズ
+- Mario（マリオ）
+- Zelda（ゼルダ）
+- Pokémon（ポケモン）
+- Minecraft（マインクラフト）
+- Fortnite（フォートナイト）
+- Call of Duty（コール・オブ・デューティー）
+- Grand Theft Auto（グランド・セフト・オート）
+- FIFA（フィーファ）
+- World of Warcraft（ワールド・オブ・ウォークラフト）
+- League of Legends（リーグ・オブ・レジェンド）
+- Counter-Strike（カウンターストライク）
+- Assassin's Creed（アサシン・クリード）
+- Halo（ヘイロー）
+- Doom（ドゥーム）
+- Street Fighter（ストリートファイター）
+- Tekken（鉄拳）
+- Final Fantasy（ファイナルファンタジー）
+- Dragon Quest（ドラゴンクエスト）
+- Sonic（ソニック）
+- Pac-Man（パックマン）
+
+##### アニメ・漫画（国際的作品）
+
+###### クラシック・長期連載
+- Dragon Ball（ドラゴンボール）
+- Naruto（ナルト）
+- One Piece（ワンピース）
+- Bleach（ブリーチ）
+
+###### 現代ジャンプ系
+- Demon Slayer（鬼滅の刃）
+- Jujutsu Kaisen（呪術廻戦）
+- Chainsaw Man（チェンソーマン）
+- My Hero Academia（僕のヒーローアカデミア）
+- Black Clover（ブラッククローバー）
+- Hunter x Hunter（ハンター×ハンター）
+- JoJo's Bizarre Adventure（ジョジョの奇妙な冒険）
+
+###### その他人気作品
+- Attack on Titan（進撃の巨人）
+- Death Note（デスノート）
+- Fullmetal Alchemist（鋼の錬金術師）
+- One Punch Man（ワンパンマン）
+- Tokyo Ghoul（東京喰種）
+- Mob Psycho 100（モブサイコ100）
+
+###### ロボット・メカ
+- Gundam（ガンダム）
+- Evangelion（エヴァンゲリオン）
+
+###### スタジオジブリ
+- Studio Ghibli（スタジオジブリ）
+- Spirited Away（千と千尋の神隠し）
+- My Neighbor Totoro（となりのトトロ）
+- Princess Mononoke（もののけ姫）
+- Howl's Moving Castle（ハウルの動く城）
+
 ### 現代社会・ビジネス用語
 - startup（スタートアップ）
 - entrepreneur（起業家）
@@ -2181,6 +2307,35 @@
 - awakening（目覚め）
 
 ### 地理・国名・地名
+
+#### 大陸・地域名
+- Asia（アジア）
+- Europe（ヨーロッパ）
+- Africa（アフリカ）
+- North America（北アメリカ）
+- South America（南アメリカ）
+- Oceania（オセアニア）
+- Antarctica（南極大陸）
+- Eurasia（ユーラシア）
+- Middle East（中東）
+- Far East（極東）
+- Southeast Asia（東南アジア）
+- East Asia（東アジア）
+- South Asia（南アジア）
+- Central Asia（中央アジア）
+- Western Europe（西ヨーロッパ）
+- Eastern Europe（東ヨーロッパ）
+- Northern Europe（北ヨーロッパ）
+- Southern Europe（南ヨーロッパ）
+- Sub-Saharan Africa（サハラ以南アフリカ）
+- Mediterranean（地中海地域）
+- Scandinavia（スカンジナビア）
+- Balkans（バルカン半島）
+- Caucasus（コーカサス地方）
+- Arabian Peninsula（アラビア半島）
+- Indian Subcontinent（インド亜大陸）
+
+#### 地理用語
 - geography（地理学）
 - topography（地形学）
 - cartography（地図学）
@@ -3232,6 +3387,97 @@
 - Myanmar（ミャンマー）
 - Cambodia（カンボジア）
 - Laos（ラオス）
+
+#### 国民・民族（その国の人）
+- Japanese（日本人）
+- Chinese（中国人）
+- Korean（韓国人）
+- Indian（インド人）
+- Thai（タイ人）
+- Vietnamese（ベトナム人）
+- Indonesian（インドネシア人）
+- Filipino（フィリピン人）
+- Malaysian（マレーシア人）
+- Singaporean（シンガポール人）
+- Russian（ロシア人）
+- Iranian（イラン人）
+- Iraqi（イラク人）
+- Syrian（シリア人）
+- Turkish（トルコ人）
+- Egyptian（エジプト人）
+- Moroccan（モロッコ人）
+- Nigerian（ナイジェリア人）
+- Kenyan（ケニア人）
+- American（アメリカ人）
+- Canadian（カナダ人）
+- Mexican（メキシコ人）
+- Brazilian（ブラジル人）
+- Argentinian（アルゼンチン人）
+- Chilean（チリ人）
+- British（イギリス人）
+- English（イングランド人）
+- Scottish（スコットランド人）
+- Welsh（ウェールズ人）
+- Irish（アイルランド人）
+- French（フランス人）
+- German（ドイツ人）
+- Italian（イタリア人）
+- Spanish（スペイン人）
+- Portuguese（ポルトガル人）
+- Dutch（オランダ人）
+- Belgian（ベルギー人）
+- Swiss（スイス人）
+- Austrian（オーストリア人）
+- Polish（ポーランド人）
+- Czech（チェコ人）
+- Hungarian（ハンガリー人）
+- Greek（ギリシャ人）
+- Swedish（スウェーデン人）
+- Norwegian（ノルウェー人）
+- Danish（デンマーク人）
+- Finnish（フィンランド人）
+- Australian（オーストラリア人）
+
+#### 言語名
+- Japanese（日本語）
+- Chinese（中国語）
+- Mandarin（北京官話）
+- Cantonese（広東語）
+- Korean（韓国語）
+- Hindi（ヒンディー語）
+- Urdu（ウルドゥー語）
+- Bengali（ベンガル語）
+- Tamil（タミル語）
+- Thai（タイ語）
+- Vietnamese（ベトナム語）
+- Malay（マレー語）
+- Indonesian（インドネシア語）
+- Tagalog（タガログ語）
+- Persian（ペルシア語）
+- Arabic（アラビア語）
+- Hebrew（ヘブライ語）
+- Turkish（トルコ語）
+- Russian（ロシア語）
+- English（英語）
+- French（フランス語）
+- German（ドイツ語）
+- Italian（イタリア語）
+- Spanish（スペイン語）
+- Portuguese（ポルトガル語）
+- Dutch（オランダ語）
+- Swedish（スウェーデン語）
+- Norwegian（ノルウェー語）
+- Danish（デンマーク語）
+- Finnish（フィンランド語）
+- Polish（ポーランド語）
+- Czech（チェコ語）
+- Hungarian（ハンガリー語）
+- Greek（ギリシャ語）
+- Swahili（スワヒリ語）
+- Amharic（アムハラ語）
+- Yoruba（ヨルバ語）
+- Zulu（ズールー語）
+- Afrikaans（アフリカーンス語）
 
 #### 主要都市名
 - Tokyo（東京）
@@ -4738,4 +4984,1993 @@
 ---
 
 **作成日**: 2025-08-08  
-**最終更新**: 2025-08-08
+**最終更新**: 2025-08-10
+
+---
+
+## 新規追加カテゴリ（2025-08-10追加）
+
+### 星・惑星・天体名
+- Mercury（水星）
+- Venus（金星）
+- Mars（火星）
+- Jupiter（木星）
+- Uranus（天王星）
+- Neptune（海王星）
+- Pluto（冥王星）
+- Sun（太陽）
+- Moon（月）
+- Earth（地球）
+- Milky Way（天の川）
+- galaxy（銀河）
+- constellation（星座）
+- comet（彗星）
+- asteroid（小惑星）
+- meteor（流星）
+- nebula（星雲）
+- supernova（超新星）
+
+### 化学元素名（主要）
+- hydrogen（水素）
+- helium（ヘリウム）
+- lithium（リチウム）
+- carbon（炭素）
+- nitrogen（窒素）
+- oxygen（酸素）
+- fluorine（フッ素）
+- neon（ネオン）
+- sodium（ナトリウム）
+- magnesium（マグネシウム）
+- aluminum（アルミニウム）
+- silicon（ケイ素）
+- phosphorus（リン）
+- sulfur（硫黄）
+- chlorine（塩素）
+- argon（アルゴン）
+- potassium（カリウム）
+- calcium（カルシウム）
+- iron（鉄）
+- copper（銅）
+- zinc（亜鉛）
+- silver（銀）
+- gold（金）
+- mercury（水銀）
+- lead（鉛）
+- uranium（ウラン）
+
+### 宗教・宗派名
+- Christianity（キリスト教）
+- Islam（イスラム教）
+- Judaism（ユダヤ教）
+- Buddhism（仏教）
+- Hinduism（ヒンドゥー教）
+- Shintoism（神道）
+- Catholicism（カトリック）
+- Protestantism（プロテスタント）
+- Orthodox（正教会）
+- mosque（モスク）
+- cathedral（大聖堂）
+- synagogue（シナゴーグ）
+- temple（寺院）
+- shrine（神社）
+- church（教会）
+- monastery（修道院）
+- prayer（祈り）
+- pilgrimage（巡礼）
+- scripture（聖典）
+- Bible（聖書）
+- Quran（コーラン）
+- Torah（トーラー）
+
+### 生き物（動物・生物）
+#### 哺乳動物
+- elephant（象）
+- rhinoceros（サイ）
+- hippopotamus（カバ）
+- giraffe（キリン）
+- zebra（シマウマ）
+- kangaroo（カンガルー）
+- panda（パンダ）
+- koala（コアラ）
+- chimpanzee（チンパンジー）
+- gorilla（ゴリラ）
+- orangutan（オランウータン）
+- leopard（ヒョウ）
+- cheetah（チーター）
+- jaguar（ジャガー）
+- raccoon（アライグマ）
+- squirrel（リス）
+- hedgehog（ハリネズミ）
+
+#### 鳥類
+- eagle（ワシ）
+- hawk（タカ）
+- owl（フクロウ）
+- parrot（オウム）
+- penguin（ペンギン）
+- flamingo（フラミンゴ）
+- peacock（クジャク）
+- swan（白鳥）
+- crane（ツル）
+- heron（サギ）
+- pelican（ペリカン）
+- ostrich（ダチョウ）
+- hummingbird（ハチドリ）
+
+#### 海洋生物
+- whale（クジラ）
+- dolphin（イルカ）
+- shark（サメ）
+- octopus（タコ）
+- squid（イカ）
+- jellyfish（クラゲ）
+- seahorse（タツノオトシゴ）
+- starfish（ヒトデ）
+- coral（サンゴ）
+- lobster（ロブスター）
+- crab（カニ）
+- shrimp（エビ）
+- oyster（カキ）
+- clam（ハマグリ）
+
+#### 昆虫・小動物
+- butterfly（蝶）
+- dragonfly（トンボ）
+- grasshopper（バッタ）
+- cricket（コオロギ）
+- ladybug（てんとう虫）
+- beetle（カブトムシ）
+- ant（アリ）
+- bee（ミツバチ）
+- wasp（スズメバチ）
+- spider（クモ）
+- scorpion（サソリ）
+- centipede（ムカデ）
+- millipede（ヤスデ）
+
+### 恐竜・古生物名
+- Tyrannosaurus（ティラノサウルス）
+- Triceratops（トリケラトプス）
+- Stegosaurus（ステゴサウルス）
+- Brontosaurus（ブロントサウルス）
+- Velociraptor（ヴェロキラプトル）
+- Diplodocus（ディプロドクス）
+- Allosaurus（アロサウルス）
+- Pteranodon（プテラノドン）
+- Archaeopteryx（始祖鳥）
+- mammoth（マンモス）
+- saber-tooth（サーベルタイガー）
+- trilobite（三葉虫）
+
+### 架空の生き物・ドラゴン系
+- dragon（ドラゴン）
+- wyvern（ワイバーン）
+- phoenix（フェニックス）
+- griffin（グリフィン）
+- unicorn（ユニコーン）
+- pegasus（ペガサス）
+- centaur（ケンタウロス）
+- minotaur（ミノタウロス）
+- sphinx（スフィンクス）
+- kraken（クラーケン）
+- hydra（ヒドラ）
+- chimera（キメラ）
+
+### 数字・数学用語
+- zero（ゼロ）
+- one（1）
+- two（2）
+- three（3）
+- four（4）
+- five（5）
+- six（6）
+- seven（7）
+- eight（8）
+- nine（9）
+- ten（10）
+- eleven（11）
+- twelve（12）
+- thirteen（13）
+- fourteen（14）
+- fifteen（15）
+- sixteen（16）
+- seventeen（17）
+- eighteen（18）
+- nineteen（19）
+- twenty（20）
+- thirty（30）
+- forty（40）
+- fifty（50）
+- sixty（60）
+- seventy（70）
+- eighty（80）
+- ninety（90）
+- hundred（100）
+- thousand（1000）
+- million（100万）
+- billion（10億）
+- fraction（分数）
+- decimal（小数）
+- percentage（パーセント）
+- infinity（無限）
+- equation（方程式）
+- formula（公式）
+- theorem（定理）
+- proof（証明）
+
+### 植物・花・木
+- rose（バラ）
+- tulip（チューリップ）
+- sunflower（ひまわり）
+- lily（ユリ）
+- orchid（ラン）
+- carnation（カーネーション）
+- chrysanthemum（菊）
+- jasmine（ジャスミン）
+- violet（すみれ）
+- daisy（デイジー）
+- iris（アイリス）
+- oak（オーク）
+- pine（松）
+- cherry（桜）
+- maple（カエデ）
+- willow（柳）
+- bamboo（竹）
+- palm（ヤシ）
+- cedar（杉）
+- birch（シラカバ）
+- eucalyptus（ユーカリ）
+- cactus（サボテン）
+- fern（シダ）
+- moss（苔）
+- ivy（ツタ）
+- vine（ぶどうの木）
+
+### 方向・方角
+- north（北）
+- south（南）
+- east（東）
+- west（西）
+- northeast（北東）
+- northwest（北西）
+- southeast（南東）
+- southwest（南西）
+- left（左）
+- right（右）
+- up（上）
+- down（下）
+- forward（前）
+- backward（後ろ）
+- center（中央）
+- middle（真ん中）
+- top（頂上）
+- bottom（底）
+- front（前面）
+- back（背面）
+- side（側面）
+- corner（角）
+- edge（端）
+- boundary（境界）
+
+### 図形・幾何学
+- circle（円）
+- square（正方形）
+- rectangle（長方形）
+- triangle（三角形）
+- pentagon（五角形）
+- hexagon（六角形）
+- octagon（八角形）
+- oval（楕円）
+- sphere（球）
+- cube（立方体）
+- cylinder（円柱）
+- pyramid（ピラミッド）
+- cone（円錐）
+- prism（プリズム）
+- angle（角度）
+- radius（半径）
+- diameter（直径）
+- circumference（円周）
+- area（面積）
+- volume（体積）
+- perimeter（周囲）
+- diagonal（対角線）
+- parallel（平行）
+- perpendicular（垂直）
+- symmetry（対称）
+
+### 食べ物・料理・調味料
+#### 主食・穀物
+- rice（米）
+- wheat（小麦）
+- oat（オーツ麦）
+- barley（大麦）
+- quinoa（キヌア）
+- pasta（パスタ）
+- noodle（麺）
+- ramen（ラーメン）
+- udon（うどん）
+- soba（そば）
+- spaghetti（スパゲッティ）
+- macaroni（マカロニ）
+
+#### 野菜・果物
+- tomato（トマト）
+- cucumber（キュウリ）
+- carrot（ニンジン）
+- broccoli（ブロッコリー）
+- cauliflower（カリフラワー）
+- spinach（ほうれん草）
+- lettuce（レタス）
+- cabbage（キャベツ）
+- onion（玉ねぎ）
+- garlic（ニンニク）
+- ginger（生姜）
+- avocado（アボカド）
+- eggplant（ナス）
+- zucchini（ズッキーニ）
+- asparagus（アスパラガス）
+- artichoke（アーティチョーク）
+- mango（マンゴー）
+- pineapple（パイナップル）
+- papaya（パパイヤ）
+- kiwi（キウィ）
+- pomegranate（ザクロ）
+- persimmon（柿）
+
+#### 肉類・魚介類
+- beef（牛肉）
+- pork（豚肉）
+- lamb（ラム肉）
+- veal（子牛肉）
+- venison（鹿肉）
+- tuna（マグロ）
+- salmon（サーモン）
+- mackerel（サバ）
+- cod（タラ）
+- halibut（ヒラメ）
+- sea bass（スズキ）
+- crab（カニ）
+- lobster（ロブスター）
+- scallop（ホタテ）
+- mussel（ムール貝）
+
+#### 調味料・香辛料
+- pepper（胡椒）
+- cinnamon（シナモン）
+- nutmeg（ナツメグ）
+- cardamom（カルダモン）
+- cumin（クミン）
+- coriander（コリアンダー）
+- turmeric（ターメリック）
+- paprika（パプリカ）
+- oregano（オレガノ）
+- basil（バジル）
+- thyme（タイム）
+- rosemary（ローズマリー）
+- parsley（パセリ）
+- cilantro（コリアンダー）
+- sage（セージ）
+- mint（ミント）
+- vanilla（バニラ）
+- soy sauce（醤油）
+- vinegar（酢）
+- mayonnaise（マヨネーズ）
+- ketchup（ケチャップ）
+- mustard（マスタード）
+
+#### 飲み物
+- coffee（コーヒー）
+- tea（茶）
+- juice（ジュース）
+- soda（ソーダ）
+- lemonade（レモネード）
+- smoothie（スムージー）
+- milkshake（ミルクシェイク）
+- cocktail（カクテル）
+- wine（ワイン）
+- beer（ビール）
+- sake（日本酒）
+- whiskey（ウイスキー）
+- vodka（ウォッカ）
+- rum（ラム酒）
+- gin（ジン）
+- champagne（シャンパン）
+
+#### デザート・菓子
+- cake（ケーキ）
+- cookie（クッキー）
+- chocolate（チョコレート）
+- candy（キャンディー）
+- ice cream（アイスクリーム）
+- pudding（プリン）
+- pie（パイ）
+- tart（タルト）
+- donut（ドーナツ）
+- muffin（マフィン）
+- croissant（クロワッサン）
+- macaron（マカロン）
+- tiramisu（ティラミス）
+- cheesecake（チーズケーキ）
+- brownie（ブラウニー）
+### 歴史上の有名人物
+#### 古代・中世の人物
+- Caesar（カエサル）
+- Cleopatra（クレオパトラ）
+- Alexander（アレクサンダー大王）
+- Hannibal（ハンニバル）
+- Tutankhamun（ツタンカーメン）
+- Nero（ネロ皇帝）
+- Constantine（コンスタンティヌス）
+- Charlemagne（シャルルマーニュ）
+- Genghis Khan（チンギス・ハン）
+- Marco Polo（マルコ・ポーロ）
+
+#### 宗教・思想家
+- Buddha（仏陀）※男性だがドイツ語では女性名詞
+- Confucius（孔子）
+- Socrates（ソクラテス）
+- Plato（プラトン）
+- Aristotle（アリストテレス）
+- Augustine（アウグスティヌス）
+- Aquinas（トマス・アクィナス）
+
+#### 征服者・統治者
+- Attila（アッティラ）※男性だがドイツ語では女性名詞
+- Caligula（カリグラ）※男性だがドイツ語では女性名詞
+- Justinian（ユスティニアヌス）
+- Saladin（サラディン）
+- Richard（リチャード獅子心王）
+- Joan of Arc（ジャンヌ・ダルク）
+
+#### ルネサンス期の人物
+- Leonardo（レオナルド・ダ・ヴィンチ）
+- Michelangelo（ミケランジェロ）
+- Raphael（ラファエロ）
+- Machiavelli（マキャヴェッリ）
+- Galileo（ガリレオ）
+- Copernicus（コペルニクス）
+
+#### 探検家・発見者
+- Columbus（コロンブス）
+- Magellan（マゼラン）
+- Vasco da Gama（ヴァスコ・ダ・ガマ）
+- Cook（キャプテン・クック）
+
+### 有名映画・TV番組
+#### クラシック映画
+- Casablanca（カサブランカ）
+- Titanic（タイタニック）
+- Gone with the Wind（風と共に去りぬ）
+- Citizen Kane（市民ケーン）
+- Psycho（サイコ）
+- Vertigo（めまい）
+- Singin' in the Rain（雨に唄えば）
+- Some Like It Hot（お熱いのがお好き）
+
+#### アクション・アドベンチャー
+- Jaws（ジョーズ）
+- Raiders of the Lost Ark（レイダース/失われたアーク《聖櫃》）
+- Die Hard（ダイ・ハード）
+- Terminator（ターミネーター）
+- Alien（エイリアン）
+- Predator（プレデター）
+- Rocky（ロッキー）
+- Rambo（ランボー）
+
+#### SF・ファンタジー
+- Star Wars（スター・ウォーズ）
+- Back to the Future（バック・トゥ・ザ・フューチャー）
+- E.T.（E.T.）
+- Blade Runner（ブレードランナー）
+- Matrix（マトリックス）
+- Jurassic Park（ジュラシック・パーク）
+- Superman（スーパーマン）
+- Batman（バットマン）
+- Spider-Man（スパイダーマン）
+
+#### ホラー・スリラー
+- Halloween（ハロウィン）
+- Friday the 13th（13日の金曜日）
+- Nightmare on Elm Street（エルム街の悪夢）
+- Exorcist（エクソシスト）
+- Shining（シャイニング）
+- Silence of the Lambs（羊たちの沈黙）
+
+#### ドラマ・ロマンス
+- Godfather（ゴッドファーザー）
+- Goodfellas（グッドフェローズ）
+- Forrest Gump（フォレスト・ガンプ）
+- Pretty Woman（プリティ・ウーマン）
+- Ghost（ゴースト）
+- Dirty Dancing（ダーティ・ダンシング）
+
+#### アニメーション
+- Snow White（白雪姫）
+- Cinderella（シンデレラ）
+- Beauty and the Beast（美女と野獣）
+- Lion King（ライオン・キング）
+- Toy Story（トイ・ストーリー）
+- Finding Nemo（ファインディング・ニモ）
+- Shrek（シュレック）
+
+#### 有名TV番組
+- Friends（フレンズ）
+- Seinfeld（となりのサインフェルド）
+- Cheers（チアーズ）
+- Dallas（ダラス）
+- Dynasty（ダイナスティ）
+- Miami Vice（マイアミ・バイス）
+
+### 日常生活・家庭用語
+
+#### 朝の身支度・衛生用品
+- toothbrush（歯ブラシ）
+- toothpaste（歯磨き粉）
+- shampoo（シャンプー）
+- conditioner（コンディショナー）
+- soap（石鹸）
+- towel（タオル）
+- mirror（鏡）
+- comb（くし）
+- brush（ブラシ）
+- makeup（化粧品）
+- perfume（香水）
+- deodorant（デオドラント）
+- razor（カミソリ）
+- shaving cream（シェービングクリーム）
+
+#### 衣類・身につけるもの
+- underwear（下着）
+- bra（ブラジャー）
+- socks（靴下）
+- stockings（ストッキング）
+- tie（ネクタイ）
+- belt（ベルト）
+- watch（腕時計）
+- necklace（ネックレス）
+- earrings（イヤリング）
+- ring（指輪）
+- bracelet（ブレスレット）
+- uniform（制服）
+- apron（エプロン）
+- gloves（手袋）
+- scarf（マフラー）
+- hat（帽子）
+- sunglasses（サングラス）
+
+#### 朝食・食事用品
+- cereal（シリアル）
+- toast（トースト）
+- jam（ジャム）
+- marmalade（マーマレード）
+- butter（バター）
+- margarine（マーガリン）
+- yogurt（ヨーグルト）
+- orange juice（オレンジジュース）
+- smoothie（スムージー）
+- oatmeal（オートミール）
+- pancake（パンケーキ）
+- waffle（ワッフル）
+- syrup（シロップ）
+- honey（蜂蜜）
+
+#### 通勤・通学・交通
+- train（電車）
+- bus（バス）
+- subway（地下鉄）
+- taxi（タクシー）
+- bicycle（自転車）
+- motorcycle（バイク）
+- car（車）
+- traffic（交通）
+- traffic light（信号機）
+- crosswalk（横断歩道）
+- station（駅）
+- platform（プラットフォーム）
+- ticket（切符）
+- pass（定期券）
+- backpack（バックパック）
+- briefcase（ブリーフケース）
+- purse（ハンドバッグ）
+- wallet（財布）
+
+#### 仕事・学校関係
+- office（オフィス）
+- desk（机）
+- chair（椅子）
+- computer（コンピューター）
+- keyboard（キーボード）
+- mouse（マウス）
+- printer（プリンター）
+- meeting（会議）
+- presentation（プレゼンテーション）
+- deadline（締切）
+- project（プロジェクト）
+- report（報告書）
+- document（書類）
+- contract（契約）
+- colleague（同僚）
+- boss（上司）
+- employee（従業員）
+- customer（顧客）
+- client（クライアント）
+- classroom（教室）
+- teacher（先生）
+- student（学生）
+- classmate（クラスメート）
+- homework（宿題）
+- assignment（課題）
+- test（テスト）
+- exam（試験）
+- grade（成績）
+- textbook（教科書）
+- notebook（ノート）
+- pencil（鉛筆）
+- pen（ペン）
+- eraser（消しゴム）
+- ruler（定規）
+- calculator（電卓）
+
+#### 買い物・外出先
+- supermarket（スーパーマーケット）
+- grocery store（食料品店）
+- department store（デパート）
+- mall（ショッピングモール）
+- pharmacy（薬局）
+- bank（銀行）
+- post office（郵便局）
+- library（図書館）
+- hospital（病院）
+- clinic（クリニック）
+- dentist（歯科医院）
+- barber（理髪店）
+- beauty salon（美容院）
+- restaurant（レストラン）
+- cafe（カフェ）
+- receipt（レシート）
+- discount（割引）
+- sale（セール）
+- cashier（レジ係）
+- shopping cart（ショッピングカート）
+- basket（買い物かご）
+
+#### 家事・家庭用具
+- vacuum cleaner（掃除機）
+- washing machine（洗濯機）
+- dryer（乾燥機）
+- iron（アイロン）
+- ironing board（アイロン台）
+- detergent（洗剤）
+- fabric softener（柔軟剤）
+- bleach（漂白剤）
+- garbage（ゴミ）
+- trash can（ゴミ箱）
+- recycling（リサイクル）
+- broom（ほうき）
+- mop（モップ）
+- bucket（バケツ）
+- sponge（スポンジ）
+- cloth（布）
+- duster（はたき）
+
+#### 料理・台所用品
+- ingredient（材料）
+- recipe（レシピ）
+- oven（オーブン）
+- microwave（電子レンジ）
+- refrigerator（冷蔵庫）
+- freezer（冷凍庫）
+- stove（コンロ）
+- burner（バーナー）
+- pot（鍋）
+- pan（フライパン）
+- lid（蓋）
+- spatula（フライ返し）
+- ladle（おたま）
+- whisk（泡立て器）
+- cutting board（まな板）
+- knife（包丁）
+- fork（フォーク）
+- spoon（スプーン）
+- chopsticks（箸）
+- plate（皿）
+- bowl（ボウル）
+- cup（カップ）
+- mug（マグカップ）
+- glass（グラス）
+- bottle（ボトル）
+- can（缶）
+- jar（瓶）
+
+#### 夜の娯楽・リラックス
+- television（テレビ）
+- remote control（リモコン）
+- channel（チャンネル）
+- program（番組）
+- news（ニュース）
+- weather forecast（天気予報）
+- commercial（コマーシャル）
+- movie（映画）
+- series（シリーズ）
+- documentary（ドキュメンタリー）
+- magazine（雑誌）
+- newspaper（新聞）
+- book（本）
+- novel（小説）
+- comic（漫画）
+- music（音楽）
+- headphones（ヘッドフォン）
+- speaker（スピーカー）
+- game（ゲーム）
+- puzzle（パズル）
+- hobby（趣味）
+
+#### 就寝・寝室
+- bedroom（寝室）
+- bed（ベッド）
+- mattress（マットレス）
+- pillow（枕）
+- pillowcase（枕カバー）
+- blanket（毛布）
+- sheet（シーツ）
+- comforter（掛け布団）
+- pajamas（パジャマ）
+- nightgown（ナイトガウン）
+- slippers（スリッパ）
+- alarm clock（目覚まし時計）
+- lamp（ランプ）
+- nightstand（ナイトスタンド）
+- curtains（カーテン）
+- blinds（ブラインド）
+
+### 緊急事態・災害対応用語
+
+#### 自然災害
+- earthquake（地震）
+- tsunami（津波）
+- typhoon（台風）
+- hurricane（ハリケーン）
+- tornado（竜巻）
+- flood（洪水）
+- landslide（土砂崩れ）
+- avalanche（雪崩）
+- volcano（火山）
+- eruption（噴火）
+- thunder（雷）
+- lightning（稲妻）
+- hail（雹）
+- blizzard（吹雪）
+
+#### 事故・事件
+- fire（火事）
+- accident（事故）
+- collision（衝突）
+- crash（墜落・激突）
+- explosion（爆発）
+- gas leak（ガス漏れ）
+- blackout（停電）
+- burglary（強盗）
+- theft（窃盗）
+- crime（犯罪）
+
+#### 救急・医療
+- emergency（緊急事態）
+- ambulance（救急車）
+- paramedic（救急隊員）
+- fire truck（消防車）
+- firefighter（消防士）
+- police（警察）
+- police officer（警察官）
+- hospital（病院）
+- emergency room（救急室）
+- doctor（医者）
+- nurse（看護師）
+- patient（患者）
+- medicine（薬）
+- pill（錠剤）
+- injection（注射）
+- bandage（包帯）
+- gauze（ガーゼ）
+- antiseptic（消毒薬）
+- thermometer（体温計）
+- stethoscope（聴診器）
+- X-ray（レントゲン）
+- surgery（手術）
+- operation（手術）
+
+#### 怪我・病気
+- injury（怪我）
+- wound（傷）
+- cut（切り傷）
+- bruise（あざ）
+- burn（やけど）
+- fracture（骨折）
+- sprain（捻挫）
+- fever（熱）
+- headache（頭痛）
+- stomachache（腹痛）
+- cough（咳）
+- cold（風邪）
+- flu（インフルエンザ）
+- allergy（アレルギー）
+- pain（痛み）
+- symptom（症状）
+
+#### 避難・救助
+- evacuation（避難）
+- shelter（避難所）
+- refuge（避難場所）
+- rescue（救助）
+- survivor（生存者）
+- victim（被害者）
+- relief（救援）
+- aid（支援）
+- volunteer（ボランティア）
+- donation（寄付）
+- supplies（物資）
+- food（食料）
+- water（水）
+- blanket（毛布）
+- tent（テント）
+- generator（発電機）
+- flashlight（懐中電灯）
+- battery（電池）
+- radio（ラジオ）
+- whistle（笛）
+- rope（ロープ）
+- helmet（ヘルメット）
+- mask（マスク）
+
+#### 応急処置
+- first aid（応急手当）
+- first aid kit（救急箱）
+- CPR（心肺蘇生法）
+- tourniquet（止血帯）
+- splint（添え木）
+- stretcher（担架）
+- oxygen（酸素）
+- defibrillator（除細動器）
+
+### 感情・心理表現
+
+#### 基本感情
+- anger（怒り）
+- rage（激怒）
+- fury（憤怒）
+- frustration（イライラ）
+- annoyance（苛立ち）
+- irritation（いら立ち）
+- happiness（幸せ）
+- joy（喜び）
+- excitement（興奮）
+- enthusiasm（熱意）
+- sadness（悲しみ）
+- sorrow（悲哀）
+- grief（悲嘆）
+- depression（憂鬱）
+- melancholy（憂愁）
+- fear（恐れ）
+- anxiety（不安）
+- worry（心配）
+- panic（パニック）
+- terror（恐怖）
+- surprise（驚き）
+- shock（ショック）
+- amazement（驚嘆）
+- confusion（困惑）
+- embarrassment（恥ずかしさ）
+- shame（羞恥）
+- guilt（罪悪感）
+- pride（誇り）
+- confidence（自信）
+- doubt（疑い）
+- jealousy（嫉妬）
+- envy（羨望）
+- love（愛）
+- affection（愛情）
+- hatred（憎しみ）
+- disgust（嫌悪）
+- disappointment（失望）
+- hope（希望）
+- despair（絶望）
+- relief（安堵）
+- stress（ストレス）
+- pressure（プレッシャー）
+- tension（緊張）
+- relaxation（リラックス）
+- peace（平静）
+- calm（穏やか）
+- serenity（静寂）
+
+#### 感情の程度・状態
+- mood（気分）
+- emotion（感情）
+- feeling（気持ち）
+- sentiment（感情）
+- temperament（気質）
+- personality（性格）
+- attitude（態度）
+- behavior（行動）
+- reaction（反応）
+- response（反応）
+
+### 道案内・場所・移動
+
+#### 方向指示
+- direction（方向）
+- way（道）
+- path（道）
+- route（ルート）
+- street（通り）
+- road（道路）
+- avenue（大通り）
+- boulevard（並木道）
+- lane（小道）
+- alley（路地）
+- intersection（交差点）
+- corner（角）
+- block（ブロック）
+- distance（距離）
+- destination（目的地）
+- location（場所）
+- position（位置）
+- address（住所）
+- landmark（目印）
+- sign（標識）
+- map（地図）
+- GPS（GPS）
+- compass（コンパス）
+
+#### 交通機関・移動手段
+- transportation（交通機関）
+- vehicle（乗り物）
+- public transport（公共交通機関）
+- metro（地下鉄）
+- tram（路面電車）
+- trolley（トロリー）
+- cable car（ケーブルカー）
+- ferry（フェリー）
+- boat（船）
+- ship（船）
+- airplane（飛行機）
+- helicopter（ヘリコプター）
+- limousine（リムジン）
+- van（バン）
+- truck（トラック）
+
+#### 交通関連
+- traffic jam（渋滞）
+- rush hour（ラッシュアワー）
+- parking（駐車場）
+- garage（ガレージ）
+- gas station（ガソリンスタンド）
+- toll（料金所）
+- bridge（橋）
+- tunnel（トンネル）
+- highway（高速道路）
+- freeway（高速道路）
+
+### 予約・サービス
+
+#### 宿泊関連
+- hotel（ホテル）
+- motel（モーテル）
+- inn（旅館）
+- hostel（ホステル）
+- bed and breakfast（民宿）
+- resort（リゾート）
+- reservation（予約）
+- booking（予約）
+- check-in（チェックイン）
+- check-out（チェックアウト）
+- reception（受付）
+- lobby（ロビー）
+- room（部屋）
+- suite（スイート）
+- single room（シングル）
+- double room（ダブル）
+- twin room（ツイン）
+- vacancy（空室）
+- occupancy（入室）
+- guest（客）
+- service（サービス）
+- amenity（設備）
+- facility（施設）
+- elevator（エレベーター）
+- stairs（階段）
+- floor（階）
+- key（鍵）
+- keycard（キーカード）
+- safe（金庫）
+- minibar（ミニバー）
+- Wi-Fi（Wi-Fi）
+- laundry（ランドリー）
+- housekeeping（ハウスキーピング）
+
+#### レストラン関連
+- restaurant（レストラン）
+- cafe（カフェ）
+- bistro（ビストロ）
+- brasserie（ブラッスリー）
+- diner（ダイナー）
+- cafeteria（カフェテリア）
+- buffet（ビュッフェ）
+- menu（メニュー）
+- dish（料理）
+- course（コース）
+- appetizer（前菜）
+- main course（メインコース）
+- dessert（デザート）
+- beverage（飲み物）
+- wine list（ワインリスト）
+- waiter（ウェイター）
+- waitress（ウェイトレス）
+- server（サーバー）
+- chef（シェフ）
+- cook（コック）
+- table（テーブル）
+- seat（席）
+- booth（ボックス席）
+- reservation（予約）
+- order（注文）
+- bill（請求書）
+- check（伝票）
+- tip（チップ）
+- receipt（レシート）
+
+### トラブル解決・問題対応
+
+#### 一般的な問題
+- problem（問題）
+- trouble（トラブル）
+- issue（問題）
+- difficulty（困難）
+- challenge（挑戦・困難）
+- obstacle（障害）
+- barrier（障壁）
+- crisis（危機）
+- emergency（緊急事態）
+- urgency（緊急性）
+- priority（優先度）
+- solution（解決策）
+- answer（答え）
+- resolution（解決）
+- compromise（妥協）
+- negotiation（交渉）
+- discussion（話し合い）
+- argument（議論・口論）
+- disagreement（意見の相違）
+- conflict（対立）
+- dispute（争い）
+- complaint（苦情）
+- criticism（批判）
+- feedback（フィードバック）
+- suggestion（提案）
+- recommendation（推奨）
+- advice（アドバイス）
+- help（助け）
+- assistance（援助）
+- support（サポート）
+
+#### 法的・公的機関
+- police（警察）
+- court（裁判所）
+- lawyer（弁護士）
+- attorney（弁護士）
+- judge（判事）
+- law（法律）
+- regulation（規則）
+- rule（ルール）
+- fine（罰金）
+- penalty（罰則）
+- license（ライセンス）
+- permit（許可証）
+- visa（ビザ）
+- passport（パスポート）
+- immigration（出入国管理）
+- customs（税関）
+- embassy（大使館）
+- consulate（領事館）
+- government（政府）
+- authority（当局）
+- official（役員）
+- department（部署）
+- ministry（省庁）
+- agency（機関）
+
+### 恋愛・人間関係
+
+#### 恋愛関係
+- love（愛）
+- romance（恋愛）
+- relationship（関係）
+- partnership（パートナーシップ）
+- courtship（求愛）
+- dating（デート）
+- attraction（魅力）
+- chemistry（相性）
+- connection（つながり）
+- bond（絆）
+- intimacy（親密さ）
+- affection（愛情）
+- passion（情熱）
+- desire（欲望）
+- crush（片思い）
+- infatuation（夢中になること）
+- flirtation（いちゃつき）
+- seduction（誘惑）
+- proposal（プロポーズ）
+- engagement（婚約）
+- wedding（結婚式）
+- marriage（結婚）
+- honeymoon（新婚旅行）
+- anniversary（記念日）
+- valentine（バレンタイン）
+- gift（贈り物）
+- surprise（サプライズ）
+- kiss（キス）
+- hug（ハグ）
+- embrace（抱擁）
+
+#### 人間関係
+- friend（友人）
+- friendship（友情）
+- companion（仲間）
+- partner（パートナー）
+- boyfriend（彼氏）
+- girlfriend（彼女）
+- spouse（配偶者）
+- husband（夫）
+- wife（妻）
+- ex（元恋人）
+- rival（ライバル）
+- enemy（敵）
+- stranger（見知らぬ人）
+- acquaintance（知人）
+- neighbor（隣人）
+- colleague（同僚）
+- teammate（チームメート）
+- classmate（クラスメート）
+
+#### 関係の状態
+- single（独身）
+- taken（交際中）
+- available（フリー）
+- committed（真剣な関係）
+- casual（カジュアルな関係）
+- complicated（複雑な関係）
+- breakup（別れ）
+- separation（別居）
+- divorce（離婚）
+- reconciliation（復縁）
+
+### 海外生活・移住
+
+#### 住居関連
+- apartment（アパート）
+- flat（フラット）
+- studio（スタジオ）
+- condominium（コンドミニアム）
+- townhouse（タウンハウス）
+- house（家）
+- mansion（邸宅）
+- rent（家賃）
+- mortgage（住宅ローン）
+- deposit（敷金）
+- lease（賃貸契約）
+- landlord（大家）
+- tenant（借家人）
+- roommate（ルームメート）
+- neighbor（隣人）
+- neighborhood（近所）
+- community（コミュニティ）
+- utilities（光熱費）
+- electricity（電気）
+- gas（ガス）
+- water（水道）
+- heating（暖房）
+- air conditioning（エアコン）
+- internet（インターネット）
+- cable（ケーブル）
+- furniture（家具）
+- appliance（電化製品）
+
+#### 銀行・金融
+- bank（銀行）
+- account（口座）
+- savings account（貯蓄口座）
+- checking account（当座預金）
+- credit card（クレジットカード）
+- debit card（デビットカード）
+- ATM（ATM）
+- withdrawal（引き出し）
+- deposit（預金）
+- transfer（送金）
+- balance（残高）
+- statement（明細書）
+- loan（ローン）
+- interest（利子）
+- fee（手数料）
+- commission（手数料）
+- exchange rate（為替レート）
+- currency（通貨）
+- cash（現金）
+- check（小切手）
+- money order（為替手形）
+
+#### 就職・仕事
+- job（仕事）
+- employment（雇用）
+- career（キャリア）
+- profession（職業）
+- occupation（職業）
+- position（職位）
+- role（役割）
+- responsibility（責任）
+- duty（義務）
+- task（タスク）
+- interview（面接）
+- resume（履歴書）
+- CV（履歴書）
+- application（申請）
+- qualification（資格）
+- skill（スキル）
+- experience（経験）
+- training（研修）
+- salary（給料）
+- wage（賃金）
+- bonus（ボーナス）
+- benefit（福利厚生）
+- vacation（休暇）
+- sick leave（病気休暇）
+- overtime（残業）
+- promotion（昇進）
+- resignation（辞職）
+- retirement（退職）
+
+#### 医療・健康
+- doctor（医者）
+- physician（内科医）
+- specialist（専門医）
+- dentist（歯科医）
+- nurse（看護師）
+- pharmacist（薬剤師）
+- clinic（クリニック）
+- hospital（病院）
+- pharmacy（薬局）
+- appointment（予約）
+- consultation（診察）
+- examination（検査）
+- diagnosis（診断）
+- treatment（治療）
+- prescription（処方箋）
+- medication（薬）
+- insurance（保険）
+- coverage（保険適用）
+- co-pay（自己負担金）
+- deductible（控除額）
+- premium（保険料）
+
+#### 教育・学習
+- school（学校）
+- university（大学）
+- college（大学）
+- course（コース）
+- class（クラス）
+- lesson（レッスン）
+- lecture（講義）
+- seminar（セミナー）
+- workshop（ワークショップ）
+- tutorial（個別指導）
+- enrollment（入学）
+- registration（登録）
+- tuition（学費）
+- scholarship（奨学金）
+- degree（学位）
+- diploma（卒業証書）
+- certificate（証明書）
+- transcript（成績証明書）
+- grade（成績）
+- credit（単位）
+
+#### 日常サービス
+- post office（郵便局）
+- mail（郵便）
+- package（荷物）
+- delivery（配達）
+- shipping（配送）
+- courier（宅配便）
+- barber（理髪店）
+- salon（美容院）
+- spa（スパ）
+- gym（ジム）
+- fitness center（フィットネスセンター）
+- laundromat（コインランドリー）
+- dry cleaner（クリーニング店）
+- tailor（仕立屋）
+- repair shop（修理店）
+- mechanic（修理工）
+- plumber（配管工）
+- electrician（電気工事士）
+- contractor（業者）
+
+### 外交・国際関係
+
+#### 外交機関・職位
+- diplomacy（外交）
+- diplomat（外交官）
+- ambassador（大使）
+- consul（領事）
+- attaché（アタッシェ）
+- secretary（書記官）
+- minister（大臣）
+- chancellor（首相・外相）
+- premier（首相）
+- president（大統領）
+- prime minister（首相）
+- foreign minister（外相）
+- delegation（代表団）
+- envoy（特使）
+- representative（代表者）
+- negotiator（交渉者）
+- mediator（仲裁者）
+- interpreter（通訳者）
+- translator（翻訳者）
+
+#### 外交文書・手続き
+- treaty（条約）
+- agreement（合意・協定）
+- pact（協定）
+- accord（合意）
+- protocol（議定書）
+- memorandum（覚書）
+- declaration（宣言）
+- resolution（決議）
+- charter（憲章）
+- convention（条約）
+- clause（条項）
+- article（条文）
+- amendment（修正）
+- ratification（批准）
+- signature（署名）
+- seal（印章）
+- credential（信任状）
+- immunity（免責・免疫）
+- privilege（特権）
+- reciprocity（相互主義）
+
+#### 国際会議・交渉
+- summit（首脳会議）
+- conference（会議）
+- session（会期・セッション）
+- forum（フォーラム）
+- symposium（シンポジウム）
+- summit meeting（首脳会談）
+- bilateral（二国間）
+- multilateral（多国間）
+- negotiation（交渉）
+- consultation（協議）
+- discussion（討議）
+- debate（討論）
+- agenda（議題）
+- proposal（提案）
+- compromise（妥協）
+- concession（譲歩）
+- deadlock（行き詰まり）
+- breakthrough（突破口）
+- consensus（合意）
+- unanimous（満場一致）
+
+### 海外ビジネス
+
+#### 企業・組織形態
+- corporation（法人・企業）
+- company（会社）
+- firm（企業・商社）
+- enterprise（事業・企業）
+- conglomerate（コングロマリット）
+- multinational（多国籍企業）
+- subsidiary（子会社）
+- affiliate（関連会社）
+- branch（支社）
+- headquarters（本社）
+- office（オフィス・事務所）
+- factory（工場）
+- plant（プラント・工場）
+- facility（施設）
+- warehouse（倉庫）
+- distribution center（流通センター）
+
+#### ビジネス取引・契約
+- business（ビジネス・事業）
+- trade（貿易・商取引）
+- commerce（商業）
+- transaction（取引）
+- deal（取引・契約）
+- contract（契約）
+- agreement（契約・合意）
+- partnership（パートナーシップ）
+- joint venture（合弁事業）
+- merger（合併）
+- acquisition（買収）
+- franchise（フランチャイズ）
+- license（ライセンス）
+- patent（特許）
+- trademark（商標）
+- copyright（著作権）
+- intellectual property（知的財産）
+- negotiation（交渉）
+- proposal（提案）
+- quotation（見積もり）
+- bid（入札）
+- tender（入札）
+- procurement（調達）
+- supplier（供給業者）
+- vendor（ベンダー）
+- client（顧客・依頼人）
+- customer（顧客）
+- consumer（消費者）
+
+#### 金融・投資
+- finance（金融）
+- investment（投資）
+- capital（資本）
+- fund（資金・ファンド）
+- equity（株式・出資）
+- stock（株式）
+- share（株式・シェア）
+- bond（債券）
+- dividend（配当）
+- profit（利益）
+- revenue（収益）
+- income（収入）
+- expense（費用）
+- cost（コスト・費用）
+- budget（予算）
+- forecast（予測）
+- projection（予想）
+- cash flow（キャッシュフロー）
+- asset（資産）
+- liability（負債）
+- debt（債務）
+- loan（ローン）
+- credit（信用・与信）
+- mortgage（抵当）
+- collateral（担保）
+- guarantee（保証）
+- insurance（保険）
+- premium（保険料）
+- currency（通貨）
+- exchange rate（為替レート）
+- inflation（インフレ）
+- deflation（デフレ）
+
+#### マーケティング・販売
+- marketing（マーケティング）
+- advertising（広告）
+- promotion（プロモーション）
+- campaign（キャンペーン）
+- brand（ブランド）
+- product（製品）
+- service（サービス）
+- market（市場）
+- segment（セグメント）
+- target（ターゲット）
+- customer（顧客）
+- demand（需要）
+- supply（供給）
+- competition（競争）
+- competitor（競合他社）
+- strategy（戦略）
+- tactic（戦術）
+- sales（売上・営業）
+- distribution（流通）
+- channel（チャネル）
+- retail（小売）
+- wholesale（卸売）
+- export（輸出）
+- import（輸入）
+
+#### 会議・プレゼンテーション
+- meeting（会議）
+- conference（会議・カンファレンス）
+- presentation（プレゼンテーション）
+- demonstration（デモンストレーション）
+- pitch（提案・売り込み）
+- proposal（提案書）
+- report（報告書）
+- analysis（分析）
+- data（データ）
+- statistics（統計）
+- chart（チャート）
+- graph（グラフ）
+- table（表）
+- diagram（図表）
+- slide（スライド）
+- projector（プロジェクター）
+- screen（スクリーン）
+- microphone（マイクロフォン）
+- speaker（スピーカー）
+- agenda（議題）
+- minutes（議事録）
+- action item（アクションアイテム）
+- deadline（締切）
+- milestone（マイルストーン）
+
+### 旅行・観光
+
+#### 旅行計画・予約
+- travel（旅行）
+- trip（旅行）
+- journey（旅）
+- voyage（航海）
+- tour（ツアー）
+- vacation（休暇）
+- holiday（休日・休暇）
+- itinerary（旅程）
+- schedule（スケジュール）
+- reservation（予約）
+- booking（予約）
+- ticket（チケット）
+- fare（運賃）
+- price（価格）
+- cost（費用）
+- discount（割引）
+- package（パッケージ）
+- deal（取引・特典）
+- promotion（プロモーション）
+- season（シーズン）
+- peak season（繁忙期）
+- off-season（閑散期）
+
+#### 交通手段
+- flight（フライト）
+- airplane（飛行機）
+- airport（空港）
+- terminal（ターミナル）
+- gate（ゲート）
+- boarding（搭乗）
+- departure（出発）
+- arrival（到着）
+- delay（遅延）
+- cancellation（キャンセル）
+- luggage（荷物）
+- baggage（手荷物）
+- suitcase（スーツケース）
+- carry-on（機内持ち込み）
+- check-in（チェックイン）
+- security（セキュリティ）
+- customs（税関）
+- immigration（入国審査）
+- passport control（パスポート審査）
+- visa（ビザ）
+- passport（パスポート）
+- border（国境）
+
+#### 宿泊施設
+- accommodation（宿泊施設）
+- hotel（ホテル）
+- resort（リゾート）
+- motel（モーテル）
+- inn（宿）
+- lodge（ロッジ）
+- hostel（ホステル）
+- guesthouse（ゲストハウス）
+- bed and breakfast（民宿）
+- villa（ヴィラ）
+- apartment（アパートメント）
+- suite（スイート）
+- room（部屋）
+- single（シングル）
+- double（ダブル）
+- twin（ツイン）
+- deluxe（デラックス）
+- standard（スタンダード）
+- economy（エコノミー）
+- luxury（ラグジュアリー）
+
+#### 観光・娯楽
+- sightseeing（観光）
+- attraction（観光名所）
+- landmark（ランドマーク）
+- monument（記念碑）
+- museum（博物館）
+- gallery（ギャラリー）
+- cathedral（大聖堂）
+- castle（城）
+- palace（宮殿）
+- temple（寺院）
+- shrine（神社）
+- park（公園）
+- garden（庭園）
+- zoo（動物園）
+- aquarium（水族館）
+- theater（劇場）
+- opera house（オペラハウス）
+- concert hall（コンサートホール）
+- stadium（スタジアム）
+- arena（アリーナ）
+- beach（ビーチ）
+- mountain（山）
+- lake（湖）
+- river（川）
+- waterfall（滝）
+- national park（国立公園）
+- safari（サファリ）
+- cruise（クルーズ）
+- excursion（小旅行）
+- adventure（アドベンチャー）
+
+#### ショッピング・お土産
+- shopping（ショッピング）
+- souvenir（お土産）
+- gift（贈り物）
+- memento（記念品）
+- handicraft（手工芸品）
+- artwork（芸術品）
+- antique（骨董品）
+- jewelry（宝石・アクセサリー）
+- clothing（衣類）
+- fashion（ファッション）
+- boutique（ブティック）
+- market（市場）
+- bazaar（バザール）
+- mall（ショッピングモール）
+- department store（デパート）
+- duty-free shop（免税店）
+- tax refund（税金還付）
+- receipt（レシート）
+- bargaining（値切り交渉）
+- haggling（値段交渉）
+
+#### 文化・体験
+- culture（文化）
+- tradition（伝統）
+- custom（習慣）
+- festival（祭り）
+- celebration（祝典）
+- ceremony（儀式）
+- ritual（儀礼）
+- performance（公演）
+- show（ショー）
+- exhibition（展示）
+- display（展示）
+- demonstration（実演）
+- workshop（ワークショップ）
+- class（クラス・授業）
+- lesson（レッスン）
+- experience（体験）
+- activity（活動）
+- adventure（冒険）
+- expedition（遠征）
+- exploration（探検）
+
+### 国際機関・組織
+
+#### 国際機関
+- United Nations（国連）
+- Security Council（安全保障理事会）
+- General Assembly（総会）
+- World Bank（世界銀行）
+- IMF（国際通貨基金）
+- WTO（世界貿易機関）
+- WHO（世界保健機関）
+- UNESCO（ユネスコ）
+- UNICEF（ユニセフ）
+- NATO（NATO）
+- EU（欧州連合）
+- ASEAN（東南アジア諸国連合）
+- G7（G7）
+- G20（G20）
+- OECD（OECD）
+
+#### 国際問題・課題
+- globalization（グローバル化）
+- international relations（国際関係）
+- diplomacy（外交）
+- cooperation（協力）
+- collaboration（協働）
+- partnership（パートナーシップ）
+- alliance（同盟）
+- conflict（紛争）
+- dispute（争い）
+- crisis（危機）
+- tension（緊張）
+- sanction（制裁）
+- embargo（禁輸）
+- peacekeeping（平和維持）
+- humanitarian aid（人道支援）
+- development aid（開発援助）
+- sustainability（持続可能性）
+- environment（環境）
+- climate change（気候変動）
+- human rights（人権）
+- democracy（民主主義）
+- governance（統治）
+
+### 各言語・文化圏の特有語彙
+
+#### 日本文化特有語彙
+- samurai（侍）
+- geisha（芸者）
+- ninja（忍者）
+- shogun（将軍）
+- daimyo（大名）
+- ronin（浪人）
+- sushi（寿司）
+- sashimi（刺身）
+- tempura（天ぷら）
+- ramen（ラーメン）
+- sake（日本酒）
+- wasabi（わさび）
+- miso（味噌）
+- tofu（豆腐）
+- kimono（着物）
+- yukata（浴衣）
+- obi（帯）
+- geta（下駄）
+- tatami（畳）
+- shoji（障子）
+- futon（布団）
+- zabuton（座布団）
+- katana（刀）
+- wakizashi（脇差）
+- origami（折り紙）
+- ikebana（生け花）
+- bonsai（盆栽）
+- haiku（俳句）
+- manga（漫画）
+- anime（アニメ）
+- karate（空手）
+- judo（柔道）
+- kendo（剣道）
+- sumo（相撲）
+- zen（禅）
+- dojo（道場）
+- sensei（先生）
+- senpai（先輩）
+- kohai（後輩）
+- tsunami（津波）
+- karaoke（カラオケ）
+- pokemon（ポケモン）
+- gundam（ガンダム）
+- hello kitty（ハローキティ）
+
+#### フランス文化特有語彙
+- baguette（バゲット）
+- croissant（クロワッサン）
+- champagne（シャンパン）
+- cognac（コニャック）
+- bordeaux（ボルドー）
+- burgundy（ブルゴーニュ）
+- camembert（カマンベール）
+- roquefort（ロックフォール）
+- foie gras（フォアグラ）
+- escargot（エスカルゴ）
+- bouillabaisse（ブイヤベース）
+- ratatouille（ラタトゥイユ）
+- beret（ベレー帽）
+- chic（シック）
+- couture（オートクチュール）
+- boutique（ブティック）
+- cafe（カフェ）
+- bistro（ビストロ）
+- salon（サロン）
+- atelier（アトリエ）
+- flâneur（散歩する人）
+- savoir-vivre（生活の知恵）
+- joie de vivre（人生の喜び）
+- renaissance（ルネサンス）
+- avant-garde（前衛）
+- cabaret（キャバレー）
+- chanson（シャンソン）
+- cannes（カンヌ）
+
+#### ドイツ文化特有語彙
+- oktoberfest（オクトーバーフェスト）
+- bratwurst（ブラートヴルスト）
+- sauerkraut（ザワークラウト）
+- pretzel（プレッツェル）
+- strudel（シュトゥルーデル）
+- volkswagen（フォルクスワーゲン）
+- mercedes（メルセデス）
+- bmw（BMW）
+- porsche（ポルシェ）
+- lederhosen（レーダーホーゼン）
+- dirndl（ディルンドル）
+- kindergarten（幼稚園）
+- wanderlust（旅への憧れ）
+- gemütlichkeit（居心地の良さ）
+- schadenfreude（他人の不幸を喜ぶ気持ち）
+- zeitgeist（時代精神）
+- autobahn（アウトバーン）
+- blitzkrieg（電撃戦）
+- bundesliga（ブンデスリーガ）
+
+#### スペイン文化特有語彙
+- flamenco（フラメンコ）
+- fiesta（フィエスタ）
+- siesta（シエスタ）
+- paella（パエリア）
+- tapas（タパス）
+- sangria（サングリア）
+- gazpacho（ガスパチョ）
+- churros（チュロス）
+- matador（マタドール）
+- torero（闘牛士）
+- corrida（闘牛）
+- tango（タンゴ）
+- salsa（サルサ）
+- mariachi（マリアッチ）
+- conquistador（征服者）
+- hacienda（農園）
+- patio（中庭）
+- plaza（広場）
+- bodega（酒蔵）
+
+#### イタリア文化特有語彙
+- pizza（ピザ）
+- spaghetti（スパゲッティ）
+- lasagna（ラザニア）
+- risotto（リゾット）
+- gelato（ジェラート）
+- cappuccino（カプチーノ）
+- espresso（エスプレッソ）
+- prosciutto（プロシュート）
+- mozzarella（モッツァレラ）
+- parmigiano（パルミジャーノ）
+- chianti（キャンティ）
+- ferrari（フェラーリ）
+- lamborghini（ランボルギーニ）
+- maserati（マセラティ）
+- vespa（ベスパ）
+- opera（オペラ）
+- soprano（ソプラノ）
+- maestro（マエストロ）
+- dolce vita（甘い生活）
+- paparazzi（パパラッチ）
+- mafia（マフィア）
+- renaissance（ルネサンス）
+- colosseum（コロッセオ）
+
+#### ポルトガル・ブラジル文化特有語彙
+- saudade（サウダージ）
+- fado（ファド）
+- caipirinha（カイピリーニャ）
+- cachaca（カシャーサ）
+- bossa nova（ボサノヴァ）
+- samba（サンバ）
+- carnival（カーニバル）
+- capoeira（カポエイラ）
+- favela（ファベーラ）
+- churrasco（シュラスコ）
+- acai（アサイー）
+
+#### ロシア・東欧文化特有語彙
+- vodka（ウォッカ）
+- caviar（キャビア）
+- borscht（ボルシチ）
+- stroganoff（ストロガノフ）
+- pierogi（ピエロギ）
+- matryoshka（マトリョーシカ）
+- balalaika（バラライカ）
+- troika（トロイカ）
+- kremlin（クレムリン）
+- tsar（ツァーリ）
+- cossack（コサック）
+- babushka（おばあちゃん）
+- dacha（別荘）
+- samovar（サモワール）
+- ballet（バレエ）
+- bolshoi（ボリショイ）
+- sputnik（スプートニク）
+- perestroika（ペレストロイカ）
+- glasnost（グラスノスチ）
+
+#### アラビア・中東文化特有語彙
+- hummus（フムス）
+- falafel（ファラフェル）
+- kebab（ケバブ）
+- baklava（バクラヴァ）
+- hookah（水タバコ）
+- bazaar（バザール）
+- minaret（ミナレット）
+- mosque（モスク）
+- imam（イマーム）
+- jihad（ジハード）
+- hajj（ハッジ）
+- ramadan（ラマダン）
+- sheikh（シェイク）
+- sultan（スルタン）
+- harem（ハレム）
+- oasis（オアシス）
+- camel（ラクダ）
+- bedouin（ベドウィン）
+- oud（ウード）
+- belly dance（ベリーダンス）
+
+#### インド・南アジア文化特有語彙
+- curry（カレー）
+- tandoor（タンドール）
+- naan（ナン）
+- chapati（チャパティ）
+- samosa（サモサ）
+- chai（チャイ）
+- lassi（ラッシー）
+- yoga（ヨガ）
+- guru（グル）
+- ashram（アーシュラム）
+- karma（カルマ）
+- dharma（ダルマ）
+- nirvana（ニルヴァーナ）
+- mantra（マントラ）
+- chakra（チャクラ）
+- sari（サリー）
+- turban（ターバン）
+- monsoon（モンスーン）
+- bollywood（ボリウッド）
+- raga（ラーガ）
+- sitar（シタール）
+- tabla（タブラ）
+- maharaja（マハラジャ）
+- taj mahal（タージ・マハル）
+
+#### 中国文化特有語彙
+- dim sum（点心）
+- wonton（ワンタン）
+- congee（粥）
+- peking duck（北京ダック）
+- mapo tofu（麻婆豆腐）
+- kung pao（宮保）
+- oolong（烏龍茶）
+- jasmine（ジャスミン茶）
+- qipao（チーパオ）
+- cheongsam（チャイナドレス）
+- feng shui（風水）
+- qi（気）
+- yin yang（陰陽）
+- tai chi（太極拳）
+- kung fu（カンフー）
+- wushu（武術）
+- mahjong（麻雀）
+- go（囲碁）
+- calligraphy（書道）
+- beijing opera（京劇）
+- guqin（古琴）
+- erhu（二胡）
+- hutong（胡同）
+- pagoda（パゴダ）
+
+#### 英語圏文化特有語彙
+- fish and chips（フィッシュアンドチップス）
+- bangers and mash（ソーセージとマッシュポテト）
+- afternoon tea（アフタヌーンティー）
+- scone（スコーン）
+- shepherd's pie（シェパーズパイ）
+- haggis（ハギス）
+- kilt（キルト）
+- tartan（タータン）
+- pub（パブ）
+- cricket（クリケット）
+- rugby（ラグビー）
+- football（フットボール）
+- premier league（プレミアリーグ）
+- wimbledon（ウィンブルドン）
+- barbecue（バーベキュー）
+- hamburger（ハンバーガー）
+- hot dog（ホットドッグ）
+- cheesecake（チーズケーキ）
+- brownie（ブラウニー）
+- baseball（野球）
+- basketball（バスケットボール）
+- american football（アメリカンフットボール）
+- super bowl（スーパーボウル）
+- hollywood（ハリウッド）
+- broadway（ブロードウェイ）
+- jazz（ジャズ）
+- blues（ブルース）
+- rock and roll（ロックンロール）
+- country music（カントリー音楽）
+- cowboy（カウボーイ）
+- rodeo（ロデオ）
