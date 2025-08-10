@@ -1035,7 +1035,6 @@ craft	Skill; art; boat; make.	artisanat	m	Handwerk	n	oficio	m	mestiere	m	ofício
 cram	Intensive study; stuffing; cramming session.	bachotage	m	Pauken	n	estudy intensivo	m	studio intensivo	m	estudo intensivo	m	зубрёжка	f	حشو	m	रटाई	f
 cramp	Muscle spasm; painful muscle contraction; constraint.	crampe	f	Krampf	m	calambre	m	crampo	m	cãibra	f	судорога	f	تشنج	m	ऐंठन	f
 crane	Lifting machine; large bird; construction equipment.	grue	f	Kran	m	grúa	f	gru	f	guindaste	m	кран	m	رافعة	f	क्रेन	m
-crap	Nonsense; worthless thing.	connerie	f	Mist	m	tonterías	f	stronzata	f	merda	f	чушь	f	هراء	m	बकवास	f
 crash	Collision; failure; accident; fall.	accident	m	Zusammenstoß	m	accidente	m	incidente	m	acidente	m	авария	f	حادث	m	दुर्घटना	f
 crawl	Slow movement on hands and knees.	rampement	m	Kriechen	n	gateo	m	gattone	m	engatinhamento	m	ползание	n	زحف	m	रेंगना	m
 cream	Dairy; color; best; lotion.	crème	f	Sahne	f	nata	f	panna	f	natas	f	сливки	m	كريم	m	मलाई	f
@@ -2157,7 +2156,6 @@ neutron	A subatomic particle with no electric charge.	neutron	m	Neutron	n	neutr�
 newbie	A person new to a particular activity; a beginner; someone inexperienced.	débutant	m	Anfänger	m	principiante	m	principiante	m	initiante	m	новичок	m	مبتدئ	m	नामा	m
 news	Information; reports; updates; journalism.	nouvelles	f	Nachrichten	f	noticias	f	notizie	f	notícias	f	новости	f	أخبار	f	समाचार	m
 newspaper	Daily publication; press; journal; news.	journal	m	Zeitung	f	periódico	m	giornale	m	jornal	m	газета	f	جريدة	f	अखबार	m
-nice	Pleasant or agreeable; fine or subtle; kind or friendly; attractive.	agréable	m	schön	m	agradable	m	bello	m	bom	m	милый	m	لطيف	m	अच्छा	m
 niche	A specialized segment of a market.	niche	f	Nische	f	nicho	m	nicchia	f	nicho	m	ниша	f	منافذ	m	आला	m
 nick	A small cut or notch; informal term for steal; a nickname; to make a small cut.	entaille	f	Kerbe	f	mella	f	tacca	f	corte	m	зарубка	f	شق	m	काट	m
 nickel	A metallic chemical element; a five-cent coin; to plate with nickel.	nickel	m	Nickel	n	níquel	m	nichel	m	níquel	m	никель	m	نيكل	m	निकल	m
@@ -2184,7 +2182,6 @@ norm	A standard or typical pattern; expected behavior in a group; a rule or prin
 normal	Conforming to a standard; usual or typical; mentally and physically healthy.	normal	m	normal	m	normal	m	normale	m	normal	m	нормальный	m	طبيعي	m	सामान्य	m
 north	Direction; top; northern region; arctic.	nord	m	Norden	m	norte	m	nord	m	norte	m	север	m	شمال	m	उत्तर	m
 northeast	The direction between north and east; the northeastern part of a region.	nord-est	m	Nordosten	m	noreste	m	nordest	m	nordeste	m	северо-восток	m	شمال شرق	m	उत्तर-पूर्व	m
-northern	Located in or characteristic of the north; coming from the north.	nord	m	nördlich	m	norteño	m	settentrionale	m	nortista	m	северный	m	شمالي	m	उत्तरी	m
 northward	In a northern direction; toward the north; facing north.	vers le nord	m	nordwärts	m	hacia el norte	m	verso nord	m	para o norte	m	к северу	m	نحو الشمال	m	उत्तर की ओर	m
 northwest	The direction between north and west; the northwestern part of a region.	nord-ouest	m	Nordwesten	m	noroeste	m	nordovest	m	noroeste	m	северо-запад	m	شمال غرب	m	उत्तर-पश्चिम	m
 nose	Facial feature; smell organ; front part; tip.	nez	m	Nase	f	nariz	f	naso	m	nariz	m	нос	m	أنف	m	नाक	m
@@ -2902,7 +2899,6 @@ sour	Having sharp taste; not sweet; bad-tempered; to become acid.	aigreur	f	saue
 source	Origin; beginning; cause; spring.	source	f	Quelle	f	fuente	f	fonte	f	fonte	f	источник	m	مصدر	m	स्रोत	m
 south	Direction; region; bottom; southern.	sud	m	Süden	m	sur	m	sud	m	sul	m	юг	m	جنوب	m	दक्षिण	m
 southeast	Direction between south and east; southeastern region; compass point.	sud-est	m	Südosten	m	sudeste	m	sudest	m	sudeste	m	юго-восток	m	جنوب شرق	m	दक्षिण-पूर्व	m
-southern	Located in or toward the south; from the south; characteristic of south.	sud	m	südlich	m	sureño	m	meridionale	m	meridional	m	южный	m	جنوبي	m	दक्षिणी	m
 southward	In direction toward the south; moving to the south; southern direction.	vers le sud	m	nach Süden	m	hacia el sur	m	verso sud	m	para o sul	m	на юг	m	نحو الجنوب	m	दक्षिण की ओर	m
 southwest	Direction between south and west; southwestern region; compass point.	sud-ouest	m	Südwesten	m	sudoeste	m	sudovest	m	sudoeste	m	юго-запад	m	جنوب غرب	m	दक्षिण-पश्चिम	m
 sovereignty	Supreme authority; independence; self-governance; ruling power.	souveraineté	f	Souveränität	f	soberanía	f	sovranità	f	soberania	f	суверенитет	m	سيادة	f	प्रभुसत्ता	f
@@ -3593,7 +3589,6 @@ wire	Metal thread; cable; telegram; connection.	fil	m	Draht	m	alambre	m	filo	m	f
 wireless	Without wires; radio communication; Wi-Fi; remote connection.	sans fil	m	drahtlos	n	inalámbrico	m	senza fili	m	sem fio	m	беспроводной	m	لاسلكي	m	बेतार	m
 wisconsin	US state; midwestern state; dairy state; Great Lakes state.	Wisconsin	m	Wisconsin	n	Wisconsin	m	Wisconsin	m	Wisconsin	m	Висконсин	m	ويسكونسن	m	विस्कॉन्सिन	m
 wisdom	Deep knowledge; good judgment; intelligence; understanding.	sagesse	f	Weisheit	f	sabiduría	f	saggezza	f	sabedoria	f	мудрость	f	حكمة	f	ज्ञान	m
-wise	Having wisdom; intelligent; knowledgeable; smart.	sage	m	weise	m	sabio	m	saggio	m	sábio	m	мудрый	m	حكيم	m	बुद्धिमान	m
 wish	Desire; hope; want; aspiration.	souhait	m	Wunsch	m	deseo	m	desiderio	m	desejo	m	желание	n	أمنية	f	इच्छा	f
 wit	Quick humor; intelligence; clever speech; mental sharpness.	esprit	m	Witz	m	ingenio	m	spirito	m	espírito	m	остроумие	n	ذكاء	m	बुद्धि	f
 witch	Person practicing magic; sorceress; magical woman; enchantress.	sorcière	f	Hexe	f	bruja	f	strega	f	bruxa	f	ведьма	f	ساحرة	f	डायन	f
@@ -3628,7 +3623,6 @@ wrestling	Combat sport; grappling; physical contest; fighting sport.	lutte	f	Rin
 wrist	Joint between hand and arm; connecting joint; hand connection.	poignet	m	Handgelenk	n	muñeca	f	polso	m	pulso	m	запястье	n	معصم	m	कलाई	f
 writer	Person who writes; author; scribe; literary creator.	écrivain	m	Schriftsteller	m	escritor	m	scrittore	m	escritor	m	писатель	m	كاتب	m	लेखक	m
 wrong	Mistake; error; incorrect; improper.	erreur	f	Fehler	m	error	m	errore	m	erro	m	ошибка	f	خطأ	m	गलती	f
-wuss	Weak person; coward; wimp; timid individual.	poule mouillée	f	Schwächling	m	cobarde	m	smidollato	m	fraco	m	слабачок	m	جبان	m	कायर	m
 x-ray	Medical imaging; electromagnetic radiation; to examine with x-rays.	rayon X	m	Röntgen	n	rayo X	m	radiografia	f	raio X	m	рентген	m	أشعة سينية	f	एक्स-रे	m
 xanadu	Idyllic place; paradise; utopia; perfect location.	xanadu	m	Xanadu	n	xanadú	m	xanadu	m	xanadu	m	ксанаду	m	زانادو	m	जनादू	m
 xenon	Noble gas element; chemical element; inert gas; lighting gas.	xénon	m	Xenon	n	xenón	m	xeno	m	xénon	m	ксенон	m	زينون	m	जेनॉन	m
@@ -3696,7 +3690,6 @@ frost	Thin layer of ice crystals.	gelée	f	Frost	m	escarcha	f	brina	f	geada	f	и
 fume	Gas or vapor that smells strongly.	vapeur	f	Dampf	m	vapor	m	vapore	m	vapor	m	пар	m	بخار	m	धुआं	m
 fungus	Organism that feeds on organic matter.	champignon	m	Pilz	m	hongo	m	fungo	m	fungo	m	гриб	m	فطر	m	कवक	m
 funk	State of depression or bad mood.	déprime	f	Funk	m	depresión	f	depressione	f	depressão	f	хандра	f	كآبة	f	उदासी	f
-funny	Causing laughter or amusement.	drôle	m	lustig	m	gracioso	m	divertente	m	engraçado	m	смешной	m	مضحك	m	हंसी वाला	m
 fury	Wild or violent anger.	fureur	f	Wut	f	furia	f	furia	f	fúria	f	ярость	f	غضب	m	क्रोध	m
 fusion	Process of joining or blending.	fusion	f	Fusion	f	fusión	f	fusione	f	fusão	f	слияние	n	اندماج	m	संलयन	m
 fuss	Unnecessary worry or bother.	agitation	f	Aufregung	f	alboroto	m	trambusto	m	agitação	f	суета	f	ضجيج	m	हंगामा	m
@@ -4221,7 +4214,6 @@ sherbet	A frozen dessert made from fruit juice.	sorbet	m	Sorbet	n	sorbete	m	sorb
 sherry	A fortified wine.	sherry	m	Sherry	m	jerez	m	sherry	m	vinho do Porto	m	херес	m	شيري	m	शेरी	m
 shield	A broad piece of armor.	bouclier	m	Schild	m	escudo	m	scudo	m	escudo	m	щит	m	درع	m	ढाल	m
 ship	A large boat for transporting people.	navire	m	Schiff	n	barco	m	nave	f	navio	m	корабль	m	سفينة	f	जहाज	m
-shit	Feces or something worthless.	excréments	m	Kot	m	excremento	m	escremento	m	fezes	f	дерьмо	n	براز	m	गंदगी	f
 shiver	A momentary trembling movement.	frisson	m	Schauer	m	escalofrío	m	brivido	m	arrepio	m	дрожь	f	قشعريرة	f	कंपन	m
 shore	The land along edge of sea.	rive	f	Ufer	n	orilla	f	riva	f	margem	f	берег	m	شاطئ	m	तट	m
 downsizing	Reducing company size by eliminating jobs.	restructuration	f	Personalabbau	m	reducción de plantilla	f	ridimensionamento	m	redimensionamento	m	сокращение	n	تقليص	m	छटनी	f
@@ -4254,7 +4246,6 @@ enclosure	Area surrounded by barrier.	enceinte	f	Gehäge	n	recinto	m	recinto	m	c
 encore	Repeated performance by popular demand.	encore	m	Zugabe	f	bis	m	bis	m	bis	m	бис	m	إعادة	f	अंकोर	m
 encouragement	Action of giving support or confidence.	encouragement	m	Ermutigung	f	aliento	m	incoraggiamento	m	encorajamento	m	поощрение	n	تشجيع	m	प्रोत्साहन	m
 fringe	Decorative border of threads.	frange	f	Franse	f	fleco	m	frangia	f	franja	f	бахрома	f	خيوط متدلية	f	झालर	m
-fuck	Vulgar slang for sexual intercourse.	rapport sexuel	m	Geschlechtsverkehr	m	relación sexual	f	rapporto sessuale	m	relação sexual	f	половой акт	m	جماع	m	यौन संभोग	m
 fundamental	Basic principle or rule.	fondamental	m	Grundlage	f	fundamento	m	fondamento	m	fundamento	m	основа	f	أساس	m	मूलभूत सिद्धांत	m
 fur	Thick hair of animal.	fourrure	f	Pelz	m	piel	f	pelliccia	f	pele	f	мех	m	فرو	m	फर	m
 furrow	Long narrow trench in ground.	sillon	m	Furche	f	surco	m	solco	m	sulco	m	борозда	f	أخدود	m	खांचा	m
@@ -4285,7 +4276,6 @@ gravel	Small stones used for paths.	gravier	m	Kies	m	grava	f	ghiaia	f	cascalho	m
 gray	Color between black and white.	gris	m	Grau	n	gris	m	grigio	m	cinza	m	серый	m	رمادي	m	धूसर	m
 graze	Feed on growing grass.	pâturage	m	Weidegang	m	pastoreo	m	pascolo	m	pastoreio	m	выпас	m	رعي	m	चरने की क्रिया	f
 grazing	Feeding on grass in field.	pâturage	m	Beweidung	f	pastoreo	m	pascolo	m	pastagem	f	выпас	m	رعي	m	चराई	f
-great	Of large size or extent.	grandeur	f	Größe	f	grandeza	f	grandezza	f	grandeza	f	величина	f	عظمة	f	महत्तव	m
 greenhouse	Glass building for growing plants.	serre	f	Gewächshaus	n	invernadero	m	serra	f	estufa	f	теплица	f	بيت زجاجي	m	ग्रीनहाउस	m
 greyhound	Slender racing dog.	lévrier	m	Windhund	m	galgo	m	levriero	m	galgo	m	борзая	f	سلقي	m	ग्रेहाउंड	m
 grind	Reduce to powder by crushing.	mouture	f	Mahlen	n	molienda	f	macinazione	f	moagem	f	помол	m	طحن	m	पीसना	m
@@ -4584,10 +4574,8 @@ eighth	Ordinal number for 8.	huitième	m	achte	n	octavo	m	ottavo	m	oitavo	m	во
 landmine	An explosive device buried in the ground.	mine terrestre	f	Landmine	f	mina terrestre	f	mina terrestre	f	mina terrestre	f	мина	f	لغم أرضي	m	भूमि खान	m
 missouri	A state in the Midwestern United States.	Missouri	m	Missouri	n	Missouri	m	Missouri	m	Missouri	m	Миссури	m	ميزوري	m	मिसूरी	m
 prowl	An act of moving stealthily in search of prey.	rôder	m	Schleichen	n	merodeo	m	agguato	m	espreita	f	подкрадывание	n	تسلل	m	घात	f
-revere	Deep respect for someone or something.	vénération	f	Verehrung	f	reverencia	f	reverenza	f	reverença	f	почитание	n	تبجيل	m	श्रद्धा	f
 roti	A type of unleavened bread from India.	roti	m	Roti	n	roti	m	roti	m	roti	m	роти	m	روتي	m	रोटी	f
 seventeen	The number equivalent to the sum of ten and seven.	dix-sept	m	siebzehn	n	diecisiete	m	diciassette	m	dezassete	m	семнадцать	n	سبعة عشر	f	सत्रह	m
-seventieth	Constituting number seventy in a sequence.	soixante-dixième	m	siebzigste	n	septésimo	m	settantesimo	m	septésimo	m	семидесятый	m	السبعون	m	सत्तरवाँ	m
 retrial	A second or further trial.	nouvel essai	m	Wiederholung	f	nuevo juicio	m	nuovo processo	m	novo julgamento	m	повторное судебное рассмотрение	n	محاكمة جديدة	f	पुनर्विचार	m
 seventy	The number equivalent to the product of seven and ten.	soixante-dix	m	siebzig	n	setenta	m	settanta	m	setenta	m	семьдесят	n	سبعون	m	सत्तर	m
 michigan	A state in the Great Lakes region of the United States.	Michigan	m	Michigan	n	Michigan	m	Michigan	m	Michigan	m	Мичиган	m	ميشيغان	m	मिशिगन	m
