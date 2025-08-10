@@ -9,12 +9,7 @@ from pathlib import Path
 
 # 削除対象単語リスト
 DELETE_WORDS = [
-    'ancient', 'anyway', 'basic', 'big', 'broad', 'civil', 'elect', 'external',
-    'feminine', 'gargle', 'harry', 'have', 'hot', 'how', 'ill', 'immortal',
-    'in', 'incoming', 'internal', 'intimate', 'inward', 'jolly', 'listen',
-    'lower', 'many', 'multimedia', 'must', 'narrow', 'necessary', 'negative',
-    'open', 'oriental', 'possible', 'raw', 'read', 'rich', 'rob', 'rough',
-    'sell', 'separate', 'shallow', 'sheer', 'short', 'shout'
+    'active', 'altogether', 'delicious', 'easy', 'when', 'where'
 ]
 
 def delete_words_from_csv(csv_file_path):
