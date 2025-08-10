@@ -170,6 +170,8 @@
 ###### 長寿・国民的漫画
 - Doraemon（ドラえもん）
 - Detective Conan（名探偵コナン）
+- Pokemon（ポケットモンスター）
+- Pikachu（ピカチュウ）
 - Sazae-san（サザエさん）
 - Chibi Maruko-chan（ちびまる子ちゃん）
 - Crayon Shin-chan（クレヨンしんちゃん）

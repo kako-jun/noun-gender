@@ -9,7 +9,7 @@ from pathlib import Path
 
 # 削除対象単語リスト
 DELETE_WORDS = [
-    'active', 'altogether', 'delicious', 'easy', 'when', 'where'
+    'seventieth', 'funny', 'great', 'fuck', 'revere'
 ]
 
 def delete_words_from_csv(csv_file_path):
