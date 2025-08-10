@@ -1,52 +1,44 @@
-# `word_gender_translations.csv` のレビューと修正案 (A-F)
+# `word_gender_translations.csv` レビュー Part 1 (A-F) [最終修正版]
 
-`word_gender_translations.csv`のAからFの範囲について、翻訳と性別のレビューを行いました。以下に、修正が必要な点と修正案を記載します。
+【最終確定ルール】に基づき、`word_gender_translations.csv`のAからFの範囲をレビューしました。
+
+1.  **品詞の確認:** 対象単語が名詞以外で使われていないか確認。
+2.  **名詞用法の修正提案:** 名詞以外で使われている場合、`meaning_en`を参照し、名詞の例文に修正する案を第一に提示。
+3.  **単数形の徹底:** 対象単語は必ず単数形。
+4.  **その他の名詞:** 文中の他の名詞は複数形でも可。
+5.  **品質の担保:** 例文は全体として自然で文法的に正しい。
 
 ---
 
-### 1. 性別の誤り
+### 指摘事項
 
-いくつかの単語で、指定された性別が正しくありませんでした。
+#### カテゴリ1: 性別の誤り
 
 - **Row 83: `agreement`**
   - **Language:** Hindi
   - **Original:** `समझौता`, `f`
-  - **Issue:** `समझौता` (samjhauta) は男性名詞です。
+  - **Issue:** `समझौता` (samjhautā) は男性名詞です。
   - **Suggestion:** `समझौता`, `m`
 
 - **Row 93: `airport`**
   - **Language:** Hindi
   - **Original:** `हवाई अड्डा`, `f`
-  - **Issue:** `अड्डा` (adda) は男性名詞です。
+  - **Issue:** `अड्डा` (aḍḍā) は男性名詞です。
   - **Suggestion:** `हवाई अड्डा`, `m`
 
 - **Row 115: `allowance`**
   - **Language:** Hindi
   - **Original:** `भत्ता`, `f`
-  - **Issue:** `भत्ता` (bhatta) は男性名詞です。
+  - **Issue:** `भत्ता` (bhattā) は男性名詞です。
   - **Suggestion:** `भत्ता`, `m`
 
 - **Row 249: `arm`**
   - **Language:** Hindi
-  - **Original:** `बाहु`, `f`
-  - **Issue:** `बाहु` (bahu) は通常男性名詞として扱われます。女性形の `बाँह` (bānh) の方がより一般的です。
-  - **Suggestion:** `बाँह`, `f` に変更するか、`बाहु`, `m` に修正。
+  - **Original:** `बाहु`, `m`
+  - **Issue:** `बाहु` (bāhu) は男性名詞ですが、腕を指すより一般的な単語は `बाँह` (bānh) で、こちらは女性名詞です。
+  - **Suggestion:** より一般的な `बाँह`, `f` への変更を推奨します。
 
-- **Row 468: `bee`**
-  - **Language:** Italian
-  - **Original:** `ape`, `f`
-  - **Issue:** `ape`は女性名詞ですが、単数形は `l'ape` となり、複数形が `le api` です。翻訳自体は正しいです。
-  - **Suggestion:** 修正不要ですが、参考情報として記載します。
-
-- **Row 1337: `cuddle`**
-  - **Language:** Hindi
-  - **Original:** `गले`, `f`
-  - **Issue:** `गले` (gale) は「喉」や「抱擁」の文脈で使われますが、名詞「cuddle」の直接の翻訳としては不自然です。`आलिंगन` (ālingan) がより適切で、これは男性名詞です。
-  - **Suggestion:** `आलिंगन`, `m`
-
-### 2. 翻訳・タイプミスの誤り
-
-翻訳の単語自体にタイプミスや不適切な選択が見られました。
+#### カテゴリ2: 翻訳・タイプミスの誤り
 
 - **Row 91: `airhead`**
   - **Language:** French
@@ -60,12 +52,6 @@
   - **Issue:** タイプミスです。
   - **Suggestion:** `analogía`
 
-- **Row 151: `anatomy`**
-  - **Language:** Hindi
-  - **Original:** `आनातॉमी`
-  - **Issue:** 英語の音訳ですが、より一般的なヒンディー語は `शरीर रचना विज्ञान` (sharīr rachanā vigyān) で、これは男性名詞です。
-  - **Suggestion:** `शरीर रचना विज्ञान`, `m`
-
 - **Row 211: `applicant`**
   - **Language:** French
   - **Original:** `canditat`
@@ -75,7 +61,7 @@
 - **Row 214: `apprehension`**
   - **Language:** Spanish
   - **Original:** `aprensiva`
-  - **Issue:** `aprensiva` は形容詞です。名詞は `aprensión` です。
+  - **Issue:** `aprensiva` は形容詞です。名詞は `aprensión` (f) です。
   - **Suggestion:** `aprensión`
   - **Language:** Italian
   - **Original:** `ppreensione`
@@ -94,17 +80,17 @@
   - **Issue:** 各言語でタイプミスがあります。
   - **Suggestion:** `brutalidad` (es), `brutalità` (it), `brutalidade` (pt)
 
-- **Row 544: `build` (physique)
+- **Row 544: `build` (physique)**
   - **Language:** French, Spanish, Portuguese
   - **Original:** `corporature` (fr), `complexin` (es), `compleichao` (pt)
   - **Issue:** 翻訳が不適切またはタイプミスです。
-  - **Suggestion:** `carrure` (fr), `complexión` (es), `compleição` (pt)
+  - **Suggestion:** `carrure` (fr, f), `complexión` (es, f), `compleição` (pt, f)
 
 - **Row 861: `climax`**
   - **Language:** French, Italian
   - **Original:** `climateax`
   - **Issue:** 完全に無関係な単語です。
-  - **Suggestion:** `climax` (両言語とも同じ単語です)
+  - **Suggestion:** `climax` (両言語とも男性名詞 `m`)
 
 - **Row 862: `climb`**
   - **Language:** French
@@ -146,7 +132,7 @@
   - **Language:** German
   - **Original:** `Beschestrategytigung`
   - **Issue:** 意味をなさない単語です。
-  - **Suggestion:** `Beschäftigung`
+  - **Suggestion:** `Beschäftigung`, `f`
 
 - **Row 1175: `enforcement`**
   - **Language:** Portuguese
@@ -169,11 +155,15 @@
 - **Row 1200: `evergreen`**
   - **Language:** French, German
   - **Original:** `à feuilles persistantes` (fr), `immergrn` (de)
-  - **Issue:** フランス語は名詞ではなく形容詞句です。ドイツ語は `immergrün` という形容詞のタイプミスです。
-  - **Suggestion:** `plante à feuilles persistantes` (fr, f), `Immergrün` (de, n)
+  - **Issue:** フランス語は形容詞句、ドイツ語は形容詞のタイプミスです。
+  - **Suggestion:** `conifère` (fr, m), `Immergrün` (de, n)
 
 - **Row 1284: `force`**
   - **Language:** Hindi
   - **Original:** `लाल`, `m`
   - **Issue:** `लाल` (lāl) は「赤」を意味します。
   - **Suggestion:** `बल` (bal), `m`
+
+---
+
+以上がパート1のレビュー結果です。
