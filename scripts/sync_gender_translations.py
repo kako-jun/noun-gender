@@ -10,12 +10,16 @@
     - INSERT OR REPLACE で重複自動解決
     - 翻訳と性別が両方とも空でない行のみ処理
     - 8言語対応: fr, de, es, it, pt, ru, ar, hi
+    - 性別マーカー検証: m, f, n のみ許可
 """
 
 import sqlite3
 import csv
 import sys
 from pathlib import Path
+
+# 許可される性別マーカー
+VALID_GENDER_MARKERS = {'m', 'f', 'n'}
 
 def sync_gender_translations():
     # ファイルパス
@@ -48,6 +52,7 @@ def sync_gender_translations():
     
     updated_count = {}
     error_count = 0
+    validation_errors = []
     
     for lang in languages.keys():
         updated_count[lang] = 0
@@ -72,8 +77,16 @@ def sync_gender_translations():
                         translation = row[translation_col] if len(row) > translation_col else ''
                         gender = row[translation_col + 1] if len(row) > translation_col + 1 else ''
                         
-                        # 翻訳と性別が両方とも空でない場合のみ挿入
+                        # 翻訳と性別が両方とも空でない場合のみ処理
                         if translation.strip() and gender.strip():
+                            # 性別マーカーのバリデーション
+                            if gender.strip() not in VALID_GENDER_MARKERS:
+                                error_msg = f"行{line_num} [{en}] {lang_code.upper()}: 不正な性別マーカー '{gender}' (有効: m, f, n)"
+                                print(f"❌ エラー: {error_msg}")
+                                validation_errors.append(error_msg)
+                                error_count += 1
+                                continue
+                            
                             cursor.execute(f'''
                                 INSERT OR REPLACE INTO words_{lang_code} 
                                 (en, translation, gender, verified_at, confidence_score)
@@ -85,12 +98,27 @@ def sync_gender_translations():
                     print(f"エラー: 行{line_num} - {row[0] if row else '不明'}: {e}")
                     error_count += 1
         
-        conn.commit()
-        print(f"\n完了:")
-        for lang_code, count in updated_count.items():
-            print(f"  {lang_code}: {count}件")
-        print(f"  総計: {sum(updated_count.values())}件")
-        print(f"  エラー: {error_count}件")
+        # エラーがなければコミット、あればロールバック
+        if error_count == 0:
+            conn.commit()
+            print(f"\n✅ 同期完了:")
+            for lang_code, count in updated_count.items():
+                print(f"  {lang_code.upper()}: {count}件")
+            print(f"  総計: {sum(updated_count.values())}件")
+            print(f"  エラー: {error_count}件")
+        else:
+            conn.rollback()
+            print(f"\n❌ 同期失敗: {error_count}件のエラーがあります")
+            print(f"データベースへの変更はロールバックされました\n")
+            
+            # バリデーションエラーのサマリー表示
+            if validation_errors:
+                print("🔍 検出された性別マーカーエラー:")
+                for error in validation_errors:
+                    print(f"  • {error}")
+                print(f"\n💡 修正方法:")
+                print(f"  1. CSVファイルで不正な性別マーカーを m, f, n に修正")
+                print(f"  2. 再度このスクリプトを実行")
         
         return error_count == 0
         
