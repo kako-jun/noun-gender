@@ -50,19 +50,21 @@ def sync_meaning_translations():
                         error_count += 1
                         continue
                     
-                    # 翻訳が1つ以上ある場合のみ処理
-                    if any(cell.strip() for cell in row[2:]):
-                        cursor.execute('''
-                            INSERT OR REPLACE INTO word_meanings 
-                            (en, meaning_en, meaning_ja, meaning_zh, meaning_fr, meaning_de, 
-                             meaning_es, meaning_it, meaning_pt, meaning_ru, meaning_ar, meaning_hi)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        ''', row)
-                        updated_count += 1
-                        if updated_count % 100 == 0:
-                            print(f"進捗: {updated_count}件処理済み...")
-                    else:
+                    # 全ての行を処理（翻訳が空でも英単語レコードは作成）
+                    cursor.execute('''
+                        INSERT OR REPLACE INTO word_meanings 
+                        (en, meaning_en, meaning_ja, meaning_zh, meaning_fr, meaning_de, 
+                         meaning_es, meaning_it, meaning_pt, meaning_ru, meaning_ar, meaning_hi)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', row)
+                    updated_count += 1
+                    
+                    # 翻訳が空の場合はカウント
+                    if not any(cell.strip() for cell in row[2:]):
                         skipped_count += 1
+                    
+                    if updated_count % 100 == 0:
+                        print(f"進捗: {updated_count}件処理済み...")
                         
                 except Exception as e:
                     print(f"エラー: 行{line_num} - {row[0] if row else '不明'}: {e}")
