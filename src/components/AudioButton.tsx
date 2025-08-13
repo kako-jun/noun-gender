@@ -87,7 +87,7 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
         if (matchingVoices.length > 0) {
           // 言語・ブラウザ別の推奨音声を定義
           const getRecommendedVoices = (lang: string) => {
-            const voiceMap: { [key: string]: any } = {
+            const voiceMap: { [key: string]: { microsoft?: { male?: string[]; female?: string[] }; google?: { male?: string[]; female?: string[] }; apple?: { male?: string[]; female?: string[] } } } = {
               // English
               'en': {
                 microsoft: {
@@ -300,7 +300,7 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
           setHasSpoken(false); // 完了後にフラグをリセット
         };
 
-        utterance.onerror = (event) => {
+        utterance.onerror = () => {
           console.warn('Speech synthesis failed for:', text, 'in language:', voiceLang);
           setIsPlaying(false);
           setHasSpoken(false); // エラー後にフラグをリセット

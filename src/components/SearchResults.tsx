@@ -5,11 +5,10 @@ import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
 import { CopyButton } from './CopyButton';
 import { useTranslations } from '@/hooks/useTranslations';
-import { Button } from './ui/Button';
 import { getGenderStyle, getGenderSymbol } from '@/utils/genderStyles';
 import { HighlightedText } from '@/utils/textHighlight';
 import { ExampleSection } from './ExampleSection';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface SearchResultsProps {
   results: SearchResult[];
@@ -22,16 +21,10 @@ interface SearchResultsProps {
 // 個別カードコンポーネントで状態を分離
 function TranslationCard({ 
   translation, 
-  index, 
-  tIndex, 
-  result, 
   mode, 
   searchQuery 
 }: {
-  translation: any;
-  index: number;
-  tIndex: number;
-  result: any;
+  translation: SearchResult;
   mode: string;
   searchQuery: string;
 }) {

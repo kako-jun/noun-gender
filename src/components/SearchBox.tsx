@@ -40,9 +40,9 @@ export interface SearchBoxRef {
 }
 
 // デバウンス関数
-function debounce<T extends (...args: any[]) => void>(func: T, wait: number): T {
+function debounce<T extends (...args: Parameters<T>) => void>(func: T, wait: number): T {
   let timeout: NodeJS.Timeout | null = null;
-  return ((...args: any[]) => {
+  return ((...args: Parameters<T>) => {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   }) as T;
@@ -54,7 +54,6 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   onQuiz,
   onTabChange,
   onSearchResultsClear,
-  isLoading, 
   initialQuery = '', 
   initialLanguages = Object.keys(SUPPORTED_LANGUAGES), 
   currentMode = 'search',

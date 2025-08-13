@@ -12,8 +12,6 @@ import { VoiceSelector } from '@/components/VoiceSelector';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useTheme } from 'next-themes';
-import { Button } from '@/components/ui/Button';
 import type { SearchResult } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/types';
 
@@ -212,9 +210,6 @@ export default function Home() {
     setSearchResults([]);
   };
 
-  const handleToggleTheme = () => {
-    // テーマ切り替えはThemeToggleコンポーネントで処理
-  };
 
   useKeyboardShortcuts({
     onFocusSearch: handleFocusSearch,

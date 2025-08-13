@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Play, RotateCcw, Check, X } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
@@ -86,21 +86,7 @@ export function Quiz({ onClose }: QuizProps) {
     }
   };
 
-  const nextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setSelectedAnswer(answers[currentQuestion + 1]);
-    } else {
-      setShowResult(true);
-    }
-  };
 
-  const prevQuestion = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-      setSelectedAnswer(answers[currentQuestion - 1]);
-    }
-  };
 
   const restartQuiz = () => {
     setCurrentQuestion(0);

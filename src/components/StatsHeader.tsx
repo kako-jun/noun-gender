@@ -35,7 +35,7 @@ export function StatsHeader() {
     );
   }
 
-  const { totalWords, totalTranslations, multilingualTerms, languageStats } = stats;
+  const { totalWords, totalTranslations, languageStats } = stats;
   const languageCount = languageStats.length;
 
   return (

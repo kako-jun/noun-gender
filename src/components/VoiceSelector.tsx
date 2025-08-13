@@ -9,7 +9,7 @@ interface VoiceSelectorProps {
   onVoiceGenderChange: (isFemale: boolean) => void;
 }
 
-export function VoiceSelector({ onVoiceGenderChange }: VoiceSelectorProps) {
+export function VoiceSelector({ }: VoiceSelectorProps) {
   const { preferFemaleVoice, setPreferFemaleVoice } = useVoice();
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslations();

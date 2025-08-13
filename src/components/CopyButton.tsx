@@ -11,7 +11,7 @@ interface CopyButtonProps {
   className?: string;
 }
 
-export function CopyButton({ text, label, className = '' }: CopyButtonProps) {
+export function CopyButton({ text, className = '' }: CopyButtonProps) {
   const { t } = useTranslations();
   const [copied, setCopied] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
