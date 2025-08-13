@@ -106,7 +106,7 @@ f.write(f'{en}\t{meaning_en}\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n')
 ## データ追加ルール
 
 ### 翻訳・例文品質基準
-1. **meaning_enの解釈**: セミコロン(;)区切りの**最初の意味**のみ使用（名詞用法）
+1. **meaning_enの解釈**: 英語の意味説明文**全体**を翻訳（セミコロン含め全文を翻訳）
 2. **品詞制限**: 必ず名詞としての使用法のみ（動詞・形容詞禁止）
 3. **文章品質**: 
    - 自然で適切な長さ
@@ -122,11 +122,11 @@ f.write(f'{en}\t{meaning_en}\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n')
 ### 翻訳例
 ```
 meaning_en: "A building or buildings occupied by a community of monks or nuns."
-→ 最初の部分"A building"に基づいて翻訳
+→ 説明文全体を翻訳
 → abbey → abbaye (f), Abtei (f), abadía (f)...
 
 meaning_en: "Lack; not being present; missing; vacancy."
-→ 最初の"Lack"に基づいて翻訳  
+→ 説明文全体を翻訳「欠如; 存在しないこと; 不在; 空席」
 → absence → absence (f), Abwesenheit (f), ausencia (f)...
 ```
 
