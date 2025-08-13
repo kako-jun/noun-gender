@@ -6,22 +6,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const prefix = searchParams.get('prefix') || '';
     
-    // DatabaseManagerのgetDb()メソッドを使用してデータベースにアクセス
-    const db = (dbManager as unknown as { getDb: () => { prepare: (sql: string) => { all: (prefix: string) => Array<{ next_letter: string; count: number }> } } }).getDb();
-    
-    // 指定されたプレフィックスで始まる単語の、次の文字ごとの統計を取得
-    const letterStats = await db.prepare(`
-      SELECT 
-        SUBSTR(english, ${prefix.length + 1}, 1) as next_letter,
-        COUNT(DISTINCT english) as count
-      FROM all_words 
-      WHERE english IS NOT NULL 
-        AND LENGTH(english) > ${prefix.length}
-        AND english LIKE ? || '%'
-        AND SUBSTR(english, ${prefix.length + 1}, 1) BETWEEN 'a' AND 'z'
-      GROUP BY SUBSTR(english, ${prefix.length + 1}, 1)
-      ORDER BY next_letter
-    `).all(prefix);
+    const letterStats = dbManager.getLetterStatsDetailed(prefix);
 
     // a-zすべての文字を含む配列を作成（0件の文字も含む）
     const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');

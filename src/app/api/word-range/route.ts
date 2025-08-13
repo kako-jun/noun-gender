@@ -6,49 +6,14 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const prefix = searchParams.get('prefix') || '';
     
-    // DatabaseManagerのgetDb()メソッドを使用してデータベースにアクセス
-    const db = (dbManager as unknown as { getDb: () => { prepare: (sql: string) => { get: (prefix: string) => { english?: string; total?: number } | undefined } } }).getDb();
-    
-    // 指定されたプレフィックスで始まる最初と最後の単語を取得
-    // DISTINCT を使用して重複を除く
-    const firstWord = await db.prepare(`
-      SELECT english 
-      FROM (
-        SELECT DISTINCT english 
-        FROM all_words 
-        WHERE english IS NOT NULL 
-          AND english LIKE ? || '%'
-        ORDER BY english ASC
-      )
-      LIMIT 1
-    `).get(prefix);
-    
-    const lastWord = await db.prepare(`
-      SELECT english 
-      FROM (
-        SELECT DISTINCT english 
-        FROM all_words 
-        WHERE english IS NOT NULL 
-          AND english LIKE ? || '%'
-        ORDER BY english DESC
-      )
-      LIMIT 1
-    `).get(prefix);
-    
-    // 総数を取得
-    const countResult = await db.prepare(`
-      SELECT COUNT(DISTINCT english) as total
-      FROM all_words 
-      WHERE english IS NOT NULL 
-        AND english LIKE ? || '%'
-    `).get(prefix);
+    const result = dbManager.getWordRange(prefix);
 
     return NextResponse.json({
       success: true,
       data: {
-        firstWord: firstWord?.english || '',
-        lastWord: lastWord?.english || '',
-        totalCount: countResult?.total || 0
+        firstWord: result.firstWord || '',
+        lastWord: result.lastWord || '',
+        totalCount: result.totalCount
       }
     });
   } catch (error) {
