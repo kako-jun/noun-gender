@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { SearchBox, type SearchBoxRef } from '@/components/SearchBox';
 import { SearchResults } from '@/components/SearchResults';
@@ -15,7 +15,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 import type { SearchResult } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/types';
 
-export default function Home() {
+function HomeContent() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [browseResults, setBrowseResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -375,5 +375,21 @@ export default function Home() {
       {/* Scroll to Top Button */}
       <ScrollToTop />
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-solarized-base3 dark:bg-solarized-base03 flex items-center justify-center">
+        <div className="flex space-x-1">
+          <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0s' }}></div>
+          <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.3s' }}></div>
+          <div className="w-1.5 h-1.5 bg-solarized-base01 dark:bg-solarized-base0 rounded-full animate-pulse" style={{ animationDuration: '1.5s', animationDelay: '0.6s' }}></div>
+        </div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   );
 }
