@@ -178,7 +178,7 @@ class DatabaseManager {
       WHERE translation IS NOT NULL AND translation != ''
     `;
     
-    const englishParams: any[] = [];
+    const englishParams: string[] = [];
     
     if (language) {
       englishWordsQuery += ` AND lang = ?`;
@@ -231,7 +231,7 @@ class DatabaseManager {
     
     translationsQuery += ` ORDER BY LOWER(vat.en), vat.lang`;
     
-    const rows = db.prepare(translationsQuery).all(...translationParams) as any[];
+    const rows = db.prepare(translationsQuery).all(...translationParams) as Array<{ en: string; lang: string; translation: string; gender?: string; meaning?: string; examples?: string }>;
     
     // Group by English word
     const grouped = new Map();

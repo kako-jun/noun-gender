@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const prefix = searchParams.get('prefix') || '';
     
     // DatabaseManagerのgetDb()メソッドを使用してデータベースにアクセス
-    const db = (dbManager as any).getDb();
+    const db = (dbManager as { getDb: () => any }).getDb();
     
     // 指定されたプレフィックスで始まる単語の、次の文字ごとの統計を取得
     const letterStats = await db.prepare(`
