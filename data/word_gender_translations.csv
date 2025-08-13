@@ -95,7 +95,7 @@ allergy	Hypersensitive reaction to substance.	allergie	f	Allergie	f	alergia	f	al
 alliance	Union; partnership; coalition; agreement.	alliance	f	Allianz	f	alianza	f	alleanza	f	aliança	f	союз	m	تحالف	m	गठबंधन	m
 alligator	Large reptile found in swamps.	alligator	m	Alligator	m	caimán	m	alligatore	m	jacaré	m	аллигатор	m	تمساح	m	घडियाल	m
 allocation	Distribution; assignment; apportionment.	allocation	f	Zuteilung	f	asignación	f	assegnazione	f	alocação	f	распределение	n	تخصيص	m	आवंटन	m
-allotment	Portion assigned; small garden plot.	lotissement	m	Zuteilung	f	parcela	f	assegnazione	f	lote	m	надел	m	قطعة أرض	f	आवंटन	m
+allotment	Portion assigned; small garden plot.	attribution	f	Zuteilung	f	asignación	f	assegnazione	f	atribuição	f	выделение	n	تخصيص	m	आवंटन	m
 allowance	Money given regularly; permitted amount.	allocation	f	Zulage	f	asignación	f	indennità	f	mesada	f	пособие	n	بدل	m	भत्ता	m
 alloy	Metal made by combining two or more metals.	alliage	m	Legierung	f	aleación	f	lega	f	liga	f	сплав	m	سبيكة	f	मिश्र धातु	m
 ally	A country or person that cooperates with another.	allié	m	Verbündeter	m	aliado	m	alleato	m	aliado	m	союзник	m	حليف	m	सहयोगी	m
@@ -300,7 +300,7 @@ bachelor	An unmarried man.	célibataire	m	Junggeselle	m	soltero	m	scapolo	m	solt
 back	Rear; spine; support; return.	arrière	m	Hinterteil	n	parte trasera	f	parte posteriore	f	parte traseira	f	задняя часть	f	الخلف	m	पिछला भाग	m
 backache	Pain in back; spine pain; lumbar pain; dorsal pain.	mal de dos	m	Rückenschmerz	m	dolor de espalda	m	mal di schiena	m	dor nas costas	f	боль в спине	f	ألم الظهر	m	पीठ दर्द	m
 backbone	Spine; vertebral column; main support; courage.	épine dorsale	f	Wirbelsäule	f	columna vertebral	f	colonna vertebrale	f	coluna vertebral	f	позвоночник	m	عمود فقري	m	रीढ़ की हड्डी	f
-background	History; setting; experience; context.	arrière-plan	m	Hintergrund	m	fondo	m	sfondo	m	fundo	m	фон	m	خلفية	f	पृष्ठभूमि	f
+background	History; setting; experience; context.	historique	m	Vorgeschichte	f	historial	m	storia	f	histórico	m	предыстория	f	تاريخ	m	इतिहास	m
 backing	Support; financial help; endorsement; reverse side.	soutien	m	Unterstützung	f	apoyo	m	sostegno	m	apoio	m	поддержка	f	دعم	m	समर्थन	m
 backlog	Accumulated work; pending tasks; unfinished items; queue.	arriéré	m	Rückstand	m	acumulación	f	arretrato	m	acumulação	f	задолженность	f	تراكم	m	बकाया	m
 backup	Copy for safety; support; reserve; substitute.	sauvegarde	f	Sicherung	f	copia de seguridad	f	backup	m	backup	m	резервная копия	f	نسخة احتياطية	f	बैकअप	m
@@ -1500,7 +1500,7 @@ expert	Specialist; authority; professional; skilled person.	expert	m	Experte	m	e
 explanation	Clarification; reason; interpretation; account.	explication	f	Erklärung	f	explicación	f	spiegazione	f	explicação	f	объяснение	n	تفسير	m	व्याख्या	f
 explosion	Blast; detonation; sudden increase; outburst.	explosion	f	Explosion	f	explosión	f	esplosione	f	explosão	f	взрыв	m	انفجار	m	विस्फोट	m
 export	Sending abroad; overseas sale; international trade.	exportation	f	Export	m	exportación	f	esportazione	f	exportação	f	экспорт	m	تصدير	m	निर्यात	m
-exposition	Comprehensive description.	exposition	f	Ausstellung	f	exposición	f	esposizione	f	exposição	f	выставка	f	معرض	m	प्रदर्शनी	f
+exposition	Comprehensive description.	description complète	f	umfassende Beschreibung	f	descripción completa	f	descrizione completa	f	descrição completa	f	подробное описание	n	وصف شامل	m	विस्तृत विवरण	m
 exposure	State of being exposed.	exposition	f	Belichtung	f	exposición	f	esposizione	f	exposição	f	воздействие	n	تعرض	m	अभिव्यक्ति	f
 express	Train service; delivery service; to convey; state clearly.	express	m	Express	m	expreso	m	espresso	m	expresso	m	экспресс	m	سريع	m	तेज	m
 expression	Phrase; facial look; manifestation; utterance.	phrase	f	Phrase	f	frase	f	frase	f	frase	f	фраза	f	عبارة	f	वाक्यांश	m
@@ -1574,7 +1574,7 @@ fellow	Person; man; companion; peer.	compagnon	m	Kumpel	m	compañero	m	compagno	
 fellowship	Friendly association.	camaraderie	f	Gemeinschaft	f	compañerismo	m	compagnia	f	companheirismo	m	товарищество	n	زمالة	f	मित्रता	f
 felony	A serious crime; a major criminal offense punishable by law.	crime grave	m	Verbrechen	n	delito mayor	m	reato grave	m	crime	m	тяжкое преступление	n	جناية كبيرة	f	गंभीर अपराध	m
 fence	Barrier; boundary; enclosure; stolen goods dealer.	clôture	f	Zaun	m	valla	f	recinzione	f	cerca	f	забор	m	سياج	m	बाड़	m
-ferment	Chemical breakdown by bacteria.	ferment	m	Gärung	f	fermentación	f	fermentazione	f	fermentâo	f	брожение	n	تخمير	m	किण्वन	m
+ferment	Chemical breakdown by bacteria.	ferment	m	Gärung	f	fermentación	f	fermentazione	f	fermentação	f	брожение	n	تخمير	m	किण्वन	m
 fern	Flowerless plant with fronds.	fougère	f	Farn	m	helecho	m	felce	f	feto	m	папоротник	m	سرخس	m	फर्न	m
 fertilizer	Substance for plant growth.	engrais	m	Dünger	m	fertilizante	m	fertilizzante	m	fertilizante	m	удобрение	n	سماد	m	खाद	m
 festival	Celebration; event; party; cultural gathering.	festival	m	Festival	n	festival	m	festival	m	festival	m	фестиваль	m	مهرجان	m	त्योहार	m
@@ -3089,7 +3089,7 @@ support	Help; assistance; backing; hold up.	soutien	m	Unterstützung	f	apoyo	m	s
 supporter	Person who supports; fan; backer; advocate.	supporteur	m	Anhänger	m	seguidor	m	sostenitore	m	torcedor	m	сторонник	m	مؤيد	m	समर्थक	m
 supposition	Assumption without proof; hypothesis; belief; conjecture.	supposition	f	Annahme	f	suposición	f	supposizione	f	suposição	f	предположение	n	افتراض	m	कल्पना	f
 surcharge	Additional charge; extra fee; to charge extra; penalty fee.	surtaxe	f	Zuschlag	m	recargo	m	sovrattassa	f	sobretaxa	f	доплата	f	رسوم إضافية	f	अतिरिक्त शुल्क	m
-surf	Ocean waves; to ride waves; foam on waves; to browse internet.	surf	m	Brandung	f	oleaje	m	cavalloni	m	ondas	f	прибой	m	أمواج	f	लहरे	m
+surf	Ocean waves; to ride waves; foam on waves; to browse internet.	vagues océaniques	f	Brandung	f	olas oceánicas	f	onde oceaniche	f	ondas oceânicas	f	океанские волны	f	أمواج المحيط	f	समुद्री लहरें	f
 surface	Top; exterior; area; appearance.	surface	f	Oberfläche	f	superficie	f	superficie	f	superfície	f	поверхность	f	سطح	m	सतह	m
 surfing	Sport of riding waves; water sport; internet browsing.	surf	m	Surfen	n	surf	m	surf	m	surf	m	сёрфинг	m	تزلج على الأمواج	m	सर्फिंग	f
 surge	Sudden powerful movement; electrical spike; to move forward powerfully.	montée	f	Anstieg	m	oleada	f	ondata	f	onda	f	всплеск	m	موجة	f	उभार	m
