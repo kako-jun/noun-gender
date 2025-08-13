@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const prefix = searchParams.get('prefix') || '';
     
     // DatabaseManagerのgetDb()メソッドを使用してデータベースにアクセス
-    const db = (dbManager as { getDb: () => any }).getDb();
+    const db = (dbManager as unknown as { getDb: () => { prepare: (sql: string) => { get: (prefix: string) => { english?: string; total?: number } | undefined } } }).getDb();
     
     // 指定されたプレフィックスで始まる最初と最後の単語を取得
     // DISTINCT を使用して重複を除く

@@ -87,7 +87,7 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
         if (matchingVoices.length > 0) {
           // 言語・ブラウザ別の推奨音声を定義
           const getRecommendedVoices = (lang: string) => {
-            const voiceMap: { [key: string]: { microsoft?: { male?: string[]; female?: string[] }; google?: { male?: string[]; female?: string[] }; apple?: { male?: string[]; female?: string[] } } } = {
+            const voiceMap: { [key: string]: { microsoft?: { male?: string[]; female?: string[] }; google?: { male?: string[]; female?: string[] }; apple?: { male?: string[]; female?: string[] }; firefox?: { male?: string[]; female?: string[] } } } = {
               // English
               'en': {
                 microsoft: {
@@ -267,8 +267,8 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
           const recommendedVoices = getRecommendedVoices(targetLang);
           
           const targetVoices = preferFemaleVoice 
-            ? [...recommendedVoices.microsoft.female, ...recommendedVoices.google.female, ...recommendedVoices.apple.female, ...recommendedVoices.firefox.female]
-            : [...recommendedVoices.microsoft.male, ...recommendedVoices.google.male, ...recommendedVoices.apple.male, ...recommendedVoices.firefox.male];
+            ? [...(recommendedVoices.microsoft?.female || []), ...(recommendedVoices.google?.female || []), ...(recommendedVoices.apple?.female || []), ...(recommendedVoices.firefox?.female || [])]
+            : [...(recommendedVoices.microsoft?.male || []), ...(recommendedVoices.google?.male || []), ...(recommendedVoices.apple?.male || []), ...(recommendedVoices.firefox?.male || [])];
           
           // 推奨音声から検索
           for (const targetVoice of targetVoices) {

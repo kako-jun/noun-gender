@@ -123,7 +123,7 @@ class DatabaseManager {
       
       const result = grouped.get(englishWord)!;
       // 有効な翻訳データのみ追加
-      if (row.translation && row.translation.trim() !== '' && ['m', 'f', 'n'].includes(row.gender)) {
+      if (row.translation && row.translation.trim() !== '' && row.gender && ['m', 'f', 'n'].includes(row.gender)) {
         result.translations.push({
           id: 0,
           word_id: 0,
@@ -178,7 +178,7 @@ class DatabaseManager {
       WHERE translation IS NOT NULL AND translation != ''
     `;
     
-    const englishParams: string[] = [];
+    const englishParams: (string | number)[] = [];
     
     if (language) {
       englishWordsQuery += ` AND lang = ?`;
@@ -231,7 +231,21 @@ class DatabaseManager {
     
     translationsQuery += ` ORDER BY LOWER(vat.en), vat.lang`;
     
-    const rows = db.prepare(translationsQuery).all(...translationParams) as Array<{ en: string; lang: string; translation: string; gender?: string; meaning?: string; examples?: string }>;
+    const rows = db.prepare(translationsQuery).all(...translationParams) as Array<{ 
+      en: string; 
+      lang: string; 
+      translation: string; 
+      gender?: string; 
+      meaning_en?: string;
+      meaning_ja?: string;
+      meaning_zh?: string;
+      example_en?: string;
+      example_ja?: string;
+      example_zh?: string;
+      memory_trick_ja?: string;
+      memory_trick_en?: string;
+      memory_trick_zh?: string;
+    }>;
     
     // Group by English word
     const grouped = new Map();
@@ -253,7 +267,7 @@ class DatabaseManager {
       }
       
       // 有効な翻訳データのみ追加
-      if (row.translation && row.translation.trim() !== '' && ['m', 'f', 'n'].includes(row.gender)) {
+      if (row.translation && row.translation.trim() !== '' && row.gender && ['m', 'f', 'n'].includes(row.gender)) {
         grouped.get(row.en).translations.push({
           id: 0,
           word_id: 0,

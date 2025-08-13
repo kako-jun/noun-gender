@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import dbManager from '@/lib/database';
 
 export async function GET() {
   try {
     // DatabaseManagerのgetDb()メソッドを使用してデータベースにアクセス
-    const db = (dbManager as { getDb: () => any }).getDb();
+    const db = (dbManager as unknown as { getDb: () => { prepare: (sql: string) => { all: () => Array<{ letter: string; count: number }> } } }).getDb();
     
     // a-z各文字の単語数をカウント
     const letterStats = await db.prepare(`
