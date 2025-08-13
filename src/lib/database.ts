@@ -1,11 +1,55 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import { z } from 'zod';
 import type { SearchResult, LanguageCode } from '@/types';
+
+// Zod schemas for database validation
+const LetterStatsSchema = z.object({
+  letter: z.string().min(1).max(1),
+  count: z.number().int().min(0)
+});
+
+const LetterStatsDetailedSchema = z.object({
+  next_letter: z.string().min(1).max(1),
+  count: z.number().int().min(0)
+});
+
+const WordAtOffsetSchema = z.object({
+  english: z.string().min(1)
+});
+
+const TranslationRowSchema = z.object({
+  en: z.string().min(1),
+  lang: z.string().min(2).max(2),
+  translation: z.string().min(1),
+  gender: z.enum(['m', 'f', 'n']).optional(),
+  meaning_en: z.string().optional(),
+  meaning_ja: z.string().optional(),
+  meaning_zh: z.string().optional(),
+  example_en: z.string().optional(),
+  example_ja: z.string().optional(),
+  example_zh: z.string().optional(),
+  memory_trick_ja: z.string().optional(),
+  memory_trick_en: z.string().optional(),
+  memory_trick_zh: z.string().optional()
+});
+
+const MemoryTrickWithLangSchema = z.object({
+  translation_lang: z.string().min(2).max(2),
+  trick_text: z.string().min(1)
+});
+
+// Inferred types
+type LetterStatsRow = z.infer<typeof LetterStatsSchema>;
+type LetterStatsDetailedRow = z.infer<typeof LetterStatsDetailedSchema>;
+type WordAtOffsetRow = z.infer<typeof WordAtOffsetSchema>;
+type TranslationRow = z.infer<typeof TranslationRowSchema>;
+
 
 class DatabaseManager {
   private db: Database.Database | null = null;
 
-  private getDb() {
+  private getDb(): Database.Database {
     if (!this.db) {
       const dbPath = path.join(process.cwd(), 'data', 'noun_gender.db');
       this.db = new Database(dbPath, { readonly: true });
@@ -231,21 +275,19 @@ class DatabaseManager {
     
     translationsQuery += ` ORDER BY LOWER(vat.en), vat.lang`;
     
-    const rows = db.prepare(translationsQuery).all(...translationParams) as Array<{ 
-      en: string; 
-      lang: string; 
-      translation: string; 
-      gender?: string; 
-      meaning_en?: string;
-      meaning_ja?: string;
-      meaning_zh?: string;
-      example_en?: string;
-      example_ja?: string;
-      example_zh?: string;
-      memory_trick_ja?: string;
-      memory_trick_en?: string;
-      memory_trick_zh?: string;
-    }>;
+    const rawRows = db.prepare(translationsQuery).all(...translationParams);
+    
+    // Validate each row with zod
+    const rows: TranslationRow[] = [];
+    for (const rawRow of rawRows) {
+      try {
+        const validatedRow = TranslationRowSchema.parse(rawRow);
+        rows.push(validatedRow);
+      } catch (error) {
+        console.warn('Invalid translation row data, skipping:', rawRow, error);
+        // Skip invalid rows instead of failing the entire query
+      }
+    }
     
     // Group by English word
     const grouped = new Map();
@@ -294,8 +336,16 @@ class DatabaseManager {
       WHERE en = ? AND translation_lang = ? AND ui_lang = ?
     `;
     
-    const result = db.prepare(sql).get(englishWord, targetLanguage, uiLanguage) as { trick_text: string } | undefined;
-    return result?.trick_text || null;
+    const rawResult = db.prepare(sql).get(englishWord, targetLanguage, uiLanguage);
+    if (!rawResult) return null;
+    
+    try {
+      const validatedResult = z.object({ trick_text: z.string().min(1) }).parse(rawResult);
+      return validatedResult.trick_text;
+    } catch (error) {
+      console.warn('Invalid memory trick data:', rawResult, error);
+      return null;
+    }
   }
 
   async getMemoryTricksForWord(englishWord: string, uiLanguage: string): Promise<Record<string, string>> {
@@ -307,12 +357,17 @@ class DatabaseManager {
       WHERE en = ? AND ui_lang = ?
     `;
     
-    const results = db.prepare(sql).all(englishWord, uiLanguage) as { translation_lang: string; trick_text: string }[];
+    const rawResults = db.prepare(sql).all(englishWord, uiLanguage);
     
     const tricks: Record<string, string> = {};
-    results.forEach(row => {
-      tricks[row.translation_lang] = row.trick_text;
-    });
+    for (const rawRow of rawResults) {
+      try {
+        const validatedRow = MemoryTrickWithLangSchema.parse(rawRow);
+        tricks[validatedRow.translation_lang] = validatedRow.trick_text;
+      } catch (error) {
+        console.warn('Invalid memory trick row data, skipping:', rawRow, error);
+      }
+    }
     
     return tricks;
   }
@@ -322,6 +377,106 @@ class DatabaseManager {
       this.db.close();
       this.db = null;
     }
+  }
+
+  // Public methods for API routes
+  getLetterStats(): LetterStatsRow[] {
+    const db = this.getDb();
+    const rawResults = db.prepare(`
+      SELECT 
+        SUBSTR(english, 1, 1) as letter,
+        COUNT(DISTINCT english) as count
+      FROM all_words 
+      WHERE english IS NOT NULL 
+        AND LENGTH(english) > 0
+        AND SUBSTR(english, 1, 1) BETWEEN 'a' AND 'z'
+      GROUP BY SUBSTR(english, 1, 1)
+      ORDER BY letter
+    `).all();
+    
+    return z.array(LetterStatsSchema).parse(rawResults);
+  }
+
+  getLetterStatsDetailed(prefix: string): LetterStatsDetailedRow[] {
+    const db = this.getDb();
+    const rawResults = db.prepare(`
+      SELECT 
+        SUBSTR(english, ${prefix.length + 1}, 1) as next_letter,
+        COUNT(DISTINCT english) as count
+      FROM all_words 
+      WHERE english IS NOT NULL 
+        AND LENGTH(english) > ${prefix.length}
+        AND english LIKE ? || '%'
+        AND SUBSTR(english, ${prefix.length + 1}, 1) BETWEEN 'a' AND 'z'
+      GROUP BY SUBSTR(english, ${prefix.length + 1}, 1)
+      ORDER BY next_letter
+    `).all(prefix);
+    
+    return z.array(LetterStatsDetailedSchema).parse(rawResults);
+  }
+
+  getWordAtOffset(prefix: string, offset: number): WordAtOffsetRow | undefined {
+    const db = this.getDb();
+    const rawResult = db.prepare(`
+      SELECT english 
+      FROM (
+        SELECT DISTINCT english 
+        FROM all_words 
+        WHERE english IS NOT NULL 
+          AND english LIKE ? || '%'
+        ORDER BY english ASC
+      )
+      LIMIT 1 OFFSET ?
+    `).get(prefix, offset);
+    
+    if (!rawResult) return undefined;
+    return WordAtOffsetSchema.parse(rawResult);
+  }
+
+  getWordRange(prefix: string): { firstWord?: string; lastWord?: string; totalCount: number } {
+    const db = this.getDb();
+    
+    const rawFirstWord = db.prepare(`
+      SELECT english 
+      FROM (
+        SELECT DISTINCT english 
+        FROM all_words 
+        WHERE english IS NOT NULL 
+          AND english LIKE ? || '%'
+        ORDER BY english ASC
+      )
+      LIMIT 1
+    `).get(prefix);
+    
+    const rawLastWord = db.prepare(`
+      SELECT english 
+      FROM (
+        SELECT DISTINCT english 
+        FROM all_words 
+        WHERE english IS NOT NULL 
+          AND english LIKE ? || '%'
+        ORDER BY english DESC
+      )
+      LIMIT 1
+    `).get(prefix);
+    
+    const rawCountResult = db.prepare(`
+      SELECT COUNT(DISTINCT english) as total
+      FROM all_words 
+      WHERE english IS NOT NULL 
+        AND english LIKE ? || '%'
+    `).get(prefix);
+
+    // Validate and extract results
+    const firstWord = rawFirstWord ? WordAtOffsetSchema.parse(rawFirstWord) : undefined;
+    const lastWord = rawLastWord ? WordAtOffsetSchema.parse(rawLastWord) : undefined;
+    const countResult = rawCountResult ? z.object({ total: z.number().int().min(0) }).parse(rawCountResult) : undefined;
+
+    return {
+      firstWord: firstWord?.english,
+      lastWord: lastWord?.english,
+      totalCount: countResult?.total || 0
+    };
   }
 }
 
