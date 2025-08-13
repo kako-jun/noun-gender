@@ -3,6 +3,7 @@
 import type { ExampleSentence } from '@/types';
 import { useTranslations } from '@/hooks/useTranslations';
 import { AudioButton } from './AudioButton';
+import type { ReactElement } from 'react';
 
 interface ExampleSectionProps {
   word: string;
@@ -26,7 +27,7 @@ export function ExampleSection({ word, example }: ExampleSectionProps) {
     const parts = text.split(regex);
     const matches = text.match(regex) || [];
     
-    return parts.reduce((acc: (string | JSX.Element)[], part, index) => {
+    return parts.reduce((acc: (string | ReactElement)[], part, index) => {
       if (index > 0) {
         acc.push(
           <span key={index} className="font-bold text-solarized-cyan dark:text-solarized-cyan">

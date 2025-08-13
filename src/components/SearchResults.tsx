@@ -1,6 +1,6 @@
 'use client';
 
-import type { SearchResult } from '@/types';
+import type { SearchResult, Translation } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
 import { CopyButton } from './CopyButton';
@@ -24,7 +24,7 @@ function TranslationCard({
   mode, 
   searchQuery 
 }: {
-  translation: SearchResult;
+  translation: Translation;
   mode: string;
   searchQuery: string;
 }) {
@@ -269,9 +269,6 @@ export function SearchResults({
               <TranslationCard
                 key={tIndex}
                 translation={translation}
-                index={index}
-                tIndex={tIndex}
-                result={result}
                 mode={mode}
                 searchQuery={searchQuery}
               />

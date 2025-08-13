@@ -124,7 +124,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
       }
       setInitialized(true);
     }
-  }, [initialQuery, initialLanguages, initialLetter, initialized]);
+  }, [initialQuery, initialLanguages, initialLetter, initialized, query, selectedLanguages, selectedLetter]);
 
   // currentModeが変わった時にactiveTabを同期
   useEffect(() => {
@@ -133,9 +133,12 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
 
   // デバウンス用のインクリメンタルサーチ
   const debouncedSearch = useCallback(
-    debounce((query: string, languages: string[]) => {
-      onSearch(query, languages);
-    }, 300),
+    (query: string, languages: string[]) => {
+      const debouncedFn = debounce((q: string, langs: string[]) => {
+        onSearch(q, langs);
+      }, 300);
+      debouncedFn(query, languages);
+    },
     [onSearch]
   );
 
@@ -149,7 +152,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
         onSearchResultsClear();
       }
     }
-  }, [query, selectedLanguages, activeTab]);
+  }, [query, selectedLanguages, activeTab, debouncedSearch, onSearchResultsClear]);
 
   const handleClear = () => {
     setQuery('');

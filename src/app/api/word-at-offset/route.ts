@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
     
     // DatabaseManagerのgetDb()メソッドを使用してデータベースにアクセス
-    const db = (dbManager as { getDb: () => any }).getDb();
+    const db = (dbManager as unknown as { getDb: () => { prepare: (sql: string) => { get: (prefix: string, offset: number) => { english?: string } | undefined } } }).getDb();
     
     // 指定されたプレフィックスで始まる単語のoffset番目を取得
     // DISTINCT を使用して重複を除き、英単語単位でカウントする

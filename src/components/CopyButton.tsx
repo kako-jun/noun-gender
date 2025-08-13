@@ -17,7 +17,7 @@ export function CopyButton({ text, className = '' }: CopyButtonProps) {
   const [showPopup, setShowPopup] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // スクロール時にポップアップを隠す
   useEffect(() => {

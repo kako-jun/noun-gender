@@ -1,10 +1,6 @@
 'use client';
 
 import { ButtonHTMLAttributes, forwardRef } from 'react';
-// Simple className utility without external dependencies
-function cn(...classes: (string | undefined | boolean)[]): string {
-  return classes.filter(Boolean).join(' ');
-}
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'selected';
