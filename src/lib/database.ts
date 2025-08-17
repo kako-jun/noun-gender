@@ -505,7 +505,7 @@ class DatabaseManager {
         FROM v_all_translations 
         WHERE en IS NOT NULL 
           AND en LIKE ? || '%'
-        ORDER BY en ASC
+        ORDER BY en COLLATE NOCASE ASC
       )
       LIMIT 1 OFFSET ?
     `).get(prefix, offset);
@@ -524,7 +524,7 @@ class DatabaseManager {
         FROM v_all_translations 
         WHERE en IS NOT NULL 
           AND en LIKE ? || '%'
-        ORDER BY en ASC
+        ORDER BY en COLLATE NOCASE ASC
       )
       LIMIT 1
     `).get(prefix);
@@ -536,7 +536,7 @@ class DatabaseManager {
         FROM v_all_translations 
         WHERE en IS NOT NULL 
           AND en LIKE ? || '%'
-        ORDER BY en DESC
+        ORDER BY en COLLATE NOCASE DESC
       )
       LIMIT 1
     `).get(prefix);

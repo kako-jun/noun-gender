@@ -9,20 +9,25 @@ export async function GET(request: Request) {
     const language = searchParams.get('language') || 'all';
     const startsWith = searchParams.get('startsWith') || '';
 
+    // limit+1件取得して、hasMoreを正確に判定
     const results = await dbManager.browseWords({
-      limit,
+      limit: limit + 1,
       offset,
       language: language === 'all' ? undefined : language,
       startsWith
     });
 
+    // 実際に返すデータは要求されたlimit件まで
+    const actualResults = results.slice(0, limit);
+    const hasMore = results.length > limit;
+
     return NextResponse.json({
       success: true,
-      data: results,
+      data: actualResults,
       pagination: {
         limit,
         offset,
-        hasMore: results.length === limit // 簡易的な判定
+        hasMore
       }
     });
   } catch (error) {
