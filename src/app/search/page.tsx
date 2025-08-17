@@ -20,6 +20,7 @@ function SearchContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const searchBoxRef = useRef<SearchBoxRef>(null);
+  const currentRequestId = useRef(0);
   
   const { t, isLoading: translationsLoading } = useTranslations();
   const searchParams = useSearchParams();
@@ -28,6 +29,10 @@ function SearchContent() {
   // 検索実行
   const handleSearch = useCallback(async (query: string, selectedLanguages: string[]) => {
     if (!query.trim()) return;
+    
+    // 新しいリクエストIDを生成
+    currentRequestId.current += 1;
+    const requestId = currentRequestId.current;
     
     setIsLoading(true);
     setSearchError(null);
@@ -42,6 +47,11 @@ function SearchContent() {
       const response = await fetch(`/api/search?${params.toString()}`);
       const data = await response.json();
       
+      // 古いリクエストの結果は無視
+      if (requestId !== currentRequestId.current) {
+        return;
+      }
+      
       if (!response.ok) {
         throw new Error(data.error || 'Search failed');
       }
@@ -49,11 +59,19 @@ function SearchContent() {
       setSearchResults(data.data || []);
       
     } catch (error) {
+      // 古いリクエストのエラーは無視
+      if (requestId !== currentRequestId.current) {
+        return;
+      }
+      
       console.error('Search error:', error);
       setSearchError(error instanceof Error ? error.message : 'Search failed');
       setSearchResults([]);
     } finally {
-      setIsLoading(false);
+      // 古いリクエストの場合はローディング状態を変更しない
+      if (requestId === currentRequestId.current) {
+        setIsLoading(false);
+      }
     }
   }, []);
 
@@ -130,6 +148,11 @@ function SearchContent() {
             router.push('/quiz');
           }}
           onTabChange={(tab) => {
+            // タブ変更時に検索結果を即座にクリアし、進行中のリクエストをキャンセル
+            setSearchResults([]);
+            setSearchError(null);
+            currentRequestId.current += 1; // 古いリクエストをキャンセル
+            
             if (tab === 'search') {
               router.push('/search');
             } else if (tab === 'browse') {

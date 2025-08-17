@@ -23,6 +23,7 @@ function BrowseContent() {
   const [currentBrowseLetter, setCurrentBrowseLetter] = useState<string | null>(null);
   const searchBoxRef = useRef<SearchBoxRef>(null);
   const isLoadingMoreRef = useRef(false);
+  const currentRequestId = useRef(0);
   
   const { t, isLoading: translationsLoading } = useTranslations();
   const searchParams = useSearchParams();
@@ -37,6 +38,12 @@ function BrowseContent() {
   const loadBrowseData = useCallback(async (offset: number = 0, startsWith?: string, append: boolean = false) => {
     // 無限スクロール時のみ重複読み込みチェック
     if (append && isLoadingMoreRef.current) return;
+    
+    // 新しいリクエストIDを生成（新規読み込みの場合のみ）
+    if (!append) {
+      currentRequestId.current += 1;
+    }
+    const requestId = currentRequestId.current;
     
     if (append) {
       setIsLoadingMore(true);
@@ -53,6 +60,10 @@ function BrowseContent() {
       const response = await fetch(url);
       const data = await response.json();
       
+      // 古いリクエストの結果は無視（新規読み込みの場合のみ）
+      if (!append && requestId !== currentRequestId.current) {
+        return;
+      }
       
       if (append) {
         setBrowseResults(prev => [...prev, ...(data.data || [])]);
@@ -62,12 +73,19 @@ function BrowseContent() {
       
       setHasMore(data.pagination?.hasMore || false);
     } catch (error) {
+      // 古いリクエストのエラーは無視（新規読み込みの場合のみ）
+      if (!append && requestId !== currentRequestId.current) {
+        return;
+      }
       console.error('Browse data loading error:', error);
     } finally {
-      if (append) {
-        setIsLoadingMore(false);
-      } else {
-        setIsLoading(false);
+      // 古いリクエストの場合はローディング状態を変更しない（新規読み込みの場合のみ）
+      if (!append || requestId === currentRequestId.current) {
+        if (append) {
+          setIsLoadingMore(false);
+        } else {
+          setIsLoading(false);
+        }
       }
     }
   }, []);
@@ -180,6 +198,10 @@ function BrowseContent() {
             router.push('/quiz');
           }}
           onTabChange={(tab) => {
+            // タブ変更時にブラウズ結果を即座にクリアし、進行中のリクエストをキャンセル
+            setBrowseResults([]);
+            currentRequestId.current += 1; // 古いリクエストをキャンセル
+            
             if (tab === 'search') {
               router.push('/search');
             } else if (tab === 'browse') {
