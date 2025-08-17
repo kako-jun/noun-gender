@@ -165,29 +165,33 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   };
 
   const handleTabChange = (tab: 'search' | 'browse' | 'quiz') => {
-    setActiveTab(tab);
+    // 同じタブをクリックした場合、状態をリセット
+    if (activeTab === tab) {
+      if (tab === 'search') {
+        // 検索タブ: 検索ワードをクリア
+        setQuery('');
+        if (onSearchResultsClear) {
+          onSearchResultsClear();
+        }
+      } else if (tab === 'browse') {
+        // ブラウズタブ: 索引選択をクリア
+        setSelectedLetter('');
+        setLetterHierarchy([]);
+        setSliderValue(0);
+        setPreviewWord('');
+        // 全文字の統計を再読み込み
+        onBrowse(); // パラメータなしで呼び出し
+      }
+      return; // 同じタブの場合はURL変更しない
+    }
     
-    // 親コンポーネントにタブ変更を通知（URL復元を先に実行）
+    // 親コンポーネントにタブ変更を通知（URL変更を先に実行）
     if (onTabChange) {
       onTabChange(tab);
     }
     
-    // URL復元後に必要な処理を実行（少し遅延させる）
-    setTimeout(() => {
-      switch (tab) {
-        case 'search':
-          // 検索タブではURLからqueryを読み取り、必要に応じて検索実行
-          // （親コンポーネントのuseEffectで自動実行されるため、ここでは何もしない）
-          break;
-        case 'browse':
-          // ブラウズタブでもURLからletterを読み取り、必要に応じてブラウズ実行
-          // （親コンポーネントのuseEffectで自動実行されるため、ここでは何もしない）
-          break;
-        case 'quiz':
-          // クイズタブ選択時は何もしない（開始ボタンを押したときのみ実行）
-          break;
-      }
-    }, 10);
+    // タブ状態を更新
+    setActiveTab(tab);
   };
 
   const handleLetterSelect = (letter: string) => {
