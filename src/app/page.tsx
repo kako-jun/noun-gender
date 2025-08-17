@@ -142,16 +142,11 @@ function HomeContent() {
     router.replace(newUrl, { scroll: false });
   }, [router]);
 
-  const handleSearch = async (query: string, languages: string[]) => {
+  // URL更新なしの検索実行（SearchBoxから呼ばれる）
+  const executeSearch = async (query: string, languages: string[]) => {
     if (!query.trim()) {
       setSearchResults([]);
       setSearchError(null);
-      setMode('browse');
-      updateURL('', []);
-      // ブラウズデータがない場合は初期読み込み
-      if (browseResults.length === 0 && !isLoading) {
-        loadBrowseData();
-      }
       return;
     }
 
@@ -159,8 +154,6 @@ function HomeContent() {
     if (languages.length === 0) {
       setSearchResults([]);
       setSearchError(null);
-      setMode('search');
-      updateURL(query, languages);
       return;
     }
 
@@ -168,14 +161,10 @@ function HomeContent() {
     setIsLoading(true);
     setSearchError(null);
     
-    // URLを更新
-    updateURL(query, languages);
-    
     try {
       const params = new URLSearchParams({
         q: query,
         languages: languages.join('-')
-        // limitパラメータを削除 - サーバー側のデフォルト（1000件）を使用
       });
 
       const response = await fetch(`/api/search?${params}`);
@@ -199,6 +188,12 @@ function HomeContent() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // URL更新付きの検索実行（URLからの初期実行用）
+  const handleSearch = async (query: string, languages: string[]) => {
+    updateURL(query, languages);
+    await executeSearch(query, languages);
   };
 
   const handleFocusSearch = () => {
@@ -253,7 +248,7 @@ function HomeContent() {
       <main className="flex-1 container mx-auto px-4 py-8">
         <SearchBox 
           ref={searchBoxRef} 
-          onSearch={handleSearch}
+          onSearch={executeSearch}
           onSearchResultsClear={handleSearchResultsClear}
           onBrowse={async (letter, languages, offset = 0) => {
             setMode('browse');

@@ -24,16 +24,6 @@ const ibmPlexSerif = IBM_Plex_Serif({
 export const metadata: Metadata = {
   title: "Noun Gender - Master noun genders across languages",
   description: "Learn and search noun genders in 8 languages with over 9,000 translations. Supports French, German, Spanish, Italian, Portuguese, Russian, Arabic, and Hindi.",
-  icons: {
-    icon: [
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    shortcut: '/favicon.ico',
-  },
 };
 
 export default function RootLayout({
