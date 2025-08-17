@@ -6,7 +6,8 @@
     python scripts/sync_all.py
     
 機能:
-    - 3つのCSVファイルを順次データベースに同期
+    - 5つのCSVファイルを順次データベースに同期
+    - 意味翻訳、例文、性別翻訳、例文翻訳、記憶術を同期
     - エラーがある場合は処理を停止
 """
 
@@ -41,7 +42,8 @@ def sync_all():
         'sync_meaning_translations.py',
         'sync_examples.py', 
         'sync_gender_translations.py',
-        'sync_csv_to_db.py'  # example_translations の同期
+        'sync_csv_to_db.py',  # example_translations の同期
+        'sync_memory_tricks_from_csv.py'  # memory_tricks の同期
     ]
     
     print("CSV → データベース一括同期を開始します...")
