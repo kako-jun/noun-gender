@@ -435,5 +435,264 @@ conn.close()
 - 翻訳品質チェックリスト
 - 言語別ネイティブチェック（可能な場合）
 
-**最終更新**: 2025-08-17 - 例文翻訳管理システム追加
+---
+
+## 記憶術管理 (memory_tricks.csv)
+
+### 5. memory_tricks.csv
+**目的**: 名詞性別の記憶術・助記法管理（多言語UI対応）
+**場所**: `/data/memory_tricks.csv`
+**形式**: TSV（タブ区切り）
+
+```
+en	translation_lang	ui_lang	trick_text
+cat	fr	ja	フランス語では「シャッ」という鋭い鳴き声が男性的に聞こえることから男性名詞とされています。
+cat	fr	en	In French, the sharp "chat" sound is perceived as masculine, making it a masculine noun.
+cat	fr	zh	在法语中，"chat"的尖锐发音听起来很男性化，因此是阳性名词。
+cat	de	ja	ドイツ語では家庭的で母性的な動物として捉えられ、子猫を育てる姿から女性名詞とされています。
+```
+
+**列構成**:
+- `en`: 英単語（words_en.enへのFK制約）
+- `translation_lang`: 対象言語（fr, de, es, it, pt, ru, ar, hi）
+- `ui_lang`: UI言語（ja, en, zh）
+- `trick_text`: 記憶術テキスト（その性別になる理由・覚え方）
+
+### データベース制約
+- **PRIMARY KEY**: `id` (AUTOINCREMENT)
+- **UNIQUE制約**: `(en, translation_lang, ui_lang)` - 同じ組み合わせの重複防止
+- **FOREIGN KEY**: `en` → `words_en(en)` CASCADE制約
+- **INDEX**: `en`列にインデックス
+
+### 記憶術CSV初期化
+```python
+import sqlite3
+
+conn = sqlite3.connect('data/noun_gender.db')
+cursor = conn.cursor()
+
+# 性別がある全言語の全単語を取得
+cursor.execute('''
+    SELECT DISTINCT en, lang as translation_lang
+    FROM v_all_translations 
+    WHERE gender IN ('m', 'f', 'n')
+    ORDER BY en, translation_lang
+''')
+all_combinations = cursor.fetchall()
+
+# UI言語リスト
+ui_languages = ['ja', 'en', 'zh']
+
+with open('data/memory_tricks.csv', 'w', encoding='utf-8') as f:
+    # ヘッダー
+    f.write('en\ttranslation_lang\tui_lang\ttrick_text\n')
+    
+    # 各単語×各対象言語×各UI言語の組み合わせを作成（記憶術は空）
+    for en, translation_lang in all_combinations:
+        for ui_lang in ui_languages:
+            f.write(f'{en}\t{translation_lang}\t{ui_lang}\t\n')
+
+conn.close()
+```
+
+## 記憶術作成手順
+
+### 記憶術の品質基準
+1. **説明内容**:
+   - なぜその性別になるのかの論理的説明
+   - 文化的・言語学的背景
+   - 覚えやすい関連付け・語呂合わせ
+
+2. **文体・品質**:
+   - UI言語に応じた自然な表現
+   - 100-200文字程度の適切な長さ
+   - 教育的でわかりやすい内容
+   - 文化的に適切・中立的
+
+3. **技術的要件**:
+   - 各UI言語での正確な文法
+   - 専門用語の適切な使用
+   - 一貫した説明スタイル
+
+### 記憶術作成作業手順
+
+#### 1. 段階的実施
+```
+Phase 1: 基本語彙から開始（A語から順次）
+Phase 2: フランス語・ドイツ語を優先（データ充実度高）
+Phase 3: その他言語（es, it, pt, ru, ar, hi）展開
+Phase 4: 全UI言語対応（ja → en → zh順）
+```
+
+#### 2. 作業プロセス
+```
+1. 対象単語・言語の選定
+2. 言語学的調査（語源・文法的性別の理由）
+3. 記憶術テキスト作成（UI言語別）
+4. 品質レビュー・文体チェック
+5. CSVファイルへの記入
+6. データベース同期
+```
+
+#### 3. 記憶術の種類・アプローチ
+- **語源ベース**: ラテン語・古フランス語からの由来
+- **音韻ベース**: 語尾音と性別の関連性
+- **文化ベース**: その言語圏での文化的認識
+- **連想ベース**: 覚えやすい関連付け・イメージ
+- **文法ベース**: 語尾変化パターンの説明
+
+### データベース同期（記憶術）
+
+**推奨方法（スクリプト使用）:**
+```bash
+python scripts/sync_memory_tricks.py
+```
+
+**手動実装（参考用）:**
+```python
+import sqlite3, csv
+
+conn = sqlite3.connect('data/noun_gender.db')
+cursor = conn.cursor()
+
+with open('data/memory_tricks.csv', 'r', encoding='utf-8') as f:
+    reader = csv.reader(f, delimiter='\t')
+    next(reader)  # ヘッダースキップ
+    
+    for row in reader:
+        if len(row) == 4 and row[3].strip():  # trick_textが空でない
+            cursor.execute('''
+                INSERT OR REPLACE INTO memory_tricks 
+                (en, translation_lang, ui_lang, trick_text)
+                VALUES (?, ?, ?, ?)
+            ''', row)
+
+conn.commit()
+conn.close()
+```
+
+## 記憶術進捗管理
+
+### 現在の状況
+- **既存データ**: 18件（cat, dogなど基本語彙のfr/de記憶術）
+- **対象範囲**: 全4,592語 × 8言語 = 36,736組み合わせ
+- **UI言語**: 3言語（ja, en, zh）
+- **総必要記憶術数**: 110,208件（理論上最大）
+
+### 推奨作業順序
+1. **Phase 1**: A語のフランス語・ドイツ語記憶術（日本語UI）
+2. **Phase 2**: A語の記憶術を英語・中国語UIに展開
+3. **Phase 3**: A語の他言語（es, it, pt, ru, ar, hi）記憶術
+4. **Phase 4**: B語以降の段階的展開
+
+### 品質管理・レビュー
+- 記憶術専用レビューガイドライン: `.claude/memory_tricks_review_guidelines.md`
+- 言語学的正確性チェック
+- 文化的適切性確認
+- UI言語別の文体統一性確認
+
+## 更新されたスクリプト一覧
+
+### 個別同期スクリプト
+- `python scripts/sync_meaning_translations.py` - 意味翻訳同期
+- `python scripts/sync_examples.py` - 例文同期
+- `python scripts/sync_gender_translations.py` - 性別翻訳同期
+- `python scripts/sync_csv_to_db.py` - 例文翻訳同期
+- `python scripts/sync_memory_tricks_from_csv.py` - **記憶術同期**（新規）
+
+### 一括処理スクリプト
+- `python scripts/sync_all.py` - 全CSV一括同期（5つのCSV: 意味翻訳、例文、性別翻訳、例文翻訳、記憶術）
+
+---
+
+## 記憶術作成ワークフロー (memory_tricks_creation.csv)
+
+### 6. memory_tricks_creation.csv
+**目的**: 記憶術作成・翻訳ワークフロー管理（作業効率化）
+**場所**: `/data/memory_tricks_creation.csv`
+**形式**: TSV（タブ区切り）
+
+```
+en	meaning_en	target_lang	translation	gender	ui_lang	trick_text_en	trick_text_translated	status
+abbey	A building occupied by monks or nuns	fr	abbaye	f	en	In French, abbey is feminine because it represents a nurturing, maternal community space.		draft
+abbey	A building occupied by monks or nuns	fr	abbaye	f	ja			empty
+abbey	A building occupied by monks or nuns	fr	abbaye	f	zh			empty
+```
+
+**列構成**:
+- `en`: 英単語（words_en.enへのFK制約対象）
+- `meaning_en`: 英語の意味（参照用・記憶術作成のヒント）
+- `target_lang`: 対象言語（fr, de, es, it, pt, ru, ar, hi）
+- `translation`: その言語での翻訳
+- `gender`: **重要**: その言語での性別（m/f/n）※記憶術内容の正確性確保
+- `ui_lang`: 表示言語（en, ja, zh, fr, de, es, it, pt, ru, ar, hi）
+- `trick_text_en`: 英語で作成した記憶術（作成者記入）
+- `trick_text_translated`: 翻訳された記憶術（翻訳作業で記入）
+- `status`: 作業状況（empty/draft/ready/completed）
+
+### 記憶術作成ワークフロー
+
+#### Phase 1: 英語記憶術作成（簡潔版）
+```
+1. target_lang='fr', ui_lang='en'の行を選択
+2. gender列を確認（重要：正しい性別の記憶術を作成）
+3. trick_text_en列に英語記憶術を記入
+   - 冗長な前置き不要："In French, X is feminine because..."
+   - 理由に集中："Represents nurturing, maternal sanctuary..."
+   - 50-100文字程度で簡潔に
+4. status列を'draft'に変更
+```
+
+#### Phase 2: 多言語翻訳（簡潔版）
+```
+1. 同じen+target_langの他のui_lang行を処理
+2. trick_text_enを各言語に翻訳してtrick_text_translated列に記入
+   - 冗長な前置き削除：「〜語では〜名詞です。なぜなら、」不要
+   - 理由のみ翻訳：「〜を表すため」「〜によるため」で終わる
+   - 各言語で50-100文字程度
+3. 翻訳完了後status列を'ready'に変更
+```
+
+#### Phase 3: データベース反映
+```python
+# 専用同期スクリプト作成予定
+python scripts/sync_memory_tricks_from_csv.py
+```
+
+### 記憶術作成ガイドライン
+
+#### 重要原則：簡潔性重視
+✅ **理由に集中**: 「〜語では〜は〜名詞です。なぜなら、」などの冗長な前置きは不要  
+✅ **核心のみ**: 性別の根拠となる理由のみを簡潔に記述  
+✅ **記憶効率**: 覚えやすさを最優先、説明は最小限に
+
+#### 品質基準
+1. **性別根拠明確化**: なぜその性別なのかの論理的説明（理由のみ）
+2. **簡潔性**: 50-100文字程度の短い説明（従来の100-200文字から短縮）
+3. **文化的中立性**: 宗教・政治的偏見を避ける
+4. **記憶効果**: 覚えやすい関連付け・語呂合わせ
+
+#### 記憶術の書き方
+**❌ 悪い例（冗長）**:
+```
+フランス語では「abbaye」は女性名詞です。なぜなら、心の避難所を求める魂たちに世話と保護を提供する精神的な母と父がいる、育み深い母性的聖域を表すからです。
+```
+
+**✅ 良い例（簡潔）**:
+```
+精神的な母と父が世話と保護を提供する、育み深い母性的聖域を表すため。
+```
+
+#### 記憶術の種類と簡潔な表現例
+- **語源ベース**: 「ラテン語の〜（男性形）から派生したため」
+- **音韻ベース**: 「語尾-ungは抽象概念で女性性と結びつくため」
+- **文化ベース**: 「力強さ・活力の象徴として男性的属性と結びつくため」
+- **連想ベース**: 「〜のイメージが〜性的特徴と関連するため」
+
+### データ統計（2025-08-17現在）
+- **対象単語**: 175語（A語基本語彙、8文字以下）
+- **総組み合わせ**: 15,400件（175語 × 8言語 × 11UI言語）
+- **作業状況**: 全てempty（記憶術作成待ち）
+
+**最終更新**: 2025-08-17 - 記憶術簡潔性重視ガイドライン更新
 **作成者**: Claude Code Assistant

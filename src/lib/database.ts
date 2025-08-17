@@ -35,9 +35,17 @@ const TranslationRowSchema = z.object({
   meaning_ar: z.string().nullable().optional(),
   meaning_hi: z.string().nullable().optional(),
   example_en: z.string().nullable().optional(),
-  memory_trick_ja: z.string().nullable().optional(),
   memory_trick_en: z.string().nullable().optional(),
-  memory_trick_zh: z.string().nullable().optional()
+  memory_trick_ja: z.string().nullable().optional(),
+  memory_trick_zh: z.string().nullable().optional(),
+  memory_trick_fr: z.string().nullable().optional(),
+  memory_trick_de: z.string().nullable().optional(),
+  memory_trick_es: z.string().nullable().optional(),
+  memory_trick_it: z.string().nullable().optional(),
+  memory_trick_pt: z.string().nullable().optional(),
+  memory_trick_ru: z.string().nullable().optional(),
+  memory_trick_ar: z.string().nullable().optional(),
+  memory_trick_hi: z.string().nullable().optional()
 });
 
 const MemoryTrickWithLangSchema = z.object({
@@ -79,15 +87,31 @@ class DatabaseManager {
       SELECT DISTINCT vat.en, vat.translation, vat.lang, vat.gender,
              wm.meaning_en, wm.meaning_ja, wm.meaning_zh, wm.meaning_fr, wm.meaning_de, wm.meaning_es, wm.meaning_it, wm.meaning_pt, wm.meaning_ru, wm.meaning_ar, wm.meaning_hi,
              ex.example_en,
-             mt_ja.trick_text as memory_trick_ja,
              mt_en.trick_text as memory_trick_en,
-             mt_zh.trick_text as memory_trick_zh
+             mt_ja.trick_text as memory_trick_ja,
+             mt_zh.trick_text as memory_trick_zh,
+             mt_fr.trick_text as memory_trick_fr,
+             mt_de.trick_text as memory_trick_de,
+             mt_es.trick_text as memory_trick_es,
+             mt_it.trick_text as memory_trick_it,
+             mt_pt.trick_text as memory_trick_pt,
+             mt_ru.trick_text as memory_trick_ru,
+             mt_ar.trick_text as memory_trick_ar,
+             mt_hi.trick_text as memory_trick_hi
       FROM v_all_translations vat
       LEFT JOIN word_meanings wm ON vat.en = wm.en
       LEFT JOIN examples ex ON vat.en = ex.en
-      LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
       LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
+      LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
       LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
+      LEFT JOIN memory_tricks mt_fr ON vat.en = mt_fr.en AND vat.lang = mt_fr.translation_lang AND mt_fr.ui_lang = 'fr'
+      LEFT JOIN memory_tricks mt_de ON vat.en = mt_de.en AND vat.lang = mt_de.translation_lang AND mt_de.ui_lang = 'de'
+      LEFT JOIN memory_tricks mt_es ON vat.en = mt_es.en AND vat.lang = mt_es.translation_lang AND mt_es.ui_lang = 'es'
+      LEFT JOIN memory_tricks mt_it ON vat.en = mt_it.en AND vat.lang = mt_it.translation_lang AND mt_it.ui_lang = 'it'
+      LEFT JOIN memory_tricks mt_pt ON vat.en = mt_pt.en AND vat.lang = mt_pt.translation_lang AND mt_pt.ui_lang = 'pt'
+      LEFT JOIN memory_tricks mt_ru ON vat.en = mt_ru.en AND vat.lang = mt_ru.translation_lang AND mt_ru.ui_lang = 'ru'
+      LEFT JOIN memory_tricks mt_ar ON vat.en = mt_ar.en AND vat.lang = mt_ar.translation_lang AND mt_ar.ui_lang = 'ar'
+      LEFT JOIN memory_tricks mt_hi ON vat.en = mt_hi.en AND vat.lang = mt_hi.translation_lang AND mt_hi.ui_lang = 'hi'
       WHERE (vat.lang IN (${langPlaceholders})) AND (
         vat.en LIKE ? 
         OR vat.translation LIKE ?
@@ -144,9 +168,17 @@ class DatabaseManager {
       meaning_ar?: string;
       meaning_hi?: string;
       example_en?: string;
-      memory_trick_ja?: string;
       memory_trick_en?: string;
+      memory_trick_ja?: string;
       memory_trick_zh?: string;
+      memory_trick_fr?: string;
+      memory_trick_de?: string;
+      memory_trick_es?: string;
+      memory_trick_it?: string;
+      memory_trick_pt?: string;
+      memory_trick_ru?: string;
+      memory_trick_ar?: string;
+      memory_trick_hi?: string;
     }>;
 
     // Group results by English word
@@ -194,9 +226,17 @@ class DatabaseManager {
           language: row.lang,
           translation: row.translation,
           gender: row.gender as 'm' | 'f' | 'n',
-          memory_trick_ja: row.memory_trick_ja,
           memory_trick_en: row.memory_trick_en,
-          memory_trick_zh: row.memory_trick_zh
+          memory_trick_ja: row.memory_trick_ja,
+          memory_trick_zh: row.memory_trick_zh,
+          memory_trick_fr: row.memory_trick_fr,
+          memory_trick_de: row.memory_trick_de,
+          memory_trick_es: row.memory_trick_es,
+          memory_trick_it: row.memory_trick_it,
+          memory_trick_pt: row.memory_trick_pt,
+          memory_trick_ru: row.memory_trick_ru,
+          memory_trick_ar: row.memory_trick_ar,
+          memory_trick_hi: row.memory_trick_hi
         });
       }
     });
@@ -297,15 +337,31 @@ class DatabaseManager {
       SELECT vat.en, vat.lang, vat.translation, vat.gender,
              wm.meaning_en, wm.meaning_ja, wm.meaning_zh, wm.meaning_fr, wm.meaning_de, wm.meaning_es, wm.meaning_it, wm.meaning_pt, wm.meaning_ru, wm.meaning_ar, wm.meaning_hi,
              ex.example_en,
-             mt_ja.trick_text as memory_trick_ja,
              mt_en.trick_text as memory_trick_en,
-             mt_zh.trick_text as memory_trick_zh
+             mt_ja.trick_text as memory_trick_ja,
+             mt_zh.trick_text as memory_trick_zh,
+             mt_fr.trick_text as memory_trick_fr,
+             mt_de.trick_text as memory_trick_de,
+             mt_es.trick_text as memory_trick_es,
+             mt_it.trick_text as memory_trick_it,
+             mt_pt.trick_text as memory_trick_pt,
+             mt_ru.trick_text as memory_trick_ru,
+             mt_ar.trick_text as memory_trick_ar,
+             mt_hi.trick_text as memory_trick_hi
       FROM v_all_translations vat
       LEFT JOIN word_meanings wm ON vat.en = wm.en
       LEFT JOIN examples ex ON vat.en = ex.en
-      LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
       LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
+      LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
       LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
+      LEFT JOIN memory_tricks mt_fr ON vat.en = mt_fr.en AND vat.lang = mt_fr.translation_lang AND mt_fr.ui_lang = 'fr'
+      LEFT JOIN memory_tricks mt_de ON vat.en = mt_de.en AND vat.lang = mt_de.translation_lang AND mt_de.ui_lang = 'de'
+      LEFT JOIN memory_tricks mt_es ON vat.en = mt_es.en AND vat.lang = mt_es.translation_lang AND mt_es.ui_lang = 'es'
+      LEFT JOIN memory_tricks mt_it ON vat.en = mt_it.en AND vat.lang = mt_it.translation_lang AND mt_it.ui_lang = 'it'
+      LEFT JOIN memory_tricks mt_pt ON vat.en = mt_pt.en AND vat.lang = mt_pt.translation_lang AND mt_pt.ui_lang = 'pt'
+      LEFT JOIN memory_tricks mt_ru ON vat.en = mt_ru.en AND vat.lang = mt_ru.translation_lang AND mt_ru.ui_lang = 'ru'
+      LEFT JOIN memory_tricks mt_ar ON vat.en = mt_ar.en AND vat.lang = mt_ar.translation_lang AND mt_ar.ui_lang = 'ar'
+      LEFT JOIN memory_tricks mt_hi ON vat.en = mt_hi.en AND vat.lang = mt_hi.translation_lang AND mt_hi.ui_lang = 'hi'
       WHERE vat.en IN (${placeholders}) AND vat.translation IS NOT NULL AND vat.translation != ''
     `;
     
@@ -371,9 +427,17 @@ class DatabaseManager {
           language: row.lang,
           translation: row.translation,
           gender: row.gender as 'm' | 'f' | 'n',
-          memory_trick_ja: row.memory_trick_ja,
           memory_trick_en: row.memory_trick_en,
-          memory_trick_zh: row.memory_trick_zh
+          memory_trick_ja: row.memory_trick_ja,
+          memory_trick_zh: row.memory_trick_zh,
+          memory_trick_fr: row.memory_trick_fr,
+          memory_trick_de: row.memory_trick_de,
+          memory_trick_es: row.memory_trick_es,
+          memory_trick_it: row.memory_trick_it,
+          memory_trick_pt: row.memory_trick_pt,
+          memory_trick_ru: row.memory_trick_ru,
+          memory_trick_ar: row.memory_trick_ar,
+          memory_trick_hi: row.memory_trick_hi
         });
       }
     });

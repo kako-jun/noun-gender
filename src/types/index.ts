@@ -11,9 +11,18 @@ export interface Translation {
   pronunciation?: string;
   usage_notes?: string;
   gender_explanation?: string;
-  memory_trick_ja?: string;
+  // Memory tricks for all UI languages (11 languages total)
   memory_trick_en?: string;
+  memory_trick_ja?: string;
   memory_trick_zh?: string;
+  memory_trick_fr?: string;
+  memory_trick_de?: string;
+  memory_trick_es?: string;
+  memory_trick_it?: string;
+  memory_trick_pt?: string;
+  memory_trick_ru?: string;
+  memory_trick_ar?: string;
+  memory_trick_hi?: string;
 }
 
 export interface Word {
