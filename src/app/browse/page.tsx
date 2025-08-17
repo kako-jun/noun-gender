@@ -99,7 +99,7 @@ function BrowseContent() {
     
     // URL変更時は常にデータを新規読み込み（append=false）
     loadBrowseData(offset, letter || undefined, false);
-  }, [searchParams]);
+  }, [searchParams, loadBrowseData]);
 
   // 無限スクロール
   const handleScroll = useCallback(() => {
@@ -120,14 +120,14 @@ function BrowseContent() {
 
   useEffect(() => {
     const throttledHandleScroll = () => {
-      clearTimeout((window as any).scrollTimeout);
-      (window as any).scrollTimeout = setTimeout(handleScroll, 100);
+      clearTimeout((window as unknown as { scrollTimeout?: NodeJS.Timeout }).scrollTimeout);
+      (window as unknown as { scrollTimeout?: NodeJS.Timeout }).scrollTimeout = setTimeout(handleScroll, 100);
     };
 
     window.addEventListener('scroll', throttledHandleScroll);
     return () => {
       window.removeEventListener('scroll', throttledHandleScroll);
-      clearTimeout((window as any).scrollTimeout);
+      clearTimeout((window as unknown as { scrollTimeout?: NodeJS.Timeout }).scrollTimeout);
     };
   }, [handleScroll]);
 

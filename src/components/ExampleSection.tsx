@@ -11,7 +11,7 @@ interface ExampleSectionProps {
   currentLanguage?: string;  // 現在表示中の言語
 }
 
-export function ExampleSection({ word, example, currentLanguage }: ExampleSectionProps) {
+export function ExampleSection({ word, example }: ExampleSectionProps) {
   const { locale } = useTranslations();
   
   if (!example || !example.example_en) {
