@@ -60,10 +60,9 @@ function SearchContent() {
   // URLからの初期検索実行
   useEffect(() => {
     const query = searchParams.get('q');
-    const languages = searchParams.get('lang');
     
     if (query && query.trim()) {
-      const langArray = languages ? languages.split('-').filter(Boolean) : Object.keys(SUPPORTED_LANGUAGES);
+      const langArray = searchParams.get('lang')?.split('-').filter(Boolean) || [];
       handleSearch(query, langArray);
     }
   }, [searchParams, handleSearch]);
@@ -100,7 +99,12 @@ function SearchContent() {
         <div className="container mx-auto px-4 py-6">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-2 text-stone-800 dark:text-stone-100">
-              Noun Gender
+              <button 
+                onClick={() => router.push('/')}
+                className="hover:text-solarized-blue transition-colors cursor-pointer"
+              >
+                Noun Gender
+              </button>
             </h1>
             <p className="text-lg text-stone-600 dark:text-stone-300 mb-3">
               {translationsLoading ? 'Master noun genders across languages' : t('header.subtitle')}
