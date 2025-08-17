@@ -142,6 +142,10 @@ function SearchContent() {
               router.push('/quiz');
             }
           }}
+          onSearchResultsClear={() => {
+            setSearchResults([]);
+            setSearchError(null);
+          }}
           isLoading={isLoading}
           initialQuery={searchParams.get('q') || ''}
           initialLanguages={searchParams.get('lang')?.split('-').filter(Boolean) || Object.keys(SUPPORTED_LANGUAGES)}

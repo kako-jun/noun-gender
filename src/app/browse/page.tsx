@@ -171,6 +171,9 @@ function BrowseContent() {
               router.push('/quiz');
             }
           }}
+          onSearchResultsClear={() => {
+            setBrowseResults([]);
+          }}
           isLoading={isLoading}
           initialQuery=""
           initialLanguages={Object.keys(SUPPORTED_LANGUAGES)}
