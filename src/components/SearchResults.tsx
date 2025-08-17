@@ -159,7 +159,7 @@ export function SearchResults({
     );
   }
 
-  if (results.length === 0) {
+  if (!results || results.length === 0) {
     // 初回ロード中かどうかをisLoadingで判定
     if (isLoading) {
       return (

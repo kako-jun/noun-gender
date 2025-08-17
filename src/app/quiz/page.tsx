@@ -7,14 +7,17 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { VoiceSelector } from '@/components/VoiceSelector';
 import { Footer } from '@/components/Footer';
+import { StatsHeader } from '@/components/StatsHeader';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function QuizPage() {
   const [showQuiz, setShowQuiz] = useState(true);
   const router = useRouter();
+  const { t, isLoading: translationsLoading } = useTranslations();
 
   const handleClose = () => {
     setShowQuiz(false);
-    router.replace('/');
+    router.push('/');
   };
 
   return (
@@ -38,8 +41,9 @@ export default function QuizPage() {
               Noun Gender
             </h1>
             <p className="text-lg text-stone-600 dark:text-stone-300 mb-3">
-              Master noun genders across languages
+              {translationsLoading ? 'Master noun genders across languages' : t('header.subtitle')}
             </p>
+            <StatsHeader />
           </div>
         </div>
       </header>

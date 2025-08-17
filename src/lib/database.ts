@@ -559,6 +559,27 @@ class DatabaseManager {
       totalCount: countResult?.total || 0
     };
   }
+
+  // クイズ用のランダム問題取得
+  getQuizQuestions(languages: string[], count: number): Array<{ english: string; translation: string; language: string; gender: string; }> {
+    const db = this.getDb();
+    
+    // 言語フィルターのプレースホルダー
+    const languageFilter = languages.map(() => '?').join(',');
+    
+    const quizData = db.prepare(`
+      SELECT en as english, translation, lang as language, gender
+      FROM v_all_translations 
+      WHERE lang IN (${languageFilter})
+        AND translation IS NOT NULL 
+        AND translation != ''
+        AND gender IN ('m', 'f', 'n')
+      ORDER BY RANDOM()
+      LIMIT ?
+    `).all(...languages, count);
+
+    return quizData as Array<{ english: string; translation: string; language: string; gender: string; }>;
+  }
 }
 
 // Singleton instance
