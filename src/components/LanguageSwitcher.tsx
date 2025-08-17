@@ -47,8 +47,11 @@ export function LanguageSwitcher() {
                   onClick={() => handleLanguageChange(locale)}
                   disabled={isLoading}
                   className={`
-                    w-full px-3 py-2 text-left flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
-                    ${currentLocale === locale ? 'bg-solarized-blue text-white' : ''}
+                    w-full px-3 py-2 text-left flex items-center space-x-2 transition-colors
+                    ${currentLocale === locale 
+                      ? 'bg-solarized-blue text-white' 
+                      : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                    }
                   `}
                 >
                   <span className="text-lg">{localeFlags[locale]}</span>

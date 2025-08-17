@@ -29,7 +29,7 @@ const TranslationCard = React.memo(function TranslationCard({
   mode: string;
   searchQuery: string;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const { locale } = useTranslations();
   
   const toggleCard = () => {
