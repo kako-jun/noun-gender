@@ -40,7 +40,8 @@ def sync_all():
     scripts = [
         'sync_meaning_translations.py',
         'sync_examples.py', 
-        'sync_gender_translations.py'
+        'sync_gender_translations.py',
+        'sync_csv_to_db.py'  # example_translations の同期
     ]
     
     print("CSV → データベース一括同期を開始します...")
