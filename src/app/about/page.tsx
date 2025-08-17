@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Suspense } from 'react';
+import { Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { Footer } from '@/components/Footer';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -11,7 +11,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 import { Heart, Github, Coffee, Shield, Database, Lightbulb } from 'lucide-react';
 
 function AboutContent() {
-  const { t, isLoading: translationsLoading } = useTranslations();
+  const { t } = useTranslations();
   const router = useRouter();
 
   // 改行文字を<br>タグに変換するヘルパー関数

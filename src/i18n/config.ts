@@ -1,5 +1,5 @@
 // 対応言語一覧
-export const locales = ['en', 'ja', 'fr', 'de', 'es', 'it', 'pt', 'ru', 'ar', 'hi', 'zh'] as const;
+export const locales = ['en', 'ja', 'zh', 'ar', 'fr', 'de', 'hi', 'it', 'pt', 'ru', 'es'] as const;
 export type Locale = typeof locales[number];
 
 export const defaultLocale: Locale = 'en';
