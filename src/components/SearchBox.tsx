@@ -169,6 +169,18 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     });
   };
 
+  // 言語選択変更時のURL更新
+  useEffect(() => {
+    if (activeTab === 'search' && query.trim()) {
+      const params = new URLSearchParams();
+      params.set('q', query.trim());
+      if (selectedLanguages.length > 0) {
+        params.set('lang', selectedLanguages.join('-'));
+      }
+      window.history.replaceState(null, '', `/search?${params.toString()}`);
+    }
+  }, [selectedLanguages, activeTab, query]);
+
   const handleTabChange = (tab: 'search' | 'browse' | 'quiz') => {
     // 同じタブをクリックした場合、状態をリセット
     if (activeTab === tab) {

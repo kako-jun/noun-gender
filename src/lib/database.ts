@@ -95,6 +95,7 @@ class DatabaseManager {
           SELECT 1 FROM v_multilingual_search ms 
           WHERE ms.search_term LIKE ? 
           AND ms.en = vat.en
+          AND ms.lang IN (${langPlaceholders})
         )
       )
       ORDER BY 
@@ -121,8 +122,9 @@ class DatabaseManager {
     const startsWith = `${query}%`;
     
     const rows = db.prepare(sql).all(
-      ...langFilter, // Language filter
+      ...langFilter, // Language filter for main query
       searchTerm, searchTerm, searchTerm, // Search terms
+      ...langFilter, // Language filter for EXISTS subquery
       exactTerm, exactTerm, searchTerm, startsWith, startsWith, // Ranking terms
       limit
     ) as Array<{ 
