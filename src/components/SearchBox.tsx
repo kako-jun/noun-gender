@@ -96,7 +96,6 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     focus: () => inputRef.current?.focus(),
     clear: () => {
       setQuery('');
-      onSearch('', selectedLanguages);
       if (onSearchResultsClear) {
         onSearchResultsClear();
       }
@@ -135,23 +134,22 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   }, [currentMode]);
 
   // デバウンス用のインクリメンタルサーチ
-  const debouncedSearch = useCallback(
-    debounce((query: string, languages: string[]) => {
-      onSearch(query, languages);
-    }, 300),
-    [onSearch]
-  );
+  const debouncedSearch = useCallback((query: string, languages: string[]) => {
+    const debouncedFn = debounce((q: string, langs: string[]) => {
+      onSearch(q, langs);
+    }, 300);
+    debouncedFn(query, languages);
+  }, [onSearch]);
 
+  // URLからの初期検索のみuseEffectで実行
   useEffect(() => {
-    // 検索タブの時のみ検索を実行
-    if (activeTab === 'search' && query.trim()) {
-      debouncedSearch(query, selectedLanguages);
+    if (activeTab === 'search' && initialQuery && initialQuery === query && query.trim()) {
+      onSearch(query, selectedLanguages);
     }
-  }, [query, selectedLanguages, activeTab, debouncedSearch]);
+  }, [activeTab, initialQuery, query, selectedLanguages, onSearch]);
 
   const handleClear = () => {
     setQuery('');
-    onSearch('', selectedLanguages);
     if (onSearchResultsClear) {
       onSearchResultsClear();
     }
@@ -317,9 +315,14 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                   onChange={(e) => {
                     const newQuery = e.target.value;
                     setQuery(newQuery);
-                    // 検索タブで空クエリになった場合、即座にクリア
-                    if (activeTab === 'search' && !newQuery.trim() && onSearchResultsClear) {
-                      onSearchResultsClear();
+                    
+                    // 検索タブでのリアルタイム検索
+                    if (activeTab === 'search') {
+                      if (newQuery.trim()) {
+                        debouncedSearch(newQuery, selectedLanguages);
+                      } else if (onSearchResultsClear) {
+                        onSearchResultsClear();
+                      }
                     }
                   }}
                   placeholder={translations?.placeholder || "Search words..."}
