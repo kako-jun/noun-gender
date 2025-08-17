@@ -48,9 +48,9 @@ function debounce<T extends (...args: Parameters<T>) => void>(func: T, wait: num
 }
 
 export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function SearchBox({ 
-  onSearch,
-  onBrowse,
-  onQuiz,
+  onSearch: _onSearch, // eslint-disable-line @typescript-eslint/no-unused-vars
+  onBrowse: _onBrowse, // eslint-disable-line @typescript-eslint/no-unused-vars
+  onQuiz: _onQuiz, // eslint-disable-line @typescript-eslint/no-unused-vars
   onTabChange,
   onSearchResultsClear,
   initialQuery = '', 
@@ -133,17 +133,16 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
   }, [currentMode]);
 
   // URL更新のみのデバウンス（検索は親コンポーネントのuseEffectで実行）
-  const debouncedUrlUpdate = useCallback(
-    debounce((query: string, languages: string[]) => {
+  const debouncedUrlUpdate = useCallback(() => {
+    return debounce((query: string, languages: string[]) => {
       const params = new URLSearchParams();
       if (query.trim()) params.set('q', query.trim());
       if (languages.length > 0) {
         params.set('lang', languages.join('-'));
       }
       window.history.replaceState(null, '', `/search?${params.toString()}`);
-    }, 300),
-    []
-  );
+    }, 300);
+  }, [])();
 
   // URLからの初期検索は親コンポーネントに任せる（重複検索を防ぐ）
   // useEffect(() => {

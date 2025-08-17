@@ -174,7 +174,7 @@ class DatabaseManager {
                 ru: row.meaning_ru,
                 ar: row.meaning_ar,
                 hi: row.meaning_hi
-              }).filter(([key, value]) => value != null && value !== '')
+              }).filter(([, value]) => value != null && value !== '') as [string, string][]
             )
           },
           translations: [],
@@ -353,7 +353,7 @@ class DatabaseManager {
               ru: row.meaning_ru,
               ar: row.meaning_ar,
               hi: row.meaning_hi
-            }).filter(([key, value]) => value != null && value !== '')
+            }).filter(([, value]) => value != null && value !== '') as [string, string][]
           ),
           translations: [],
           example: row.example_en ? {
