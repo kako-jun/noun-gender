@@ -26,9 +26,15 @@ const TranslationRowSchema = z.object({
   meaning_en: z.string().nullable().optional(),
   meaning_ja: z.string().nullable().optional(),
   meaning_zh: z.string().nullable().optional(),
+  meaning_fr: z.string().nullable().optional(),
+  meaning_de: z.string().nullable().optional(),
+  meaning_es: z.string().nullable().optional(),
+  meaning_it: z.string().nullable().optional(),
+  meaning_pt: z.string().nullable().optional(),
+  meaning_ru: z.string().nullable().optional(),
+  meaning_ar: z.string().nullable().optional(),
+  meaning_hi: z.string().nullable().optional(),
   example_en: z.string().nullable().optional(),
-  example_ja: z.string().nullable().optional(),
-  example_zh: z.string().nullable().optional(),
   memory_trick_ja: z.string().nullable().optional(),
   memory_trick_en: z.string().nullable().optional(),
   memory_trick_zh: z.string().nullable().optional()
@@ -71,19 +77,14 @@ class DatabaseManager {
     // Search using v_all_translations view
     const sql = `
       SELECT DISTINCT vat.en, vat.translation, vat.lang, vat.gender,
-             vat.meaning_en, vat.meaning_ja, vat.meaning_zh,
+             wm.meaning_en, wm.meaning_ja, wm.meaning_zh, wm.meaning_fr, wm.meaning_de, wm.meaning_es, wm.meaning_it, wm.meaning_pt, wm.meaning_ru, wm.meaning_ar, wm.meaning_hi,
              ex.example_en,
-             et_ja.translation as example_ja,
-             et_zh.translation as example_zh,
-             et_native.translation as example_native,
              mt_ja.trick_text as memory_trick_ja,
              mt_en.trick_text as memory_trick_en,
              mt_zh.trick_text as memory_trick_zh
       FROM v_all_translations vat
+      LEFT JOIN word_meanings wm ON vat.en = wm.en
       LEFT JOIN examples ex ON vat.en = ex.en
-      LEFT JOIN example_translations et_ja ON ex.example_en = et_ja.example_en AND et_ja.lang = 'ja'
-      LEFT JOIN example_translations et_zh ON ex.example_en = et_zh.example_en AND et_zh.lang = 'zh'
-      LEFT JOIN example_translations et_native ON ex.example_en = et_native.example_en AND et_native.lang = vat.lang
       LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
       LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
       LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
@@ -132,10 +133,15 @@ class DatabaseManager {
       meaning_en?: string;
       meaning_ja?: string;
       meaning_zh?: string;
+      meaning_fr?: string;
+      meaning_de?: string;
+      meaning_es?: string;
+      meaning_it?: string;
+      meaning_pt?: string;
+      meaning_ru?: string;
+      meaning_ar?: string;
+      meaning_hi?: string;
       example_en?: string;
-      example_ja?: string;
-      example_zh?: string;
-      example_native?: string;
       memory_trick_ja?: string;
       memory_trick_en?: string;
       memory_trick_zh?: string;
@@ -153,14 +159,26 @@ class DatabaseManager {
             id: 0,
             word_en: englishWord,
             meaning_en: row.meaning_en,
-            meaning_ja: row.meaning_ja,
-            meaning_zh: row.meaning_zh
+            meanings: Object.fromEntries(
+              Object.entries({
+                en: row.meaning_en,
+                ja: row.meaning_ja,
+                zh: row.meaning_zh,
+                fr: row.meaning_fr,
+                de: row.meaning_de,
+                es: row.meaning_es,
+                it: row.meaning_it,
+                pt: row.meaning_pt,
+                ru: row.meaning_ru,
+                ar: row.meaning_ar,
+                hi: row.meaning_hi
+              }).filter(([key, value]) => value != null && value !== '')
+            )
           },
           translations: [],
           example: row.example_en ? {
             example_en: row.example_en,
-            example_ja: row.example_ja,
-            example_zh: row.example_zh
+            example_translations: {}
           } : undefined
         });
       }
@@ -180,6 +198,32 @@ class DatabaseManager {
         });
       }
     });
+
+    // 例文翻訳を別途取得
+    const wordsWithExamples = Array.from(grouped.values()).filter(word => word.example?.example_en);
+    if (wordsWithExamples.length > 0) {
+      const exampleTexts = wordsWithExamples.map(w => w.example!.example_en);
+      const examplePlaceholders = exampleTexts.map(() => '?').join(',');
+      
+      const exampleTranslations = db.prepare(`
+        SELECT example_en, lang, translation
+        FROM example_translations
+        WHERE example_en IN (${examplePlaceholders})
+      `).all(...exampleTexts) as Array<{
+        example_en: string;
+        lang: string;
+        translation: string;
+      }>;
+      
+      // 例文翻訳をマッピング
+      exampleTranslations.forEach(et => {
+        wordsWithExamples.forEach(word => {
+          if (word.example?.example_en === et.example_en) {
+            word.example.example_translations![et.lang] = et.translation;
+          }
+        });
+      });
+    }
 
     return Array.from(grouped.values()).filter(word => word.translations.length > 0);
   }
@@ -249,17 +293,14 @@ class DatabaseManager {
     
     let translationsQuery = `
       SELECT vat.en, vat.lang, vat.translation, vat.gender,
-             vat.meaning_en, vat.meaning_ja, vat.meaning_zh,
+             wm.meaning_en, wm.meaning_ja, wm.meaning_zh, wm.meaning_fr, wm.meaning_de, wm.meaning_es, wm.meaning_it, wm.meaning_pt, wm.meaning_ru, wm.meaning_ar, wm.meaning_hi,
              ex.example_en,
-             et_ja.translation as example_ja,
-             et_zh.translation as example_zh,
              mt_ja.trick_text as memory_trick_ja,
              mt_en.trick_text as memory_trick_en,
              mt_zh.trick_text as memory_trick_zh
       FROM v_all_translations vat
+      LEFT JOIN word_meanings wm ON vat.en = wm.en
       LEFT JOIN examples ex ON vat.en = ex.en
-      LEFT JOIN example_translations et_ja ON ex.example_en = et_ja.example_en AND et_ja.lang = 'ja'
-      LEFT JOIN example_translations et_zh ON ex.example_en = et_zh.example_en AND et_zh.lang = 'zh'
       LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
       LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
       LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
@@ -297,13 +338,25 @@ class DatabaseManager {
         grouped.set(row.en, {
           english: row.en,
           meaning_en: row.meaning_en,
-          meaning_ja: row.meaning_ja,
-          meaning_zh: row.meaning_zh,
+          meanings: Object.fromEntries(
+            Object.entries({
+              en: row.meaning_en,
+              ja: row.meaning_ja,
+              zh: row.meaning_zh,
+              fr: row.meaning_fr,
+              de: row.meaning_de,
+              es: row.meaning_es,
+              it: row.meaning_it,
+              pt: row.meaning_pt,
+              ru: row.meaning_ru,
+              ar: row.meaning_ar,
+              hi: row.meaning_hi
+            }).filter(([key, value]) => value != null && value !== '')
+          ),
           translations: [],
           example: row.example_en ? {
             example_en: row.example_en,
-            example_ja: row.example_ja,
-            example_zh: row.example_zh
+            example_translations: {}
           } : undefined
         });
       }
@@ -323,8 +376,36 @@ class DatabaseManager {
       }
     });
     
-    // Maintain the order of English words from the first query and filter out words with no valid translations
-    return englishList.map(englishWord => grouped.get(englishWord)).filter(word => word && word.translations.length > 0);
+    // 例文翻訳を別途取得
+    const finalResults = englishList.map(englishWord => grouped.get(englishWord)).filter(word => word && word.translations.length > 0);
+    const wordsWithExamples = finalResults.filter(word => word.example?.example_en);
+    
+    if (wordsWithExamples.length > 0) {
+      const exampleTexts = wordsWithExamples.map(w => w.example!.example_en);
+      const examplePlaceholders = exampleTexts.map(() => '?').join(',');
+      
+      // 利用可能な全言語の例文翻訳を取得
+      const exampleTranslations = db.prepare(`
+        SELECT example_en, lang, translation
+        FROM example_translations
+        WHERE example_en IN (${examplePlaceholders})
+      `).all(...exampleTexts) as Array<{
+        example_en: string;
+        lang: string;
+        translation: string;
+      }>;
+      
+      // 例文翻訳をマッピング
+      exampleTranslations.forEach(et => {
+        wordsWithExamples.forEach(word => {
+          if (word.example?.example_en === et.example_en) {
+            word.example.example_translations![et.lang] = et.translation;
+          }
+        });
+      });
+    }
+    
+    return finalResults;
   }
 
   async getMemoryTrick(englishWord: string, targetLanguage: string, uiLanguage: string): Promise<string | null> {

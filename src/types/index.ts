@@ -24,22 +24,19 @@ export interface Word {
   category?: string;
   example_en?: string;
   meaning_en?: string;
-  meaning_ja?: string;
-  meaning_zh?: string;
+  meanings?: { [key: string]: string };  // 各言語の意味 { "de": "...", "fr": "...", ... }
 }
 
 export interface ExampleSentence {
   example_en: string;
-  example_ja?: string;
-  example_zh?: string;
+  example_translations?: { [key: string]: string };  // 各言語の翻訳 { "de": "...", "fr": "...", ... }
 }
 
 export interface SearchResult {
   word?: Word;  // 既存の検索結果用
   english?: string;  // 新しいブラウズ結果用
   meaning_en?: string;  // Browse result meanings
-  meaning_ja?: string;
-  meaning_zh?: string;
+  meanings?: { [key: string]: string };  // 各言語の意味
   translations: Translation[];
   example?: ExampleSentence;  // 例文データ
 }
