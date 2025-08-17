@@ -8,18 +8,19 @@ import type { ReactElement } from 'react';
 interface ExampleSectionProps {
   word: string;
   example?: ExampleSentence;
+  currentLanguage?: string;  // 現在表示中の言語
 }
 
-export function ExampleSection({ word, example }: ExampleSectionProps) {
+export function ExampleSection({ word, example, currentLanguage }: ExampleSectionProps) {
   const { locale } = useTranslations();
   
   if (!example || !example.example_en) {
     return null;
   }
 
-  const uiTranslation = locale === 'ja' ? example.example_ja : 
-                       locale === 'zh' ? example.example_zh :
-                       null;
+  // 現在の言語またはUI言語の翻訳を取得
+  const translationLang = currentLanguage || locale;
+  const translation = example.example_translations?.[translationLang];
   
   // Highlight the word in the example sentence
   const highlightWord = (text: string, word: string) => {
@@ -56,9 +57,9 @@ export function ExampleSection({ word, example }: ExampleSectionProps) {
           />
         </div>
       </div>
-      {uiTranslation && (
+      {translation && (
         <p className="text-xs text-solarized-base00 dark:text-solarized-base0 opacity-70">
-          {uiTranslation}
+          {translation}
         </p>
       )}
     </div>

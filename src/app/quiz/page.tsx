@@ -35,10 +35,10 @@ export default function QuizPage() {
         <div className="container mx-auto px-4 py-6">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-2 text-stone-800 dark:text-stone-100">
-              Noun Gender Quiz
+              Noun Gender
             </h1>
             <p className="text-lg text-stone-600 dark:text-stone-300 mb-3">
-              Test your knowledge of noun genders
+              Master noun genders across languages
             </p>
           </div>
         </div>

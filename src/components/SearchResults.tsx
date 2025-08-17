@@ -232,10 +232,9 @@ export function SearchResults({
             
             {/* 意味の表示 */}
             {(() => {
-              // Check for meanings in both word object and result object (for browse mode)
-              const meaning = locale === 'ja' ? (result.word?.meaning_ja || result.meaning_ja) : 
-                             locale === 'zh' ? (result.word?.meaning_zh || result.meaning_zh) : 
-                             (result.word?.meaning_en || result.meaning_en);
+              // 現在の言語に基づいて意味を取得、フォールバックは英語
+              const meanings = result.word?.meanings || result.meanings || {};
+              const meaning = meanings[locale] || meanings['en'] || result.meaning_en;
               
               if (meaning) {
                 // セミコロンで意味を分割（複数意味対応）- 半角・全角両対応
@@ -261,6 +260,7 @@ export function SearchResults({
             <ExampleSection 
               word={result.english || result.word?.word_en || ''} 
               example={result.example}
+              currentLanguage={result.translations[0]?.language}  // 最初の翻訳の言語を使用
             />
           </div>
           
