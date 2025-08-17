@@ -132,20 +132,25 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     setActiveTab(currentMode);
   }, [currentMode]);
 
-  // デバウンス用のインクリメンタルサーチ
-  const debouncedSearch = useCallback((query: string, languages: string[]) => {
-    const debouncedFn = debounce((q: string, langs: string[]) => {
-      onSearch(q, langs);
-    }, 300);
-    debouncedFn(query, languages);
-  }, [onSearch]);
+  // URL更新のみのデバウンス（検索は親コンポーネントのuseEffectで実行）
+  const debouncedUrlUpdate = useCallback(
+    debounce((query: string, languages: string[]) => {
+      const params = new URLSearchParams();
+      if (query.trim()) params.set('q', query.trim());
+      if (languages.length > 0) {
+        params.set('lang', languages.join('-'));
+      }
+      window.history.replaceState(null, '', `/search?${params.toString()}`);
+    }, 300),
+    []
+  );
 
-  // URLからの初期検索のみuseEffectで実行
-  useEffect(() => {
-    if (activeTab === 'search' && initialQuery && initialQuery === query && query.trim()) {
-      onSearch(query, selectedLanguages);
-    }
-  }, [activeTab, initialQuery, query, selectedLanguages, onSearch]);
+  // URLからの初期検索は親コンポーネントに任せる（重複検索を防ぐ）
+  // useEffect(() => {
+  //   if (activeTab === 'search' && initialQuery && initialQuery === query && query.trim()) {
+  //     onSearch(query, selectedLanguages);
+  //   }
+  // }, [activeTab, initialQuery, query, selectedLanguages, onSearch]);
 
   const handleClear = () => {
     setQuery('');
@@ -319,12 +324,16 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                     const newQuery = e.target.value;
                     setQuery(newQuery);
                     
-                    // 検索タブでのリアルタイム検索
+                    // 検索タブでのURL更新のみ（検索はURLの変更で自動実行される）
                     if (activeTab === 'search') {
                       if (newQuery.trim()) {
-                        debouncedSearch(newQuery, selectedLanguages);
-                      } else if (onSearchResultsClear) {
-                        onSearchResultsClear();
+                        debouncedUrlUpdate(newQuery, selectedLanguages);
+                      } else {
+                        // 空の場合は即座にURL更新とクリア
+                        window.history.replaceState(null, '', '/search');
+                        if (onSearchResultsClear) {
+                          onSearchResultsClear();
+                        }
                       }
                     }
                   }}

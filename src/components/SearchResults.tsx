@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import type { SearchResult, Translation } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
@@ -19,7 +20,7 @@ interface SearchResultsProps {
 }
 
 // 個別カードコンポーネントで状態を分離
-function TranslationCard({ 
+const TranslationCard = React.memo(function TranslationCard({ 
   translation, 
   mode, 
   searchQuery 
@@ -86,14 +87,10 @@ function TranslationCard({
               {SUPPORTED_LANGUAGES[translation.language as keyof typeof SUPPORTED_LANGUAGES]}
             </span>
             <span className="font-semibold text-lg text-solarized-base01 dark:text-solarized-base1">
-              {mode === 'search' && searchQuery ? (
-                <HighlightedText 
-                  text={translation.translation} 
-                  query={searchQuery}
-                />
-              ) : (
-                translation.translation
-              )}
+              <HighlightedText 
+                text={translation.translation} 
+                query={mode === 'search' ? searchQuery : ''}
+              />
             </span>
           </div>
           
@@ -138,9 +135,9 @@ function TranslationCard({
       </div>
     </div>
   );
-}
+});
 
-export function SearchResults({ 
+export const SearchResults = React.memo(function SearchResults({ 
   results, 
   isLoading, 
   mode = 'search',
@@ -148,6 +145,11 @@ export function SearchResults({
   searchError = null
 }: SearchResultsProps) {
   const { t, locale } = useTranslations();
+
+  // 検索モードで検索クエリがない場合は何も表示しない
+  if (mode === 'search' && !searchQuery?.trim()) {
+    return null;
+  }
 
   if (isLoading) {
     return (
@@ -213,14 +215,10 @@ export function SearchResults({
           <div className="mb-4">
             <div className="flex items-center gap-3 mb-2">
               <h3 className="text-xl font-bold text-solarized-base01 dark:text-solarized-base1">
-                {mode === 'search' && searchQuery ? (
-                  <HighlightedText 
-                    text={result.english || result.word?.word_en || ''} 
-                    query={searchQuery}
-                  />
-                ) : (
-                  result.english || result.word?.word_en
-                )}
+                <HighlightedText 
+                  text={result.english || result.word?.word_en || ''} 
+                  query={mode === 'search' ? searchQuery : ''}
+                />
               </h3>
               <div className="transform transition-transform duration-200 hover:scale-110">
                 <AudioButton 
@@ -278,4 +276,4 @@ export function SearchResults({
       ))}
     </div>
   );
-}
+});

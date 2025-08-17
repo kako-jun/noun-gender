@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 /**
  * 検索クエリにマッチする部分をハイライト表示するコンポーネント
@@ -9,26 +9,7 @@ interface HighlightedTextProps {
   className?: string;
 }
 
-export function HighlightedText({ text, query, className = '' }: HighlightedTextProps) {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    // 初回レンダリング時とテーマ変更時にダークモードを検出
-    const checkDarkMode = () => {
-      setIsDark(document.documentElement.classList.contains('dark'));
-    };
-    
-    checkDarkMode();
-    
-    // MutationObserverでクラスの変更を監視
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(document.documentElement, { 
-      attributes: true, 
-      attributeFilter: ['class'] 
-    });
-    
-    return () => observer.disconnect();
-  }, []);
+export const HighlightedText = React.memo(function HighlightedText({ text, query, className = '' }: HighlightedTextProps) {
   // クエリが空の場合はそのまま表示
   if (!query || query.trim() === '') {
     return <span className={className}>{text}</span>;
@@ -73,9 +54,7 @@ export function HighlightedText({ text, query, className = '' }: HighlightedText
             key={index}
             className="text-inherit px-0.5 rounded"
             style={{ 
-              backgroundColor: isDark 
-                ? 'rgba(181, 137, 0, 0.7)'   // ダークテーマ: 70%
-                : 'rgba(181, 137, 0, 0.25)'  // ライトテーマ: 25%
+              backgroundColor: 'rgba(181, 137, 0, 0.25)' // Solarized yellow
             }}
           >
             {part.text}
@@ -86,7 +65,7 @@ export function HighlightedText({ text, query, className = '' }: HighlightedText
       )}
     </span>
   );
-}
+});
 
 /**
  * 複数のクエリに対してハイライト表示
