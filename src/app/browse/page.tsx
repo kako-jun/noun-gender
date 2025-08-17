@@ -22,20 +22,26 @@ function BrowseContent() {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [currentBrowseLetter, setCurrentBrowseLetter] = useState<string | null>(null);
   const searchBoxRef = useRef<SearchBoxRef>(null);
+  const isLoadingMoreRef = useRef(false);
   
   const { t, isLoading: translationsLoading } = useTranslations();
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  // isLoadingMoreの同期
+  useEffect(() => {
+    isLoadingMoreRef.current = isLoadingMore;
+  }, [isLoadingMore]);
+
   // ブラウジングデータの読み込み
-  const loadBrowseData = useCallback(async (offset: number = 0, startsWith?: string) => {
-    if (offset === 0 && isLoading) return;
-    if (offset > 0 && isLoadingMore) return;
+  const loadBrowseData = useCallback(async (offset: number = 0, startsWith?: string, append: boolean = false) => {
+    // 無限スクロール時のみ重複読み込みチェック
+    if (append && isLoadingMoreRef.current) return;
     
-    if (offset === 0) {
-      setIsLoading(true);
-    } else {
+    if (append) {
       setIsLoadingMore(true);
+    } else {
+      setIsLoading(true);
     }
     
     try {
@@ -47,46 +53,52 @@ function BrowseContent() {
       const response = await fetch(url);
       const data = await response.json();
       
-      if (offset === 0) {
-        setBrowseResults(data.data || []);
-      } else {
+      
+      if (append) {
         setBrowseResults(prev => [...prev, ...(data.data || [])]);
+      } else {
+        setBrowseResults(data.data || []);
       }
       
-      setHasMore(data.hasMore);
+      setHasMore(data.pagination?.hasMore || false);
     } catch (error) {
       console.error('Browse data loading error:', error);
     } finally {
-      if (offset === 0) {
-        setIsLoading(false);
-      } else {
+      if (append) {
         setIsLoadingMore(false);
+      } else {
+        setIsLoading(false);
       }
     }
-  }, [isLoading, isLoadingMore]);
+  }, []);
 
-  // URLからの初期状態復元
+  // URLからの初期状態復元とデータ再読み込み
   useEffect(() => {
     const letter = searchParams.get('letter');
+    const offset = parseInt(searchParams.get('offset') || '0');
+    
     setCurrentBrowseLetter(letter || null);
     
-    if ((!browseResults || browseResults.length === 0) && !isLoading) {
-      loadBrowseData(0, letter || undefined);
-    }
-  }, [searchParams, loadBrowseData]);
+    // URL変更時は常にデータを新規読み込み（append=false）
+    loadBrowseData(offset, letter || undefined, false);
+  }, [searchParams]);
 
   // 無限スクロール
   const handleScroll = useCallback(() => {
-    if (isLoadingMore || !hasMore || !browseResults) return;
+    if (isLoadingMoreRef.current || !hasMore || !browseResults || browseResults.length === 0) return;
     
     const scrollTop = window.pageYOffset;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
     
     if (scrollTop + windowHeight >= documentHeight - 200) {
-      loadBrowseData(browseResults.length, currentBrowseLetter || undefined);
+      const currentOffset = parseInt(searchParams.get('offset') || '0');
+      const nextOffset = currentOffset + browseResults.length;
+      
+      // 無限スクロール時は直接データ追加読み込み（URL変更なし）
+      loadBrowseData(nextOffset, currentBrowseLetter || undefined, true);
     }
-  }, [isLoadingMore, hasMore, browseResults, currentBrowseLetter, loadBrowseData]);
+  }, [hasMore, browseResults, currentBrowseLetter, searchParams, loadBrowseData]);
 
   useEffect(() => {
     const throttledHandleScroll = () => {

@@ -184,8 +184,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
         setLetterHierarchy([]);
         setSliderValue(0);
         setPreviewWord('');
-        // 全文字の統計を再読み込み
-        onBrowse(); // パラメータなしで呼び出し
+        // URL更新（パラメータなし）
+        window.history.replaceState(null, '', '/browse');
       }
       return; // 同じタブの場合はURL変更しない
     }
@@ -201,13 +201,16 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
 
   const handleLetterSelect = (letter: string) => {
     // 新しい階層に入る
-    setLetterHierarchy([...letterHierarchy, letter]);
+    const newHierarchy = [...letterHierarchy, letter];
+    setLetterHierarchy(newHierarchy);
     setSliderValue(0); // スライダーをリセット
     
     // 完全な文字列を構築（例: ["S", "C"] → "SC"）
-    const fullLetter = [...letterHierarchy, letter].join('');
+    const fullLetter = newHierarchy.join('');
     setSelectedLetter(fullLetter);
-    onBrowse(fullLetter, selectedLanguages);
+    
+    // URL変更のみ（ブラウズ実行は親コンポーネントのuseEffectで実行）
+    window.history.replaceState(null, '', `/browse?letter=${fullLetter}`);
   };
 
   const handleGoBack = () => {
@@ -218,7 +221,13 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
       
       const fullLetter = newHierarchy.join('');
       setSelectedLetter(fullLetter || '');
-      onBrowse(fullLetter || undefined, selectedLanguages);
+      
+      // URL変更のみ（ブラウズ実行は親コンポーネントのuseEffectで実行）
+      if (fullLetter) {
+        window.history.replaceState(null, '', `/browse?letter=${fullLetter}`);
+      } else {
+        window.history.replaceState(null, '', '/browse');
+      }
     }
   };
 
@@ -276,7 +285,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
       }
     };
 
-    if (activeTab === 'browse' && letterHierarchy.length > 0) {
+    if (activeTab === 'browse') {
       loadWordRange();
     }
   }, [activeTab, letterHierarchy]);
@@ -447,8 +456,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                 </div>
               </div>
               
-              {/* スライダー - 階層が選択されている場合のみ表示 */}
-              {letterHierarchy.length > 0 && wordRange.totalCount > 0 && (
+              {/* スライダー - 常に表示（全レベルで統一） */}
+              {wordRange.totalCount > 0 && (
                 <div className="mt-4 px-4">
                   <div className="bg-solarized-base3 dark:bg-solarized-base03 rounded-lg p-4 border border-solarized-base1 dark:border-solarized-base01">
                     <div className="flex items-center justify-between text-xs text-solarized-base00 dark:text-solarized-base0 mb-2">
@@ -471,15 +480,23 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                           await updateSliderPreview(value);
                         }}
                         onMouseUp={() => {
-                          // スライダーを離したときに実際にジャンプ
+                          // スライダーを離したときにURL更新
                           const offset = sliderValue;
-                          onBrowse(letterHierarchy.join(''), selectedLanguages, offset);
+                          const fullLetter = letterHierarchy.join('');
+                          const params = new URLSearchParams();
+                          if (fullLetter) params.set('letter', fullLetter);
+                          params.set('offset', offset.toString());
+                          window.history.replaceState(null, '', `/browse?${params.toString()}`);
                         }}
                         onKeyUp={(e) => {
-                          // キーボード操作後にジャンプ（左右キーの場合）
+                          // キーボード操作後にURL更新（左右キーの場合）
                           if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                             const offset = sliderValue;
-                            onBrowse(letterHierarchy.join(''), selectedLanguages, offset);
+                            const fullLetter = letterHierarchy.join('');
+                            const params = new URLSearchParams();
+                            if (fullLetter) params.set('letter', fullLetter);
+                            params.set('offset', offset.toString());
+                            window.history.replaceState(null, '', `/browse?${params.toString()}`);
                           }
                         }}
                         className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-solarized-base2 dark:bg-solarized-base02"
