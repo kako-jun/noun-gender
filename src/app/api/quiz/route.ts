@@ -4,23 +4,11 @@ import dbManager from '@/lib/database';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const languages = searchParams.get('languages')?.split('-') || ['fr', 'de', 'es'];
+    const languages = searchParams.get('languages')?.split(',') || ['fr', 'de', 'es'];
     const count = Math.min(parseInt(searchParams.get('count') || '10'), 20);
 
-    const db = dbManager['getDb'](); // Access private method for quiz
-    
-    // ランダムに問題を選択
-    const languageFilter = languages.map(() => '?').join(',');
-    const quizData = db.prepare(`
-      SELECT english, translation, language, gender
-      FROM all_words 
-      WHERE language IN (${languageFilter})
-        AND translation IS NOT NULL 
-        AND translation != ''
-        AND gender IN ('m', 'f', 'n')
-      ORDER BY RANDOM()
-      LIMIT ?
-    `).all(...languages, count) as Array<{ english: string; translation: string; language: string; gender: string; }>;
+    // データベースマネージャーの公開メソッドを使用
+    const quizData = dbManager.getQuizQuestions(languages, count);
 
     // クイズ形式に変換
     const questions = quizData.map((row, index: number) => {

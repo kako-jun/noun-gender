@@ -22,7 +22,6 @@ interface SearchBoxProps {
     languagesOptional?: string;
     searchButton?: string;
     searching?: string;
-    startQuiz?: string;
     tabs?: {
       search?: string;
       browse?: string;
@@ -511,20 +510,6 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
           </div>
         )}
 
-        {activeTab === 'quiz' && (
-          <div className="space-y-4">
-            <div className="text-center">
-              <Button
-                onClick={onQuiz}
-                variant="primary"
-                size="lg"
-                className="shadow-lg hover:shadow-xl"
-              >
-                {translations?.startQuiz || 'Start Quiz'}
-              </Button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
