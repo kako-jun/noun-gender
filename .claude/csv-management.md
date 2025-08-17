@@ -313,5 +313,127 @@ with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
 
 ---
 
-**最終更新**: 2025-08-08 - CSV管理システム完成
+## 例文翻訳管理 (example_translations.csv)
+
+### 4. example_translations.csv
+**目的**: 英語例文の多言語翻訳管理（10言語対応）
+**場所**: `/data/example_translations.csv`
+**形式**: TSV（タブ区切り）
+
+```
+example_en	lang	translation
+The old abbey on the hill has been a peaceful retreat for centuries.	de	Die alte Abtei auf dem Hügel war jahrhundertelang ein friedlicher Rückzugsort.
+The old abbey on the hill has been a peaceful retreat for centuries.	fr	La vieille abbaye sur la colline est un refuge paisible depuis des siècles.
+The old abbey on the hill has been a peaceful retreat for centuries.	es	La antigua abadía en la colina ha sido un refugio pacífico durante siglos.
+```
+
+**列構成**:
+- `example_en`: 英語例文（examples.example_enから取得）
+- `lang`: 言語コード（fr, de, es, it, pt, ru, ar, hi, ja, zh）
+- `translation`: その言語での例文翻訳
+
+### 例文翻訳CSV初期化
+```python
+import sqlite3
+
+conn = sqlite3.connect('data/noun_gender.db')
+cursor = conn.cursor()
+
+# 既存の英語例文を全て取得
+cursor.execute('SELECT example_en FROM examples ORDER BY en')
+all_examples = [row[0] for row in cursor.fetchall()]
+
+# 対象言語リスト
+target_languages = ['fr', 'de', 'es', 'it', 'pt', 'ru', 'ar', 'hi', 'ja', 'zh']
+
+with open('data/example_translations.csv', 'w', encoding='utf-8') as f:
+    # ヘッダー
+    f.write('example_en\tlang\ttranslation\n')
+    
+    # 各例文×各言語の組み合わせを作成（翻訳列は空）
+    for example_en in all_examples:
+        for lang in target_languages:
+            f.write(f'{example_en}\t{lang}\t\n')
+
+conn.close()
+```
+
+## 例文翻訳作業手順
+
+### 翻訳作業の進め方
+1. **段階的実施**
+   - A語の例文から開始
+   - 1言語ずつ完了させる（例：全例文のドイツ語翻訳→フランス語翻訳）
+   - または1例文ずつ全言語翻訳する
+
+2. **翻訳品質基準**
+   - 自然で流暢な翻訳
+   - 元の意味・ニュアンスを正確に保持
+   - 対象言語として自然な表現
+   - 例文中の名詞の性別を正しく反映
+
+3. **例文翻訳ルール**
+   - 英語例文の構造・意味を正確に翻訳
+   - 文体は元の例文に合わせる（フォーマル/カジュアル）
+   - 文化的文脈を適切に調整
+   - 単語の性別・格変化を正確に反映
+
+### データベース同期（例文翻訳）
+
+**推奨方法（スクリプト使用）:**
+```bash
+python scripts/sync_example_translations.py
+```
+
+**手動実装（参考用）:**
+```python
+import sqlite3, csv
+
+conn = sqlite3.connect('data/noun_gender.db')
+cursor = conn.cursor()
+
+with open('data/example_translations.csv', 'r', encoding='utf-8') as f:
+    reader = csv.reader(f, delimiter='\t')
+    next(reader)  # ヘッダースキップ
+    
+    for row in reader:
+        if len(row) == 3 and row[2].strip():  # 翻訳が空でない
+            cursor.execute('''
+                INSERT OR REPLACE INTO example_translations 
+                (example_en, lang, translation)
+                VALUES (?, ?, ?)
+            ''', row)
+
+conn.commit()
+conn.close()
+```
+
+## 更新されたスクリプト一覧
+
+### 個別同期スクリプト
+- `python scripts/sync_meaning_translations.py` - 意味翻訳同期
+- `python scripts/sync_examples.py` - 例文同期
+- `python scripts/sync_gender_translations.py` - 性別翻訳同期
+- `python scripts/sync_example_translations.py` - **例文翻訳同期**（新規）
+
+### 一括処理スクリプト
+- `python scripts/sync_all.py` - 全CSV一括同期（例文翻訳含む）
+
+## 例文翻訳進捗管理
+
+### 推奨作業順序
+1. **Phase 1**: A語の例文翻訳（約300例文）
+   - ドイツ語翻訳完了
+   - フランス語翻訳完了
+   - その他言語順次実施
+
+2. **Phase 2**: B語以降の例文翻訳
+   - アルファベット順で段階的実施
+
+### 品質管理・レビュー
+- 専用レビューガイドライン: `.claude/example_translations_review_guidelines.md`
+- 翻訳品質チェックリスト
+- 言語別ネイティブチェック（可能な場合）
+
+**最終更新**: 2025-08-17 - 例文翻訳管理システム追加
 **作成者**: Claude Code Assistant
