@@ -38,7 +38,7 @@ export function Quiz({ onClose }: QuizProps) {
   const loadQuestions = async (language: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/quiz?languages=${language}&count=10`);
+      const response = await fetch(`/api/quiz?lang=${language}&count=10`);
       const data = await response.json();
       setQuestions(data.questions || []);
       setAnswers(new Array(data.questions?.length || 0).fill(null));
