@@ -22,16 +22,16 @@ const TranslationRowSchema = z.object({
   en: z.string().min(1),
   lang: z.string().min(2).max(2),
   translation: z.string().min(1),
-  gender: z.enum(['m', 'f', 'n']).optional(),
-  meaning_en: z.string().optional(),
-  meaning_ja: z.string().optional(),
-  meaning_zh: z.string().optional(),
-  example_en: z.string().optional(),
-  example_ja: z.string().optional(),
-  example_zh: z.string().optional(),
-  memory_trick_ja: z.string().optional(),
-  memory_trick_en: z.string().optional(),
-  memory_trick_zh: z.string().optional()
+  gender: z.enum(['m', 'f', 'n']).nullable().optional(),
+  meaning_en: z.string().nullable().optional(),
+  meaning_ja: z.string().nullable().optional(),
+  meaning_zh: z.string().nullable().optional(),
+  example_en: z.string().nullable().optional(),
+  example_ja: z.string().nullable().optional(),
+  example_zh: z.string().nullable().optional(),
+  memory_trick_ja: z.string().nullable().optional(),
+  memory_trick_en: z.string().nullable().optional(),
+  memory_trick_zh: z.string().nullable().optional()
 });
 
 const MemoryTrickWithLangSchema = z.object({
@@ -384,13 +384,13 @@ class DatabaseManager {
     const db = this.getDb();
     const rawResults = db.prepare(`
       SELECT 
-        SUBSTR(english, 1, 1) as letter,
-        COUNT(DISTINCT english) as count
-      FROM all_words 
-      WHERE english IS NOT NULL 
-        AND LENGTH(english) > 0
-        AND SUBSTR(english, 1, 1) BETWEEN 'a' AND 'z'
-      GROUP BY SUBSTR(english, 1, 1)
+        SUBSTR(en, 1, 1) as letter,
+        COUNT(DISTINCT en) as count
+      FROM v_all_translations 
+      WHERE en IS NOT NULL 
+        AND LENGTH(en) > 0
+        AND SUBSTR(en, 1, 1) BETWEEN 'a' AND 'z'
+      GROUP BY SUBSTR(en, 1, 1)
       ORDER BY letter
     `).all();
     
@@ -401,14 +401,14 @@ class DatabaseManager {
     const db = this.getDb();
     const rawResults = db.prepare(`
       SELECT 
-        SUBSTR(english, ${prefix.length + 1}, 1) as next_letter,
-        COUNT(DISTINCT english) as count
-      FROM all_words 
-      WHERE english IS NOT NULL 
-        AND LENGTH(english) > ${prefix.length}
-        AND english LIKE ? || '%'
-        AND SUBSTR(english, ${prefix.length + 1}, 1) BETWEEN 'a' AND 'z'
-      GROUP BY SUBSTR(english, ${prefix.length + 1}, 1)
+        SUBSTR(en, ${prefix.length + 1}, 1) as next_letter,
+        COUNT(DISTINCT en) as count
+      FROM v_all_translations 
+      WHERE en IS NOT NULL 
+        AND LENGTH(en) > ${prefix.length}
+        AND en LIKE ? || '%'
+        AND SUBSTR(en, ${prefix.length + 1}, 1) BETWEEN 'a' AND 'z'
+      GROUP BY SUBSTR(en, ${prefix.length + 1}, 1)
       ORDER BY next_letter
     `).all(prefix);
     
@@ -418,13 +418,13 @@ class DatabaseManager {
   getWordAtOffset(prefix: string, offset: number): WordAtOffsetRow | undefined {
     const db = this.getDb();
     const rawResult = db.prepare(`
-      SELECT english 
+      SELECT en as english 
       FROM (
-        SELECT DISTINCT english 
-        FROM all_words 
-        WHERE english IS NOT NULL 
-          AND english LIKE ? || '%'
-        ORDER BY english ASC
+        SELECT DISTINCT en 
+        FROM v_all_translations 
+        WHERE en IS NOT NULL 
+          AND en LIKE ? || '%'
+        ORDER BY en ASC
       )
       LIMIT 1 OFFSET ?
     `).get(prefix, offset);
@@ -437,34 +437,34 @@ class DatabaseManager {
     const db = this.getDb();
     
     const rawFirstWord = db.prepare(`
-      SELECT english 
+      SELECT en as english 
       FROM (
-        SELECT DISTINCT english 
-        FROM all_words 
-        WHERE english IS NOT NULL 
-          AND english LIKE ? || '%'
-        ORDER BY english ASC
+        SELECT DISTINCT en 
+        FROM v_all_translations 
+        WHERE en IS NOT NULL 
+          AND en LIKE ? || '%'
+        ORDER BY en ASC
       )
       LIMIT 1
     `).get(prefix);
     
     const rawLastWord = db.prepare(`
-      SELECT english 
+      SELECT en as english 
       FROM (
-        SELECT DISTINCT english 
-        FROM all_words 
-        WHERE english IS NOT NULL 
-          AND english LIKE ? || '%'
-        ORDER BY english DESC
+        SELECT DISTINCT en 
+        FROM v_all_translations 
+        WHERE en IS NOT NULL 
+          AND en LIKE ? || '%'
+        ORDER BY en DESC
       )
       LIMIT 1
     `).get(prefix);
     
     const rawCountResult = db.prepare(`
-      SELECT COUNT(DISTINCT english) as total
-      FROM all_words 
-      WHERE english IS NOT NULL 
-        AND english LIKE ? || '%'
+      SELECT COUNT(DISTINCT en) as total
+      FROM v_all_translations 
+      WHERE en IS NOT NULL 
+        AND en LIKE ? || '%'
     `).get(prefix);
 
     // Validate and extract results

@@ -210,6 +210,11 @@ function HomeContent() {
     setSearchResults([]);
   };
 
+  const handleSearchResultsClear = useCallback(() => {
+    setSearchResults([]);
+    setSearchError(null);
+  }, []);
+
 
   useKeyboardShortcuts({
     onFocusSearch: handleFocusSearch,
@@ -249,10 +254,7 @@ function HomeContent() {
         <SearchBox 
           ref={searchBoxRef} 
           onSearch={handleSearch}
-          onSearchResultsClear={() => {
-            setSearchResults([]);
-            setSearchError(null);
-          }}
+          onSearchResultsClear={handleSearchResultsClear}
           onBrowse={async (letter, languages, offset = 0) => {
             setMode('browse');
             setCurrentBrowseLetter(letter || null);

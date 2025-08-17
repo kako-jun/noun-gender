@@ -97,6 +97,9 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     clear: () => {
       setQuery('');
       onSearch('', selectedLanguages);
+      if (onSearchResultsClear) {
+        onSearchResultsClear();
+      }
     }
   }));
 
@@ -133,30 +136,25 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
 
   // デバウンス用のインクリメンタルサーチ
   const debouncedSearch = useCallback(
-    (query: string, languages: string[]) => {
-      const debouncedFn = debounce((q: string, langs: string[]) => {
-        onSearch(q, langs);
-      }, 300);
-      debouncedFn(query, languages);
-    },
+    debounce((query: string, languages: string[]) => {
+      onSearch(query, languages);
+    }, 300),
     [onSearch]
   );
 
   useEffect(() => {
     // 検索タブの時のみ検索を実行
-    if (activeTab === 'search') {
-      if (query.trim()) {
-        debouncedSearch(query, selectedLanguages);
-      } else if (onSearchResultsClear) {
-        // 検索タブで空クエリの場合は検索結果をクリアするだけ（ブラウズモードには切り替えない）
-        onSearchResultsClear();
-      }
+    if (activeTab === 'search' && query.trim()) {
+      debouncedSearch(query, selectedLanguages);
     }
-  }, [query, selectedLanguages, activeTab, debouncedSearch, onSearchResultsClear]);
+  }, [query, selectedLanguages, activeTab, debouncedSearch]);
 
   const handleClear = () => {
     setQuery('');
     onSearch('', selectedLanguages);
+    if (onSearchResultsClear) {
+      onSearchResultsClear();
+    }
   };
 
   const handleLanguageToggle = (language: string) => {
@@ -316,7 +314,14 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                   ref={inputRef}
                   type="text"
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => {
+                    const newQuery = e.target.value;
+                    setQuery(newQuery);
+                    // 検索タブで空クエリになった場合、即座にクリア
+                    if (activeTab === 'search' && !newQuery.trim() && onSearchResultsClear) {
+                      onSearchResultsClear();
+                    }
+                  }}
                   placeholder={translations?.placeholder || "Search words..."}
                   className="w-full pl-10 pr-10 py-3 border border-stone-300 dark:border-stone-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-400 bg-white dark:bg-stone-900 transition-all duration-200"
                   spellCheck={false}
@@ -379,7 +384,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                     size="sm"
                     onClick={handleGoBack}
                     disabled={letterHierarchy.length === 0}
-                    className="w-12 h-12 p-0 text-lg rounded-none border border-solarized-base1 dark:border-solarized-base01"
+                    className="w-12 h-12 p-0 text-lg !rounded-none border border-solarized-base1 dark:border-solarized-base01"
                   >
                     ←
                   </Button>
@@ -412,7 +417,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
                               size="sm"
                               onClick={() => handleLetterSelect(displayLetter)}
                               disabled={count === 0}
-                              className={`w-12 h-12 p-0 text-xs rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
+                              className={`w-12 h-12 p-0 text-xs !rounded-none flex flex-col items-center justify-center gap-0.5 border border-solarized-base1 dark:border-solarized-base01 ${
                                 index === 0 ? '' : '-ml-px'
                               } ${count === 0 ? 'opacity-30' : 'cursor-pointer'}`}
                             >
