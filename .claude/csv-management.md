@@ -254,7 +254,42 @@ with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
 
 ### Phase 3: データベース同期
 1. **必須**: `python scripts/sync_all.py` で一括同期実行
-2. 品質確認・エラー修正
+2. **データベース整合性確認**: `v_statistics`ビューで検証
+3. 品質確認・エラー修正
+
+#### データベース整合性確認手順
+CSV同期後は必ず以下のコマンドでデータ整合性を確認してください：
+
+```bash
+# SQLiteでデータベースに接続
+sqlite3 data/noun_gender.db
+
+# 統計情報ビューで全テーブルのレコード数を確認
+SELECT * FROM v_statistics ORDER BY table_name;
+```
+
+**期待される結果例:**
+```
+example_translations|45920  ← example_translations.csv (45,921行 - ヘッダー)
+examples|4595              ← word_examples.csv (4,593行 + 2行の重複例文)
+memory_tricks|122          ← memory_tricks_creation.csv から生成
+v_multilingual_search|41328 ← 検索インデックス（自動計算）
+word_meanings|4593         ← word_meaning_translations.csv (4,593行)
+words_ar|4592              ← word_gender_translations.csv (4,592行、空行除外)
+words_de|4592              ← 同上
+words_en|4592              ← 同上
+words_es|4592              ← 同上
+words_fr|4592              ← 同上
+words_hi|4592              ← 同上
+words_it|4592              ← 同上
+words_pt|4592              ← 同上
+words_ru|4592              ← 同上
+```
+
+**チェックポイント:**
+- CSVファイル行数（`wc -l data/*.csv`）とDBレコード数の一致確認
+- 各言語テーブル（words_xx）のレコード数が同じか確認
+- 差異がある場合は同期エラーの可能性があるため再実行
 
 ## 意味翻訳作業手順 (word_meaning_translations.csv)
 
