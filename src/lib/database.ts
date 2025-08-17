@@ -531,13 +531,12 @@ class DatabaseManager {
     const db = this.getDb();
     const rawResults = db.prepare(`
       SELECT 
-        SUBSTR(en, 1, 1) as letter,
+        SUBSTR(LOWER(en), 1, 1) as letter,
         COUNT(DISTINCT en) as count
       FROM v_all_translations 
-      WHERE en IS NOT NULL 
-        AND LENGTH(en) > 0
-        AND SUBSTR(en, 1, 1) BETWEEN 'a' AND 'z'
-      GROUP BY SUBSTR(en, 1, 1)
+      WHERE translation IS NOT NULL AND translation != ''
+        AND SUBSTR(LOWER(en), 1, 1) BETWEEN 'a' AND 'z'
+      GROUP BY SUBSTR(LOWER(en), 1, 1)
       ORDER BY letter
     `).all();
     
@@ -548,16 +547,15 @@ class DatabaseManager {
     const db = this.getDb();
     const rawResults = db.prepare(`
       SELECT 
-        SUBSTR(en, ${prefix.length + 1}, 1) as next_letter,
+        SUBSTR(LOWER(en), ${prefix.length + 1}, 1) as next_letter,
         COUNT(DISTINCT en) as count
       FROM v_all_translations 
-      WHERE en IS NOT NULL 
-        AND LENGTH(en) > ${prefix.length}
-        AND en LIKE ? || '%'
-        AND SUBSTR(en, ${prefix.length + 1}, 1) BETWEEN 'a' AND 'z'
-      GROUP BY SUBSTR(en, ${prefix.length + 1}, 1)
+      WHERE translation IS NOT NULL AND translation != ''
+        AND LOWER(en) LIKE ? || '%'
+        AND SUBSTR(LOWER(en), ${prefix.length + 1}, 1) BETWEEN 'a' AND 'z'
+      GROUP BY SUBSTR(LOWER(en), ${prefix.length + 1}, 1)
       ORDER BY next_letter
-    `).all(prefix);
+    `).all(prefix.toLowerCase());
     
     return z.array(LetterStatsDetailedSchema).parse(rawResults);
   }
