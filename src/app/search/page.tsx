@@ -48,14 +48,6 @@ function SearchContent() {
       
       setSearchResults(data.data || []);
       
-      // URLも更新
-      const urlParams = new URLSearchParams();
-      urlParams.set('q', query.trim());
-      if (selectedLanguages.length > 0) {
-        urlParams.set('lang', selectedLanguages.join('-'));
-      }
-      router.replace(`/search?${urlParams.toString()}`);
-      
     } catch (error) {
       console.error('Search error:', error);
       setSearchError(error instanceof Error ? error.message : 'Search failed');
@@ -63,7 +55,7 @@ function SearchContent() {
     } finally {
       setIsLoading(false);
     }
-  }, [router]);
+  }, []);
 
   // URLからの初期検索実行
   useEffect(() => {
@@ -167,15 +159,13 @@ function SearchContent() {
           }}
         />
         
-        {(searchResults && searchResults.length > 0 || searchParams.get('q')?.trim()) && (
-          <SearchResults 
-            results={searchResults} 
-            isLoading={isLoading} 
-            mode="search"
-            searchQuery={searchParams.get('q') || ''}
-            searchError={searchError}
-          />
-        )}
+        <SearchResults 
+          results={searchResults} 
+          isLoading={isLoading} 
+          mode="search"
+          searchQuery={searchParams.get('q') || ''}
+          searchError={searchError}
+        />
       </main>
 
       <ScrollToTop />
