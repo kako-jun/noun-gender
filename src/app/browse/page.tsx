@@ -147,7 +147,7 @@ function BrowseContent() {
           onSearch={(query, selectedLanguages) => {
             const params = new URLSearchParams();
             if (query.trim()) params.set('q', query.trim());
-            if (selectedLanguages.length > 0 && selectedLanguages.length < Object.keys(SUPPORTED_LANGUAGES).length) {
+            if (selectedLanguages.length > 0) {
               params.set('lang', selectedLanguages.join('-'));
             }
             router.push(`/search?${params.toString()}`);

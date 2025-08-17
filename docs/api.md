@@ -69,12 +69,12 @@ interface SearchResult {
 | パラメータ | 型 | 必須 | 説明 |
 |-----------|------|----------|-------------|
 | `q` | string | はい | 検索クエリ (英語または対象言語) |
-| `languages` | string | いいえ | ハイフン区切りの言語コード (例: "fr-de-es") |
+| `lang` | string | いいえ | ハイフン区切りの言語コード (例: "fr-de-es") |
 | `limit` | number | いいえ | 最大結果数 (デフォルト: 1000, 最大: 1000) |
 
 **リクエスト例:**
 ```bash
-GET /api/search?q=cat&languages=fr-de-es&limit=10
+GET /api/search?q=cat&lang=fr-de-es&limit=10
 ```
 
 **レスポンス例:**
@@ -217,12 +217,12 @@ GET /api/stats
 **パラメータ:**
 | パラメータ | 型 | 必須 | 説明 |
 |-----------|------|----------|-------------|
-| `languages` | string | いいえ | ハイフン区切りの言語コード (デフォルト: "fr-de-es") |
+| `lang` | string | いいえ | ハイフン区切りの言語コード (デフォルト: "fr-de-es") |
 | `count` | number | いいえ | 問題数 (デフォルト: 10, 最大: 20) |
 
 **リクエスト例:**
 ```bash
-GET /api/quiz?languages=fr-de&count=5
+GET /api/quiz?lang=fr-de&count=5
 ```
 
 **レスポンス例:**

@@ -35,8 +35,8 @@ function SearchContent() {
     try {
       const params = new URLSearchParams();
       params.set('q', query.trim());
-      if (selectedLanguages.length > 0 && selectedLanguages.length < Object.keys(SUPPORTED_LANGUAGES).length) {
-        params.set('languages', selectedLanguages.join(','));
+      if (selectedLanguages.length > 0) {
+        params.set('lang', selectedLanguages.join('-'));
       }
       
       const response = await fetch(`/api/search?${params.toString()}`);
@@ -46,12 +46,12 @@ function SearchContent() {
         throw new Error(data.error || 'Search failed');
       }
       
-      setSearchResults(data.results);
+      setSearchResults(data.data || []);
       
       // URLも更新
       const urlParams = new URLSearchParams();
       urlParams.set('q', query.trim());
-      if (selectedLanguages.length > 0 && selectedLanguages.length < Object.keys(SUPPORTED_LANGUAGES).length) {
+      if (selectedLanguages.length > 0) {
         urlParams.set('lang', selectedLanguages.join('-'));
       }
       router.replace(`/search?${urlParams.toString()}`);

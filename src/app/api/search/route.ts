@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q');
-    const languagesParam = searchParams.get('languages');
+    const languagesParam = searchParams.get('lang');
     const limitParam = searchParams.get('limit');
 
     // Validate required parameters
