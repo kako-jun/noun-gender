@@ -18,9 +18,8 @@ export function ExampleSection({ word, example, currentLanguage }: ExampleSectio
     return null;
   }
 
-  // 現在の言語またはUI言語の翻訳を取得
-  const translationLang = currentLanguage || locale;
-  const translation = example.example_translations?.[translationLang];
+  // UI言語の翻訳を取得（currentLanguageは無視してUI言語を優先）
+  const translation = example.example_translations?.[locale];
   
   // Highlight the word in the example sentence
   const highlightWord = (text: string, word: string) => {
