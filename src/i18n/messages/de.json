@@ -66,5 +66,38 @@
     "question": "Frage {current} / {total}",
     "complete": "Quiz abgeschlossen!",
     "loadingQuiz": "Quiz wird geladen..."
+  },
+  "about": {
+    "subtitle": "Über dieses Projekt",
+    "overview": {
+      "title": "Über diese Seite",
+      "description": "Noun Gender ist eine umfassende Lernplattform zur Beherrschung von Substantivgeschlechtern in mehreren Sprachen.\n\nWir bieten Übersetzungen, Aussprache, Beispiele, Gedächtnistechniken und Quiz für über 4.600 Wörter in 8 Sprachen mit Substantivgeschlechtern."
+    },
+    "stats": {
+      "words": "Wörter",
+      "languages": "Sprachen",
+      "ui_languages": "UI-Sprachen",
+      "free": "Kostenlos"
+    },
+    "purpose": {
+      "title": "Warum diese Seite?",
+      "description": "Das Merken von Substantivgeschlechtern ist eine der größten Hürden beim Erlernen von Deutsch, Französisch, Spanisch und anderen Sprachen mit Geschlechtern.\n\nDer Autor, ansässig in Japan, wo Japanisch keine Substantivgeschlechter hat, war einfach an diesem fernen sprachlichen Konzept interessiert und erstellte dieses Tool zunächst für sein persönliches Studium.\n\nBestehende Lerntools hatten Probleme. Sie fehlten Informationen für Sprachen wie Hindi und Arabisch. Die meisten boten nur Listen ohne Erklärung, warum Wörter bestimmte Geschlechter haben.\n\nEs gab Frustration, dass dramatische Verbesserungen mit besserer Präsentation möglich waren. Mit meinem Entwicklungswissen und beschleunigter Entwicklungsgeschwindigkeit durch generative KI schien dies erreichbar."
+    },
+    "support": {
+      "title": "Bitte unterstützen Sie dieses Projekt!",
+      "description": "Diese Seite erfordert laufende Serverkosten, Wartung und Entwicklungszeit.\n\nWir planen auch, auf über 10.000 Wörter zu erweitern - während die Wortextraktion abgeschlossen ist, erfordert die nachfolgende Arbeit von Übersetzungen, Beispielen und Erstellung von Gedächtnistechniken enorme Kosten.\n\nIhre Unterstützung hilft dabei, diese Ressource kostenlos und für Sprachlernende weltweit zugänglich zu halten.",
+      "button": "Auf GitHub Sponsors unterstützen"
+    },
+    "disclaimer": {
+      "title": "Haftungsausschluss",
+      "accuracy": "Diese Seite wird nur zu Bildungszwecken bereitgestellt. Obwohl wir uns um Genauigkeit bemühen, können wir nicht alle Informationen garantieren.",
+      "responsibility": "Benutzer sind dafür verantwortlich, Informationen zu überprüfen, bevor sie sie in akademischen, beruflichen oder anderen wichtigen Kontexten verwenden.",
+      "liability": "Die Ersteller dieser Seite übernehmen keine Haftung für Konsequenzen, die sich aus der Nutzung dieser Informationen ergeben."
+    },
+    "opensource": {
+      "title": "Open Source",
+      "description": "Dieses Projekt ist Open Source und begrüßt Beiträge.\n\nSie können Probleme melden, Verbesserungen vorschlagen oder zur Codebasis auf GitHub beitragen.",
+      "button": "Auf GitHub ansehen"
+    }
   }
 }

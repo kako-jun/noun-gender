@@ -9,6 +9,7 @@ import { VoiceSelector } from '@/components/VoiceSelector';
 import { Footer } from '@/components/Footer';
 import { StatsHeader } from '@/components/StatsHeader';
 import { useTranslations } from '@/hooks/useTranslations';
+import { Info } from 'lucide-react';
 
 export default function QuizPage() {
   const [showQuiz, setShowQuiz] = useState(true);
@@ -47,6 +48,16 @@ export default function QuizPage() {
             </h1>
             <p className="text-lg text-stone-600 dark:text-stone-300 mb-3">
               {translationsLoading ? 'Master noun genders across languages' : t('header.subtitle')}
+              {!translationsLoading && (
+                <span className="mx-2 text-stone-500 dark:text-stone-400">|</span>
+              )}
+              <a 
+                href="/about" 
+                className="inline-flex items-center space-x-1 text-sm text-stone-500 dark:text-stone-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                <Info className="w-3 h-3" />
+                <span>About</span>
+              </a>
             </p>
             <StatsHeader />
           </div>

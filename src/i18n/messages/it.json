@@ -66,5 +66,38 @@
     "question": "Domanda {current} / {total}",
     "complete": "Quiz Completato!",
     "loadingQuiz": "Caricamento quiz..."
+  },
+  "about": {
+    "subtitle": "Informazioni su questo progetto",
+    "overview": {
+      "title": "Panoramica del sito web",
+      "description": "Noun Gender è una piattaforma di apprendimento completa per padroneggiare i generi dei sostantivi.\n\nOffriamo traduzioni, pronuncia, esempi, tecniche di memorizzazione e quiz per oltre 4.600 vocaboli in 8 lingue con generi dei sostantivi."
+    },
+    "stats": {
+      "words": "parole",
+      "languages": "lingue",
+      "ui_languages": "lingue interfaccia",
+      "free": "gratuito"
+    },
+    "purpose": {
+      "title": "Motivo della creazione",
+      "description": "Memorizzare i generi dei sostantivi è uno dei maggiori ostacoli nell'apprendimento di lingue con generi come tedesco, francese e spagnolo.\n\nL'autore vive in Giappone, dove il giapponese non ha generi dei sostantivi. Tuttavia, proprio perché è un concetto linguistico distante, ha suscitato interesse ed è stato creato inizialmente per l'apprendimento personale.\n\nGli strumenti di apprendimento esistenti hanno problemi. Mancano informazioni su lingue come hindi e arabo. La maggior parte elenca semplicemente informazioni senza spiegare perché un sostantivo ha un certo genere.\n\nCrediamo che si possano ottenere miglioramenti significativi migliorando il metodo di presentazione. Questo sembra possibile attraverso le mie competenze di sviluppo e la velocità di sviluppo accelerata dall'IA generativa."
+    },
+    "support": {
+      "title": "Per favore supportate questo progetto!",
+      "description": "Questo sito web richiede costi continui per server, manutenzione e tempo di sviluppo.\n\nPianifichiamo di espandere a più di 10.000 parole. L'estrazione del vocabolario è già completa, ma il lavoro successivo di traduzione, esempi e creazione di tecniche di memorizzazione richiede costi enormi.\n\nIl vostro supporto aiuta a rendere questa risorsa disponibile gratuitamente per studenti di lingue in tutto il mondo.",
+      "button": "Supporta su GitHub Sponsors"
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "accuracy": "Questo sito web è solo per scopi educativi. Anche se ci sforziamo per l'accuratezza, non possiamo garantire tutte le informazioni.",
+      "responsibility": "Gli utenti sono responsabili di verificare le informazioni prima di utilizzarle in contesti accademici, professionali o altre occasioni importanti.",
+      "liability": "I creatori di questo sito web non si assumono alcuna responsabilità per le conseguenze dell'uso di queste informazioni."
+    },
+    "opensource": {
+      "title": "Open source",
+      "description": "Questo progetto è open source e i contributi sono benvenuti.\n\nPuoi segnalare problemi, suggerire miglioramenti o contribuire al codice su GitHub.",
+      "button": "Visualizza su GitHub"
+    }
   }
 }
