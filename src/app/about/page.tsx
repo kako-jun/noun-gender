@@ -75,7 +75,7 @@ function AboutContent() {
                 <div className="text-sm text-stone-600 dark:text-stone-300">{t('about.stats.words')}</div>
               </div>
               <div className="bg-solarized-base3 dark:bg-solarized-base03 rounded-lg p-3">
-                <div className="text-2xl font-bold text-solarized-green">8</div>
+                <div className="text-2xl font-bold text-solarized-orange">8</div>
                 <div className="text-sm text-stone-600 dark:text-stone-300">{t('about.stats.languages')}</div>
               </div>
               <div className="bg-solarized-base3 dark:bg-solarized-base03 rounded-lg p-3">
