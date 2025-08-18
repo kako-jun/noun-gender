@@ -83,7 +83,7 @@ function AboutContent() {
                 <div className="text-sm text-stone-600 dark:text-stone-300">{t('about.stats.ui_languages')}</div>
               </div>
               <div className="bg-solarized-base3 dark:bg-solarized-base03 rounded-lg p-3">
-                <div className="text-2xl font-bold text-solarized-red">100%</div>
+                <div className="text-2xl font-bold text-solarized-green">100%</div>
                 <div className="text-sm text-stone-600 dark:text-stone-300">{t('about.stats.free')}</div>
               </div>
             </div>
