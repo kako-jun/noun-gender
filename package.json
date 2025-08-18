@@ -1,7 +1,7 @@
 {
   "name": "noun-gender",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
   "description": "名詞の性別がある言語（フランス語、ドイツ語、スペイン語等）の学習・検索用Webアプリケーション",
   "author": "kako-jun",
   "license": "MIT",
