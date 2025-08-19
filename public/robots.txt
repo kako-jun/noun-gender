@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://noun-gender.com/sitemap.xml
+
+# Allow common crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Block unnecessary paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /node_modules/
