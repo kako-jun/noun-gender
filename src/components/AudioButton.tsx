@@ -32,7 +32,6 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSupported, setIsSupported] = useState(true);
   const { preferFemaleVoice } = useVoice();
-  const [hasSpoken, setHasSpoken] = useState(false); // 重複実行防止フラグ
   const { t } = useTranslations();
 
   const handleSpeak = () => {
@@ -46,7 +45,6 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
     if (isPlaying) {
       window.speechSynthesis.cancel();
       setIsPlaying(false);
-      setHasSpoken(false);
       return;
     }
 
@@ -296,13 +294,11 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
 
         utterance.onend = () => {
           setIsPlaying(false);
-          setHasSpoken(false);
         };
 
         utterance.onerror = (event) => {
           console.warn('Speech synthesis failed for:', text, 'in language:', voiceLang, 'Error:', event.error);
           setIsPlaying(false);
-          setHasSpoken(false);
         };
 
         // 読み上げ開始
@@ -337,7 +333,6 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
     } catch (error) {
       console.warn('Speech synthesis initialization failed:', error);
       setIsPlaying(false);
-      setHasSpoken(false);
     }
   };
 

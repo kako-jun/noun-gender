@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import type { SearchResult, Translation } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
 import { CopyButton } from './CopyButton';
 import { useTranslations } from '@/hooks/useTranslations';
-import { getGenderStyle, getGenderSymbol } from '@/utils/genderStyles';
+import { getGenderStyle } from '@/utils/genderStyles';
 import { HighlightedText } from '@/utils/textHighlight';
 import { ExampleSection } from './ExampleSection';
 import { useState } from 'react';
@@ -65,10 +66,12 @@ const TranslationCard = React.memo(function TranslationCard({
       
       {/* Gender symbol - background image */}
       <div className="absolute top-1/2 transform -translate-y-1/2 right-0 pointer-events-none select-none">
-        <img 
+        <Image 
           src={`/images/gender-${translation.gender}-white.webp`}
           alt={`${translation.gender === 'm' ? 'Male' : translation.gender === 'f' ? 'Female' : 'Neuter'} gender symbol`}
-          className="w-20 h-20 opacity-40"
+          width={80}
+          height={80}
+          className="opacity-40"
         />
       </div>
       
