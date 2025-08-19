@@ -355,16 +355,17 @@ words_ru|4592              ← 同上
 **場所**: `/data/example_translations.csv`
 **形式**: TSV（タブ区切り）
 
+**⚠️ 重要: 実際の形式**:
 ```
-example_en	lang	translation
-The old abbey on the hill has been a peaceful retreat for centuries.	de	Die alte Abtei auf dem Hügel war jahrhundertelang ein friedlicher Rückzugsort.
-The old abbey on the hill has been a peaceful retreat for centuries.	fr	La vieille abbaye sur la colline est un refuge paisible depuis des siècles.
-The old abbey on the hill has been a peaceful retreat for centuries.	es	La antigua abadía en la colina ha sido un refugio pacífico durante siglos.
+words_en	example_en	lang	translation
+abbey	Westminster Abbey has hosted coronations for centuries of British monarchs.	de	Westminster Abbey hat jahrhundertelang Krönungen britischer Monarchen ausgerichtet.
+abbey	Westminster Abbey has hosted coronations for centuries of British monarchs.	fr	L'abbaye de Westminster a accueilli les couronnements des monarques britanniques pendant des siècles.
 ```
 
 **列構成**:
+- `words_en`: 英単語（参照用）
 - `example_en`: 英語例文（examples.example_enから取得）
-- `lang`: 言語コード（fr, de, es, it, pt, ru, ar, hi, ja, zh）
+- `lang`: 言語コード（de, fr, es, it, pt, ru, ar, hi, ja, zh）
 - `translation`: その言語での例文翻訳
 
 ### 例文翻訳CSV初期化
@@ -395,11 +396,23 @@ conn.close()
 
 ## 例文翻訳作業手順
 
+### ⚠️ 最重要ルール
+**絶対に行を追加・削除しない。既存の空欄のみを埋める。**
+
 ### 翻訳作業の進め方
-1. **段階的実施**
-   - A語の例文から開始
-   - 1言語ずつ完了させる（例：全例文のドイツ語翻訳→フランス語翻訳）
-   - または1例文ずつ全言語翻訳する
+1. **CSVファイルを直接編集**
+   - `/data/example_translations.csv`をそのまま編集
+   - 空の`translation`列（4列目）のみを埋める
+   - 新しいファイルは作成しない
+   - バックアップも作成しない
+
+2. **作業手順**:
+   ```
+   1. example_translations.csvの空欄を特定
+   2. 該当行のtranslation列に翻訳を直接記入
+   3. 定期的にファイルを保存
+   4. 同期スクリプト実行
+   ```
 
 2. **翻訳品質基準**
    - 自然で流暢な翻訳
@@ -417,7 +430,7 @@ conn.close()
 
 **推奨方法（スクリプト使用）:**
 ```bash
-python scripts/sync_example_translations.py
+python scripts/sync_csv_to_db.py
 ```
 
 **手動実装（参考用）:**
