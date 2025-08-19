@@ -63,15 +63,13 @@ const TranslationCard = React.memo(function TranslationCard({
       {/* Gender background - spans full container */}
       <div className="absolute inset-0 opacity-40" style={getGenderStyle(translation.gender)}></div>
       
-      {/* Gender symbol - large background text */}
-      <div className={`absolute top-1/2 transform -translate-y-1/2 pointer-events-none select-none ${
-        translation.gender === 'n' ? 'right-3' : 'right-2'
-      }`} style={translation.gender === 'n' ? { marginLeft: '-6px' } : {}}>
-        <span className={`text-white font-bold opacity-40 ${
-          translation.gender === 'n' ? 'text-4xl' : 'text-6xl'
-        }`} aria-hidden="true">
-          {getGenderSymbol(translation.gender)}
-        </span>
+      {/* Gender symbol - background image */}
+      <div className="absolute top-1/2 transform -translate-y-1/2 right-0 pointer-events-none select-none">
+        <img 
+          src={`/images/gender-${translation.gender}-white.webp`}
+          alt={`${translation.gender === 'm' ? 'Male' : translation.gender === 'f' ? 'Female' : 'Neuter'} gender symbol`}
+          className="w-20 h-20 opacity-40"
+        />
       </div>
       
       {/* Screen reader only gender info */}
@@ -95,7 +93,7 @@ const TranslationCard = React.memo(function TranslationCard({
           </div>
           
           <div 
-            className="flex items-center gap-2 flex-shrink-0 self-end sm:self-auto mr-12 sm:mr-16"
+            className="flex items-center gap-2 flex-shrink-0 self-end sm:self-auto mr-16 sm:mr-16"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="w-8 h-8 flex justify-center items-center transform transition-transform duration-200 hover:scale-110">
