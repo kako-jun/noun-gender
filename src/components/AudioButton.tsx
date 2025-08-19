@@ -54,13 +54,12 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
       return;
     }
 
-    // 重複実行防止 - 再生中または直前にトリガーされた場合はスキップ
-    if (hasSpoken || isPlaying) {
+    // 重複実行防止を緩和 - モバイル対応
+    if (isPlaying) {
       return;
     }
 
     try {
-      setHasSpoken(true); // 重複実行防止フラグを設定
       
       const utterance = new SpeechSynthesisUtterance(text);
       const voiceLang = getVoiceLang(language);
@@ -297,14 +296,13 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
 
         utterance.onend = () => {
           setIsPlaying(false);
-          setHasSpoken(false); // 完了後にフラグをリセット
+          setHasSpoken(false);
         };
 
-        utterance.onerror = () => {
-          console.warn('Speech synthesis failed for:', text, 'in language:', voiceLang);
+        utterance.onerror = (event) => {
+          console.warn('Speech synthesis failed for:', text, 'in language:', voiceLang, 'Error:', event.error);
           setIsPlaying(false);
-          setHasSpoken(false); // エラー後にフラグをリセット
-          // エラーが発生してもボタンは表示したまま
+          setHasSpoken(false);
         };
 
         // 読み上げ開始
@@ -339,7 +337,7 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
     } catch (error) {
       console.warn('Speech synthesis initialization failed:', error);
       setIsPlaying(false);
-      setHasSpoken(false); // エラー時にフラグをリセット
+      setHasSpoken(false);
     }
   };
 
@@ -358,12 +356,22 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
   return (
     <button
       onClick={handleSpeak}
+      onTouchStart={(e) => {
+        // タッチデバイス用: タッチ開始時にプリベント
+        e.preventDefault();
+      }}
+      onTouchEnd={(e) => {
+        // タッチデバイス用: タッチ終了時に実行
+        e.preventDefault();
+        handleSpeak();
+      }}
       className={`
         inline-flex items-center justify-center
         ${sizeClasses} rounded-full
         bg-solarized-orange hover:bg-solarized-yellow 
         text-white transition-colors
         disabled:opacity-50
+        touch-manipulation
         ${className}
       `}
       title={isPlaying ? t('audio.stop') : t('audio.play')}

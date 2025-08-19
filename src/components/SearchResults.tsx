@@ -81,12 +81,12 @@ const TranslationCard = React.memo(function TranslationCard({
       
       {/* Main content */}
       <div className="relative p-3">
-        <div className="flex items-center justify-between w-full mb-1">
-          <div className="flex items-center space-x-3 sm:space-x-6">
-            <span className="text-sm font-medium text-solarized-base00 dark:text-solarized-base0 w-20">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full mb-1 gap-2 sm:gap-0">
+          <div className="flex items-center space-x-3 sm:space-x-6 min-w-0 flex-1">
+            <span className="text-sm font-medium text-solarized-base00 dark:text-solarized-base0 w-16 sm:w-20 flex-shrink-0">
               {SUPPORTED_LANGUAGES[translation.language as keyof typeof SUPPORTED_LANGUAGES]}
             </span>
-            <span className="font-semibold text-lg text-solarized-base01 dark:text-solarized-base1">
+            <span className="font-semibold text-lg text-solarized-base01 dark:text-solarized-base1 break-words">
               <HighlightedText 
                 text={translation.translation} 
                 query={mode === 'search' ? searchQuery : ''}
@@ -95,16 +95,16 @@ const TranslationCard = React.memo(function TranslationCard({
           </div>
           
           <div 
-            className="flex items-center mr-16"
+            className="flex items-center gap-2 flex-shrink-0 self-end sm:self-auto mr-12 sm:mr-16"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="w-8 flex justify-center transform transition-transform duration-200 hover:scale-110">
+            <div className="w-8 h-8 flex justify-center items-center transform transition-transform duration-200 hover:scale-110">
               <AudioButton 
                 text={translation.translation} 
                 language={translation.language}
               />
             </div>
-            <div className="w-8 flex justify-center ml-3 transform transition-transform duration-200 hover:scale-110">
+            <div className="w-8 h-8 flex justify-center items-center transform transition-transform duration-200 hover:scale-110">
               <CopyButton 
                 text={translation.translation}
                 label={translation.translation}
