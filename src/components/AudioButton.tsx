@@ -66,7 +66,7 @@ export function AudioButton({ text, language, className = '', size = 'normal' }:
       
       // 音声設定
       utterance.lang = voiceLang;
-      utterance.rate = 0.9;
+      utterance.rate = 0.85;
       utterance.pitch = 1.0;
       utterance.volume = 0.8;
 
