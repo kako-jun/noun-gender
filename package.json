@@ -2,7 +2,7 @@
   "name": "noun-gender",
   "version": "1.0.0",
   "private": false,
-  "description": "名詞の性別がある言語（フランス語、ドイツ語、スペイン語等）の学習・検索用Webアプリケーション",
+  "description": "Web application for learning and searching noun genders in languages like French, German, Spanish, and more",
   "author": "kako-jun",
   "license": "MIT",
   "homepage": "https://noun-gender.llll-ll.com",
