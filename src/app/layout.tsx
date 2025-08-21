@@ -106,6 +106,7 @@ export default function RootLayout({
       <head>
         {/* Nostalgic Counter Web Component */}
         <script src="https://nostalgic.llll-ll.com/components/visit.js" async />
+        <script src="https://nostalgic.llll-ll.com/components/like.js" async />
       </head>
       <body
         className={`${sourceSerif.variable} ${ibmPlexSerif.variable} font-serif antialiased`}
