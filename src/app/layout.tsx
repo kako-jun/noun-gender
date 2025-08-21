@@ -103,6 +103,10 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning>
+      <head>
+        {/* Nostalgic Counter Web Component */}
+        <script src="https://nostalgic.llll-ll.com/components/visit.js" async />
+      </head>
       <body
         className={`${sourceSerif.variable} ${ibmPlexSerif.variable} font-serif antialiased`}
       >
