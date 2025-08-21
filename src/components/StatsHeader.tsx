@@ -39,20 +39,27 @@ export function StatsHeader() {
   const languageCount = languageStats.length;
 
   return (
-    <div className="flex flex-wrap justify-center gap-3 text-sm text-solarized-base01 dark:text-solarized-base0">
-      <span className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full">
-        {totalWords.toLocaleString()} words
-      </span>
-      <span className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full">
-        {totalTranslations.toLocaleString()}+ translations
-      </span>
-      <span className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full">
-        {languageCount} languages
-      </span>
-      <div className="w-full"></div>
-      <div className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full inline-flex items-center gap-2">
-        <nostalgic-counter id="noun-gender-639f7fa2" type="total" theme="modern" format="text"></nostalgic-counter>
-        <span>visitors</span>
+    <div className="flex flex-col items-center gap-2 text-sm text-solarized-base01 dark:text-solarized-base0">
+      <div className="flex flex-wrap justify-center gap-3">
+        <span className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full">
+          {totalWords.toLocaleString()} words
+        </span>
+        <span className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full">
+          {totalTranslations.toLocaleString()}+ translations
+        </span>
+        <span className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full">
+          {languageCount} languages
+        </span>
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full inline-flex items-center gap-2">
+          <nostalgic-counter id="noun-gender-639f7fa2" type="total" theme="modern" format="text"></nostalgic-counter>
+          <span>visitors</span>
+        </div>
+        <div className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full inline-flex items-center gap-2">
+          <nostalgic-like id="noun-gender-639f7fa2" theme="modern" format="text"></nostalgic-like>
+          <span>stars</span>
+        </div>
       </div>
     </div>
   );

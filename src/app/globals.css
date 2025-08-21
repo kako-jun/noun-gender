@@ -39,3 +39,11 @@ html {
     letter-spacing: 0;
   }
 }
+
+/* Nostalgic Like コンポーネントのカラーカスタマイズ */
+nostalgic-like {
+  --like-text-color-unliked: #2aa198; /* Solarized cyan - Like前 */
+  --like-text-color-liked: #b58900; /* Solarized yellow - Like後 */
+  --like-text-hover-color-unliked: #268bd2; /* Solarized blue - hover */
+  --like-text-hover-color-liked: #cb4b16; /* Solarized orange - hover */
+}
