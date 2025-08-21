@@ -49,9 +49,11 @@ export function StatsHeader() {
       <span className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full">
         {languageCount} languages
       </span>
-      <span className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full">
-        Multilingual search
-      </span>
+      <div className="w-full"></div>
+      <div className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full inline-flex items-center gap-2">
+        <nostalgic-counter id="noun-gender-639f7fa2" type="total" theme="modern" format="text"></nostalgic-counter>
+        <span>visitors</span>
+      </div>
     </div>
   );
 }
