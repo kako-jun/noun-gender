@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Play, RotateCcw, Check, X } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { AudioButton } from './AudioButton';
@@ -51,6 +51,69 @@ export function Quiz({ onClose }: QuizProps) {
       setIsLoading(false);
     }
   };
+
+  const calculateScore = () => {
+    return answers.filter((answer, index) => 
+      answer === questions[index]?.correctGender
+    ).length;
+  };
+
+  const generatePlayerName = (): string => {
+    const adjectives = ['Swift', 'Clever', 'Brave', 'Quick', 'Smart', 'Fast', 'Sharp', 'Wise', 'Cool', 'Super'];
+    const animals = ['Fox', 'Eagle', 'Tiger', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Cat', 'Dog', 'Owl'];
+    
+    // IP+UserAgentの代わりにnavigatorのプロパティを使用してハッシュ生成
+    const userString = `${navigator.userAgent}-${navigator.language}-${screen.width}x${screen.height}`;
+    let hash = 0;
+    for (let i = 0; i < userString.length; i++) {
+      const char = userString.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // 32bit整数に変換
+    }
+    
+    const adjIndex = Math.abs(hash) % adjectives.length;
+    const animalIndex = Math.abs(hash >> 8) % animals.length;
+    const number = (Math.abs(hash >> 16) % 999) + 1;
+    
+    return `${adjectives[adjIndex]}${animals[animalIndex]}${number}`;
+  };
+
+  const submitToRanking = useCallback(async () => {
+    if (rankingSubmitted) return;
+    
+    const score = calculateScore();
+    const percentage = Math.round((score / questions.length) * 100);
+    const displayScore = `${score}/${questions.length} (${percentage}%)`;
+    const playerName = generatePlayerName();
+    
+    const rankingId = "noun-gender-d0bb6d1f";
+    
+    try {
+      // 正しいAPI呼び出し: 数値（ソート用）と文字列（表示用）の両方を送信
+      const response = await fetch(`https://nostalgic.llll-ll.com/api/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${percentage}&displayScore=${encodeURIComponent(displayScore)}`);
+      
+      if (response.ok) {
+        setRankingSubmitted(true);
+        setSubmitMessage('Submitted to ranking! 🏆');
+      } else {
+        setSubmitMessage('Submit failed. Please try again.');
+      }
+    } catch (error) {
+      setSubmitMessage('Submit failed. Please try again.');
+      console.error('Ranking submission error:', error);
+    }
+  }, [rankingSubmitted, questions, answers]);
+
+  // クイズ完了時に自動でランキング送信
+  useEffect(() => {
+    if (showResult && !rankingSubmitted) {
+      // 少し遅延を入れてからランキング送信
+      const timer = setTimeout(() => {
+        submitToRanking();
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showResult, rankingSubmitted, submitToRanking]);
 
   const handleStartQuiz = () => {
     if (selectedLanguage) {
@@ -115,58 +178,6 @@ export function Quiz({ onClose }: QuizProps) {
     return flags[lang] || '🌍';
   };
 
-  const calculateScore = () => {
-    return answers.filter((answer, index) => 
-      answer === questions[index]?.correctGender
-    ).length;
-  };
-
-  // プレイヤー名生成（IP+UserAgentベース）
-  const generatePlayerName = (): string => {
-    const adjectives = ['Swift', 'Clever', 'Brave', 'Quick', 'Smart', 'Fast', 'Sharp', 'Wise', 'Cool', 'Super'];
-    const animals = ['Fox', 'Eagle', 'Tiger', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Cat', 'Dog', 'Owl'];
-    
-    // IP+UserAgentの代わりにnavigatorのプロパティを使用してハッシュ生成
-    const userString = `${navigator.userAgent}-${navigator.language}-${screen.width}x${screen.height}`;
-    let hash = 0;
-    for (let i = 0; i < userString.length; i++) {
-      const char = userString.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // 32bit整数に変換
-    }
-    
-    const adjIndex = Math.abs(hash) % adjectives.length;
-    const animalIndex = Math.abs(hash >> 8) % animals.length;
-    const number = (Math.abs(hash >> 16) % 999) + 1;
-    
-    return `${adjectives[adjIndex]}${animals[animalIndex]}${number}`;
-  };
-
-  const submitToRanking = async () => {
-    if (rankingSubmitted) return;
-    
-    const score = calculateScore();
-    const percentage = Math.round((score / questions.length) * 100);
-    const displayScore = `${score}/${questions.length} (${percentage}%)`;
-    const playerName = generatePlayerName();
-    
-    const rankingId = "noun-gender-d0bb6d1f";
-    
-    try {
-      // 正しいAPI呼び出し: 数値（ソート用）と文字列（表示用）の両方を送信
-      const response = await fetch(`https://nostalgic.llll-ll.com/api/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${percentage}&displayScore=${encodeURIComponent(displayScore)}`);
-      
-      if (response.ok) {
-        setRankingSubmitted(true);
-        setSubmitMessage('Submitted to ranking! 🏆');
-      } else {
-        setSubmitMessage('Submit failed. Please try again.');
-      }
-    } catch (error) {
-      setSubmitMessage('Submit failed. Please try again.');
-      console.error('Ranking submission error:', error);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -322,13 +333,14 @@ Select Language
 
           <div className="space-y-3">
             {!rankingSubmitted && (
-              <Button
-                onClick={submitToRanking}
-                variant="primary"
-                className="w-full"
-              >
-                🏆 Submit to Global Ranking
-              </Button>
+              <div className="text-center text-sm text-solarized-base01 dark:text-solarized-base1">
+                🏆 Auto-submitting to <a href="https://nostalgic.llll-ll.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">global ranking</a>...
+              </div>
+            )}
+            {rankingSubmitted && (
+              <div className="text-center text-sm text-green-500">
+                🏆 Submitted to <a href="https://nostalgic.llll-ll.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">global ranking</a>!
+              </div>
             )}
             <div className="flex space-x-3">
               <Button
