@@ -35,7 +35,6 @@ export function Quiz({ onClose }: QuizProps) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | 'center'>('center');
   const [rankingSubmitted, setRankingSubmitted] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState('');
 
   const loadQuestions = async (language: string) => {
     setIsLoading(true);
@@ -82,15 +81,14 @@ export function Quiz({ onClose }: QuizProps) {
     if (rankingSubmitted) return;
     
     const score = calculateScore();
-    const percentage = Math.round((score / questions.length) * 100);
-    const displayScore = `${score}/${questions.length} (${percentage}%)`;
+    const displayScore = `${score}/${questions.length}`;
     const playerName = generatePlayerName();
     
     const rankingId = "noun-gender-d0bb6d1f";
     
     try {
-      // 正しいAPI呼び出し: 数値（ソート用）と文字列（表示用）の両方を送信
-      const response = await fetch(`https://nostalgic.llll-ll.com/api/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${percentage}&displayScore=${encodeURIComponent(displayScore)}`);
+      // 正解数をソートキー、表示用文字列を別途送信
+      const response = await fetch(`https://nostalgic.llll-ll.com/api/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${score}&displayScore=${encodeURIComponent(displayScore)}`);
       
       if (response.ok) {
         setRankingSubmitted(true);
@@ -100,7 +98,7 @@ export function Quiz({ onClose }: QuizProps) {
     } catch (error) {
       console.error('Ranking submission error:', error);
     }
-  }, [rankingSubmitted, questions, answers]);
+  }, [rankingSubmitted, questions, answers, calculateScore]);
 
   // クイズ完了時に自動でランキング送信
   useEffect(() => {
