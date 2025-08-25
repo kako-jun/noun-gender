@@ -94,12 +94,10 @@ export function Quiz({ onClose }: QuizProps) {
       
       if (response.ok) {
         setRankingSubmitted(true);
-        setSubmitMessage('Submitted to ranking! 🏆');
       } else {
-        setSubmitMessage('Submit failed. Please try again.');
+        console.error('Ranking submission failed');
       }
     } catch (error) {
-      setSubmitMessage('Submit failed. Please try again.');
       console.error('Ranking submission error:', error);
     }
   }, [rankingSubmitted, questions, answers]);
@@ -298,13 +296,6 @@ Select Language
             <div className="text-lg text-solarized-base01 dark:text-solarized-base1 mt-2">
               {Math.round((score / questions.length) * 100)}% Accuracy
             </div>
-            {submitMessage && (
-              <div className={`text-sm mt-2 font-medium ${
-                submitMessage.includes('failed') ? 'text-red-500' : 'text-green-500'
-              }`}>
-                {submitMessage}
-              </div>
-            )}
           </div>
           
           <div className="space-y-2 mb-6">
