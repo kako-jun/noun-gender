@@ -150,8 +150,7 @@ export function Quiz({ onClose }: QuizProps) {
     const displayScore = `${score}/${questions.length} (${percentage}%)`;
     const playerName = generatePlayerName();
     
-    // TODO: 実際の公開IDに置き換える（ランキング作成後）
-    const rankingId = "quiz-xxxxxxxx"; // プレースホルダー
+    const rankingId = "noun-gender-d0bb6d1f";
     
     try {
       // 正しいAPI呼び出し: 公開IDのみ使用
