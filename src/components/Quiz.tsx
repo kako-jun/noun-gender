@@ -34,6 +34,8 @@ export function Quiz({ onClose }: QuizProps) {
   const [selectedLanguage, setSelectedLanguage] = useState<string>('');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | 'center'>('center');
+  const [rankingSubmitted, setRankingSubmitted] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
 
   const loadQuestions = async (language: string) => {
     setIsLoading(true);
@@ -96,6 +98,8 @@ export function Quiz({ onClose }: QuizProps) {
     setQuizStarted(true);
     setIsTransitioning(false);
     setSlideDirection('center');
+    setRankingSubmitted(false);
+    setSubmitMessage('');
   };
 
 
@@ -115,6 +119,54 @@ export function Quiz({ onClose }: QuizProps) {
     return answers.filter((answer, index) => 
       answer === questions[index]?.correctGender
     ).length;
+  };
+
+  // プレイヤー名生成（IP+UserAgentベース）
+  const generatePlayerName = (): string => {
+    const adjectives = ['Swift', 'Clever', 'Brave', 'Quick', 'Smart', 'Fast', 'Sharp', 'Wise', 'Cool', 'Super'];
+    const animals = ['Fox', 'Eagle', 'Tiger', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Cat', 'Dog', 'Owl'];
+    
+    // IP+UserAgentの代わりにnavigatorのプロパティを使用してハッシュ生成
+    const userString = `${navigator.userAgent}-${navigator.language}-${screen.width}x${screen.height}`;
+    let hash = 0;
+    for (let i = 0; i < userString.length; i++) {
+      const char = userString.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // 32bit整数に変換
+    }
+    
+    const adjIndex = Math.abs(hash) % adjectives.length;
+    const animalIndex = Math.abs(hash >> 8) % animals.length;
+    const number = (Math.abs(hash >> 16) % 999) + 1;
+    
+    return `${adjectives[adjIndex]}${animals[animalIndex]}${number}`;
+  };
+
+  const submitToRanking = async () => {
+    if (rankingSubmitted) return;
+    
+    const score = calculateScore();
+    const percentage = Math.round((score / questions.length) * 100);
+    const displayScore = `${score}/${questions.length} (${percentage}%)`;
+    const playerName = generatePlayerName();
+    
+    // TODO: 実際の公開IDに置き換える（ランキング作成後）
+    const rankingId = "quiz-xxxxxxxx"; // プレースホルダー
+    
+    try {
+      // 正しいAPI呼び出し: 公開IDのみ使用
+      const response = await fetch(`https://nostalgic.llll-ll.com/api/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${percentage}`);
+      
+      if (response.ok) {
+        setRankingSubmitted(true);
+        setSubmitMessage('Submitted to ranking! 🏆');
+      } else {
+        setSubmitMessage('Submit failed. Please try again.');
+      }
+    } catch (error) {
+      setSubmitMessage('Submit failed. Please try again.');
+      console.error('Ranking submission error:', error);
+    }
   };
 
   if (isLoading) {
@@ -233,6 +285,16 @@ Select Language
             <div className="text-4xl font-bold text-solarized-orange">
               {score} / {questions.length}
             </div>
+            <div className="text-lg text-solarized-base01 dark:text-solarized-base1 mt-2">
+              {Math.round((score / questions.length) * 100)}% Accuracy
+            </div>
+            {submitMessage && (
+              <div className={`text-sm mt-2 font-medium ${
+                submitMessage.includes('failed') ? 'text-red-500' : 'text-green-500'
+              }`}>
+                {submitMessage}
+              </div>
+            )}
           </div>
           
           <div className="space-y-2 mb-6">
@@ -259,22 +321,33 @@ Select Language
             ))}
           </div>
 
-          <div className="flex space-x-3">
-            <Button
-              onClick={restartQuiz}
-              variant="primary"
-              className="flex-1"
-            >
-              <RotateCcw className="w-4 h-4 mr-2" />
-              {t('common.tryAgain')}
-            </Button>
-            <Button
-              onClick={onClose}
-              variant="secondary"
-              className="flex-1"
-            >
-              {t('common.close')}
-            </Button>
+          <div className="space-y-3">
+            {!rankingSubmitted && (
+              <Button
+                onClick={submitToRanking}
+                variant="primary"
+                className="w-full"
+              >
+                🏆 Submit to Global Ranking
+              </Button>
+            )}
+            <div className="flex space-x-3">
+              <Button
+                onClick={restartQuiz}
+                variant="primary"
+                className="flex-1"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                {t('common.tryAgain')}
+              </Button>
+              <Button
+                onClick={onClose}
+                variant="secondary"
+                className="flex-1"
+              >
+                {t('common.close')}
+              </Button>
+            </div>
           </div>
           </div>
         </div>
