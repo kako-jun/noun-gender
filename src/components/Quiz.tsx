@@ -153,8 +153,8 @@ export function Quiz({ onClose }: QuizProps) {
     const rankingId = "noun-gender-d0bb6d1f";
     
     try {
-      // 正しいAPI呼び出し: 公開IDのみ使用
-      const response = await fetch(`https://nostalgic.llll-ll.com/api/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${percentage}`);
+      // 正しいAPI呼び出し: 数値（ソート用）と文字列（表示用）の両方を送信
+      const response = await fetch(`https://nostalgic.llll-ll.com/api/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${percentage}&displayScore=${encodeURIComponent(displayScore)}`);
       
       if (response.ok) {
         setRankingSubmitted(true);
