@@ -41,3 +41,4 @@ yarn-error.log*
 next-env.d.ts
 data/translation.db
 .claude/settings.local.json
+.serena/
