@@ -8,24 +8,24 @@
 ## 技術スタック
 
 ### フロントエンド
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 15 (Static Export)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
-- **Internationalization**: next-intl (11言語対応)
+- **Internationalization**: 静的JSONファイル (11言語対応)
 - **Theme**: next-themes (ダーク/ライト切り替え)
-- **State Management**: Zustand (軽量・必要時のみ)
+- **State Management**: React Context
 
 ### バックエンド
-- **API**: Next.js App Router (統合型)
-- **Database**: SQLite (better-sqlite3)
+- **API**: Hono (Cloudflare Workers)
+- **Database**: Cloudflare D1 (SQLite互換)
 - **ORM**: Native SQL (型安全ヘルパー付き)
-- **File Storage**: ローカルファイルシステム
 
 ### デプロイメント
-- **Infrastructure**: Google Cloud Engine (GCE)
-- **Containerization**: Docker
-- **CI/CD**: GitHub Actions
+- **Frontend**: Cloudflare Pages (静的サイト)
+- **API**: Cloudflare Workers
+- **Database**: Cloudflare D1
+- **CI/CD**: Cloudflare GitHub連携 (自動デプロイ)
 - **Domain**: noun-gender.llll-ll.com
 
 ## データベース設計
@@ -274,9 +274,9 @@ export default function SearchView() {
 ## セキュリティ設計
 
 ### データベースセキュリティ
-- **SQLインジェクション対策**: パラメータ化クエリ徹底
+- **SQLインジェクション対策**: パラメータ化クエリ徹底 (D1 Prepared Statements)
 - **外部キー制約**: データ整合性保証
-- **読み取り専用接続**: better-sqlite3のreadonly設定
+- **エッジ実行**: Cloudflare D1によるセキュアなデータアクセス
 
 ### Webアプリケーションセキュリティ
 - **XSS対策**: React標準のエスケープ処理
@@ -287,28 +287,18 @@ export default function SearchView() {
 ## 運用・監視
 
 ### CI/CD パイプライン
-```yaml
-# GitHub Actions
-name: Deploy
-on:
-  push:
-    branches: [main]
 
-jobs:
-  deploy:
-    - checkout
-    - setup Node.js
-    - install dependencies
-    - run tests
-    - build application
-    - deploy to GCE
-```
+Cloudflare Pages/Workers のGitHub連携による自動デプロイ:
+
+1. **mainブランチへのpush** → 自動ビルド・デプロイ
+2. **プレビューデプロイ**: PRごとにプレビューURL生成
+3. **ロールバック**: Cloudflare Dashboardから即座に可能
 
 ### 監視・分析
-- **Performance Monitoring**: Core Web Vitals
-- **Error Tracking**: カスタムエラー監視
-- **Usage Analytics**: プライバシー配慮の分析
-- **Database Monitoring**: クエリパフォーマンス監視
+- **Performance Monitoring**: Cloudflare Analytics + Core Web Vitals
+- **Error Tracking**: Cloudflare Workers Logs
+- **Usage Analytics**: Cloudflare Web Analytics (プライバシー配慮)
+- **Database Monitoring**: D1 Analytics
 
 ## 拡張性設計
 
