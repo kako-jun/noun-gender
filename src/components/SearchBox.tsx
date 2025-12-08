@@ -5,6 +5,7 @@ import { Search, X } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { KeyboardShortcuts } from './KeyboardShortcuts';
 import { Button } from './ui/Button';
+import { getApiUrl } from '@/lib/api';
 
 interface SearchBoxProps {
   onSearch: (query: string, languages: string[]) => void;
@@ -81,7 +82,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     // プレビュー単語を更新
     try {
       const prefix = letterHierarchy.join('');
-      const response = await fetch(`/api/word-at-offset?prefix=${prefix}&offset=${value}`);
+      const response = await fetch(getApiUrl(`/api/word-at-offset?prefix=${prefix}&offset=${value}`));
       const data = await response.json();
       if (data.success && data.data.word) {
         setPreviewWord(data.data.word);
@@ -261,10 +262,10 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     const loadLetterStats = async () => {
       try {
         const prefix = letterHierarchy.join('');
-        const url = prefix 
-          ? `/api/letter-stats-detailed?prefix=${prefix}`
-          : '/api/letter-stats';
-          
+        const url = prefix
+          ? getApiUrl(`/api/letter-stats-detailed?prefix=${prefix}`)
+          : getApiUrl('/api/letter-stats');
+
         const response = await fetch(url);
         const data = await response.json();
         if (data.success) {
@@ -285,7 +286,7 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     const loadWordRange = async () => {
       try {
         const prefix = letterHierarchy.join('');
-        const response = await fetch(`/api/word-range?prefix=${prefix}`);
+        const response = await fetch(getApiUrl(`/api/word-range?prefix=${prefix}`));
         const data = await response.json();
         if (data.success) {
           setWordRange(data.data);

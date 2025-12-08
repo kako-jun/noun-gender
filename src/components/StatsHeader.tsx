@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getApiUrl } from '@/lib/api';
 
 interface Stats {
   totalWords: number;
@@ -14,7 +15,7 @@ export function StatsHeader() {
   const [stats, setStats] = useState<Stats | null>(null);
 
   useEffect(() => {
-    fetch('/api/stats')
+    fetch(getApiUrl('/api/stats'))
       .then(res => res.json())
       .then(setStats)
       .catch(console.error);

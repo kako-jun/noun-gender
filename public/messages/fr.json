@@ -1,0 +1,103 @@
+{
+  "common": {
+    "close": "Fermer",
+    "tryAgain": "Réessayer",
+    "changeLanguage": "Changer de langue"
+  },
+  "header": {
+    "subtitle": "Maîtrisez les genres des noms dans toutes les langues"
+  },
+  "search": {
+    "placeholder": "Rechercher un mot...",
+    "searching": "Recherche...",
+    "languagesOptional": "Langues",
+    "searchButton": "Rechercher",
+    "noResultsFound": "Aucun résultat trouvé.\nEssayez de rechercher un mot comme \"cat\", \"book\" ou \"house\".",
+    "resultsFound": "Trouvé {count} résultats",
+    "networkError": "Erreur de réseau",
+    "networkErrorMessage": "Veuillez vérifier votre connexion réseau et réessayer"
+  },
+  "tabs": {
+    "search": "Rechercher",
+    "browse": "Parcourir",
+    "quiz": "Quiz"
+  },
+  "browse": {
+    "index": "Index"
+  },
+  "gender": {
+    "masculine": "Masculin",
+    "feminine": "Féminin",
+    "neuter": "Neutre"
+  },
+  "languages": {
+    "Arabic": "Arabe",
+    "French": "Français",
+    "German": "Allemand",
+    "Hindi": "Hindi",
+    "Italian": "Italien",
+    "Portuguese": "Portugais",
+    "Russian": "Russe",
+    "Spanish": "Espagnol"
+  },
+  "audio": {
+    "play": "Lire l'audio",
+    "stop": "Arrêter l'audio",
+    "selectVoiceGender": "Sélectionner le genre de la voix",
+    "maleVoice": "Voix masculine",
+    "femaleVoice": "Voix féminine"
+  },
+  "copy": {
+    "copy": "Copier dans le presse-papiers",
+    "copied": "Copié !"
+  },
+  "theme": {
+    "toggle": "Changer de thème"
+  },
+  "shortcuts": {
+    "title": "Raccourcis Clavier",
+    "focusSearch": "Cibler l'entrée de recherche",
+    "clearSearch": "Effacer la recherche"
+  },
+  "quiz": {
+    "title": "Quiz de Genre",
+    "description": "Testez vos connaissances des genres des noms !\nChoisissez une langue et obtenez 10 mots aléatoires pour identifier leur genre.",
+    "startQuiz": "Commencer le Quiz",
+    "question": "Question {current} / {total}",
+    "complete": "Quiz Terminé !",
+    "loadingQuiz": "Chargement du quiz..."
+  },
+  "about": {
+    "subtitle": "À propos de ce projet",
+    "overview": {
+      "title": "À propos de ce site",
+      "description": "Noun Gender est une plateforme d'apprentissage complète pour maîtriser les genres des noms dans plusieurs langues.\n\nNous proposons traductions, prononciation, exemples, techniques de mémorisation et quiz pour plus de 4 600 mots dans 8 langues avec genre des noms."
+    },
+    "stats": {
+      "words": "Mots",
+      "languages": "Langues",
+      "ui_languages": "Langues d'interface",
+      "free": "Gratuit"
+    },
+    "purpose": {
+      "title": "Pourquoi ce site ?",
+      "description": "Mémoriser les genres des noms est l'un des plus grands obstacles dans l'apprentissage de l'allemand, du français, de l'espagnol et d'autres langues genrées.\n\nL'auteur, basé au Japon où le japonais n'a pas de genre des noms, s'intéressait simplement à ce concept linguistique distant et a créé cet outil pour ses études personnelles au début.\n\nLes outils d'apprentissage existants avaient des problèmes. Ils manquaient d'informations pour des langues comme l'hindi et l'arabe. La plupart ne fournissaient que des listes sans expliquer pourquoi les mots ont certains genres.\n\nIl y avait une frustration que des améliorations spectaculaires étaient possibles avec une meilleure présentation. Avec mes connaissances en développement et la vitesse de développement accélérée grâce à l'IA générative, cela semblait réalisable."
+    },
+    "support": {
+      "title": "Veuillez soutenir ce projet !",
+      "description": "Ce site nécessite des coûts de serveur continus, de la maintenance et du temps de développement.\n\nNous prévoyons également d'étendre à plus de 10 000 mots - bien que l'extraction des mots soit terminée, le travail ultérieur de traductions, exemples et création de techniques de mémorisation nécessite des coûts énormes.\n\nVotre soutien aide à maintenir cette ressource gratuite et accessible aux apprenants de langues du monde entier.",
+      "button": "Soutenir sur GitHub Sponsors"
+    },
+    "disclaimer": {
+      "title": "Avertissement",
+      "accuracy": "Ce site est fourni à des fins éducatives. Bien que nous nous efforcions d'être précis, nous ne pouvons garantir toutes les informations.",
+      "responsibility": "Les utilisateurs sont responsables de vérifier les informations avant de les utiliser dans des contextes académiques, professionnels ou autres contextes importants.",
+      "liability": "Les créateurs de ce site n'acceptent aucune responsabilité pour les conséquences découlant de l'utilisation de ces informations."
+    },
+    "opensource": {
+      "title": "Open Source",
+      "description": "Ce projet est open source et accueille les contributions.\n\nVous pouvez signaler des problèmes, suggérer des améliorations ou contribuer au code sur GitHub.",
+      "button": "Voir sur GitHub"
+    }
+  }
+}
