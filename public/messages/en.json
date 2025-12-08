@@ -1,0 +1,103 @@
+{
+  "common": {
+    "close": "Close",
+    "tryAgain": "Try Again",
+    "changeLanguage": "Change language"
+  },
+  "header": {
+    "subtitle": "Master noun genders across languages"
+  },
+  "search": {
+    "placeholder": "Search words...",
+    "searching": "Searching...",
+    "languagesOptional": "Languages",
+    "searchButton": "Search",
+    "noResultsFound": "No results found.\nTry searching for a word like \"cat\", \"book\", or \"house\".",
+    "resultsFound": "Found {count} results",
+    "networkError": "Network Error",
+    "networkErrorMessage": "Please check your network connection and try again"
+  },
+  "tabs": {
+    "search": "Search",
+    "browse": "Browse",
+    "quiz": "Quiz"
+  },
+  "browse": {
+    "index": "Index"
+  },
+  "gender": {
+    "masculine": "Masculine",
+    "feminine": "Feminine",
+    "neuter": "Neuter"
+  },
+  "languages": {
+    "Arabic": "Arabic",
+    "French": "French",
+    "German": "German",
+    "Hindi": "Hindi",
+    "Italian": "Italian",
+    "Portuguese": "Portuguese",
+    "Russian": "Russian",
+    "Spanish": "Spanish"
+  },
+  "audio": {
+    "play": "Play audio",
+    "stop": "Stop audio",
+    "selectVoiceGender": "Select voice gender",
+    "maleVoice": "Male Voice",
+    "femaleVoice": "Female Voice"
+  },
+  "copy": {
+    "copy": "Copy to clipboard",
+    "copied": "Copied!"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "focusSearch": "Focus search input",
+    "clearSearch": "Clear search"
+  },
+  "quiz": {
+    "title": "Gender Quiz",
+    "description": "Test your knowledge of noun genders!\nChoose a language and get 10 random words to identify their gender.",
+    "startQuiz": "Start Quiz",
+    "question": "Question {current} / {total}",
+    "complete": "Quiz Complete!",
+    "loadingQuiz": "Loading quiz..."
+  },
+  "about": {
+    "subtitle": "About this project",
+    "overview": {
+      "title": "About This Site",
+      "description": "Noun Gender is a comprehensive learning platform for mastering noun genders in multiple languages.\n\nWe provide translations, pronunciation, examples, memory techniques, and quizzes for over 4,600 words across 8 languages with noun gender."
+    },
+    "stats": {
+      "words": "Words",
+      "languages": "Languages",
+      "ui_languages": "UI Languages",
+      "free": "Free"
+    },
+    "purpose": {
+      "title": "Why This Site?",
+      "description": "Memorizing noun genders is one of the biggest barriers in studying German, French, Spanish, and other gendered languages.\n\nThe author, based in Japan where Japanese has no noun gender. However, was interested in this distant linguistic concept and created this tool for personal study at first.\n\nExisting learning tools had issues. They lacked information for languages like Hindi and Arabic. Most just provided lists without explaining why words have certain genders.\n\nThere was frustration that dramatic improvements were possible with better presentation. With my development knowledge and accelerated development speed through generative AI, this seemed achievable."
+    },
+    "support": {
+      "title": "Please Support This Project!",
+      "description": "This site requires ongoing server costs, maintenance, and development time.\n\nWe also plan to expand to over 10,000 words - while word extraction is complete, the subsequent work of translations, examples, and memory techniques creation requires enormous costs.\n\nYour support helps keep this resource free and accessible to language learners worldwide.",
+      "button": "Support on GitHub Sponsors"
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "accuracy": "This site is provided for educational purposes. While we strive for accuracy, we cannot guarantee all information.",
+      "responsibility": "Users are responsible for verifying information before using it in academic, professional, or other important contexts.",
+      "liability": "The creators of this site accept no liability for any consequences arising from the use of this information."
+    },
+    "opensource": {
+      "title": "Open Source",
+      "description": "This project is open source and welcomes contributions.\n\nYou can report issues, suggest improvements, or contribute to the codebase on GitHub.",
+      "button": "View on GitHub"
+    }
+  }
+}
