@@ -1,13 +1,13 @@
 # Noun Gender Learning App - Project Navigation
 
 ## プロジェクト概要
-名詞に性別のある言語（ドイツ語、フランス語、スペイン語など）の学習・検索用Webアプリケーション。  
-Next.js 15 + TypeScript + SQLite で実装された、4,651語の多言語翻訳・学習ツール。
+名詞に性別のある言語（ドイツ語、フランス語、スペイン語など）の学習・検索用Webアプリケーション。
+Next.js 15 (静的エクスポート) + Hono (Cloudflare Workers) + D1 で実装された、4,651語の多言語翻訳・学習ツール。
 
-## 現在の状況（2025-08-08）
-✅ **実装完了**: 基本機能・UI・データベース正規化・API完備  
-🔄 **作業中**: 意味定義補完・例文機能拡充  
-🎯 **次期計画**: 品質改善・本格運用準備
+## 現在の状況（2025-12-08）
+✅ **実装完了**: 基本機能・UI・データベース正規化・API完備
+🔄 **作業中**: Cloudflare移行・D1データベース設定
+🎯 **次期計画**: 本番デプロイ・パフォーマンス最適化
 
 ## 📋 プロジェクト文書
 
@@ -48,11 +48,11 @@ Next.js 15 + TypeScript + SQLite で実装された、4,651語の多言語翻訳
 ## 🏛️ アーキテクチャ概要
 
 ### 技術スタック（実装済み）
-- **Frontend**: Next.js 15 + TypeScript + Tailwind CSS
+- **Frontend**: Next.js 15 (Static Export) + TypeScript + Tailwind CSS
 - **UI Components**: shadcn/ui + Solarized Theme
-- **Database**: SQLite (正規化スキーマ・外部キー制約)
-- **API**: Next.js App Router (9エンドポイント)
-- **Deploy**: GCE + Docker + GitHub Actions
+- **API**: Hono (Cloudflare Workers)
+- **Database**: Cloudflare D1 (SQLite互換・正規化スキーマ)
+- **Deploy**: Cloudflare Pages + Workers (GitHub連携自動デプロイ)
 
 ### データ概要
 - **英語単語**: 4,651語
@@ -77,14 +77,25 @@ npm run build
 ### 主要ディレクトリ
 ```
 src/
-├── app/           # Next.js App Router
+├── app/           # Next.js App Router (静的エクスポート)
 ├── components/    # React コンポーネント
-├── lib/           # データベース・ユーティリティ
-├── i18n/          # 多言語翻訳ファイル
+├── lib/           # ユーティリティ (api.ts等)
+├── i18n/          # 多言語翻訳ファイル (ソース)
 └── types/         # TypeScript 型定義
 
+api/
+├── src/
+│   ├── index.ts   # Hono APIエントリーポイント
+│   ├── db.ts      # D1データベースクエリ
+│   └── types.ts   # API型定義
+├── wrangler.toml  # Cloudflare Workers設定
+└── package.json   # API依存関係
+
+public/
+└── messages/      # i18n静的JSONファイル
+
 data/
-└── noun_gender.db # SQLite データベース
+└── noun_gender.db # SQLite データベース (D1マイグレーション用)
 
 docs/              # プロジェクト文書
 .claude/           # 開発文書・進捗管理
@@ -96,4 +107,4 @@ docs/              # プロジェクト文書
 
 ---
 
-**最終更新**: 2025-08-08 - CLAUDE.md をナビゲーション形式に変更
+**最終更新**: 2025-12-08 - Cloudflare Pages + Workers アーキテクチャに移行
