@@ -1,0 +1,103 @@
+{
+  "common": {
+    "close": "Fechar",
+    "tryAgain": "Tentar novamente",
+    "changeLanguage": "Alterar idioma"
+  },
+  "header": {
+    "subtitle": "Domine os gêneros dos substantivos em todos os idiomas"
+  },
+  "search": {
+    "placeholder": "Pesquisar palavras...",
+    "searching": "Pesquisando...",
+    "languagesOptional": "Idiomas",
+    "searchButton": "Pesquisar",
+    "noResultsFound": "Nenhum resultado encontrado.\nTente pesquisar palavras como \"cat\", \"book\" ou \"house\".",
+    "resultsFound": "Encontrados {count} resultados",
+    "networkError": "Erro de rede",
+    "networkErrorMessage": "Verifique sua conexão de rede e tente novamente"
+  },
+  "tabs": {
+    "search": "Pesquisar",
+    "browse": "Navegar",
+    "quiz": "Quiz"
+  },
+  "browse": {
+    "index": "Índice"
+  },
+  "gender": {
+    "masculine": "Masculino",
+    "feminine": "Feminino",
+    "neuter": "Neutro"
+  },
+  "languages": {
+    "Arabic": "Árabe",
+    "French": "Francês",
+    "German": "Alemão",
+    "Hindi": "Hindi",
+    "Italian": "Italiano",
+    "Portuguese": "Português",
+    "Russian": "Russo",
+    "Spanish": "Espanhol"
+  },
+  "audio": {
+    "play": "Reproduzir áudio",
+    "stop": "Parar áudio",
+    "selectVoiceGender": "Selecionar gênero da voz",
+    "maleVoice": "Voz masculina",
+    "femaleVoice": "Voz feminina"
+  },
+  "copy": {
+    "copy": "Copiar para área de transferência",
+    "copied": "Copiado!"
+  },
+  "theme": {
+    "toggle": "Alternar tema"
+  },
+  "shortcuts": {
+    "title": "Atalhos do Teclado",
+    "focusSearch": "Focar pesquisa",
+    "clearSearch": "Limpar pesquisa"
+  },
+  "quiz": {
+    "title": "Quiz de Gênero",
+    "description": "Teste seu conhecimento sobre gêneros de substantivos!\nEscolha um idioma e obtenha 10 palavras aleatórias para identificar seu gênero.",
+    "startQuiz": "Iniciar Quiz",
+    "question": "Pergunta {current} / {total}",
+    "complete": "Quiz Completo!",
+    "loadingQuiz": "Carregando quiz..."
+  },
+  "about": {
+    "subtitle": "Sobre este projeto",
+    "overview": {
+      "title": "Visão geral do site",
+      "description": "Noun Gender é uma plataforma abrangente de aprendizagem para dominar gêneros de substantivos.\n\nOferecemos traduções, pronúncia, exemplos, técnicas de memorização e quizzes para mais de 4.600 vocabulários em 8 idiomas com gêneros de substantivos."
+    },
+    "stats": {
+      "words": "palavras",
+      "languages": "idiomas",
+      "ui_languages": "idiomas da interface",
+      "free": "grátis"
+    },
+    "purpose": {
+      "title": "Razão da criação",
+      "description": "Memorizar gêneros de substantivos é um dos maiores obstáculos ao aprender idiomas com gêneros como alemão, francês e espanhol.\n\nO autor vive no Japão, onde o japonês não tem gêneros de substantivos. No entanto, precisamente porque é um conceito linguístico distante, despertou interesse e foi criado inicialmente para aprendizagem pessoal.\n\nAs ferramentas de aprendizagem existentes têm problemas. Faltam informações sobre idiomas como hindi e árabe. A maioria simplesmente lista informações sem explicar por que um substantivo tem determinado gênero.\n\nAcreditamos que melhorias significativas podem ser alcançadas melhorando o método de apresentação. Isso parece possível através dos meus conhecimentos de desenvolvimento e velocidade de desenvolvimento acelerada pela IA generativa."
+    },
+    "support": {
+      "title": "Por favor, apoiem este projeto!",
+      "description": "Este site requer custos contínuos de servidor, manutenção e tempo de desenvolvimento.\n\nPlanejamos expandir para mais de 10.000 palavras. A extração de vocabulário já está completa, mas o trabalho subsequente de tradução, exemplos e criação de técnicas de memorização requer custos enormes.\n\nSeu apoio ajuda a tornar este recurso disponível gratuitamente para estudantes de idiomas em todo o mundo.",
+      "button": "Apoiar no GitHub Sponsors"
+    },
+    "disclaimer": {
+      "title": "Isenção de responsabilidade",
+      "accuracy": "Este site é apenas para fins educacionais. Embora nos esforcemos pela precisão, não podemos garantir todas as informações.",
+      "responsibility": "Os usuários são responsáveis por verificar as informações antes de usá-las em contextos acadêmicos, profissionais ou outras ocasiões importantes.",
+      "liability": "Os criadores deste site não assumem nenhuma responsabilidade pelas consequências do uso dessas informações."
+    },
+    "opensource": {
+      "title": "Código aberto",
+      "description": "Este projeto é de código aberto e contribuições são bem-vindas.\n\nVocê pode relatar problemas, sugerir melhorias ou contribuir para o código no GitHub.",
+      "button": "Ver no GitHub"
+    }
+  }
+}

@@ -1,15 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
-  webpack: (config) => {
-    // SQLite support
-    config.externals.push({
-      'better-sqlite3': 'commonjs better-sqlite3',
-    });
-    return config;
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
   },
-  serverExternalPackages: ['better-sqlite3'],
 };
 
 export default nextConfig;

@@ -1,0 +1,16 @@
+name = "noun-gender-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "noun-gender-db"
+database_id = "YOUR_DATABASE_ID_HERE"  # Replace after running: wrangler d1 create noun-gender-db
+
+[vars]
+ENVIRONMENT = "production"
+
+# Local development
+[dev]
+port = 8787

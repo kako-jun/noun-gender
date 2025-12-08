@@ -15,6 +15,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 import type { SearchResult } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { Info } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
 
 function BrowseContent() {
   const [browseResults, setBrowseResults] = useState<SearchResult[]>([]);
@@ -53,11 +54,11 @@ function BrowseContent() {
     }
     
     try {
-      let url = `/api/browse?limit=50&offset=${offset}`;
+      let url = getApiUrl(`/api/browse?limit=50&offset=${offset}`);
       if (startsWith) {
         url += `&startsWith=${startsWith.toLowerCase()}`;
       }
-      
+
       const response = await fetch(url);
       const data = await response.json();
       

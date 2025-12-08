@@ -7,6 +7,7 @@ import { AudioButton } from './AudioButton';
 import { Button } from './ui/Button';
 import { getGenderStyle, getGenderSymbol } from '@/utils/genderStyles';
 import { useTranslations } from '@/contexts/TranslationsContext';
+import { getApiUrl } from '@/lib/api';
 
 interface QuizQuestion {
   id: number;
@@ -39,7 +40,7 @@ export function Quiz({ onClose }: QuizProps) {
   const loadQuestions = async (language: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/quiz?lang=${language}&count=10`);
+      const response = await fetch(getApiUrl(`/api/quiz?lang=${language}&count=10`));
       const data = await response.json();
       setQuestions(data.questions || []);
       setAnswers(new Array(data.questions?.length || 0).fill(null));
