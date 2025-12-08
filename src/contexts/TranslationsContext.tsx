@@ -27,13 +27,13 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
         const savedLocale = localStorage.getItem('preferred-locale') as Locale;
         const targetLocale = savedLocale || detectBrowserLocale() || 'en';
         
-        const response = await fetch(`/api/messages/${targetLocale}`);
+        const response = await fetch(`/messages/${targetLocale}.json`);
         if (response.ok) {
           const loadedMessages = await response.json();
           setMessages(loadedMessages);
           setLocale(targetLocale);
         } else {
-          const enResponse = await fetch('/api/messages/en');
+          const enResponse = await fetch('/messages/en.json');
           const enMessages = await enResponse.json();
           setMessages(enMessages);
           setLocale('en');
@@ -59,12 +59,7 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
   const changeLanguage = async (newLocale: Locale) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/messages/${newLocale}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(`/messages/${newLocale}.json`);
       
       if (response.ok) {
         const newMessages = await response.json();

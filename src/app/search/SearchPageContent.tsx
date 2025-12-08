@@ -15,6 +15,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 import type { SearchResult } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/types';
 import { Info } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
 
 function SearchContent() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -45,7 +46,7 @@ function SearchContent() {
         params.set('lang', selectedLanguages.join('-'));
       }
       
-      const response = await fetch(`/api/search?${params.toString()}`);
+      const response = await fetch(getApiUrl(`/api/search?${params.toString()}`));
       const data = await response.json();
       
       // 古いリクエストの結果は無視
