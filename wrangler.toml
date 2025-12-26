@@ -1,12 +1,13 @@
 name = "noun-gender"
 compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
 
 # D1 Database binding
 [[d1_databases]]
 binding = "DB"
 database_name = "noun-gender-db"
-database_id = "YOUR_DATABASE_ID_HERE"  # Replace after running: wrangler d1 create noun-gender-db
+database_id = "b77966ed-35c3-4fc8-a649-fea43e085708"
 
 [vars]
 ENVIRONMENT = "production"
