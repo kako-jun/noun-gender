@@ -1,6 +1,6 @@
 # Noun Gender Database ER Diagram
 
-## Updated Database Structure (As of 2025-08-08)
+## Database Structure (Cloudflare D1 - Updated 2025-12-26)
 
 ```mermaid
 erDiagram
@@ -16,6 +16,14 @@ erDiagram
         TEXT meaning_en "English definition"
         TEXT meaning_ja "Japanese definition"
         TEXT meaning_zh "Chinese definition"
+        TEXT meaning_fr "French definition"
+        TEXT meaning_de "German definition"
+        TEXT meaning_es "Spanish definition"
+        TEXT meaning_it "Italian definition"
+        TEXT meaning_pt "Portuguese definition"
+        TEXT meaning_ru "Russian definition"
+        TEXT meaning_ar "Arabic definition"
+        TEXT meaning_hi "Hindi definition"
     }
 
     examples {
@@ -39,7 +47,7 @@ erDiagram
         TEXT trick_text "Memory trick text"
     }
 
-    %% Language Tables
+    %% Language Tables (8 languages)
     words_ar {
         INTEGER id PK
         TEXT en "English word"
@@ -112,46 +120,6 @@ erDiagram
         INTEGER confidence_score
     }
 
-    %% Views
-    v_all_translations {
-        TEXT en "English word"
-        TEXT meaning_en
-        TEXT meaning_ja
-        TEXT meaning_zh
-        TEXT lang "Language code"
-        TEXT translation
-        TEXT gender
-        NUMERIC verified_at
-        INTEGER confidence_score
-    }
-
-    v_multilingual_search {
-        INTEGER id "Generated ID"
-        TEXT search_term "Lowercase search term"
-        TEXT en "English word"
-        TEXT lang "Language code"
-        TEXT translation
-        TEXT match_type "exact/english"
-        DATETIME created_at
-    }
-
-    v_search_ready {
-        TEXT search_term
-        TEXT en
-        TEXT lang
-        TEXT translation
-        TEXT match_type
-        TEXT meaning_en
-        TEXT meaning_ja
-        TEXT meaning_zh
-        TEXT gender
-    }
-
-    v_statistics {
-        TEXT table_name
-        INTEGER record_count
-    }
-
     %% Foreign Key Relationships
     words_en ||--o{ word_meanings : "en"
     words_en ||--o{ examples : "en"
@@ -166,50 +134,42 @@ erDiagram
     words_en ||--o{ words_es : "en"
 
     examples ||--o{ example_translations : "example_en"
-
-    %% View Dependencies
-    words_en ||--o{ v_all_translations : "UNION source"
-    word_meanings ||--o{ v_all_translations : "LEFT JOIN"
-    words_ar ||--o{ v_all_translations : "UNION ALL"
-    words_fr ||--o{ v_all_translations : "UNION ALL"
-    words_de ||--o{ v_all_translations : "UNION ALL"
-    words_hi ||--o{ v_all_translations : "UNION ALL"
-    words_it ||--o{ v_all_translations : "UNION ALL"
-    words_pt ||--o{ v_all_translations : "UNION ALL"
-    words_ru ||--o{ v_all_translations : "UNION ALL"
-    words_es ||--o{ v_all_translations : "UNION ALL"
-
-    v_all_translations ||--o{ v_multilingual_search : "Auto-generated search index"
-    v_multilingual_search ||--o{ v_search_ready : "Enhanced with meanings"
 ```
 
-## Key Improvements (2025-08-08 Refactoring)
+## Architecture (2025-12-26 Update)
 
-### 1. Normalized Schema
-- **Single source of truth**: `words_en` table contains all English words
-- **Separate concerns**: Meanings, examples, and tricks in dedicated tables
-- **Referential integrity**: All tables linked via foreign keys
+### No Views - Direct Table Queries
 
-### 2. Consistent Naming
-- **Column standardization**: `english` → `en`, `language_code` → `lang`
-- **View naming**: All views prefixed with `v_`
-- **Clear relationships**: FK constraints maintain data consistency
+D1のUNION ALL制限（約4-5項まで）を回避するため、ビューを使用しない設計を採用:
 
-### 3. Auto-Maintenance
-- **`v_multilingual_search`**: Dynamic view replacing static table
-- **Self-updating**: Search index automatically reflects data changes
-- **No manual sync**: Eliminates maintenance overhead
+```typescript
+// 例: 全言語から翻訳を取得
+const ALL_LANGUAGES = ['ar', 'fr', 'de', 'hi', 'it', 'pt', 'ru', 'es'] as const;
 
-### 4. Performance Optimization
-- **Strategic indexes**: On `en`, `lang`, `gender` columns
-- **Efficient views**: Optimized JOIN patterns
-- **Constraint checks**: Database-level validation
+for (const lang of ALL_LANGUAGES) {
+  const { results } = await db
+    .prepare(`SELECT en, translation, gender FROM words_${lang} WHERE ...`)
+    .all();
+  // 結果をSetやMapで統合
+}
+```
 
-## Database Statistics (As of 2025-08-08)
+### Query Strategy
 
-| Table/View | Records | Purpose |
-|------------|---------|---------|
-| v_multilingual_search | 35,012 | Auto-generated search index |
+1. **個別クエリ**: 各言語テーブル (`words_fr`, `words_de`, etc.) を個別にクエリ
+2. **JavaScript統合**: 結果を `Set<string>` や `Map<string, T>` で統合
+3. **アプリ層ソート**: ソート・フィルタリングはJavaScript側で実行
+
+### Benefits
+
+- **D1互換**: UNION ALL制限を完全回避
+- **シンプル**: ビューの管理が不要
+- **柔軟**: 言語の追加が容易
+
+## Database Statistics
+
+| Table | Records | Purpose |
+|-------|---------|---------|
 | words_en | 4,651 | Master English word list |
 | words_fr | 4,449 | French translations |
 | words_de | 4,433 | German translations |
@@ -226,33 +186,18 @@ erDiagram
 
 ## Technical Features
 
-### Foreign Key Constraints
-- **CASCADE deletion**: Removing English word deletes all translations
-- **Data integrity**: Prevents orphaned records
-- **Consistent updates**: Changes propagate automatically
-
-### View Architecture
-1. **`v_all_translations`**: Core unified data view
-2. **`v_multilingual_search`**: Dynamic search index (replaces table)
-3. **`v_search_ready`**: API-optimized search results
-4. **`v_statistics`**: System metrics and counts
-
 ### Indexing Strategy
 - Primary keys on all `id` columns
 - Unique indexes on `en` columns
-- Performance indexes on `lang` and `gender`
-- Search optimization on `search_term`
+- Performance indexes on `translation` and `gender`
 
-## Migration Benefits
-- ✅ **Zero maintenance**: Search indexes update automatically
-- ✅ **Data integrity**: Foreign key constraints prevent corruption
-- ✅ **Performance**: Optimized indexes and view structure
-- ✅ **Consistency**: Standardized naming and relationships
-- ✅ **Scalability**: Normalized schema supports growth
+### Data Integrity
+- Foreign key constraints via `en` column
+- Consistent naming: `en` for English word, `lang` for language code
+- Valid gender values: `m`, `f`, `n`
 
-## API Compatibility
-The database restructure maintains full API compatibility while providing:
-- Improved query performance
-- Automatic search index updates
-- Better data validation
-- Simplified maintenance workflows
+## Deployment
+
+- **Platform**: Cloudflare Pages + D1
+- **Database ID**: `b77966ed-35c3-4fc8-a649-fea43e085708`
+- **Database Name**: `noun-gender-db`

@@ -5,7 +5,7 @@
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
-![SQLite](https://img.shields.io/badge/SQLite-3.4-003B57?logo=sqlite)
+![Cloudflare D1](https://img.shields.io/badge/Cloudflare_D1-F38020?logo=cloudflare&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css)
 
 ## 🌟 主な機能
@@ -43,27 +43,33 @@ graph TB
         COMP[shadcn/ui + Tailwind CSS]
         I18N[next-intl]
     end
-    
+
     subgraph "Backend"
-        API[App Router API]
-        DB[SQLite Database]
-        SEARCH[検索エンジン]
+        PAGES[Cloudflare Pages]
+        API[Next.js API Routes]
+        DB[Cloudflare D1]
     end
-    
+
     subgraph "データ"
         WORDS[4,651 英語単語]
-        TRANS[8言語翻訳]
+        TRANS[8言語テーブル]
         MEANING[意味定義]
         TRICKS[暗記術]
     end
-    
+
     UI --> API
+    PAGES --> API
     API --> DB
     DB --> WORDS
     DB --> TRANS
     DB --> MEANING
     DB --> TRICKS
 ```
+
+### デプロイ環境
+- **ホスティング**: Cloudflare Pages
+- **データベース**: Cloudflare D1 (SQLite互換)
+- **SSR**: @cloudflare/next-on-pages
 
 ## 🚀 クイックスタート
 
@@ -136,7 +142,7 @@ flowchart TD
 
 ## 🗄️ データベース
 
-正規化されたSQLiteデータベース構造：
+Cloudflare D1上の正規化されたデータベース構造：
 
 ```mermaid
 erDiagram
@@ -146,12 +152,12 @@ erDiagram
     words_en ||--o{ words_es : translates_to
     words_en ||--o{ memory_tricks : has
     examples ||--o{ example_translations : translates_to
-    
+
     words_en {
         int id PK
         string en UK
     }
-    
+
     word_meanings {
         int id PK
         string en FK
@@ -159,7 +165,7 @@ erDiagram
         string meaning_ja
         string meaning_zh
     }
-    
+
     words_fr {
         int id PK
         string en FK
@@ -167,6 +173,11 @@ erDiagram
         string gender
     }
 ```
+
+### クエリアーキテクチャ
+- **ビュー不使用**: D1のUNION ALL制限を回避するため、各言語テーブルを直接クエリ
+- **JavaScript統合**: 複数テーブルの結果をアプリケーション側で結合
+- **効率的なインデックス**: `en`, `translation`, `gender`列にインデックス
 
 ## 📊 開発状況
 
@@ -202,6 +213,7 @@ erDiagram
 
 ---
 
-**作者**: kako-jun  
-**開発**: Next.js 15 + TypeScript + SQLite  
-**最終更新**: 2025-08-08
+**作者**: kako-jun
+**開発**: Next.js 15 + TypeScript + Cloudflare D1
+**デプロイ**: Cloudflare Pages
+**最終更新**: 2025-12-26
