@@ -41,7 +41,7 @@ export function Quiz({ onClose }: QuizProps) {
     setIsLoading(true);
     try {
       const response = await fetch(getApiUrl(`/api/quiz?lang=${language}&count=10`));
-      const data = await response.json();
+      const data = await response.json() as { questions?: QuizQuestion[] };
       setQuestions(data.questions || []);
       setAnswers(new Array(data.questions?.length || 0).fill(null));
       setQuizStarted(true);
@@ -159,7 +159,6 @@ export function Quiz({ onClose }: QuizProps) {
     setIsTransitioning(false);
     setSlideDirection('center');
     setRankingSubmitted(false);
-    setSubmitMessage('');
   };
 
 

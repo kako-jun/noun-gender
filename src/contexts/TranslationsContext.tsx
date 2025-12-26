@@ -29,12 +29,12 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
         
         const response = await fetch(`/messages/${targetLocale}.json`);
         if (response.ok) {
-          const loadedMessages = await response.json();
+          const loadedMessages = await response.json() as Record<string, unknown>;
           setMessages(loadedMessages);
           setLocale(targetLocale);
         } else {
           const enResponse = await fetch('/messages/en.json');
-          const enMessages = await enResponse.json();
+          const enMessages = await enResponse.json() as Record<string, unknown>;
           setMessages(enMessages);
           setLocale('en');
         }
@@ -60,9 +60,9 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     try {
       const response = await fetch(`/messages/${newLocale}.json`);
-      
+
       if (response.ok) {
-        const newMessages = await response.json();
+        const newMessages = await response.json() as Record<string, unknown>;
         setMessages(newMessages);
         setLocale(newLocale);
         localStorage.setItem('preferred-locale', newLocale);

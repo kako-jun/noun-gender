@@ -1,13 +1,9 @@
-// API configuration for Cloudflare deployment
-// In production, API_BASE_URL points to the Cloudflare Workers API
-// In development, it can be left empty to use the local Next.js API routes
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+// API configuration for Next.js API Routes
+// All APIs are served from the same origin via Next.js App Router
 
 export function getApiUrl(path: string): string {
-  // Remove leading slash if present to avoid double slashes
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${API_BASE_URL}${cleanPath}`;
+  // Ensure path starts with /
+  return path.startsWith('/') ? path : `/${path}`;
 }
 
 export async function fetchApi<T>(path: string, options?: RequestInit): Promise<T> {

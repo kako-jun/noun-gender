@@ -2,7 +2,7 @@
 
 ## プロジェクト概要
 名詞に性別のある言語（ドイツ語、フランス語、スペイン語など）の学習・検索用Webアプリケーション。
-Next.js 15 (静的エクスポート) + Hono (Cloudflare Workers) + D1 で実装された、4,651語の多言語翻訳・学習ツール。
+Next.js 15 (SSR + @cloudflare/next-on-pages) + D1 で実装された、4,651語の多言語翻訳・学習ツール。
 
 ## 現在の状況（2025-12-08）
 ✅ **実装完了**: 基本機能・UI・データベース正規化・API完備
@@ -48,11 +48,11 @@ Next.js 15 (静的エクスポート) + Hono (Cloudflare Workers) + D1 で実装
 ## 🏛️ アーキテクチャ概要
 
 ### 技術スタック（実装済み）
-- **Frontend**: Next.js 15 (Static Export) + TypeScript + Tailwind CSS
+- **Frontend**: Next.js 15 (SSR) + TypeScript + Tailwind CSS
 - **UI Components**: shadcn/ui + Solarized Theme
-- **API**: Hono (Cloudflare Workers)
+- **API**: Next.js API Routes (Edge Runtime)
 - **Database**: Cloudflare D1 (SQLite互換・正規化スキーマ)
-- **Deploy**: Cloudflare Pages + Workers (GitHub連携自動デプロイ)
+- **Deploy**: Cloudflare Pages (@cloudflare/next-on-pages)
 
 ### データ概要
 - **英語単語**: 4,651語
@@ -77,19 +77,13 @@ npm run build
 ### 主要ディレクトリ
 ```
 src/
-├── app/           # Next.js App Router (静的エクスポート)
+├── app/           # Next.js App Router (SSR)
+│   ├── api/       # Next.js API Routes (Edge Runtime)
+│   └── word/      # 単語ページ (SSR、SEO対応)
 ├── components/    # React コンポーネント
-├── lib/           # ユーティリティ (api.ts等)
+├── lib/           # ユーティリティ (api.ts, db.ts)
 ├── i18n/          # 多言語翻訳ファイル (ソース)
 └── types/         # TypeScript 型定義
-
-api/
-├── src/
-│   ├── index.ts   # Hono APIエントリーポイント
-│   ├── db.ts      # D1データベースクエリ
-│   └── types.ts   # API型定義
-├── wrangler.toml  # Cloudflare Workers設定
-└── package.json   # API依存関係
 
 public/
 └── messages/      # i18n静的JSONファイル

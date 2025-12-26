@@ -83,8 +83,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
     try {
       const prefix = letterHierarchy.join('');
       const response = await fetch(getApiUrl(`/api/word-at-offset?prefix=${prefix}&offset=${value}`));
-      const data = await response.json();
-      if (data.success && data.data.word) {
+      const data = await response.json() as { success?: boolean; data?: { word?: string } };
+      if (data.success && data.data?.word) {
         setPreviewWord(data.data.word);
       }
     } catch (error) {
@@ -267,8 +267,8 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
           : getApiUrl('/api/letter-stats');
 
         const response = await fetch(url);
-        const data = await response.json();
-        if (data.success) {
+        const data = await response.json() as { success?: boolean; data?: { letter: string; count: number }[] };
+        if (data.success && data.data) {
           setLetterStats(data.data);
         }
       } catch (error) {
@@ -287,10 +287,10 @@ export const SearchBox = forwardRef<SearchBoxRef, SearchBoxProps>(function Searc
       try {
         const prefix = letterHierarchy.join('');
         const response = await fetch(getApiUrl(`/api/word-range?prefix=${prefix}`));
-        const data = await response.json();
-        if (data.success) {
+        const data = await response.json() as { success?: boolean; data?: { firstWord: string; lastWord: string; totalCount: number } };
+        if (data.success && data.data) {
           setWordRange(data.data);
-          setPreviewWord(data.data.firstWord); // 初期プレビューを最初の単語に
+          setPreviewWord(data.data.firstWord || ''); // 初期プレビューを最初の単語に
         }
       } catch (error) {
         console.error('Failed to load word range:', error);

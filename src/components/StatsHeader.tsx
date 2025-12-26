@@ -16,7 +16,7 @@ export function StatsHeader() {
 
   useEffect(() => {
     fetch(getApiUrl('/api/stats'))
-      .then(res => res.json())
+      .then(res => res.json() as Promise<Stats>)
       .then(setStats)
       .catch(console.error);
   }, []);

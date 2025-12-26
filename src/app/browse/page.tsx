@@ -60,7 +60,7 @@ function BrowseContent() {
       }
 
       const response = await fetch(url);
-      const data = await response.json();
+      const data = await response.json() as { data?: SearchResult[]; pagination?: { hasMore?: boolean } };
       
       // 古いリクエストの結果は無視（新規読み込みの場合のみ）
       if (!append && requestId !== currentRequestId.current) {

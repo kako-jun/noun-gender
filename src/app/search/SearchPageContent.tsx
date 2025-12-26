@@ -47,7 +47,7 @@ function SearchContent() {
       }
       
       const response = await fetch(getApiUrl(`/api/search?${params.toString()}`));
-      const data = await response.json();
+      const data = await response.json() as { data?: SearchResult[]; error?: string };
       
       // 古いリクエストの結果は無視
       if (requestId !== currentRequestId.current) {

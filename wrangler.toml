@@ -1,6 +1,6 @@
-name = "noun-gender-api"
-main = "src/index.ts"
+name = "noun-gender"
 compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
 
 # D1 Database binding
 [[d1_databases]]
@@ -10,7 +10,3 @@ database_id = "YOUR_DATABASE_ID_HERE"  # Replace after running: wrangler d1 crea
 
 [vars]
 ENVIRONMENT = "production"
-
-# Local development
-[dev]
-port = 8787

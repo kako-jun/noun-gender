@@ -8,7 +8,7 @@
 ## 技術スタック
 
 ### フロントエンド
-- **Framework**: Next.js 15 (Static Export)
+- **Framework**: Next.js 15 (SSR + @cloudflare/next-on-pages)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
@@ -17,13 +17,12 @@
 - **State Management**: React Context
 
 ### バックエンド
-- **API**: Hono (Cloudflare Workers)
+- **API**: Next.js API Routes (Edge Runtime)
 - **Database**: Cloudflare D1 (SQLite互換)
 - **ORM**: Native SQL (型安全ヘルパー付き)
 
 ### デプロイメント
-- **Frontend**: Cloudflare Pages (静的サイト)
-- **API**: Cloudflare Workers
+- **全体**: Cloudflare Pages (@cloudflare/next-on-pages)
 - **Database**: Cloudflare D1
 - **CI/CD**: Cloudflare GitHub連携 (自動デプロイ)
 - **Domain**: noun-gender.llll-ll.com
@@ -288,7 +287,7 @@ export default function SearchView() {
 
 ### CI/CD パイプライン
 
-Cloudflare Pages/Workers のGitHub連携による自動デプロイ:
+Cloudflare Pages のGitHub連携による自動デプロイ:
 
 1. **mainブランチへのpush** → 自動ビルド・デプロイ
 2. **プレビューデプロイ**: PRごとにプレビューURL生成
