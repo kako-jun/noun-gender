@@ -41,43 +41,7 @@ function getDB(): D1Database {
 // 言語コードのリスト
 const ALL_LANGUAGES = ['ar', 'fr', 'de', 'hi', 'it', 'pt', 'ru', 'es'] as const;
 
-// 各言語テーブルを個別にクエリして結合（D1のUNION ALL制限回避）
-interface TranslationRow {
-  en: string;
-  lang: string;
-  translation: string;
-  gender: string;
-  verified_at?: number;
-  confidence_score?: number;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function queryAllTranslations(
-  db: D1Database,
-  whereField: string,
-  whereValue: string
-): Promise<TranslationRow[]> {
-  const results: TranslationRow[] = [];
-
-  for (const lang of ALL_LANGUAGES) {
-    const { results: rows } = await db
-      .prepare(
-        `SELECT we.en, '${lang}' as lang, t.translation, t.gender, t.verified_at, t.confidence_score
-         FROM words_en we
-         JOIN words_${lang} t ON we.en = t.en
-         WHERE t.translation IS NOT NULL AND t.translation != ''
-         AND ${whereField} = ?`
-      )
-      .bind(whereValue)
-      .all();
-    results.push(...(rows as unknown as TranslationRow[]));
-  }
-
-  return results;
-}
-
 // 翻訳があるすべての英単語を取得
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getAllEnglishWordsWithTranslations(db: D1Database): Promise<string[]> {
   const wordSet = new Set<string>();
 
@@ -101,96 +65,109 @@ async function getAllEnglishWordsWithTranslations(db: D1Database): Promise<strin
 export async function getWord(word: string): Promise<WordData | null> {
   const db = getDB();
 
-  const sql = `
-    SELECT vat.en, vat.lang, vat.translation, vat.gender,
-           wm.meaning_en, wm.meaning_ja, wm.meaning_zh, wm.meaning_fr, wm.meaning_de, wm.meaning_es, wm.meaning_it, wm.meaning_pt, wm.meaning_ru, wm.meaning_ar, wm.meaning_hi,
-           ex.example_en,
-           mt_en.trick_text as memory_trick_en,
-           mt_ja.trick_text as memory_trick_ja,
-           mt_zh.trick_text as memory_trick_zh,
-           mt_fr.trick_text as memory_trick_fr,
-           mt_de.trick_text as memory_trick_de,
-           mt_es.trick_text as memory_trick_es,
-           mt_it.trick_text as memory_trick_it,
-           mt_pt.trick_text as memory_trick_pt,
-           mt_ru.trick_text as memory_trick_ru,
-           mt_ar.trick_text as memory_trick_ar,
-           mt_hi.trick_text as memory_trick_hi
-    FROM v_all_translations vat
-    LEFT JOIN word_meanings wm ON vat.en = wm.en
-    LEFT JOIN examples ex ON vat.en = ex.en
-    LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
-    LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
-    LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
-    LEFT JOIN memory_tricks mt_fr ON vat.en = mt_fr.en AND vat.lang = mt_fr.translation_lang AND mt_fr.ui_lang = 'fr'
-    LEFT JOIN memory_tricks mt_de ON vat.en = mt_de.en AND vat.lang = mt_de.translation_lang AND mt_de.ui_lang = 'de'
-    LEFT JOIN memory_tricks mt_es ON vat.en = mt_es.en AND vat.lang = mt_es.translation_lang AND mt_es.ui_lang = 'es'
-    LEFT JOIN memory_tricks mt_it ON vat.en = mt_it.en AND vat.lang = mt_it.translation_lang AND mt_it.ui_lang = 'it'
-    LEFT JOIN memory_tricks mt_pt ON vat.en = mt_pt.en AND vat.lang = mt_pt.translation_lang AND mt_pt.ui_lang = 'pt'
-    LEFT JOIN memory_tricks mt_ru ON vat.en = mt_ru.en AND vat.lang = mt_ru.translation_lang AND mt_ru.ui_lang = 'ru'
-    LEFT JOIN memory_tricks mt_ar ON vat.en = mt_ar.en AND vat.lang = mt_ar.translation_lang AND mt_ar.ui_lang = 'ar'
-    LEFT JOIN memory_tricks mt_hi ON vat.en = mt_hi.en AND vat.lang = mt_hi.translation_lang AND mt_hi.ui_lang = 'hi'
-    WHERE LOWER(vat.en) = LOWER(?)
-      AND vat.translation IS NOT NULL AND vat.translation != ''
-    ORDER BY vat.lang
-  `;
+  // 1. 単語の意味を取得
+  const meaning = await db
+    .prepare(
+      `SELECT wm.*, ex.example_en
+       FROM word_meanings wm
+       LEFT JOIN examples ex ON wm.en = ex.en
+       WHERE LOWER(wm.en) = LOWER(?)`
+    )
+    .bind(word)
+    .first<Record<string, unknown>>();
 
-  const { results } = await db.prepare(sql).bind(word).all();
-
-  if (results.length === 0) {
-    return null;
+  // 単語が存在しない場合はwords_enも確認
+  let englishWord = word;
+  if (!meaning) {
+    const wordEn = await db
+      .prepare('SELECT en FROM words_en WHERE LOWER(en) = LOWER(?)')
+      .bind(word)
+      .first<{ en: string }>();
+    if (!wordEn) return null;
+    englishWord = wordEn.en;
+  } else {
+    englishWord = meaning.en as string;
   }
 
-  const firstRow = results[0] as Record<string, unknown>;
+  // 2. 各言語テーブルから翻訳を取得
+  const translations: Translation[] = [];
+  for (const lang of ALL_LANGUAGES) {
+    const result = await db
+      .prepare(
+        `SELECT t.translation, t.gender
+         FROM words_${lang} t
+         WHERE LOWER(t.en) = LOWER(?)
+           AND t.translation IS NOT NULL AND t.translation != ''`
+      )
+      .bind(englishWord)
+      .first<{ translation: string; gender: string }>();
 
-  const wordData: WordData = {
-    english: firstRow.en as string,
-    meaning_en: firstRow.meaning_en as string | undefined,
-    meanings: Object.fromEntries(
-      Object.entries({
-        en: firstRow.meaning_en,
-        ja: firstRow.meaning_ja,
-        zh: firstRow.meaning_zh,
-        fr: firstRow.meaning_fr,
-        de: firstRow.meaning_de,
-        es: firstRow.meaning_es,
-        it: firstRow.meaning_it,
-        pt: firstRow.meaning_pt,
-        ru: firstRow.meaning_ru,
-        ar: firstRow.meaning_ar,
-        hi: firstRow.meaning_hi,
-      }).filter(([, value]) => value != null && value !== '') as [string, string][]
-    ),
-    translations: [],
-    example: firstRow.example_en
-      ? { example_en: firstRow.example_en as string, example_translations: {} }
-      : undefined,
-  };
+    if (result && result.translation && ['m', 'f', 'n'].includes(result.gender)) {
+      // memory tricksを取得
+      const { results: tricks } = await db
+        .prepare(
+          `SELECT ui_lang, trick_text FROM memory_tricks
+           WHERE en = ? AND translation_lang = ?`
+        )
+        .bind(englishWord, lang)
+        .all();
 
-  for (const row of results as Record<string, unknown>[]) {
-    if (row.translation && (row.translation as string).trim() !== '' && row.gender && ['m', 'f', 'n'].includes(row.gender as string)) {
-      wordData.translations.push({
+      const trickMap: Record<string, string> = {};
+      for (const t of tricks as { ui_lang: string; trick_text: string }[]) {
+        trickMap[`memory_trick_${t.ui_lang}`] = t.trick_text;
+      }
+
+      translations.push({
         id: 0,
         word_id: 0,
-        language: row.lang as string,
-        translation: row.translation as string,
-        gender: row.gender as 'm' | 'f' | 'n',
-        memory_trick_en: row.memory_trick_en as string | undefined,
-        memory_trick_ja: row.memory_trick_ja as string | undefined,
-        memory_trick_zh: row.memory_trick_zh as string | undefined,
-        memory_trick_fr: row.memory_trick_fr as string | undefined,
-        memory_trick_de: row.memory_trick_de as string | undefined,
-        memory_trick_es: row.memory_trick_es as string | undefined,
-        memory_trick_it: row.memory_trick_it as string | undefined,
-        memory_trick_pt: row.memory_trick_pt as string | undefined,
-        memory_trick_ru: row.memory_trick_ru as string | undefined,
-        memory_trick_ar: row.memory_trick_ar as string | undefined,
-        memory_trick_hi: row.memory_trick_hi as string | undefined,
+        language: lang,
+        translation: result.translation,
+        gender: result.gender as 'm' | 'f' | 'n',
+        memory_trick_en: trickMap.memory_trick_en,
+        memory_trick_ja: trickMap.memory_trick_ja,
+        memory_trick_zh: trickMap.memory_trick_zh,
+        memory_trick_fr: trickMap.memory_trick_fr,
+        memory_trick_de: trickMap.memory_trick_de,
+        memory_trick_es: trickMap.memory_trick_es,
+        memory_trick_it: trickMap.memory_trick_it,
+        memory_trick_pt: trickMap.memory_trick_pt,
+        memory_trick_ru: trickMap.memory_trick_ru,
+        memory_trick_ar: trickMap.memory_trick_ar,
+        memory_trick_hi: trickMap.memory_trick_hi,
       });
     }
   }
 
-  // Get example translations if example exists
+  if (translations.length === 0) return null;
+
+  // 3. WordDataを構築
+  const wordData: WordData = {
+    english: englishWord,
+    meaning_en: meaning?.meaning_en as string | undefined,
+    meanings: meaning
+      ? Object.fromEntries(
+          Object.entries({
+            en: meaning.meaning_en,
+            ja: meaning.meaning_ja,
+            zh: meaning.meaning_zh,
+            fr: meaning.meaning_fr,
+            de: meaning.meaning_de,
+            es: meaning.meaning_es,
+            it: meaning.meaning_it,
+            pt: meaning.meaning_pt,
+            ru: meaning.meaning_ru,
+            ar: meaning.meaning_ar,
+            hi: meaning.meaning_hi,
+          }).filter(([, value]) => value != null && value !== '') as [string, string][]
+        )
+      : {},
+    translations,
+    example: meaning?.example_en
+      ? { example_en: meaning.example_en as string, example_translations: {} }
+      : undefined,
+  };
+
+  // 4. 例文翻訳を取得
   if (wordData.example?.example_en) {
     const { results: exampleTranslations } = await db
       .prepare('SELECT lang, translation FROM example_translations WHERE example_en = ?')
@@ -202,21 +179,12 @@ export async function getWord(word: string): Promise<WordData | null> {
     }
   }
 
-  return wordData.translations.length > 0 ? wordData : null;
+  return wordData;
 }
 
 export async function getAllWords(): Promise<string[]> {
   const db = getDB();
-
-  const { results } = await db
-    .prepare(
-      `SELECT DISTINCT en FROM v_all_translations
-       WHERE translation IS NOT NULL AND translation != ''
-       ORDER BY LOWER(en)`
-    )
-    .all();
-
-  return (results as { en: string }[]).map((row) => row.en);
+  return getAllEnglishWordsWithTranslations(db);
 }
 
 export interface SearchResult {
@@ -324,135 +292,194 @@ export async function search(
     return [];
   }
 
-  const langPlaceholders = languages.map(() => '?').join(',');
-  const searchTerm = `%${query}%`;
-  const exactTerm = query;
-  const startsWith = `${query}%`;
+  const searchTerm = `%${query.toLowerCase()}%`;
+  const exactTerm = query.toLowerCase();
+  const startsWith = `${query.toLowerCase()}%`;
 
-  const d1Sql = `
-    SELECT DISTINCT vat.en, vat.translation, vat.lang, vat.gender,
-           wm.meaning_en, wm.meaning_ja, wm.meaning_zh, wm.meaning_fr, wm.meaning_de, wm.meaning_es, wm.meaning_it, wm.meaning_pt, wm.meaning_ru, wm.meaning_ar, wm.meaning_hi,
-           ex.example_en,
-           mt_en.trick_text as memory_trick_en,
-           mt_ja.trick_text as memory_trick_ja,
-           mt_zh.trick_text as memory_trick_zh,
-           mt_fr.trick_text as memory_trick_fr,
-           mt_de.trick_text as memory_trick_de,
-           mt_es.trick_text as memory_trick_es,
-           mt_it.trick_text as memory_trick_it,
-           mt_pt.trick_text as memory_trick_pt,
-           mt_ru.trick_text as memory_trick_ru,
-           mt_ar.trick_text as memory_trick_ar,
-           mt_hi.trick_text as memory_trick_hi
-    FROM v_all_translations vat
-    LEFT JOIN word_meanings wm ON vat.en = wm.en
-    LEFT JOIN examples ex ON vat.en = ex.en
-    LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
-    LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
-    LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
-    LEFT JOIN memory_tricks mt_fr ON vat.en = mt_fr.en AND vat.lang = mt_fr.translation_lang AND mt_fr.ui_lang = 'fr'
-    LEFT JOIN memory_tricks mt_de ON vat.en = mt_de.en AND vat.lang = mt_de.translation_lang AND mt_de.ui_lang = 'de'
-    LEFT JOIN memory_tricks mt_es ON vat.en = mt_es.en AND vat.lang = mt_es.translation_lang AND mt_es.ui_lang = 'es'
-    LEFT JOIN memory_tricks mt_it ON vat.en = mt_it.en AND vat.lang = mt_it.translation_lang AND mt_it.ui_lang = 'it'
-    LEFT JOIN memory_tricks mt_pt ON vat.en = mt_pt.en AND vat.lang = mt_pt.translation_lang AND mt_pt.ui_lang = 'pt'
-    LEFT JOIN memory_tricks mt_ru ON vat.en = mt_ru.en AND vat.lang = mt_ru.translation_lang AND mt_ru.ui_lang = 'ru'
-    LEFT JOIN memory_tricks mt_ar ON vat.en = mt_ar.en AND vat.lang = mt_ar.translation_lang AND mt_ar.ui_lang = 'ar'
-    LEFT JOIN memory_tricks mt_hi ON vat.en = mt_hi.en AND vat.lang = mt_hi.translation_lang AND mt_hi.ui_lang = 'hi'
-    WHERE (vat.lang IN (${langPlaceholders})) AND (
-      vat.en LIKE ?
-      OR vat.translation LIKE ?
-      OR EXISTS (
-        SELECT 1 FROM v_multilingual_search ms
-        WHERE ms.search_term LIKE ?
-        AND ms.en = vat.en
-        AND ms.lang IN (${langPlaceholders})
-      )
+  // 1. 検索条件に一致する英単語と翻訳を各言語テーブルから収集
+  interface RawMatch {
+    en: string;
+    lang: string;
+    translation: string;
+    gender: string;
+    matchType: number; // 1=exact en, 2=exact translation, 3=starts with en, 4=starts with translation, 5=contains
+  }
+  const rawMatches: RawMatch[] = [];
+
+  // 英単語での検索（全テーブル共通のwords_enから）
+  const { results: enMatches } = await db
+    .prepare(
+      `SELECT en FROM words_en WHERE LOWER(en) LIKE ?`
     )
-    ORDER BY
-      CASE
-        WHEN vat.en = ? THEN 1
-        WHEN vat.translation = ? THEN 2
-        WHEN LENGTH(vat.en) <= 4 AND vat.en LIKE ? THEN 2.5
-        WHEN vat.en LIKE ? THEN 3
-        WHEN vat.translation LIKE ? THEN 4
-        ELSE 5
-      END,
-      LENGTH(vat.en),
-      vat.en
-    LIMIT ?
-  `;
+    .bind(searchTerm)
+    .all();
+  const matchedEnWords = new Set((enMatches as { en: string }[]).map((r) => r.en));
 
-  const d1Params = [
-    ...languages,
-    searchTerm, searchTerm, searchTerm,
-    ...languages,
-    exactTerm, exactTerm, searchTerm, startsWith, startsWith,
-    limit,
-  ];
+  // 各言語テーブルから翻訳を取得
+  for (const lang of languages) {
+    // 翻訳での検索
+    const { results: translationMatches } = await db
+      .prepare(
+        `SELECT en, translation, gender FROM words_${lang}
+         WHERE translation IS NOT NULL AND translation != ''
+         AND (LOWER(translation) LIKE ? OR en IN (SELECT en FROM words_en WHERE LOWER(en) LIKE ?))`
+      )
+      .bind(searchTerm, searchTerm)
+      .all();
 
-  const { results } = await db.prepare(d1Sql).bind(...d1Params).all();
+    for (const row of translationMatches as { en: string; translation: string; gender: string }[]) {
+      let matchType = 5;
+      const enLower = row.en.toLowerCase();
+      const transLower = row.translation.toLowerCase();
 
-  // Group results by English word
-  const grouped = new Map<string, SearchResult>();
+      if (enLower === exactTerm) matchType = 1;
+      else if (transLower === exactTerm) matchType = 2;
+      else if (enLower.length <= 4 && enLower.startsWith(exactTerm)) matchType = 2.5;
+      else if (enLower.startsWith(exactTerm)) matchType = 3;
+      else if (transLower.startsWith(exactTerm)) matchType = 4;
 
-  for (const row of results as Record<string, unknown>[]) {
-    const englishWord = row.en as string;
-
-    if (!grouped.has(englishWord)) {
-      grouped.set(englishWord, {
-        word: {
-          id: 0,
-          word_en: englishWord,
-          meaning_en: row.meaning_en as string | undefined,
-          meanings: Object.fromEntries(
-            Object.entries({
-              en: row.meaning_en,
-              ja: row.meaning_ja,
-              zh: row.meaning_zh,
-              fr: row.meaning_fr,
-              de: row.meaning_de,
-              es: row.meaning_es,
-              it: row.meaning_it,
-              pt: row.meaning_pt,
-              ru: row.meaning_ru,
-              ar: row.meaning_ar,
-              hi: row.meaning_hi,
-            }).filter(([, value]) => value != null && value !== '') as [string, string][]
-          ),
-        },
-        translations: [],
-        example: row.example_en
-          ? { example_en: row.example_en as string, example_translations: {} }
-          : undefined,
+      rawMatches.push({
+        en: row.en,
+        lang,
+        translation: row.translation,
+        gender: row.gender,
+        matchType,
       });
-    }
-
-    const result = grouped.get(englishWord)!;
-    const translation = row.translation as string;
-    const gender = row.gender as string;
-    if (translation && translation.trim() !== '' && gender && ['m', 'f', 'n'].includes(gender)) {
-      result.translations.push({
-        id: 0,
-        word_id: 0,
-        language: row.lang as string,
-        translation,
-        gender: gender as 'm' | 'f' | 'n',
-        memory_trick_en: row.memory_trick_en as string | undefined,
-        memory_trick_ja: row.memory_trick_ja as string | undefined,
-        memory_trick_zh: row.memory_trick_zh as string | undefined,
-        memory_trick_fr: row.memory_trick_fr as string | undefined,
-        memory_trick_de: row.memory_trick_de as string | undefined,
-        memory_trick_es: row.memory_trick_es as string | undefined,
-        memory_trick_it: row.memory_trick_it as string | undefined,
-        memory_trick_pt: row.memory_trick_pt as string | undefined,
-        memory_trick_ru: row.memory_trick_ru as string | undefined,
-        memory_trick_ar: row.memory_trick_ar as string | undefined,
-        memory_trick_hi: row.memory_trick_hi as string | undefined,
-      });
+      matchedEnWords.add(row.en);
     }
   }
 
-  // Get example translations
+  // 2. ユニークな英単語を取得してソート
+  const uniqueWords = Array.from(matchedEnWords);
+  // matchTypeの最小値でソート（優先度が高いものが先）
+  const wordPriority = new Map<string, number>();
+  for (const match of rawMatches) {
+    const current = wordPriority.get(match.en) ?? 999;
+    if (match.matchType < current) {
+      wordPriority.set(match.en, match.matchType);
+    }
+  }
+  uniqueWords.sort((a, b) => {
+    const pa = wordPriority.get(a) ?? 999;
+    const pb = wordPriority.get(b) ?? 999;
+    if (pa !== pb) return pa - pb;
+    if (a.length !== b.length) return a.length - b.length;
+    return a.localeCompare(b);
+  });
+
+  // limitを適用
+  const limitedWords = uniqueWords.slice(0, limit);
+
+  if (limitedWords.length === 0) {
+    return [];
+  }
+
+  // 3. 選ばれた単語の詳細情報を取得
+  const placeholders = limitedWords.map(() => '?').join(',');
+
+  // 意味と例文を取得
+  const { results: meaningRows } = await db
+    .prepare(
+      `SELECT wm.*, ex.example_en
+       FROM word_meanings wm
+       LEFT JOIN examples ex ON wm.en = ex.en
+       WHERE wm.en IN (${placeholders})`
+    )
+    .bind(...limitedWords)
+    .all();
+
+  const meaningMap = new Map<string, Record<string, unknown>>();
+  for (const row of meaningRows as Record<string, unknown>[]) {
+    meaningMap.set(row.en as string, row);
+  }
+
+  // 4. 結果を構築
+  const grouped = new Map<string, SearchResult>();
+
+  for (const word of limitedWords) {
+    const meaning = meaningMap.get(word);
+    grouped.set(word, {
+      word: {
+        id: 0,
+        word_en: word,
+        meaning_en: meaning?.meaning_en as string | undefined,
+        meanings: meaning
+          ? Object.fromEntries(
+              Object.entries({
+                en: meaning.meaning_en,
+                ja: meaning.meaning_ja,
+                zh: meaning.meaning_zh,
+                fr: meaning.meaning_fr,
+                de: meaning.meaning_de,
+                es: meaning.meaning_es,
+                it: meaning.meaning_it,
+                pt: meaning.meaning_pt,
+                ru: meaning.meaning_ru,
+                ar: meaning.meaning_ar,
+                hi: meaning.meaning_hi,
+              }).filter(([, value]) => value != null && value !== '') as [string, string][]
+            )
+          : {},
+      },
+      translations: [],
+      example: meaning?.example_en
+        ? { example_en: meaning.example_en as string, example_translations: {} }
+        : undefined,
+    });
+  }
+
+  // 5. 各言語の翻訳を取得
+  for (const lang of languages) {
+    const { results: transRows } = await db
+      .prepare(
+        `SELECT t.en, t.translation, t.gender
+         FROM words_${lang} t
+         WHERE t.en IN (${placeholders})
+         AND t.translation IS NOT NULL AND t.translation != ''`
+      )
+      .bind(...limitedWords)
+      .all();
+
+    for (const row of transRows as { en: string; translation: string; gender: string }[]) {
+      const result = grouped.get(row.en);
+      if (result && row.translation && ['m', 'f', 'n'].includes(row.gender)) {
+        // memory tricksを取得
+        const { results: tricks } = await db
+          .prepare(
+            `SELECT ui_lang, trick_text FROM memory_tricks
+             WHERE en = ? AND translation_lang = ?`
+          )
+          .bind(row.en, lang)
+          .all();
+
+        const trickMap: Record<string, string> = {};
+        for (const t of tricks as { ui_lang: string; trick_text: string }[]) {
+          trickMap[`memory_trick_${t.ui_lang}`] = t.trick_text;
+        }
+
+        result.translations.push({
+          id: 0,
+          word_id: 0,
+          language: lang,
+          translation: row.translation,
+          gender: row.gender as 'm' | 'f' | 'n',
+          memory_trick_en: trickMap.memory_trick_en,
+          memory_trick_ja: trickMap.memory_trick_ja,
+          memory_trick_zh: trickMap.memory_trick_zh,
+          memory_trick_fr: trickMap.memory_trick_fr,
+          memory_trick_de: trickMap.memory_trick_de,
+          memory_trick_es: trickMap.memory_trick_es,
+          memory_trick_it: trickMap.memory_trick_it,
+          memory_trick_pt: trickMap.memory_trick_pt,
+          memory_trick_ru: trickMap.memory_trick_ru,
+          memory_trick_ar: trickMap.memory_trick_ar,
+          memory_trick_hi: trickMap.memory_trick_hi,
+        });
+      }
+    }
+  }
+
+  // 6. 例文翻訳を取得
   const wordsWithExamples = Array.from(grouped.values()).filter((w) => w.example?.example_en);
   if (wordsWithExamples.length > 0) {
     const exampleTexts = wordsWithExamples.map((w) => w.example!.example_en);
@@ -484,137 +511,140 @@ export async function browseWords(options: {
   const db = getDB();
   const { limit = 50, offset = 0, language, startsWith } = options;
 
-  let englishWordsQuery = `
-    SELECT DISTINCT en
-    FROM v_all_translations
-    WHERE translation IS NOT NULL AND translation != ''
-  `;
+  // 1. 翻訳が存在する英単語を取得
+  const wordSet = new Set<string>();
+  const targetLangs = language ? [language] : ALL_LANGUAGES;
 
-  const englishParams: (string | number)[] = [];
+  for (const lang of targetLangs) {
+    let query = `SELECT DISTINCT en FROM words_${lang} WHERE translation IS NOT NULL AND translation != ''`;
+    const params: string[] = [];
 
-  if (language) {
-    englishWordsQuery += ` AND lang = ?`;
-    englishParams.push(language);
+    if (startsWith) {
+      query += ` AND LOWER(en) LIKE ?`;
+      params.push(`${startsWith.toLowerCase()}%`);
+    }
+
+    const { results } = await db.prepare(query).bind(...params).all();
+    for (const row of results as { en: string }[]) {
+      wordSet.add(row.en);
+    }
   }
 
-  if (startsWith) {
-    englishWordsQuery += ` AND LOWER(en) LIKE ?`;
-    englishParams.push(`${startsWith.toLowerCase()}%`);
-  }
+  // 2. ソートしてページネーション適用
+  const allWords = Array.from(wordSet).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+  const englishList = allWords.slice(offset, offset + limit);
 
-  englishWordsQuery += ` ORDER BY LOWER(en) LIMIT ? OFFSET ?`;
-  englishParams.push(limit, offset);
-
-  const { results: englishWords } = await db.prepare(englishWordsQuery).bind(...englishParams).all();
-
-  if (englishWords.length === 0) {
+  if (englishList.length === 0) {
     return [];
   }
 
-  const englishList = (englishWords as { en: string }[]).map((row) => row.en);
   const placeholders = englishList.map(() => '?').join(',');
 
-  let translationsQuery = `
-    SELECT vat.en, vat.lang, vat.translation, vat.gender,
-           wm.meaning_en, wm.meaning_ja, wm.meaning_zh, wm.meaning_fr, wm.meaning_de, wm.meaning_es, wm.meaning_it, wm.meaning_pt, wm.meaning_ru, wm.meaning_ar, wm.meaning_hi,
-           ex.example_en,
-           mt_en.trick_text as memory_trick_en,
-           mt_ja.trick_text as memory_trick_ja,
-           mt_zh.trick_text as memory_trick_zh,
-           mt_fr.trick_text as memory_trick_fr,
-           mt_de.trick_text as memory_trick_de,
-           mt_es.trick_text as memory_trick_es,
-           mt_it.trick_text as memory_trick_it,
-           mt_pt.trick_text as memory_trick_pt,
-           mt_ru.trick_text as memory_trick_ru,
-           mt_ar.trick_text as memory_trick_ar,
-           mt_hi.trick_text as memory_trick_hi
-    FROM v_all_translations vat
-    LEFT JOIN word_meanings wm ON vat.en = wm.en
-    LEFT JOIN examples ex ON vat.en = ex.en
-    LEFT JOIN memory_tricks mt_en ON vat.en = mt_en.en AND vat.lang = mt_en.translation_lang AND mt_en.ui_lang = 'en'
-    LEFT JOIN memory_tricks mt_ja ON vat.en = mt_ja.en AND vat.lang = mt_ja.translation_lang AND mt_ja.ui_lang = 'ja'
-    LEFT JOIN memory_tricks mt_zh ON vat.en = mt_zh.en AND vat.lang = mt_zh.translation_lang AND mt_zh.ui_lang = 'zh'
-    LEFT JOIN memory_tricks mt_fr ON vat.en = mt_fr.en AND vat.lang = mt_fr.translation_lang AND mt_fr.ui_lang = 'fr'
-    LEFT JOIN memory_tricks mt_de ON vat.en = mt_de.en AND vat.lang = mt_de.translation_lang AND mt_de.ui_lang = 'de'
-    LEFT JOIN memory_tricks mt_es ON vat.en = mt_es.en AND vat.lang = mt_es.translation_lang AND mt_es.ui_lang = 'es'
-    LEFT JOIN memory_tricks mt_it ON vat.en = mt_it.en AND vat.lang = mt_it.translation_lang AND mt_it.ui_lang = 'it'
-    LEFT JOIN memory_tricks mt_pt ON vat.en = mt_pt.en AND vat.lang = mt_pt.translation_lang AND mt_pt.ui_lang = 'pt'
-    LEFT JOIN memory_tricks mt_ru ON vat.en = mt_ru.en AND vat.lang = mt_ru.translation_lang AND mt_ru.ui_lang = 'ru'
-    LEFT JOIN memory_tricks mt_ar ON vat.en = mt_ar.en AND vat.lang = mt_ar.translation_lang AND mt_ar.ui_lang = 'ar'
-    LEFT JOIN memory_tricks mt_hi ON vat.en = mt_hi.en AND vat.lang = mt_hi.translation_lang AND mt_hi.ui_lang = 'hi'
-    WHERE vat.en IN (${placeholders}) AND vat.translation IS NOT NULL AND vat.translation != ''
-  `;
+  // 3. 意味と例文を取得
+  const { results: meaningRows } = await db
+    .prepare(
+      `SELECT wm.*, ex.example_en
+       FROM word_meanings wm
+       LEFT JOIN examples ex ON wm.en = ex.en
+       WHERE wm.en IN (${placeholders})`
+    )
+    .bind(...englishList)
+    .all();
 
-  const translationParams = [...englishList];
-
-  if (language) {
-    translationsQuery += ` AND vat.lang = ?`;
-    translationParams.push(language);
+  const meaningMap = new Map<string, Record<string, unknown>>();
+  for (const row of meaningRows as Record<string, unknown>[]) {
+    meaningMap.set(row.en as string, row);
   }
 
-  translationsQuery += ` ORDER BY LOWER(vat.en), vat.lang`;
-
-  const { results: rows } = await db.prepare(translationsQuery).bind(...translationParams).all();
-
+  // 4. 結果を構築
   const grouped = new Map<string, BrowseResult>();
 
-  for (const row of rows as Record<string, unknown>[]) {
-    const en = row.en as string;
-    if (!grouped.has(en)) {
-      grouped.set(en, {
-        english: en,
-        meaning_en: row.meaning_en as string | undefined,
-        meanings: Object.fromEntries(
-          Object.entries({
-            en: row.meaning_en,
-            ja: row.meaning_ja,
-            zh: row.meaning_zh,
-            fr: row.meaning_fr,
-            de: row.meaning_de,
-            es: row.meaning_es,
-            it: row.meaning_it,
-            pt: row.meaning_pt,
-            ru: row.meaning_ru,
-            ar: row.meaning_ar,
-            hi: row.meaning_hi,
-          }).filter(([, value]) => value != null && value !== '') as [string, string][]
-        ),
-        translations: [],
-        example: row.example_en
-          ? { example_en: row.example_en as string, example_translations: {} }
-          : undefined,
-      });
-    }
+  for (const word of englishList) {
+    const meaning = meaningMap.get(word);
+    grouped.set(word, {
+      english: word,
+      meaning_en: meaning?.meaning_en as string | undefined,
+      meanings: meaning
+        ? Object.fromEntries(
+            Object.entries({
+              en: meaning.meaning_en,
+              ja: meaning.meaning_ja,
+              zh: meaning.meaning_zh,
+              fr: meaning.meaning_fr,
+              de: meaning.meaning_de,
+              es: meaning.meaning_es,
+              it: meaning.meaning_it,
+              pt: meaning.meaning_pt,
+              ru: meaning.meaning_ru,
+              ar: meaning.meaning_ar,
+              hi: meaning.meaning_hi,
+            }).filter(([, value]) => value != null && value !== '') as [string, string][]
+          )
+        : {},
+      translations: [],
+      example: meaning?.example_en
+        ? { example_en: meaning.example_en as string, example_translations: {} }
+        : undefined,
+    });
+  }
 
-    const translation = row.translation as string;
-    const gender = row.gender as string;
-    if (translation && translation.trim() !== '' && gender && ['m', 'f', 'n'].includes(gender)) {
-      grouped.get(en)!.translations.push({
-        id: 0,
-        word_id: 0,
-        language: row.lang as string,
-        translation,
-        gender: gender as 'm' | 'f' | 'n',
-        memory_trick_en: row.memory_trick_en as string | undefined,
-        memory_trick_ja: row.memory_trick_ja as string | undefined,
-        memory_trick_zh: row.memory_trick_zh as string | undefined,
-        memory_trick_fr: row.memory_trick_fr as string | undefined,
-        memory_trick_de: row.memory_trick_de as string | undefined,
-        memory_trick_es: row.memory_trick_es as string | undefined,
-        memory_trick_it: row.memory_trick_it as string | undefined,
-        memory_trick_pt: row.memory_trick_pt as string | undefined,
-        memory_trick_ru: row.memory_trick_ru as string | undefined,
-        memory_trick_ar: row.memory_trick_ar as string | undefined,
-        memory_trick_hi: row.memory_trick_hi as string | undefined,
-      });
+  // 5. 各言語の翻訳を取得
+  for (const lang of targetLangs) {
+    const { results: transRows } = await db
+      .prepare(
+        `SELECT t.en, t.translation, t.gender
+         FROM words_${lang} t
+         WHERE t.en IN (${placeholders})
+         AND t.translation IS NOT NULL AND t.translation != ''`
+      )
+      .bind(...englishList)
+      .all();
+
+    for (const row of transRows as { en: string; translation: string; gender: string }[]) {
+      const result = grouped.get(row.en);
+      if (result && row.translation && ['m', 'f', 'n'].includes(row.gender)) {
+        // memory tricksを取得
+        const { results: tricks } = await db
+          .prepare(
+            `SELECT ui_lang, trick_text FROM memory_tricks
+             WHERE en = ? AND translation_lang = ?`
+          )
+          .bind(row.en, lang)
+          .all();
+
+        const trickMap: Record<string, string> = {};
+        for (const t of tricks as { ui_lang: string; trick_text: string }[]) {
+          trickMap[`memory_trick_${t.ui_lang}`] = t.trick_text;
+        }
+
+        result.translations.push({
+          id: 0,
+          word_id: 0,
+          language: lang,
+          translation: row.translation,
+          gender: row.gender as 'm' | 'f' | 'n',
+          memory_trick_en: trickMap.memory_trick_en,
+          memory_trick_ja: trickMap.memory_trick_ja,
+          memory_trick_zh: trickMap.memory_trick_zh,
+          memory_trick_fr: trickMap.memory_trick_fr,
+          memory_trick_de: trickMap.memory_trick_de,
+          memory_trick_es: trickMap.memory_trick_es,
+          memory_trick_it: trickMap.memory_trick_it,
+          memory_trick_pt: trickMap.memory_trick_pt,
+          memory_trick_ru: trickMap.memory_trick_ru,
+          memory_trick_ar: trickMap.memory_trick_ar,
+          memory_trick_hi: trickMap.memory_trick_hi,
+        });
+      }
     }
   }
 
+  // 6. 結果をフィルタリング
   const finalResults = englishList
     .map((en) => grouped.get(en))
     .filter((word): word is BrowseResult => word !== undefined && word.translations.length > 0);
 
+  // 7. 例文翻訳を取得
   const wordsWithExamples = finalResults.filter((word) => word.example?.example_en);
 
   if (wordsWithExamples.length > 0) {
@@ -641,112 +671,132 @@ export async function browseWords(options: {
 export async function getLetterStats(): Promise<LetterStat[]> {
   const db = getDB();
 
-  const { results } = await db
-    .prepare(
-      `SELECT
-        SUBSTR(LOWER(en), 1, 1) as letter,
-        COUNT(DISTINCT en) as count
-      FROM v_all_translations
-      WHERE translation IS NOT NULL AND translation != ''
-        AND SUBSTR(LOWER(en), 1, 1) BETWEEN 'a' AND 'z'
-      GROUP BY SUBSTR(LOWER(en), 1, 1)
-      ORDER BY letter`
-    )
-    .all();
+  // 各言語テーブルから翻訳がある英単語を収集
+  const wordSet = new Set<string>();
 
-  return results as unknown as LetterStat[];
+  for (const lang of ALL_LANGUAGES) {
+    const { results } = await db
+      .prepare(
+        `SELECT DISTINCT en FROM words_${lang}
+         WHERE translation IS NOT NULL AND translation != ''`
+      )
+      .all();
+    for (const row of results as { en: string }[]) {
+      wordSet.add(row.en);
+    }
+  }
+
+  // アルファベットごとにカウント
+  const letterCounts = new Map<string, number>();
+  for (const word of wordSet) {
+    const letter = word.charAt(0).toLowerCase();
+    if (letter >= 'a' && letter <= 'z') {
+      letterCounts.set(letter, (letterCounts.get(letter) ?? 0) + 1);
+    }
+  }
+
+  // ソートして返却
+  return Array.from(letterCounts.entries())
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([letter, count]) => ({ letter, count }));
 }
 
 export async function getLetterStatsDetailed(prefix: string): Promise<{ next_letter: string; count: number }[]> {
   const db = getDB();
-  const prefixLength = prefix.length + 1;
+  const prefixLower = prefix.toLowerCase();
+  const prefixLength = prefix.length;
 
-  const { results } = await db
-    .prepare(
-      `SELECT
-        SUBSTR(LOWER(en), ${prefixLength}, 1) as next_letter,
-        COUNT(DISTINCT en) as count
-      FROM v_all_translations
-      WHERE translation IS NOT NULL AND translation != ''
-        AND LOWER(en) LIKE ? || '%'
-        AND SUBSTR(LOWER(en), ${prefixLength}, 1) BETWEEN 'a' AND 'z'
-      GROUP BY SUBSTR(LOWER(en), ${prefixLength}, 1)
-      ORDER BY next_letter`
-    )
-    .bind(prefix.toLowerCase())
-    .all();
+  // 各言語テーブルから翻訳がある英単語を収集
+  const wordSet = new Set<string>();
 
-  return results as unknown as { next_letter: string; count: number }[];
+  for (const lang of ALL_LANGUAGES) {
+    const { results } = await db
+      .prepare(
+        `SELECT DISTINCT en FROM words_${lang}
+         WHERE translation IS NOT NULL AND translation != ''
+         AND LOWER(en) LIKE ?`
+      )
+      .bind(`${prefixLower}%`)
+      .all();
+    for (const row of results as { en: string }[]) {
+      wordSet.add(row.en);
+    }
+  }
+
+  // 次の文字ごとにカウント
+  const letterCounts = new Map<string, number>();
+  for (const word of wordSet) {
+    if (word.length > prefixLength) {
+      const nextLetter = word.charAt(prefixLength).toLowerCase();
+      if (nextLetter >= 'a' && nextLetter <= 'z') {
+        letterCounts.set(nextLetter, (letterCounts.get(nextLetter) ?? 0) + 1);
+      }
+    }
+  }
+
+  // ソートして返却
+  return Array.from(letterCounts.entries())
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([next_letter, count]) => ({ next_letter, count }));
 }
 
 export async function getWordAtOffset(prefix: string, offset: number): Promise<string | null> {
   const db = getDB();
 
-  const result = await db
-    .prepare(
-      `SELECT en as english
-       FROM (
-         SELECT DISTINCT en
-         FROM v_all_translations
-         WHERE en IS NOT NULL
-           AND en LIKE ? || '%'
-         ORDER BY en COLLATE NOCASE ASC
-       )
-       LIMIT 1 OFFSET ?`
-    )
-    .bind(prefix, offset)
-    .first<{ english: string }>();
+  // 各言語テーブルから翻訳がある英単語を収集
+  const wordSet = new Set<string>();
 
-  return result?.english ?? null;
+  for (const lang of ALL_LANGUAGES) {
+    const { results } = await db
+      .prepare(
+        `SELECT DISTINCT en FROM words_${lang}
+         WHERE translation IS NOT NULL AND translation != ''
+         AND en LIKE ?`
+      )
+      .bind(`${prefix}%`)
+      .all();
+    for (const row of results as { en: string }[]) {
+      wordSet.add(row.en);
+    }
+  }
+
+  // ソートしてoffset番目を返却
+  const sortedWords = Array.from(wordSet).sort((a, b) =>
+    a.toLowerCase().localeCompare(b.toLowerCase())
+  );
+
+  return sortedWords[offset] ?? null;
 }
 
 export async function getWordRange(prefix: string): Promise<{ firstWord?: string; lastWord?: string; totalCount: number }> {
   const db = getDB();
 
-  const [firstWord, lastWord, countResult] = await Promise.all([
-    db
+  // 各言語テーブルから翻訳がある英単語を収集
+  const wordSet = new Set<string>();
+
+  for (const lang of ALL_LANGUAGES) {
+    const { results } = await db
       .prepare(
-        `SELECT en as english
-         FROM (
-           SELECT DISTINCT en
-           FROM v_all_translations
-           WHERE en IS NOT NULL
-             AND en LIKE ? || '%'
-           ORDER BY en COLLATE NOCASE ASC
-         )
-         LIMIT 1`
+        `SELECT DISTINCT en FROM words_${lang}
+         WHERE translation IS NOT NULL AND translation != ''
+         AND en LIKE ?`
       )
-      .bind(prefix)
-      .first<{ english: string }>(),
-    db
-      .prepare(
-        `SELECT en as english
-         FROM (
-           SELECT DISTINCT en
-           FROM v_all_translations
-           WHERE en IS NOT NULL
-             AND en LIKE ? || '%'
-           ORDER BY en COLLATE NOCASE DESC
-         )
-         LIMIT 1`
-      )
-      .bind(prefix)
-      .first<{ english: string }>(),
-    db
-      .prepare(
-        `SELECT COUNT(DISTINCT en) as total
-         FROM v_all_translations
-         WHERE en IS NOT NULL
-           AND en LIKE ? || '%'`
-      )
-      .bind(prefix)
-      .first<{ total: number }>(),
-  ]);
+      .bind(`${prefix}%`)
+      .all();
+    for (const row of results as { en: string }[]) {
+      wordSet.add(row.en);
+    }
+  }
+
+  // ソートして最初と最後を取得
+  const sortedWords = Array.from(wordSet).sort((a, b) =>
+    a.toLowerCase().localeCompare(b.toLowerCase())
+  );
 
   return {
-    firstWord: firstWord?.english,
-    lastWord: lastWord?.english,
-    totalCount: countResult?.total ?? 0,
+    firstWord: sortedWords[0],
+    lastWord: sortedWords[sortedWords.length - 1],
+    totalCount: sortedWords.length,
   };
 }
 
@@ -755,23 +805,39 @@ export async function getQuizQuestions(
   count: number
 ): Promise<{ english: string; translation: string; language: string; gender: string }[]> {
   const db = getDB();
-  const languageFilter = languages.map(() => '?').join(',');
 
-  const { results } = await db
-    .prepare(
-      `SELECT en as english, translation, lang as language, gender
-       FROM v_all_translations
-       WHERE lang IN (${languageFilter})
-         AND translation IS NOT NULL
-         AND translation != ''
-         AND gender IN ('m', 'f', 'n')
-       ORDER BY RANDOM()
-       LIMIT ?`
-    )
-    .bind(...languages, count)
-    .all();
+  // 各言語テーブルから候補を収集
+  const allCandidates: { english: string; translation: string; language: string; gender: string }[] = [];
 
-  return results as { english: string; translation: string; language: string; gender: string }[];
+  for (const lang of languages) {
+    if (!ALL_LANGUAGES.includes(lang as (typeof ALL_LANGUAGES)[number])) continue;
+
+    const { results } = await db
+      .prepare(
+        `SELECT en as english, translation, gender
+         FROM words_${lang}
+         WHERE translation IS NOT NULL AND translation != ''
+         AND gender IN ('m', 'f', 'n')`
+      )
+      .all();
+
+    for (const row of results as { english: string; translation: string; gender: string }[]) {
+      allCandidates.push({
+        english: row.english,
+        translation: row.translation,
+        language: lang,
+        gender: row.gender,
+      });
+    }
+  }
+
+  // シャッフルしてcount個を返却
+  for (let i = allCandidates.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allCandidates[i], allCandidates[j]] = [allCandidates[j], allCandidates[i]];
+  }
+
+  return allCandidates.slice(0, count);
 }
 
 export async function getMemoryTricksForWord(
