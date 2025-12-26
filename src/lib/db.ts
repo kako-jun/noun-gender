@@ -38,6 +38,66 @@ function getDB(): D1Database {
   return ctx.env.DB;
 }
 
+// 言語コードのリスト
+const ALL_LANGUAGES = ['ar', 'fr', 'de', 'hi', 'it', 'pt', 'ru', 'es'] as const;
+
+// 各言語テーブルを個別にクエリして結合（D1のUNION ALL制限回避）
+interface TranslationRow {
+  en: string;
+  lang: string;
+  translation: string;
+  gender: string;
+  verified_at?: number;
+  confidence_score?: number;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function queryAllTranslations(
+  db: D1Database,
+  whereField: string,
+  whereValue: string
+): Promise<TranslationRow[]> {
+  const results: TranslationRow[] = [];
+
+  for (const lang of ALL_LANGUAGES) {
+    const { results: rows } = await db
+      .prepare(
+        `SELECT we.en, '${lang}' as lang, t.translation, t.gender, t.verified_at, t.confidence_score
+         FROM words_en we
+         JOIN words_${lang} t ON we.en = t.en
+         WHERE t.translation IS NOT NULL AND t.translation != ''
+         AND ${whereField} = ?`
+      )
+      .bind(whereValue)
+      .all();
+    results.push(...(rows as unknown as TranslationRow[]));
+  }
+
+  return results;
+}
+
+// 翻訳があるすべての英単語を取得
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function getAllEnglishWordsWithTranslations(db: D1Database): Promise<string[]> {
+  const wordSet = new Set<string>();
+
+  for (const lang of ALL_LANGUAGES) {
+    const { results } = await db
+      .prepare(
+        `SELECT DISTINCT we.en
+         FROM words_en we
+         JOIN words_${lang} t ON we.en = t.en
+         WHERE t.translation IS NOT NULL AND t.translation != ''`
+      )
+      .all();
+    for (const row of results as { en: string }[]) {
+      wordSet.add(row.en);
+    }
+  }
+
+  return Array.from(wordSet).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+}
+
 export async function getWord(word: string): Promise<WordData | null> {
   const db = getDB();
 
@@ -198,25 +258,58 @@ export async function getStats(): Promise<{
 }> {
   const db = getDB();
 
-  const [totalWords, totalTranslations, multilingualTerms, searchLanguages, languageStats] = await Promise.all([
-    db.prepare('SELECT COUNT(DISTINCT en) as total FROM v_all_translations').first<{ total: number }>(),
-    db.prepare('SELECT COUNT(*) as total FROM v_all_translations').first<{ total: number }>(),
-    db.prepare('SELECT COUNT(*) as total FROM v_multilingual_search').first<{ total: number }>(),
-    db.prepare('SELECT COUNT(DISTINCT lang) as total FROM v_multilingual_search').first<{ total: number }>(),
-    db.prepare(
-      `SELECT lang as language, COUNT(*) as count
-       FROM v_all_translations
-       GROUP BY lang
-       ORDER BY count DESC`
-    ).all(),
-  ]);
+  // 各言語テーブルから統計を個別に取得
+  const languageStats: { language: string; count: number }[] = [];
+  const wordSets: Set<string>[] = [];
+  let totalTranslations = 0;
+
+  for (const lang of ALL_LANGUAGES) {
+    const result = await db
+      .prepare(
+        `SELECT COUNT(*) as count FROM words_${lang}
+         WHERE translation IS NOT NULL AND translation != ''`
+      )
+      .first<{ count: number }>();
+    const count = result?.count ?? 0;
+    if (count > 0) {
+      languageStats.push({ language: lang, count });
+    }
+    totalTranslations += count;
+
+    // ユニークな英単語を収集
+    const { results } = await db
+      .prepare(
+        `SELECT DISTINCT en FROM words_${lang}
+         WHERE translation IS NOT NULL AND translation != ''`
+      )
+      .all();
+    const wordSet = new Set((results as { en: string }[]).map((r) => r.en));
+    wordSets.push(wordSet);
+  }
+
+  // 全言語でユニークな英単語数
+  const allWords = new Set<string>();
+  for (const wordSet of wordSets) {
+    for (const word of wordSet) {
+      allWords.add(word);
+    }
+  }
+
+  // 検索用語数 = 翻訳数 + 英単語数
+  const englishWordsCount = await db
+    .prepare('SELECT COUNT(*) as count FROM words_en')
+    .first<{ count: number }>();
+  const multilingualTerms = totalTranslations + (englishWordsCount?.count ?? 0);
+
+  // 言語別統計をカウント降順でソート
+  languageStats.sort((a, b) => b.count - a.count);
 
   return {
-    totalWords: totalWords?.total ?? 0,
-    totalTranslations: totalTranslations?.total ?? 0,
-    multilingualTerms: multilingualTerms?.total ?? 0,
-    searchLanguages: searchLanguages?.total ?? 0,
-    languageStats: languageStats.results as { language: string; count: number }[],
+    totalWords: allWords.size,
+    totalTranslations,
+    multilingualTerms,
+    searchLanguages: languageStats.length + 1, // +1 for English
+    languageStats,
   };
 }
 
