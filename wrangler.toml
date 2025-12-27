@@ -7,7 +7,7 @@ pages_build_output_dir = ".vercel/output/static"
 [[d1_databases]]
 binding = "DB"
 database_name = "noun-gender-db"
-database_id = "b77966ed-35c3-4fc8-a649-fea43e085708"
+database_id = "4704d0e8-8bca-41ad-9317-3ade1636b9d3"
 
 [vars]
 ENVIRONMENT = "production"
