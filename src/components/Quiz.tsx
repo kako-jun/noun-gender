@@ -99,7 +99,8 @@ export function Quiz({ onClose }: QuizProps) {
     } catch (error) {
       console.error('Ranking submission error:', error);
     }
-  }, [rankingSubmitted, questions, answers, calculateScore]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- calculateScore internally uses answers
+  }, [rankingSubmitted, questions.length]);
 
   // クイズ完了時に自動でランキング送信
   useEffect(() => {

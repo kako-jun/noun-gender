@@ -294,7 +294,6 @@ export async function search(
 
   const searchTerm = `%${query.toLowerCase()}%`;
   const exactTerm = query.toLowerCase();
-  const startsWith = `${query.toLowerCase()}%`;
 
   // 1. 検索条件に一致する英単語と翻訳を各言語テーブルから収集
   interface RawMatch {
