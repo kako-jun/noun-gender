@@ -4,9 +4,8 @@
 名詞に性別のある言語（ドイツ語、フランス語、スペイン語など）の学習・検索用Webアプリケーション。
 Next.js 15 (SSR + @cloudflare/next-on-pages) + D1 で実装された、4,651語の多言語翻訳・学習ツール。
 
-## 現在の状況（2025-12-08）
-✅ **実装完了**: 基本機能・UI・データベース正規化・API完備
-🔄 **作業中**: Cloudflare移行・D1データベース設定
+## 現在の状況（2025-12-27）
+✅ **実装完了**: 基本機能・UI・API・Cloudflare D1移行完了
 🎯 **次期計画**: 本番デプロイ・パフォーマンス最適化
 
 ## 📋 プロジェクト文書
@@ -88,11 +87,33 @@ src/
 public/
 └── messages/      # i18n静的JSONファイル
 
-data/
-└── noun_gender.db # SQLite データベース (D1マイグレーション用)
+data/              # CSVマスターデータ（単一の真実の源）
+├── word_gender_translations.csv    # 単語・翻訳・性別
+├── word_meaning_translations.csv   # 意味定義（多言語）
+├── word_examples.csv               # 例文
+└── example_translations.csv        # 例文翻訳
+
+scripts/           # D1同期スクリプト
+├── d1_sync_all.sh   # 全削除→全挿入（日常使い）
+├── d1_reset.sh      # スキーマ再作成→全挿入
+├── d1_schema.sql    # D1スキーマ定義
+└── sync_to_d1.py    # CSV→D1同期ロジック
 
 docs/              # プロジェクト文書
 .claude/           # 開発文書・進捗管理
+```
+
+### データ更新手順
+CSVを編集したらD1に同期する：
+```bash
+# 日常的なデータ更新（全削除→全挿入）
+./scripts/d1_sync_all.sh
+
+# スキーマ変更時のみ
+./scripts/d1_reset.sh
+
+# 特定テーブルのみ更新
+python scripts/sync_to_d1.py --table words_fr
 ```
 
 ## 📧 連絡・質問
@@ -101,4 +122,4 @@ docs/              # プロジェクト文書
 
 ---
 
-**最終更新**: 2025-12-08 - Cloudflare Pages + Workers アーキテクチャに移行
+**最終更新**: 2025-12-27 - CSV→D1直接同期に移行（SQLite廃止）
