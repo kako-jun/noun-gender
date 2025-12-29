@@ -3,8 +3,6 @@ import { notFound } from 'next/navigation';
 import { getWord } from '@/lib/db';
 import WordPageClient from './WordPageClient';
 
-export const runtime = 'edge';
-
 interface Props {
   params: Promise<{ word: string }>;
 }

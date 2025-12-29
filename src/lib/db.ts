@@ -1,5 +1,5 @@
 // D1 Database access for Server Components
-import { getRequestContext } from '@cloudflare/next-on-pages';
+import { getCloudflareContext } from '@opennextjs/cloudflare';
 
 export type LanguageCode = 'ar' | 'fr' | 'de' | 'hi' | 'it' | 'pt' | 'ru' | 'es';
 
@@ -34,8 +34,8 @@ export interface WordData {
 }
 
 function getDB(): D1Database {
-  const ctx = getRequestContext();
-  return ctx.env.DB;
+  const { env } = getCloudflareContext();
+  return env.DB;
 }
 
 // 言語コードのリスト
