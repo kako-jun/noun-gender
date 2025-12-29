@@ -38,6 +38,18 @@ function getDB(): D1Database {
   return env.DB;
 }
 
+function getCache(): KVNamespace | null {
+  try {
+    const { env } = getCloudflareContext();
+    return env.CACHE || null;
+  } catch {
+    return null;
+  }
+}
+
+// キャッシュTTL（1時間）
+const CACHE_TTL = 3600;
+
 // 言語コードのリスト
 const ALL_LANGUAGES = ['ar', 'fr', 'de', 'hi', 'it', 'pt', 'ru', 'es'] as const;
 
@@ -521,8 +533,25 @@ export async function browseWords(options: {
   language?: string;
   startsWith?: string;
 } = {}): Promise<BrowseResult[]> {
-  const db = getDB();
   const { limit = 50, offset = 0, language, startsWith } = options;
+
+  // キャッシュキーを生成
+  const cacheKey = `browse:${limit}:${offset}:${language || 'all'}:${startsWith || ''}`;
+  const cache = getCache();
+
+  // キャッシュをチェック
+  if (cache) {
+    try {
+      const cached = await cache.get(cacheKey, 'json');
+      if (cached) {
+        return cached as BrowseResult[];
+      }
+    } catch {
+      // キャッシュエラーは無視して続行
+    }
+  }
+
+  const db = getDB();
   const targetLangs = language ? [language] : ALL_LANGUAGES;
 
   // 1. words_enから直接ページネーション（COLLATE NOCASEインデックス使用）
@@ -546,11 +575,7 @@ export async function browseWords(options: {
 
   const placeholders = englishList.map(() => '?').join(',');
 
-  // 3. 意味・翻訳・memory tricksを一括取得（UNION ALLで1クエリに統合）
-  const translationUnion = targetLangs
-    .map((lang) => `SELECT '${lang}' as lang, en, translation, gender FROM words_${lang} WHERE en IN (${placeholders}) AND translation IS NOT NULL AND translation != ''`)
-    .join(' UNION ALL ');
-
+  // 3. 意味・memory tricksを一括取得
   const batchQueries = [
     // 意味と例文
     db.prepare(
@@ -564,20 +589,29 @@ export async function browseWords(options: {
       `SELECT en, translation_lang, ui_lang, trick_text FROM memory_tricks
        WHERE en IN (${placeholders})`
     ).bind(...englishList),
-    // 全言語の翻訳を1クエリで
-    db.prepare(translationUnion).bind(...englishList.flatMap(() => englishList.slice(0, 1)).slice(0, englishList.length * targetLangs.length) || englishList),
   ];
-
-  // UNION用に各言語分のパラメータを用意
-  const translationParams = Array(targetLangs.length).fill(englishList).flat();
-  batchQueries[2] = db.prepare(translationUnion).bind(...translationParams);
 
   const batchResults = await db.batch(batchQueries);
 
   // 4. 結果を解析
   const meaningRows = batchResults[0].results as Record<string, unknown>[];
   const trickRows = batchResults[1].results as { en: string; translation_lang: string; ui_lang: string; trick_text: string }[];
-  const allTransRows = batchResults[2].results as { lang: string; en: string; translation: string; gender: string }[];
+
+  // 各言語の翻訳を個別に取得（UNION ALLの代わりに）
+  const allTransRows: { lang: string; en: string; translation: string; gender: string }[] = [];
+  for (const lang of targetLangs) {
+    const { results: langRows } = await db
+      .prepare(
+        `SELECT en, translation, gender FROM words_${lang}
+         WHERE en IN (${placeholders})
+         AND translation IS NOT NULL AND translation != ''`
+      )
+      .bind(...englishList)
+      .all();
+    for (const row of langRows as { en: string; translation: string; gender: string }[]) {
+      allTransRows.push({ lang, ...row });
+    }
+  }
 
   const meaningMap = new Map<string, Record<string, unknown>>();
   for (const row of meaningRows) {
@@ -675,6 +709,13 @@ export async function browseWords(options: {
         }
       }
     }
+  }
+
+  // キャッシュに保存（バックグラウンドで実行）
+  if (cache) {
+    cache.put(cacheKey, JSON.stringify(finalResults), { expirationTtl: CACHE_TTL }).catch(() => {
+      // キャッシュ書き込みエラーは無視
+    });
   }
 
   return finalResults;

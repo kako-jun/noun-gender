@@ -13,6 +13,12 @@
       "zone_name": "llll-ll.com"
     }
   ],
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "abee6764eeb446d280eeabcff5454772"
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
