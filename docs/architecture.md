@@ -8,7 +8,7 @@
 ## 技術スタック
 
 ### フロントエンド
-- **Framework**: Next.js 15 (SSR + @cloudflare/next-on-pages)
+- **Framework**: Next.js 15 (SSR + @opennextjs/cloudflare)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
@@ -17,14 +17,16 @@
 - **State Management**: React Context
 
 ### バックエンド
-- **API**: Next.js API Routes (Edge Runtime)
+- **API**: Next.js API Routes
 - **Database**: Cloudflare D1 (SQLite互換)
+- **Cache**: Cloudflare Workers KV (TTL 1時間)
 - **ORM**: Native SQL (型安全ヘルパー付き)
 
 ### デプロイメント
-- **全体**: Cloudflare Pages (@cloudflare/next-on-pages)
+- **全体**: Cloudflare Workers (@opennextjs/cloudflare)
 - **Database**: Cloudflare D1
-- **CI/CD**: Cloudflare GitHub連携 (自動デプロイ)
+- **Cache**: Cloudflare Workers KV
+- **CI/CD**: `npm run deploy` (手動デプロイ)
 - **Domain**: noun-gender.llll-ll.com
 
 ## データベース設計
@@ -241,16 +243,21 @@ export default function SearchView() {
 ## パフォーマンス最適化
 
 ### データベース最適化
-- **戦略的インデックス**: `en`, `lang`, `gender`カラム
+- **戦略的インデックス**: `en`, `lang`, `gender`カラム + COLLATE NOCASE
 - **外部キー制約**: 完全なデータ整合性保証
-- **ビュー最適化**: 動的検索インデックスで自動メンテナンス
 - **クエリ最適化**: JOINの効率化とN+1問題回避
+- **バッチクエリ**: `db.batch()`による並列実行
+
+### KVキャッシュ
+- **対象**: browseWords API（ページネーション結果）
+- **TTL**: 1時間
+- **キー形式**: `browse:{limit}:{offset}:{language}:{startsWith}`
+- **効果**: レスポンス時間 ~7秒 → ~0.5秒
 
 ### フロントエンド最適化
 - **Code Splitting**: 動的インポートによる遅延ローディング
 - **Image Optimization**: Next.js標準の画像最適化
 - **Bundle Analysis**: webpack-bundle-analyzerによる分析
-- **Caching Strategy**: APIレスポンスの適切なキャッシュ
 
 ### レスポンシブ設計
 
@@ -309,8 +316,8 @@ Cloudflare Pages のGitHub連携による自動デプロイ:
 
 ### スケーラビリティ対応
 - **水平スケーリング**: ステートレス設計
-- **キャッシュ戦略**: Redis導入検討可能
-- **CDN対応**: 静的アセット配信最適化
+- **キャッシュ戦略**: Cloudflare Workers KV導入済み
+- **CDN対応**: Cloudflare Assetsによる静的アセット配信
 - **API Rate Limiting**: 将来的な制限実装準備
 
 ---

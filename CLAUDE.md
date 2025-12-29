@@ -2,11 +2,11 @@
 
 ## プロジェクト概要
 名詞に性別のある言語（ドイツ語、フランス語、スペイン語など）の学習・検索用Webアプリケーション。
-Next.js 15 (SSR + @cloudflare/next-on-pages) + D1 で実装された、4,651語の多言語翻訳・学習ツール。
+Next.js 15 (SSR + @opennextjs/cloudflare) + D1 + KV で実装された、4,596語の多言語翻訳・学習ツール。
 
-## 現在の状況（2025-12-27）
-✅ **実装完了**: 基本機能・UI・API・Cloudflare D1移行完了
-🎯 **次期計画**: 本番デプロイ・パフォーマンス最適化
+## 現在の状況（2025-12-29）
+✅ **実装完了**: 基本機能・UI・API・Cloudflare D1/KV・本番デプロイ完了
+✅ **パフォーマンス最適化**: KVキャッシュ導入（レスポンス ~0.5秒）
 
 ## 📋 プロジェクト文書
 
@@ -49,9 +49,10 @@ Next.js 15 (SSR + @cloudflare/next-on-pages) + D1 で実装された、4,651語�
 ### 技術スタック（実装済み）
 - **Frontend**: Next.js 15 (SSR) + TypeScript + Tailwind CSS
 - **UI Components**: shadcn/ui + Solarized Theme
-- **API**: Next.js API Routes (Edge Runtime)
+- **API**: Next.js API Routes
 - **Database**: Cloudflare D1 (SQLite互換・正規化スキーマ)
-- **Deploy**: Cloudflare Pages (@cloudflare/next-on-pages)
+- **Cache**: Cloudflare Workers KV (TTL 1時間)
+- **Deploy**: Cloudflare Workers (@opennextjs/cloudflare)
 
 ### データ概要
 - **英語単語**: 4,651語
@@ -122,4 +123,4 @@ python scripts/sync_to_d1.py --table words_fr
 
 ---
 
-**最終更新**: 2025-12-27 - CSV→D1直接同期に移行（SQLite廃止）
+**最終更新**: 2025-12-29 - OpenNext移行・KVキャッシュ導入
