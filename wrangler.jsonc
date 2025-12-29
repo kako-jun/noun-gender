@@ -7,6 +7,12 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  "routes": [
+    {
+      "pattern": "noun-gender.llll-ll.com/*",
+      "zone_name": "llll-ll.com"
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
