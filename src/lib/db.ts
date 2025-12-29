@@ -525,16 +525,16 @@ export async function browseWords(options: {
   const { limit = 50, offset = 0, language, startsWith } = options;
   const targetLangs = language ? [language] : ALL_LANGUAGES;
 
-  // 1. words_enから直接ページネーション（高速化）
+  // 1. words_enから直接ページネーション（COLLATE NOCASEインデックス使用）
   let wordQuery = `SELECT en FROM words_en`;
   const params: (string | number)[] = [];
 
   if (startsWith) {
-    wordQuery += ` WHERE LOWER(en) LIKE ?`;
-    params.push(`${startsWith.toLowerCase()}%`);
+    wordQuery += ` WHERE en LIKE ? COLLATE NOCASE`;
+    params.push(`${startsWith}%`);
   }
 
-  wordQuery += ` ORDER BY LOWER(en) LIMIT ? OFFSET ?`;
+  wordQuery += ` ORDER BY en COLLATE NOCASE LIMIT ? OFFSET ?`;
   params.push(limit, offset);
 
   const { results: wordRows } = await db.prepare(wordQuery).bind(...params).all();
@@ -546,7 +546,11 @@ export async function browseWords(options: {
 
   const placeholders = englishList.map(() => '?').join(',');
 
-  // 3. 意味・翻訳・memory tricksを一括取得（db.batch使用）
+  // 3. 意味・翻訳・memory tricksを一括取得（UNION ALLで1クエリに統合）
+  const translationUnion = targetLangs
+    .map((lang) => `SELECT '${lang}' as lang, en, translation, gender FROM words_${lang} WHERE en IN (${placeholders}) AND translation IS NOT NULL AND translation != ''`)
+    .join(' UNION ALL ');
+
   const batchQueries = [
     // 意味と例文
     db.prepare(
@@ -560,22 +564,20 @@ export async function browseWords(options: {
       `SELECT en, translation_lang, ui_lang, trick_text FROM memory_tricks
        WHERE en IN (${placeholders})`
     ).bind(...englishList),
-    // 各言語の翻訳
-    ...targetLangs.map((lang) =>
-      db.prepare(
-        `SELECT '${lang}' as lang, t.en, t.translation, t.gender
-         FROM words_${lang} t
-         WHERE t.en IN (${placeholders})
-         AND t.translation IS NOT NULL AND t.translation != ''`
-      ).bind(...englishList)
-    ),
+    // 全言語の翻訳を1クエリで
+    db.prepare(translationUnion).bind(...englishList.flatMap(() => englishList.slice(0, 1)).slice(0, englishList.length * targetLangs.length) || englishList),
   ];
+
+  // UNION用に各言語分のパラメータを用意
+  const translationParams = Array(targetLangs.length).fill(englishList).flat();
+  batchQueries[2] = db.prepare(translationUnion).bind(...translationParams);
 
   const batchResults = await db.batch(batchQueries);
 
   // 4. 結果を解析
   const meaningRows = batchResults[0].results as Record<string, unknown>[];
   const trickRows = batchResults[1].results as { en: string; translation_lang: string; ui_lang: string; trick_text: string }[];
+  const allTransRows = batchResults[2].results as { lang: string; en: string; translation: string; gender: string }[];
 
   const meaningMap = new Map<string, Record<string, unknown>>();
   for (const row of meaningRows) {
@@ -623,32 +625,29 @@ export async function browseWords(options: {
     });
   }
 
-  // 6. 翻訳データを結果に追加
-  for (let i = 0; i < targetLangs.length; i++) {
-    const transRows = batchResults[2 + i].results as { lang: string; en: string; translation: string; gender: string }[];
-    for (const row of transRows) {
-      const result = grouped.get(row.en);
-      if (result && row.translation && ['m', 'f', 'n'].includes(row.gender)) {
-        const trickMap = tricksMap.get(`${row.en}:${row.lang}`) || {};
-        result.translations.push({
-          id: 0,
-          word_id: 0,
-          language: row.lang,
-          translation: row.translation,
-          gender: row.gender as 'm' | 'f' | 'n',
-          memory_trick_en: trickMap.memory_trick_en,
-          memory_trick_ja: trickMap.memory_trick_ja,
-          memory_trick_zh: trickMap.memory_trick_zh,
-          memory_trick_fr: trickMap.memory_trick_fr,
-          memory_trick_de: trickMap.memory_trick_de,
-          memory_trick_es: trickMap.memory_trick_es,
-          memory_trick_it: trickMap.memory_trick_it,
-          memory_trick_pt: trickMap.memory_trick_pt,
-          memory_trick_ru: trickMap.memory_trick_ru,
-          memory_trick_ar: trickMap.memory_trick_ar,
-          memory_trick_hi: trickMap.memory_trick_hi,
-        });
-      }
+  // 6. 翻訳データを結果に追加（UNIONの結果から）
+  for (const row of allTransRows) {
+    const result = grouped.get(row.en);
+    if (result && row.translation && ['m', 'f', 'n'].includes(row.gender)) {
+      const trickMap = tricksMap.get(`${row.en}:${row.lang}`) || {};
+      result.translations.push({
+        id: 0,
+        word_id: 0,
+        language: row.lang,
+        translation: row.translation,
+        gender: row.gender as 'm' | 'f' | 'n',
+        memory_trick_en: trickMap.memory_trick_en,
+        memory_trick_ja: trickMap.memory_trick_ja,
+        memory_trick_zh: trickMap.memory_trick_zh,
+        memory_trick_fr: trickMap.memory_trick_fr,
+        memory_trick_de: trickMap.memory_trick_de,
+        memory_trick_es: trickMap.memory_trick_es,
+        memory_trick_it: trickMap.memory_trick_it,
+        memory_trick_pt: trickMap.memory_trick_pt,
+        memory_trick_ru: trickMap.memory_trick_ru,
+        memory_trick_ar: trickMap.memory_trick_ar,
+        memory_trick_hi: trickMap.memory_trick_hi,
+      });
     }
   }
 
