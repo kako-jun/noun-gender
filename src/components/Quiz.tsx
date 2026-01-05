@@ -89,7 +89,7 @@ export function Quiz({ onClose }: QuizProps) {
     
     try {
       // 正解数をソートキー、表示用文字列を別途送信
-      const response = await fetch(`https://nostalgic.llll-ll.com/api/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${score}&displayScore=${encodeURIComponent(displayScore)}`);
+      const response = await fetch(`https://api.nostalgic.llll-ll.com/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${score}&displayScore=${encodeURIComponent(displayScore)}`);
       
       if (response.ok) {
         setRankingSubmitted(true);
