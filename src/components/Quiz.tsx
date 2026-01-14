@@ -62,8 +62,8 @@ export function Quiz({ onClose }: QuizProps) {
     const adjectives = ['Swift', 'Clever', 'Brave', 'Quick', 'Smart', 'Fast', 'Sharp', 'Wise', 'Cool', 'Super'];
     const animals = ['Fox', 'Eagle', 'Tiger', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Cat', 'Dog', 'Owl'];
     
-    // IP+UserAgentの代わりにnavigatorのプロパティを使用してハッシュ生成
-    const userString = `${navigator.userAgent}-${navigator.language}-${screen.width}x${screen.height}`;
+    // より多くのデバイス情報を使って異なる端末を区別する
+    const userString = `${navigator.userAgent}-${navigator.language}-${screen.width}x${screen.height}-${screen.colorDepth}-${navigator.hardwareConcurrency || 0}-${(navigator as Navigator & { deviceMemory?: number }).deviceMemory || 0}-${navigator.maxTouchPoints || 0}-${window.devicePixelRatio || 1}`;
     let hash = 0;
     for (let i = 0; i < userString.length; i++) {
       const char = userString.charCodeAt(i);
