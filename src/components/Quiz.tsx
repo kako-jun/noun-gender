@@ -58,49 +58,17 @@ export function Quiz({ onClose }: QuizProps) {
     ).length;
   };
 
-  const generatePlayerName = (): string => {
-    const adjectives = ['Swift', 'Clever', 'Brave', 'Quick', 'Smart', 'Fast', 'Sharp', 'Wise', 'Cool', 'Super'];
-    const animals = ['Fox', 'Eagle', 'Tiger', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Cat', 'Dog', 'Owl'];
-    
-    // より多くのデバイス情報を使って異なる端末を区別する
-    // WebGL renderer情報を取得（GPUの違いで区別）
-    let renderer = '';
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl');
-      const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info');
-      renderer = debugInfo ? gl?.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || '' : '';
-    } catch {
-      renderer = '';
-    }
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-    const userString = `${navigator.userAgent}-${navigator.language}-${screen.width}x${screen.height}-${screen.availWidth}x${screen.availHeight}-${screen.colorDepth}-${navigator.hardwareConcurrency || 0}-${(navigator as Navigator & { deviceMemory?: number }).deviceMemory || 0}-${navigator.maxTouchPoints || 0}-${window.devicePixelRatio || 1}-${renderer}-${timezone}`;
-    let hash = 0;
-    for (let i = 0; i < userString.length; i++) {
-      const char = userString.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // 32bit整数に変換
-    }
-    
-    const adjIndex = Math.abs(hash) % adjectives.length;
-    const animalIndex = Math.abs(hash >> 8) % animals.length;
-    const number = (Math.abs(hash >> 16) % 999) + 1;
-    
-    return `${adjectives[adjIndex]}${animals[animalIndex]}${String(number).padStart(3, '0')}`;
-  };
-
   const submitToRanking = useCallback(async () => {
     if (rankingSubmitted) return;
-    
+
     const score = calculateScore();
     const displayScore = `${score}/${questions.length}`;
-    const playerName = generatePlayerName();
-    
+
     const rankingId = "noun-gender-d0bb6d1f";
-    
+
     try {
-      // 正解数をソートキー、表示用文字列を別途送信
-      const response = await fetch(`https://api.nostalgic.llll-ll.com/ranking?action=submit&id=${rankingId}&name=${encodeURIComponent(playerName)}&score=${score}&displayScore=${encodeURIComponent(displayScore)}`);
+      // 名前はサーバー側で自動生成
+      const response = await fetch(`https://api.nostalgic.llll-ll.com/ranking?action=submit&id=${rankingId}&score=${score}&displayScore=${encodeURIComponent(displayScore)}`);
       
       if (response.ok) {
         setRankingSubmitted(true);
