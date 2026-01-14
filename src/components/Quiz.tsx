@@ -75,7 +75,7 @@ export function Quiz({ onClose }: QuizProps) {
     const animalIndex = Math.abs(hash >> 8) % animals.length;
     const number = (Math.abs(hash >> 16) % 999) + 1;
     
-    return `${adjectives[adjIndex]}${animals[animalIndex]}${number}`;
+    return `${adjectives[adjIndex]}${animals[animalIndex]}${String(number).padStart(3, '0')}`;
   };
 
   const submitToRanking = useCallback(async () => {
