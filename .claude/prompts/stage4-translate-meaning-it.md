@@ -1,7 +1,7 @@
-# Stage 4: フランス語意味翻訳タスク
+# Stage 4: イタリア語意味翻訳タスク
 
 ## あなたの役割
-あなたは**フランス語の専門翻訳者**です。`data/word_meaning_translations.csv`の**meaning_fr列のみ**を翻訳してください。
+あなたは**イタリア語の専門翻訳者**です。`data/word_meaning_translations.csv`の**meaning_it列のみ**を翻訳してください。
 
 ## 重要：上書きモード
 - 既存の翻訳は**すべて上書き**してください
@@ -11,7 +11,7 @@
 ## タスク概要
 - **ファイル**: `data/word_meaning_translations.csv`
 - **総単語数**: 4,592語
-- **担当列**: `meaning_fr`
+- **担当列**: `meaning_it`
 - **作業範囲**: **全行（1行目〜4,592行目）**
 
 ---
@@ -19,24 +19,24 @@
 ## 必須ルール（厳格に遵守）
 
 ### 1. 翻訳対象
-- `meaning_en`列の**全体**をフランス語に翻訳
+- `meaning_en`列の**全体**をイタリア語に翻訳
 - セミコロンの数は一致不要（適切な要約OK）
 
 ### 2. 翻訳品質基準
 ✅ **必須**:
 - **名詞の意味**として翻訳（動詞・形容詞の意味は禁止）
-- フランス語で自然で正確な説明文
+- イタリア語で自然で正確な説明文
 - 同一言語内での重複語を排除
 
 ### 3. 重複語の排除
 ❌ 悪い例:
 ```
-meaning_fr: "capacité; capacité; compétence"  ← "capacité"が2回
+meaning_it: "能力; 能力; 技能"  ← 「能力」が2回
 ```
 
 ✅ 良い例:
 ```
-meaning_fr: "capacité; compétence"  ← 重複削除
+meaning_it: "能力; 技能"  ← 重複削除
 ```
 
 ---
@@ -54,7 +54,7 @@ with open('data/word_meaning_translations.csv', 'r', encoding='utf-8') as f:
 print(f"総行数: {len(rows)}")
 ```
 
-### ステップ2: 全行を翻訳（上書きモード）
+### ステップ2: 全4,592行を翻訳（上書きモード）
 ```python
 import csv
 
@@ -69,9 +69,8 @@ for i, row in enumerate(rows, start=1):
     en = row['en']
     meaning_en = row['meaning_en']
     
-    # meaning_enの全体をフランス語に翻訳
-    # TODO: ここで実際の翻訳を実行
-    translation = "YOUR_TRANSLATION_HERE"
+    # meaning_enの全体をイタリア語に翻訳
+    translation = translate_meaning_to_it(meaning_en)
     
     # 重複チェック
     if ';' in translation:
@@ -86,7 +85,7 @@ for i, row in enumerate(rows, start=1):
         translation = '; '.join(unique_parts)
     
     # 上書き
-    row['meaning_fr'] = translation
+    row['meaning_it'] = translation
     
     # 進捗表示（100行ごと）
     if i % 100 == 0:
@@ -103,13 +102,15 @@ print(f"✅ 翻訳完了: {len(rows)}行")
 
 ### ステップ3: 進捗を記録
 ```bash
-echo "stage4-fr: 4592/4592 (100%)" > .claude/workflow/progress-stage4-fr.txt
-echo "完了日時: $(date)" >> .claude/workflow/progress-stage4-fr.txt
+mkdir -p .claude/workflow
+echo "stage4-it: 4592/4592 (100%)" > .claude/workflow/progress-stage4-it.txt
+echo "完了日時: $(date)" >> .claude/workflow/progress-stage4-it.txt
 ```
 
-### ステップ4: データベースに同期
+### ステップ4: 変更をコミット
 ```bash
-./scripts/d1_sync_all.sh
+git add data/word_meaning_translations.csv .claude/workflow/progress-stage4-it.txt
+git commit -m "feat(stage4-it): complete イタリア語 meaning translations for all 4592 words"
 ```
 
 ---
@@ -120,8 +121,8 @@ echo "完了日時: $(date)" >> .claude/workflow/progress-stage4-fr.txt
 ```
 en: "abbey"
 meaning_en: "a building or buildings occupied by a community of monks or nuns"
-↓ 全体をフランス語に
-meaning_fr: "bâtiment occupé par une communauté de moines ou de religieuses"
+↓ 全体をイタリア語に
+meaning_it: [全体の翻訳]
 ```
 
 ### 例2: 適切な要約（セミコロン数は一致不要）
@@ -129,28 +130,18 @@ meaning_fr: "bâtiment occupé par une communauté de moines ou de religieuses"
 en: "absence"
 meaning_en: "Lack; not being present; missing; vacancy."
 ↓ 4つ→2つに要約（OK）
-meaning_fr: "manque; fait de ne pas être présent"
-```
-
-### 例3: 重複削除
-```
-en: "ability"
-meaning_en: "Possession of the means or skill to do something."
-↓ 翻訳後に重複チェック
-meaning_fr (重複あり): "capacité; capacité; compétence"
-↓ 重複削除
-meaning_fr (最終): "capacité; compétence"
+meaning_it: [要約された翻訳]
 ```
 
 ---
 
 ## 成功基準
 
-✅ 4,592行すべての`meaning_fr`が記入されている  
+✅ 4,592行すべての`meaning_it`が記入されている  
 ✅ すべて名詞の意味として翻訳されている  
 ✅ 同一言語内に重複語がない  
 ✅ タイプミス・アクセント記号の誤りゼロ  
-✅ 自然で正確なフランス語
+✅ 自然で正確なイタリア語
 
 ---
 
@@ -158,22 +149,22 @@ meaning_fr (最終): "capacité; compétence"
 
 ❌ 動詞・形容詞の意味で翻訳  
 ❌ 同一言語内での重複語  
-❌ 他の言語列（meaning_ja, meaning_de等）を編集
+❌ 他の言語列を編集
 
 ---
 
-## 進捗報告
+## 完了報告
 
 作業完了後、以下を報告してください：
 
 1. ✅ 翻訳完了: 4,592/4,592行
 2. ✅ 重複チェック: エラー0件
-3. ✅ データベース同期: 完了
-4. ✅ 進捗ファイル更新: `.claude/workflow/progress-stage4-fr.txt`
+3. ✅ コミット完了
+4. ✅ 進捗ファイル更新: `.claude/workflow/progress-stage4-it.txt`
 
 ---
 
-**言語**: フランス語 (French)  
-**担当列**: meaning_fr  
+**言語**: イタリア語  
+**担当列**: meaning_it  
 **品質基準**: 名詞の意味、重複排除、自然な表現  
 **完了条件**: 全4,592行の上書き翻訳完了
