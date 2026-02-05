@@ -20,18 +20,132 @@
 
 ### 1. セミコロンルール（最重要）
 - `meaning_en`列にセミコロン（`;`）がある場合、**最初の意味のみ**を翻訳
-- 例: "Supply; shares; inventory" → "Supply"のみ翻訳
+- セミコロンの前だけを見て、後ろは完全に無視する
+
+**正しい例**:
+```
+meaning_en: "Lack; not being present; missing; vacancy."
+→ 最初の意味: "Lack" のみ
+→ "not being present", "missing", "vacancy" は無視
+```
+
+**間違った例（これは絶対にしてはいけない）**:
+```
+meaning_en: "Lack; not being present; missing; vacancy."
+→ ❌ "Lack and absence and missing" のように複数の意味を含めて翻訳
+→ ❌ 全体を見て総合的な翻訳をする
+```
 
 ### 2. 翻訳品質基準
 ✅ **必須**:
 - 必ず**名詞**として翻訳（動詞・形容詞は禁止）
+- **名詞1語**で翻訳（説明文・複数語は禁止）
 - ヒンディー語で最も自然で正確な訳語
 - 単数形の英単語 → 単数形で翻訳（複数形に変更禁止）
 - タイプミス・アクセント記号の誤りゼロ
 
+**出力例**: "manque" (1語), "capacité" (1語), "修道院" (1語)
+
+❌ **禁止**:
+- 動詞や形容詞での翻訳
+- 説明文ではなく、**単語1語**で翻訳すること
+- 例: ❌ "不在であること" → ✅ "不在"
+
 ### 3. 性別記号の割り当て
 ヒンディー語の文法的性別を正確に記入：
 - m (男性名詞), f (女性名詞)
+
+---
+
+## 翻訳例（完全版）
+
+### 例1: セミコロンルール厳守
+```
+入力:
+  en: "absence"
+  meaning_en: "Lack; not being present; missing; vacancy."
+
+処理:
+  ステップ1: セミコロンで分割
+    → ["Lack", "not being present", "missing", "vacancy."]
+  
+  ステップ2: 最初の要素のみ取得
+    → "Lack"
+  
+  ステップ3: "Lack"をヒンディー語の名詞に翻訳
+    → hi_translation: "manque" (フランス語の場合)
+    → hi_gender: "m"
+
+正解:
+  hi_translation: "manque"
+  hi_gender: "m"
+
+不正解（これらは絶対にダメ）:
+  ❌ hi_translation: "manque et absence" (複数の意味を含めた)
+  ❌ hi_translation: "absence" (2番目の意味を使った)
+  ❌ hi_translation: "le fait de manquer" (説明文にした)
+```
+
+### 例2: 単数形の維持
+```
+入力:
+  en: "abbey"
+  meaning_en: "A building or buildings occupied by a community of monks or nuns."
+
+処理:
+  ステップ1: セミコロンがないので全体を見る
+  ステップ2: "building"は単数形なので、翻訳も単数形
+  ステップ3: ヒンディー語の名詞に翻訳
+
+正解:
+  hi_translation: "abbaye" (単数形)
+  hi_gender: "f"
+
+不正解:
+  ❌ hi_translation: "abbayes" (複数形にした)
+  ❌ hi_translation: "bâtiment monastique" (説明的にした)
+```
+
+### 例3: 名詞として翻訳
+```
+入力:
+  en: "abstract"
+  meaning_en: "Summary; concept; idea separated from concrete reality."
+
+処理:
+  ステップ1: 最初の意味 "Summary" を取得
+  ステップ2: "Summary"をヒンディー語の**名詞**に翻訳
+    → ❌ "abstrait" (形容詞)
+    → ✅ "résumé" (名詞)
+
+正解:
+  hi_translation: "résumé" (名詞「要約」)
+  hi_gender: "m"
+
+不正解:
+  ❌ hi_translation: "abstrait" (形容詞で翻訳した)
+  ❌ hi_translation: "résumer" (動詞で翻訳した)
+```
+
+### 例4: セミコロンがない場合
+```
+入力:
+  en: "ability"
+  meaning_en: "Possession of the means or skill to do something."
+
+処理:
+  ステップ1: セミコロンがないので全体を見る
+  ステップ2: "Possession of the means or skill"全体の意味を考える
+  ステップ3: ヒンディー語の名詞1語に翻訳
+
+正解:
+  hi_translation: "capacité" (名詞1語)
+  hi_gender: "f"
+
+不正解:
+  ❌ hi_translation: "possession de moyens" (説明的すぎる)
+  ❌ hi_translation: "pouvoir" (動詞的な意味)
+```
 
 ---
 
@@ -103,27 +217,15 @@ git commit -m "feat(stage3-hi): complete ヒンディー語 gender translations 
 
 ---
 
-## 翻訳例
+## 品質チェックリスト
 
-### 例1: セミコロンルール
-```
-en: "absence"
-meaning_en: "Lack; not being present; missing; vacancy."
-↓ 最初の意味のみ
-first_meaning: "Lack"
-↓ ヒンディー語に翻訳
-hi_translation: [翻訳結果]
-hi_gender: [性別]
-```
+翻訳完了後、以下を必ず確認：
 
-### 例2: 単数形の維持
-```
-en: "abbey"
-meaning_en: "A building or buildings occupied by a community of monks or nuns."
-↓ 単数形で翻訳
-hi_translation: [単数形の翻訳]
-hi_gender: [性別]
-```
+1. ✅ **セミコロンルール**: 100行ランダムサンプリングして、最初の意味のみ翻訳されているか確認
+2. ✅ **品詞チェック**: すべて名詞か確認（動詞・形容詞がないか）
+3. ✅ **長さチェック**: 3文字未満の異常に短い翻訳がないか
+4. ✅ **性別チェック**: 性別記号が m (男性名詞), f (女性名詞) の範囲内か
+5. ✅ **アクセント**: アクセント記号が正しいか
 
 ---
 
@@ -133,7 +235,8 @@ hi_gender: [性別]
 ✅ すべて名詞として翻訳されている  
 ✅ セミコロンルール100%遵守  
 ✅ 性別記号がすべて正しい  
-✅ タイプミス・アクセント記号の誤りゼロ
+✅ タイプミス・アクセント記号の誤りゼロ  
+✅ 3文字未満の翻訳がゼロ
 
 ---
 
@@ -143,6 +246,7 @@ hi_gender: [性別]
 ❌ セミコロン後の意味を含める  
 ❌ 単数形→複数形への勝手な変更  
 ❌ 他の言語列を編集  
+❌ 説明文・複数語での翻訳（必ず名詞1語）
 
 ---
 
@@ -152,8 +256,10 @@ hi_gender: [性別]
 
 1. ✅ 翻訳完了: 4,592/4,592行
 2. ✅ 品質チェック: エラー0件
-3. ✅ コミット完了
-4. ✅ 進捗ファイル更新: `.claude/workflow/progress-stage3-hi.txt`
+3. ✅ セミコロンルール違反: 0件
+4. ✅ 3文字未満の翻訳: 0件
+5. ✅ コミット完了
+6. ✅ 進捗ファイル更新: `.claude/workflow/progress-stage3-hi.txt`
 
 ---
 
