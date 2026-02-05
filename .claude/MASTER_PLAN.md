@@ -1,7 +1,49 @@
 # 翻訳プロジェクト マスタープラン
 
 **作成日**: 2025-02-05  
+**最終更新**: 2025-02-05（CSV正規化完了）  
 **方針**: 将来の単語追加に対応できる、ゼロから全単語生成可能なプロンプト
+
+---
+
+## 📂 データ構成（完全正規化）
+
+### 3つのCSVファイル
+
+#### 1. `words.csv`（マスターテーブル）
+```csv
+en,meaning_en,example_en
+abbey,A building or buildings occupied by...,Westminster Abbey has hosted...
+```
+- **行数**: 4,592行
+- **列**: `en` (主キー), `meaning_en`, `example_en`
+- **役割**: 英語の単語・意味・例文のマスターデータ
+
+#### 2. `translations.csv`（翻訳データ）
+```csv
+en,lang,translation,gender,meaning_translation
+abbey,fr,abbaye,f,abbaye; bâtiment occupé par...
+abbey,de,Abtei,f,Abtei; Gebäude einer...
+```
+- **行数**: 45,920行（4,592語 × 10言語）
+- **列**: `en` (外部キー), `lang`, `translation`, `gender`, `meaning_translation`
+- **役割**: 各言語の単語翻訳・性別・意味翻訳
+- **言語**: fr, de, es, it, pt, ru, ar, hi, ja, zh
+
+#### 3. `example_translations.csv`（例文翻訳）
+```csv
+en,lang,example_translation
+abbey,fr,L'abbaye de Westminster a accueilli...
+abbey,de,Westminster Abbey hat jahrhundertelang...
+```
+- **行数**: 45,920行（4,592語 × 10言語）
+- **列**: `en` (外部キー), `lang`, `example_translation`
+- **役割**: 各言語の例文翻訳
+
+### データ原則
+1. **Single Source of Truth**: 各データは1箇所のみ（重複なし）
+2. **完全正規化**: 言語データは縦長（行単位）
+3. **拡張性**: 言語追加時に列を増やさず、行を追加するだけ
 
 ---
 
