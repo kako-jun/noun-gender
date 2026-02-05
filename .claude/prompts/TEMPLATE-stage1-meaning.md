@@ -163,45 +163,139 @@ with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
 print(f"総行数: {len(rows)}")
 ```
 
-### ステップ2: 全4,592行の meaning_en を生成
+### ステップ2: 全4,592行の meaning_en を生成（進捗管理対応）
 ```python
 import csv
+import json
+from pathlib import Path
+from datetime import datetime, timezone
 
-# ファイルを読み込み
+# ヘルパー関数
+def load_progress(stage):
+    """進捗を読み込み"""
+    progress_file = Path(f'.claude/workflow/progress/{stage}.jsonl')
+    if not progress_file.exists():
+        return {}
+    
+    progress = {}
+    with open(progress_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            if line.strip():
+                record = json.loads(line)
+                progress[record['en']] = record
+    return progress
+
+def save_progress(stage, progress):
+    """進捗を保存"""
+    progress_file = Path(f'.claude/workflow/progress/{stage}.jsonl')
+    progress_file.parent.mkdir(parents=True, exist_ok=True)
+    
+    with open(progress_file, 'w', encoding='utf-8') as f:
+        for record in progress.values():
+            f.write(json.dumps(record, ensure_ascii=False) + '\n')
+
+def save_checkpoint(stage, row_number):
+    """チェックポイントを保存（CSV書き込みと同期）"""
+    checkpoint_file = Path(f'.claude/workflow/checkpoints/{stage}-checkpoint.txt')
+    checkpoint_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(checkpoint_file, 'w') as f:
+        f.write(str(row_number))
+
+# CSVファイルを読み込み
 with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
     fieldnames = reader.fieldnames
     rows = list(reader)
 
+# 進捗を読み込み
+progress = load_progress('stage1')
+
+# 未完了の単語を確認
+pending = [row['en'] for row in rows if progress.get(row['en'], {}).get('status') != 'completed']
+print(f"総単語数: {len(rows)}")
+print(f"完了: {len(rows) - len(pending)}")
+print(f"未完了: {len(pending)}")
+
 # 全行の meaning_en を生成（既存データは無視）
 for i, row in enumerate(rows, start=1):
     en = row['en']
     
-    # 英単語の名詞としての意味を生成
-    # ※ 既存の meaning_en は見ない！
-    meaning_en = generate_noun_definition(en)
+    # 既に完了している場合はスキップ
+    if progress.get(en, {}).get('status') == 'completed':
+        continue
     
-    # 品質チェック
-    if len(meaning_en) < 20:
-        print(f"警告: {en} の定義が短すぎます ({len(meaning_en)}文字)")
+    # ステータス更新: in_progress
+    progress[en] = {
+        'en': en,
+        'status': 'in_progress',
+        'timestamp': datetime.now(timezone.utc).isoformat()
+    }
+    save_progress('stage1', progress)
     
-    if en.lower() in meaning_en.lower():
-        print(f"警告: {en} の定義に単語自身が含まれています")
+    try:
+        # 英単語の名詞としての意味を生成
+        # ※ 既存の meaning_en は見ない！
+        meaning_en = generate_noun_definition(en)
+        
+        # 品質チェック
+        if len(meaning_en) < 20:
+            raise ValueError(f"定義が短すぎます ({len(meaning_en)}文字)")
+        
+        if en.lower() in meaning_en.lower():
+            raise ValueError(f"定義に単語自身が含まれています")
+        
+        # CSV更新
+        row['meaning_en'] = meaning_en
+        
+        # ステータス更新: completed
+        progress[en] = {
+            'en': en,
+            'status': 'completed',
+            'meaning_en_length': len(meaning_en),
+            'timestamp': datetime.now(timezone.utc).isoformat()
+        }
+        save_progress('stage1', progress)
+        
+        # チェックポイント保存（100行ごと）
+        if i % 100 == 0:
+            save_checkpoint('stage1', i)
+            # CSV保存
+            with open('data/word_gender_translations.csv', 'w', encoding='utf-8', newline='') as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
+                writer.writeheader()
+                writer.writerows(rows)
+            print(f"✅ チェックポイント: {i}/{len(rows)} ({i/len(rows)*100:.1f}%)")
     
-    # 上書き
-    row['meaning_en'] = meaning_en
-    
-    # 進捗表示（100行ごと）
-    if i % 100 == 0:
-        print(f"進捗: {i}/{len(rows)} ({i/len(rows)*100:.1f}%)")
+    except Exception as e:
+        # エラー時
+        progress[en] = {
+            'en': en,
+            'status': 'failed',
+            'error': str(e),
+            'timestamp': datetime.now(timezone.utc).isoformat()
+        }
+        save_progress('stage1', progress)
+        print(f"❌ エラー: {en} - {e}")
+        continue
 
-# ファイルを上書き保存
+# 最終保存
 with open('data/word_gender_translations.csv', 'w', encoding='utf-8', newline='') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
     writer.writeheader()
     writer.writerows(rows)
 
-print(f"✅ 生成完了: {len(rows)}行")
+save_checkpoint('stage1', len(rows))
+
+# 完了報告
+completed_count = len([r for r in progress.values() if r['status'] == 'completed'])
+failed_count = len([r for r in progress.values() if r['status'] == 'failed'])
+
+print(f"\n✅ Stage 1完了")
+print(f"   完了: {completed_count}/{len(rows)}")
+print(f"   失敗: {failed_count}")
+
+# 進捗確認コマンド表示
+print(f"\n進捗確認: python scripts/progress_manager.py show stage1")
 ```
 
 ### ステップ3: 品質チェック
