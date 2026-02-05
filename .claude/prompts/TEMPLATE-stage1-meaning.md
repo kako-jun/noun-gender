@@ -1,7 +1,7 @@
 # Stage 1: 英語意味定義生成タスク
 
 ## あなたの役割
-あなたは**英語ネイティブの辞書編集者**です。`data/word_gender_translations.csv`の**meaning_en列のみ**を生成してください。
+あなたは**英語ネイティブの辞書編集者**です。`data/words.csv`の**meaning_en列のみ**を生成してください。
 
 ## 重要：ゼロから生成モード
 - 既存の`meaning_en`は**完全に無視**してください
@@ -9,7 +9,7 @@
 - 既存データと偶然一致してもOKです
 
 ## タスク概要
-- **ファイル**: `data/word_gender_translations.csv`
+- **ファイル**: `data/words.csv`
 - **総単語数**: 4,592語
 - **担当列**: `meaning_en`
 - **作業範囲**: **全行（1行目〜4,592行目）**
@@ -156,7 +156,7 @@ abstract: A summary of contents; a concept or idea not associated with a physica
 ```python
 import csv
 
-with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
+with open('data/words.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
     rows = list(reader)
 
@@ -202,7 +202,7 @@ def save_checkpoint(stage, row_number):
         f.write(str(row_number))
 
 # CSVファイルを読み込み
-with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
+with open('data/words.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
     fieldnames = reader.fieldnames
     rows = list(reader)
@@ -260,7 +260,7 @@ for i, row in enumerate(rows, start=1):
         if i % 100 == 0:
             save_checkpoint('stage1', i)
             # CSV保存
-            with open('data/word_gender_translations.csv', 'w', encoding='utf-8', newline='') as f:
+            with open('data/words.csv', 'w', encoding='utf-8', newline='') as f:
                 writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
                 writer.writeheader()
                 writer.writerows(rows)
@@ -279,7 +279,7 @@ for i, row in enumerate(rows, start=1):
         continue
 
 # 最終保存
-with open('data/word_gender_translations.csv', 'w', encoding='utf-8', newline='') as f:
+with open('data/words.csv', 'w', encoding='utf-8', newline='') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
     writer.writeheader()
     writer.writerows(rows)
@@ -338,7 +338,7 @@ echo "品質チェック: 短すぎる定義 0件、単語のみ 0件" >> .claud
 
 ### ステップ5: 変更をコミット
 ```bash
-git add data/word_gender_translations.csv .claude/workflow/progress-stage1.txt
+git add data/words.csv .claude/workflow/progress-stage1.txt
 git commit -m "feat(stage1): generate meaning_en for all 4592 words from scratch"
 ```
 

@@ -1,7 +1,7 @@
 # Stage 3: {LANGUAGE_NATIVE}性別翻訳タスク
 
 ## あなたの役割
-あなたは**{LANGUAGE_NATIVE}の専門翻訳者**です。`data/word_gender_translations.csv`の**{LANGUAGE}列（{LANGUAGE}_translation, {LANGUAGE}_gender）のみ**を翻訳してください。
+あなたは**{LANGUAGE_NATIVE}の専門翻訳者**です。`data/translations.csv`の**{LANGUAGE}行（translation, gender）のみ**を翻訳してください。
 
 ## 重要：上書きモード
 - 既存の翻訳は**すべて上書き**してください
@@ -9,10 +9,11 @@
 - たまたま同じ訳になってもOKです
 
 ## タスク概要
-- **ファイル**: `data/word_gender_translations.csv`
+- **ファイル**: `data/translations.csv`
 - **総単語数**: 4,592語
-- **担当列**: `{LANGUAGE}_translation`, `{LANGUAGE}_gender`
-- **作業範囲**: **全行（1行目〜4,592行目）**
+- **対象行**: `lang='{LANGUAGE}'`の行のみ（4,592行）
+- **担当列**: `translation`, `gender`
+- **作業範囲**: **{LANGUAGE}言語の全4,592行**
 
 ---
 
@@ -155,51 +156,71 @@ meaning_en: "Lack; not being present; missing; vacancy."
 ```python
 import csv
 
-with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
+# words.csvから meaning_en を読み込み
+words_data = {}
+with open('data/words.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
-    rows = list(reader)
+    for row in reader:
+        words_data[row['en']] = row['meaning_en']
 
-print(f"総行数: {len(rows)}")
+# translations.csvから{LANGUAGE}の行を読み込み
+with open('data/translations.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f, delimiter='\t')
+    rows = [row for row in reader if row['lang'] == '{LANGUAGE}']
+
+print(f"{LANGUAGE}の行数: {len(rows)}")
 ```
 
 ### ステップ2: 全4,592行を翻訳（上書きモード）
 ```python
 import csv
 
-# ファイルを読み込み
-with open('data/word_gender_translations.csv', 'r', encoding='utf-8') as f:
+# words.csvを読み込み（meaning_en用）
+words_data = {}
+with open('data/words.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f, delimiter='\t')
+    for row in reader:
+        words_data[row['en']] = row['meaning_en']
+
+# translations.csvを全部読み込み
+all_rows = []
+with open('data/translations.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
     fieldnames = reader.fieldnames
-    rows = list(reader)
+    all_rows = list(reader)
 
-# 全行を翻訳（既存翻訳も上書き）
-for i, row in enumerate(rows, start=1):
+# {LANGUAGE}の行のみ翻訳
+translated_count = 0
+for row in all_rows:
+    if row['lang'] != '{LANGUAGE}':
+        continue
+    
     en = row['en']
-    meaning_en = row['meaning_en']
+    meaning_en = words_data.get(en, '')
     
     # セミコロンルール: 最初の意味のみ抽出
     first_meaning = meaning_en.split(';')[0].strip()
     
     # {LANGUAGE_NATIVE}に翻訳（必ず名詞として）
-    # 実際の翻訳処理を実行
     translation = translate_to_{LANGUAGE}(en, first_meaning)
     gender = get_{LANGUAGE}_gender(translation)
     
     # 上書き
-    row['{LANGUAGE}_translation'] = translation
-    row['{LANGUAGE}_gender'] = gender
+    row['translation'] = translation
+    row['gender'] = gender
+    translated_count += 1
     
     # 進捗表示（100行ごと）
-    if i % 100 == 0:
-        print(f"進捗: {i}/{len(rows)} ({i/len(rows)*100:.1f}%)")
+    if translated_count % 100 == 0:
+        print(f"進捗: {translated_count}/4592 ({translated_count/4592*100:.1f}%)")
 
 # ファイルを上書き保存
-with open('data/word_gender_translations.csv', 'w', encoding='utf-8', newline='') as f:
+with open('data/translations.csv', 'w', encoding='utf-8', newline='') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
     writer.writeheader()
-    writer.writerows(rows)
+    writer.writerows(all_rows)
 
-print(f"✅ 翻訳完了: {len(rows)}行")
+print(f"✅ 翻訳完了: {translated_count}行")
 ```
 
 ### ステップ3: 進捗を記録
@@ -211,7 +232,7 @@ echo "完了日時: $(date)" >> .claude/workflow/progress-stage3-{LANGUAGE}.txt
 
 ### ステップ4: 変更をコミット
 ```bash
-git add data/word_gender_translations.csv .claude/workflow/progress-stage3-{LANGUAGE}.txt
+git add data/translations.csv .claude/workflow/progress-stage3-{LANGUAGE}.txt
 git commit -m "feat(stage3-{LANGUAGE}): complete {LANGUAGE_NATIVE} gender translations for all 4592 words"
 ```
 
@@ -231,7 +252,7 @@ git commit -m "feat(stage3-{LANGUAGE}): complete {LANGUAGE_NATIVE} gender transl
 
 ## 成功基準
 
-✅ 4,592行すべての`{LANGUAGE}_translation`, `{LANGUAGE}_gender`が記入されている  
+✅ {LANGUAGE}言語の4,592行すべての`translation`, `gender`が記入されている  
 ✅ すべて名詞として翻訳されている  
 ✅ セミコロンルール100%遵守  
 ✅ 性別記号がすべて正しい  
@@ -245,7 +266,7 @@ git commit -m "feat(stage3-{LANGUAGE}): complete {LANGUAGE_NATIVE} gender transl
 ❌ 動詞・形容詞での翻訳  
 ❌ セミコロン後の意味を含める  
 ❌ 単数形→複数形への勝手な変更  
-❌ 他の言語列を編集  
+❌ 他の言語行を編集  
 ❌ 説明文・複数語での翻訳（必ず名詞1語）
 
 ---
@@ -264,6 +285,6 @@ git commit -m "feat(stage3-{LANGUAGE}): complete {LANGUAGE_NATIVE} gender transl
 ---
 
 **言語**: {LANGUAGE_NATIVE}  
-**担当列**: {LANGUAGE}_translation, {LANGUAGE}_gender  
+**担当列**: translation, gender  
 **品質基準**: セミコロンルール厳守、名詞のみ、性別正確  
-**完了条件**: 全4,592行の上書き翻訳完了
+**完了条件**: {LANGUAGE}言語の全4,592行の上書き翻訳完了

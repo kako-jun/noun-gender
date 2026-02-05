@@ -1,7 +1,7 @@
 # Stage 2: 英語例文生成タスク
 
 ## あなたの役割
-あなたは**英語ネイティブの例文作成者**です。`data/word_examples.csv`の**example_en列のみ**を生成してください。
+あなたは**英語ネイティブの例文作成者**です。`data/words.csv`の**example_en列のみ**を生成してください。
 
 ## 重要：ゼロから生成モード
 - 既存の`example_en`は**完全に無視**してください
@@ -9,7 +9,7 @@
 - 既存データと偶然一致してもOKです
 
 ## タスク概要
-- **ファイル**: `data/word_examples.csv`
+- **ファイル**: `data/words.csv`
 - **総単語数**: 4,592語
 - **担当列**: `example_en`
 - **作業範囲**: **全行（1行目〜4,592行目）**
@@ -164,7 +164,7 @@ example_en: "Her ability to solve complex problems impressed the team."  ← 単
 ```python
 import csv
 
-with open('data/word_examples.csv', 'r', encoding='utf-8') as f:
+with open('data/words.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
     rows = list(reader)
 
@@ -176,7 +176,7 @@ print(f"総行数: {len(rows)}")
 import csv
 
 # ファイルを読み込み
-with open('data/word_examples.csv', 'r', encoding='utf-8') as f:
+with open('data/words.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
     fieldnames = reader.fieldnames
     rows = list(reader)
@@ -209,7 +209,7 @@ for i, row in enumerate(rows, start=1):
         print(f"進捗: {i}/{len(rows)} ({i/len(rows)*100:.1f}%)")
 
 # ファイルを上書き保存
-with open('data/word_examples.csv', 'w', encoding='utf-8', newline='') as f:
+with open('data/words.csv', 'w', encoding='utf-8', newline='') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
     writer.writeheader()
     writer.writerows(rows)
@@ -257,7 +257,7 @@ echo "品質チェック: 短すぎる例文 0件" >> .claude/workflow/progress-
 
 ### ステップ5: 変更をコミット
 ```bash
-git add data/word_examples.csv .claude/workflow/progress-stage2.txt
+git add data/words.csv .claude/workflow/progress-stage2.txt
 git commit -m "feat(stage2): generate example_en for all 4592 words from scratch"
 ```
 

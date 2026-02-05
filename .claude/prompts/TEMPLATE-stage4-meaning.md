@@ -2,7 +2,7 @@
 
 ## ⚠️ Stage 3 との違い（重要）
 
-| 項目 | Stage 3 (word_gender_translations) | Stage 4 (word_meaning_translations) |
+| 項目 | Stage 3 (translations.csv) | Stage 4 (translations.csv: meaning_translation) |
 |------|-----------------------------------|-------------------------------------|
 | **翻訳対象** | 最初の意味のみ | meaning_en全体 |
 | **出力形式** | 名詞**1語** | **意味の説明**（単語+補足OK） |
@@ -25,7 +25,7 @@ meaning_en: "a building occupied by monks or nuns" (長い説明)
 ---
 
 ## あなたの役割
-あなたは**{LANGUAGE_NATIVE}の専門翻訳者**です。`data/word_meaning_translations.csv`の**meaning_{LANGUAGE}列のみ**を翻訳してください。
+あなたは**{LANGUAGE_NATIVE}の専門翻訳者**です。`data/translations.csv`の**meaning_translation列のみ**を翻訳してください。
 
 ## 重要：上書きモード
 - 既存の翻訳は**すべて上書き**してください
@@ -33,10 +33,11 @@ meaning_en: "a building occupied by monks or nuns" (長い説明)
 - たまたま同じ訳になってもOKです
 
 ## タスク概要
-- **ファイル**: `data/word_meaning_translations.csv`
+- **ファイル**: `data/translations.csv`
 - **総単語数**: 4,592語
-- **担当列**: `meaning_{LANGUAGE}`
-- **作業範囲**: **全行（1行目〜4,592行目）**
+- **対象行**: `lang='{LANGUAGE}'`の行のみ（4,592行）
+- **担当列**: `meaning_translation`
+- **作業範囲**: **{LANGUAGE}言語の全4,592行**
 
 ---
 
@@ -78,27 +79,47 @@ meaning_{LANGUAGE}: "能力; 技能"  ← 重複削除
 ```python
 import csv
 
-with open('data/word_meaning_translations.csv', 'r', encoding='utf-8') as f:
+# words.csvから meaning_en を読み込み
+words_data = {}
+with open('data/words.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
-    rows = list(reader)
+    for row in reader:
+        words_data[row['en']] = row['meaning_en']
 
-print(f"総行数: {len(rows)}")
+# translations.csvから{LANGUAGE}の行を読み込み
+with open('data/translations.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f, delimiter='\t')
+    rows = [row for row in reader if row['lang'] == '{LANGUAGE}']
+
+print(f"{LANGUAGE}の行数: {len(rows)}")
 ```
 
 ### ステップ2: 全4,592行を翻訳（上書きモード）
 ```python
 import csv
 
-# ファイルを読み込み
-with open('data/word_meaning_translations.csv', 'r', encoding='utf-8') as f:
+# words.csvを読み込み（meaning_en用）
+words_data = {}
+with open('data/words.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f, delimiter='\t')
+    for row in reader:
+        words_data[row['en']] = row['meaning_en']
+
+# translations.csvを全部読み込み
+all_rows = []
+with open('data/translations.csv', 'r', encoding='utf-8') as f:
     reader = csv.DictReader(f, delimiter='\t')
     fieldnames = reader.fieldnames
-    rows = list(reader)
+    all_rows = list(reader)
 
-# 全行を翻訳（既存翻訳も上書き）
-for i, row in enumerate(rows, start=1):
+# {LANGUAGE}の行のみ翻訳
+translated_count = 0
+for row in all_rows:
+    if row['lang'] != '{LANGUAGE}':
+        continue
+    
     en = row['en']
-    meaning_en = row['meaning_en']
+    meaning_en = words_data.get(en, '')
     
     # meaning_enの全体を{LANGUAGE_NATIVE}に翻訳
     translation = translate_meaning_to_{LANGUAGE}(meaning_en)
@@ -116,19 +137,20 @@ for i, row in enumerate(rows, start=1):
         translation = '; '.join(unique_parts)
     
     # 上書き
-    row['meaning_{LANGUAGE}'] = translation
+    row['meaning_translation'] = translation
+    translated_count += 1
     
     # 進捗表示（100行ごと）
-    if i % 100 == 0:
-        print(f"進捗: {i}/{len(rows)} ({i/len(rows)*100:.1f}%)")
+    if translated_count % 100 == 0:
+        print(f"進捗: {translated_count}/4592 ({translated_count/4592*100:.1f}%)")
 
 # ファイルを上書き保存
-with open('data/word_meaning_translations.csv', 'w', encoding='utf-8', newline='') as f:
+with open('data/translations.csv', 'w', encoding='utf-8', newline='') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
     writer.writeheader()
-    writer.writerows(rows)
+    writer.writerows(all_rows)
 
-print(f"✅ 翻訳完了: {len(rows)}行")
+print(f"✅ 翻訳完了: {translated_count}行")
 ```
 
 ### ステップ3: 進捗を記録
@@ -140,7 +162,7 @@ echo "完了日時: $(date)" >> .claude/workflow/progress-stage4-{LANGUAGE}.txt
 
 ### ステップ4: 変更をコミット
 ```bash
-git add data/word_meaning_translations.csv .claude/workflow/progress-stage4-{LANGUAGE}.txt
+git add data/translations.csv .claude/workflow/progress-stage4-{LANGUAGE}.txt
 git commit -m "feat(stage4-{LANGUAGE}): complete {LANGUAGE_NATIVE} meaning translations for all 4592 words"
 ```
 
@@ -272,7 +294,7 @@ git commit -m "feat(stage4-{LANGUAGE}): complete {LANGUAGE_NATIVE} meaning trans
 
 ## 成功基準
 
-✅ 4,592行すべての`meaning_{LANGUAGE}`が記入されている  
+✅ {LANGUAGE}言語の4,592行すべての`meaning_translation`が記入されている  
 ✅ **{LANGUAGE_NATIVE}に適切な単語があればそれを使っている**  
 ✅ すべて名詞の意味として翻訳されている（動詞・形容詞は禁止）  
 ✅ 同一言語内に重複語がない  
@@ -286,7 +308,7 @@ git commit -m "feat(stage4-{LANGUAGE}): complete {LANGUAGE_NATIVE} meaning trans
 ❌ ピッタリの単語があるのに長い説明文にする（例: "修道院" があるのに "僧院が使用する建物" とだけ書く）  
 ❌ 動詞・形容詞の意味で翻訳  
 ❌ 同一言語内での重複語  
-❌ 他の言語列を編集
+❌ 他の言語行を編集
 
 ---
 
@@ -303,6 +325,6 @@ git commit -m "feat(stage4-{LANGUAGE}): complete {LANGUAGE_NATIVE} meaning trans
 ---
 
 **言語**: {LANGUAGE_NATIVE}  
-**担当列**: meaning_{LANGUAGE}  
+**担当列**: meaning_translation  
 **品質基準**: 自然な{LANGUAGE_NATIVE}表現、名詞の意味、重複排除  
-**完了条件**: 全4,592行の上書き翻訳完了
+**完了条件**: {LANGUAGE}言語の全4,592行の上書き翻訳完了
