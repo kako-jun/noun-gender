@@ -489,7 +489,7 @@
 {"en": "box", "status": "completed", "meaning_en_length": 39, "timestamp": "2026-02-05T09:47:00.458350+00:00"}
 {"en": "boxing", "status": "completed", "meaning_en_length": 29, "timestamp": "2026-02-05T09:47:00.458352+00:00"}
 {"en": "boy", "status": "completed", "meaning_en_length": 28, "timestamp": "2026-02-05T09:47:00.458354+00:00"}
-{"en": "boyhood", "status": "completed", "meaning_en_length": 20, "timestamp": "2026-02-05T09:47:00.458356+00:00"}
+{"en": "boyhood", "status": "completed", "meaning_en_length": 78, "timestamp": "2026-02-05T09:51:23.288269+00:00"}
 {"en": "brace", "status": "completed", "meaning_en_length": 24, "timestamp": "2026-02-05T09:47:00.458360+00:00"}
 {"en": "bracelet", "status": "completed", "meaning_en_length": 26, "timestamp": "2026-02-05T09:47:00.458362+00:00"}
 {"en": "brag", "status": "completed", "meaning_en_length": 59, "timestamp": "2026-02-05T09:47:00.458365+00:00"}
@@ -643,7 +643,7 @@
 {"en": "case", "status": "completed", "meaning_en_length": 44, "timestamp": "2026-02-05T09:47:00.458709+00:00"}
 {"en": "cash", "status": "completed", "meaning_en_length": 32, "timestamp": "2026-02-05T09:47:00.458712+00:00"}
 {"en": "cast", "status": "completed", "meaning_en_length": 29, "timestamp": "2026-02-05T09:47:00.458714+00:00"}
-{"en": "caste", "status": "completed", "meaning_en_length": 20, "timestamp": "2026-02-05T09:47:00.458716+00:00"}
+{"en": "caste", "status": "completed", "meaning_en_length": 82, "timestamp": "2026-02-05T09:51:23.288672+00:00"}
 {"en": "casting", "status": "completed", "meaning_en_length": 34, "timestamp": "2026-02-05T09:47:00.458718+00:00"}
 {"en": "castle", "status": "completed", "meaning_en_length": 36, "timestamp": "2026-02-05T09:47:00.458720+00:00"}
 {"en": "casual", "status": "completed", "meaning_en_length": 60, "timestamp": "2026-02-05T09:47:00.458722+00:00"}
@@ -698,7 +698,7 @@
 {"en": "channel", "status": "completed", "meaning_en_length": 35, "timestamp": "2026-02-05T09:47:00.458860+00:00"}
 {"en": "chapati", "status": "completed", "meaning_en_length": 90, "timestamp": "2026-02-05T09:47:00.458862+00:00"}
 {"en": "chapel", "status": "completed", "meaning_en_length": 61, "timestamp": "2026-02-05T09:47:00.458864+00:00"}
-{"en": "chapter", "status": "completed", "meaning_en_length": 20, "timestamp": "2026-02-05T09:47:00.458868+00:00"}
+{"en": "chapter", "status": "completed", "meaning_en_length": 108, "timestamp": "2026-02-05T09:51:23.288808+00:00"}
 {"en": "character", "status": "completed", "meaning_en_length": 28, "timestamp": "2026-02-05T09:47:00.458870+00:00"}
 {"en": "characteristic", "status": "completed", "meaning_en_length": 55, "timestamp": "2026-02-05T09:47:00.458873+00:00"}
 {"en": "charcoal", "status": "completed", "meaning_en_length": 52, "timestamp": "2026-02-05T09:47:00.458875+00:00"}
@@ -710,7 +710,7 @@
 {"en": "chase", "status": "completed", "meaning_en_length": 50, "timestamp": "2026-02-05T09:47:00.458888+00:00"}
 {"en": "cheat", "status": "completed", "meaning_en_length": 59, "timestamp": "2026-02-05T09:47:00.458890+00:00"}
 {"en": "check", "status": "completed", "meaning_en_length": 38, "timestamp": "2026-02-05T09:47:00.458892+00:00"}
-{"en": "checkup", "status": "completed", "meaning_en_length": 20, "timestamp": "2026-02-05T09:47:00.458894+00:00"}
+{"en": "checkup", "status": "completed", "meaning_en_length": 93, "timestamp": "2026-02-05T09:51:23.288853+00:00"}
 {"en": "cheek", "status": "completed", "meaning_en_length": 47, "timestamp": "2026-02-05T09:47:00.458896+00:00"}
 {"en": "cheer", "status": "completed", "meaning_en_length": 34, "timestamp": "2026-02-05T09:47:00.458899+00:00"}
 {"en": "cheese", "status": "completed", "meaning_en_length": 34, "timestamp": "2026-02-05T09:47:00.458901+00:00"}
@@ -720,7 +720,7 @@
 {"en": "cherry", "status": "completed", "meaning_en_length": 51, "timestamp": "2026-02-05T09:47:00.458910+00:00"}
 {"en": "chess", "status": "completed", "meaning_en_length": 66, "timestamp": "2026-02-05T09:47:00.458916+00:00"}
 {"en": "chest", "status": "completed", "meaning_en_length": 30, "timestamp": "2026-02-05T09:47:00.458918+00:00"}
-{"en": "chestnut", "status": "completed", "meaning_en_length": 20, "timestamp": "2026-02-05T09:47:00.458920+00:00"}
+{"en": "chestnut", "status": "completed", "meaning_en_length": 88, "timestamp": "2026-02-05T09:51:23.288880+00:00"}
 {"en": "chew", "status": "completed", "meaning_en_length": 26, "timestamp": "2026-02-05T09:47:00.458926+00:00"}
 {"en": "chick", "status": "completed", "meaning_en_length": 31, "timestamp": "2026-02-05T09:47:00.458928+00:00"}
 {"en": "chicken", "status": "completed", "meaning_en_length": 28, "timestamp": "2026-02-05T09:47:00.458930+00:00"}
@@ -1769,7 +1769,7 @@
 {"en": "holiday", "status": "completed", "meaning_en_length": 97, "timestamp": "2026-02-05T09:47:00.461418+00:00"}
 {"en": "home", "status": "completed", "meaning_en_length": 86, "timestamp": "2026-02-05T09:47:00.461420+00:00"}
 {"en": "honey", "status": "completed", "meaning_en_length": 103, "timestamp": "2026-02-05T09:47:00.461422+00:00"}
-{"en": "honor", "status": "completed", "meaning_en_length": 20, "timestamp": "2026-02-05T09:47:00.461424+00:00"}
+{"en": "honor", "status": "completed", "meaning_en_length": 98, "timestamp": "2026-02-05T09:51:23.291591+00:00"}
 {"en": "hope", "status": "completed", "meaning_en_length": 65, "timestamp": "2026-02-05T09:47:00.461427+00:00"}
 {"en": "horror", "status": "completed", "meaning_en_length": 45, "timestamp": "2026-02-05T09:47:00.461429+00:00"}
 {"en": "horse", "status": "completed", "meaning_en_length": 139, "timestamp": "2026-02-05T09:47:00.461433+00:00"}
@@ -1817,7 +1817,7 @@
 {"en": "installation", "status": "completed", "meaning_en_length": 79, "timestamp": "2026-02-05T09:47:00.461530+00:00"}
 {"en": "instance", "status": "completed", "meaning_en_length": 44, "timestamp": "2026-02-05T09:47:00.461532+00:00"}
 {"en": "institution", "status": "completed", "meaning_en_length": 85, "timestamp": "2026-02-05T09:47:00.461535+00:00"}
-{"en": "instruction", "status": "completed", "meaning_en_length": 20, "timestamp": "2026-02-05T09:47:00.461537+00:00"}
+{"en": "instruction", "status": "completed", "meaning_en_length": 114, "timestamp": "2026-02-05T09:51:23.291724+00:00"}
 {"en": "insurance", "status": "completed", "meaning_en_length": 187, "timestamp": "2026-02-05T09:47:00.461539+00:00"}
 {"en": "intelligence", "status": "completed", "meaning_en_length": 53, "timestamp": "2026-02-05T09:47:00.461541+00:00"}
 {"en": "intention", "status": "completed", "meaning_en_length": 32, "timestamp": "2026-02-05T09:47:00.461544+00:00"}
