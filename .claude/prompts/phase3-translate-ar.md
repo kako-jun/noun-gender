@@ -143,94 +143,39 @@ words.csv:
 
 ## 作業手順
 
-### ステップ1: 両ファイルを読み込む
+**重要**: APIは使用禁止。あなた（Claude）自身が直接翻訳してください。
 
-```python
-import csv
+### ステップ1: ファイルを読んで理解する
 
-# words.csvを読み込み（meaning_en, example_en用）
-words_dict = {}
-with open('data/words.csv', 'r', encoding='utf-8') as f:
-    reader = csv.DictReader(f, delimiter='\t')
-    for row in reader:
-        words_dict[row['en']] = {
-            'meaning_en': row['meaning_en'],
-            'example_en': row['example_en']
-        }
+1. `data/words.csv`を読んで、全4,592語の`meaning_en`と`example_en`を把握する
+2. `data/translations_ar.csv`を読んで、現在の状態を確認する
 
-# translations_ar.csvを読み込み
-with open('data/translations_ar.csv', 'r', encoding='utf-8') as f:
-    reader = csv.DictReader(f, delimiter='\t')
-    translations = list(reader)
+### ステップ2: 200語ずつ翻訳する
 
-print(f"words.csv: {len(words_dict)}語")
-print(f"translations_ar.csv: {len(translations)}行")
-```
+**バッチサイズ**: 200語ずつ（コンテキスト圧縮を防ぐため）
 
-### ステップ2: 各行を翻訳
+各バッチで：
+1. words.csvから該当200語の情報を読む
+2. 各単語について：
+   - `meaning_en`をセミコロンで分割し、最初の意味のみ取得
+   - `example_en`で名詞としての用法を確認
+   - アラビア語の名詞形に翻訳
+   - 文法的性別を判定
+   - 意味のアラビア語訳を作成
+3. `data/translations_ar.csv`の該当200行を直接編集（Editツール使用）
+4. 次の200語へ進む
 
-```python
-for i, row in enumerate(translations):
-    en_word = row['en']
-    
-    # words.csvから情報取得
-    word_info = words_dict.get(en_word)
-    if not word_info:
-        print(f"警告: {en_word} がwords.csvに見つかりません")
-        continue
-    
-    meaning_en = word_info['meaning_en']
-    example_en = word_info['example_en']
-    
-    # セミコロンルール: 最初の意味のみ抽出
-    first_meaning = meaning_en.split(';')[0].strip()
-    
-    # 翻訳実行（必ず名詞として）
-    # 1. first_meaningをアラビア語に翻訳
-    # 2. example_enを参考にして名詞として使われているか確認
-    # 3. アラビア語の名詞形を取得
-    translation = translate_as_noun(en_word, first_meaning, example_en)
-    gender = get_gender(translation)
-    meaning_translation = translate_meaning(first_meaning)
-    
-    # CSVに書き込み
-    row['translation'] = translation
-    row['gender'] = gender
-    row['meaning_translation'] = meaning_translation
-    
-    # 進捗表示
-    if (i + 1) % 100 == 0:
-        print(f"進捗: {i+1}/4592 ({(i+1)/4592*100:.1f}%)")
-```
+### ステップ3: 各バッチ完了後に確認
 
-### ステップ3: ファイルを上書き保存
+- 編集した200行が正しく更新されているか確認
+- 行数が変わっていないか確認（4,593行を維持）
+- 空欄がないか確認
 
-```python
-# 必ず4,593行（ヘッダー+4,592単語）を維持
-with open('data/translations_ar.csv', 'w', encoding='utf-8', newline='') as f:
-    fieldnames = ['en', 'translation', 'gender', 'meaning_translation']
-    writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
-    writer.writeheader()
-    writer.writerows(translations)
+### ステップ4: 全バッチ完了後に検証
 
-print(f"✅ 翻訳完了: {len(translations)}行")
-```
-
-### ステップ4: 検証
-
-```python
-# 行数チェック
-assert len(translations) == 4592, f"行数エラー: {len(translations)} != 4592"
-
-# 空欄チェック
-empty_count = 0
-for row in translations:
-    if not row['translation'] or not row['gender'] or not row['meaning_translation']:
-        empty_count += 1
-        print(f"空欄: {row['en']}")
-
-print(f"空欄数: {empty_count}/4592")
-```
+- 全4,592語が翻訳されているか確認
+- 行数が4,593行（ヘッダー+4,592単語）であることを確認
+- ランダムに100語サンプリングしてセミコロンルール遵守を確認
 
 ---
 
