@@ -3233,7 +3233,7 @@ thunderstorm	Gewitter	n	Sturm mit Blitz und Donner
 Thursday	Donnerstag	m	Vierter Tag der Woche
 ticket	Eintrittskarte	f	Einlasskarte
 tide	Tide	f	Anstieg und Fall des Meeres
-tie	Verbindung	f	Verbindung
+tie	Verbindung	f	Eine Verbindung zwischen zwei Dingen
 tiger	Tiger	m	Große gestreifte Katze
 tights	Strumpfhose	f	Eng anliegendes Beinbekleidung
 timber	Bauholz	n	Holz zum Bauen
@@ -3261,8 +3261,8 @@ tongue	Zunge	f	Mundmuskel
 tonic	Tonikum	n	Medizinische Substanz
 tool	Werkzeug	n	Instrument
 tooth	Zahn	m	Zahnstruktur
-toothache	Zahnschmerz	m	Zahnschmerz
-top	Gipfel	m	Gipfel
+toothache	Zahnschmerz	m	Schmerzen in einem Zahn
+top	Gipfel	m	Der höchste Punkt oder Gipfel von etwas
 topping	Belag	m	Lebensmittel, das oben platziert wird
 torment	Qual	f	Schweres Leiden
 tornado	Tornado	m	Gewaltsamer rotierender Wirbelsturm
@@ -3300,10 +3300,10 @@ transport	Transportmittel	n	Ein Mittel zum Transport von Personen oder Gütern
 transportation	Transport	m	Reise
 trap	Falle	f	Vorrichtung zum Fangen
 trauma	Trauma	n	Schwere Verletzung
-travel	Reise	f	Reise
+travel	Reise	f	Eine Reise von einem Ort zu einem anderen
 traveler	Reisender	m	Person, die reist
 tray	Tablett	n	Flacher Behälter zum Tragen
-treachery	Verrat	m	Verrat
+treachery	Verrat	m	Ein Verrat oder eine Untreue gegenüber jemandem
 tread	Tritt	m	Ein Fußtritt
 treasure	Schatz	m	Wertvolle Sammlung
 treasurer	Schatzmeister	m	Person, die Geld verwaltet
@@ -3324,11 +3324,11 @@ trickle	Rinnsal	n	Dünner Strom
 trifle	Kleinigkeit	f	Etwas von geringer Bedeutung
 trim	Zierleiste	f	Dekoration oder Verzierung
 trio	Trio	n	Gruppe von drei
-trip	Reise	f	Reise
+trip	Reise	f	Eine Reise oder Fahrt zu einem bestimmten Ziel
 triumph	Triumph	m	Großer Erfolg
 troop	Truppe	f	Gruppe von Soldaten
 trot	Trab	m	Pferdegangart
-trouble	Problem	n	Problem
+trouble	Problem	n	Ein Problem oder eine Schwierigkeit, die jemandem Sorgen bereitet
 trough	Trog	m	Behälter für Tierfutter
 trout	Forelle	f	Süßwasserfisch
 truce	Waffenstillstand	m	Vorübergehender Frieden
@@ -3346,7 +3346,7 @@ tulip	Tulpe	f	Frühlingsblume
 tumble	Sturz	m	Ein plötzlicher Fall oder Sturz
 tumor	Tumor	m	Abnormales Wachstum
 tuna	Thunfisch	m	Großer Ozeanfisch
-tune	Melodie	f	Melodie
+tune	Melodie	f	Eine Melodie oder ein musikalisches Stück mit einer erkennbaren Tonfolge
 turf	Rasen	m	Grasfläche
 Turkey	Truthuhn	n	Großer Vogel
 turn	Drehung	f	Rotation
@@ -3379,7 +3379,7 @@ undergraduate	Student	m	Universitätsstudent
 underground	Untergrund	m	Unter der Erde
 underneath	Unterseite	f	Unten
 underside	Unterseite	f	Untere Fläche
-understanding	Verständnis	n	Verständnis
+understanding	Verständnis	n	Das Verständnis oder die Fähigkeit, etwas zu begreifen und zu verstehen
 undertaking	Unternehmen	n	Aufgabe oder Projekt
 underwater	Unterwasser	n	Unter der Wasseroberfläche
 underwear	Unterwäsche	f	Kleidung, die unter anderer Kleidung getragen wird
@@ -3392,8 +3392,8 @@ universe	Universum	n	Alle Raum und Zeit
 university	Universität	f	Hochschule
 unknown	Unbekannte	n	Nicht bekannt
 unseen	Ungesehenes	n	Nicht sichtbar
-up	Aufwärtsrichtung	f	Aufwärtsrichtung
-upgrade	Verbesserung	f	Verbesserung
+up	Aufwärtsrichtung	f	Die Richtung nach oben oder aufwärts
+upgrade	Verbesserung	f	Eine Verbesserung oder Aufwertung von etwas auf einen höheren Standard
 uplift	Erhebung	f	Moralische oder geistige Verbesserung
 upright	Vertikale	f	Vertikal
 upset	Verstimmung	f	Beunruhigt
@@ -3404,7 +3404,7 @@ uranium	Uran	n	Radioaktives Metall
 uranus	Uranus	m	Siebter Planet von der Sonne
 urge	Drang	m	Starkes Verlangen
 usage	Verwendung	f	Art der Verwendung
-use	Zweck	m	Zweck
+use	Zweck	m	Der Zweck oder die Verwendung von etwas
 usual	Übliche	n	Normal
 utility	Nutzen	m	Nützlichkeit
 utmost	Äußerstes	n	Größtmöglich
@@ -3417,7 +3417,7 @@ vacuum	Vakuum	n	Leerer Raum
 validity	Gültigkeit	f	Zustand, gültig zu sein
 valley	Tal	n	Tiefland
 valuation	Bewertung	f	Wertermittlung
-value	Wert	m	Wert
+value	Wert	m	Der Wert oder die Bedeutung von etwas
 van	Lieferwagen	m	Fahrzeug zum Transport
 vanilla	Vanille	f	Gewürzaroma
 vanity	Eitelkeit	f	Übermäßiger Stolz
@@ -3431,9 +3431,9 @@ vegetable	Gemüse	n	Essbare Pflanze
 vegetation	Vegetation	f	Pflanzenleben
 veil	Schleier	m	Gesichtsbedeckung
 vein	Ader	f	Blutgefäß
-velocity	Geschwindigkeit	f	Geschwindigkeit
-vendor	Verkäufer	m	Verkäufer
-vengeance	Rache	f	Rache
+velocity	Geschwindigkeit	f	Die Geschwindigkeit, mit der sich etwas bewegt
+vendor	Verkäufer	m	Ein Verkäufer oder Händler von Waren
+vengeance	Rache	f	Die Rache oder Vergeltung für ein erlittenes Unrecht
 venture	Unternehmen	n	Geschäftsvorhaben
 venus	Venus	f	Zweiter Planet von der Sonne
 verdict	Urteil	n	Juryentscheidung
@@ -3476,9 +3476,9 @@ vital	Notwendigkeit	f	Wesentliches
 vitamin	Vitamin	n	Nährstoff für die Gesundheit
 vocabulary	Wortschatz	m	Bekannte Wörter
 vocation	Beruf	m	Berufung
-vogue	Mode	f	Mode
+vogue	Mode	f	Die Mode oder der aktuelle Trend in einem bestimmten Bereich
 voice	Stimme	f	Laut
-void	Leere	f	Leere
+void	Leere	f	Eine Leere oder ein leerer Raum ohne Inhalt
 volcano	Vulkan	m	Berg mit geschmolzenem Gestein
 volley	Salve	f	Serie von Schüssen
 volleyball	Volleyball	m	Mannschaftssport mit Netz
@@ -3511,7 +3511,7 @@ ward	Station	f	Krankenhausabteilung
 wardrobe	Garderobe	f	Kleidersammlung
 ware	Ware	f	Hergestellte Güter
 warfare	Kriegsführung	f	Bewaffneter Kampf
-warm	Wärme	f	Wärme
+warm	Wärme	f	Wärme oder eine angenehme Temperatur zwischen kühl und heiß
 warp	Verformung	f	Verwindung oder Verbiegung
 warrant	Haftbefehl	m	Rechtsdokument
 warranty	Garantie	f	Qualitätsgarantie
@@ -3610,7 +3610,7 @@ world	Welt	f	Die Erde mit allen Ländern
 worm	Wurm	m	Langes weiches Tier
 worry	Sorge	f	Besorgnis
 worship	Gottesdienst	m	Religiöse Andacht
-worth	Wert	m	Wert
+worth	Wert	m	Der Wert oder die Bedeutung von etwas
 wound	Wunde	f	Verletzung
 wrap	Hülle	f	Eine Abdeckung oder Verpackungsmaterial
 wreck	Wrack	n	Zerstörte Überreste
@@ -3623,8 +3623,8 @@ x-ray	Röntgenbild	n	Medizinische Bildgebung
 xanadu	Idylle	f	Idyllischer Ort
 xenon	Xenon	n	Edelgas-Element
 xenophobia	Fremdenfeindlichkeit	f	Angst vor Fremden
-xerox	Fotokopie	f	Fotokopie
-xmas	Weihnachten	n	Weihnachten
+xerox	Fotokopie	f	Eine Fotokopie oder das Kopieren eines Dokuments mit einem Kopiergerät
+xmas	Weihnachten	n	Eine umgangssprachliche Abkürzung für Weihnachten
 xylitol	Xylitol	n	Zuckerersatz
 xylophone	Xylophon	n	Schlaginstrument
 yak	Yak	m	Großes haariges Rind
@@ -3952,7 +3952,7 @@ mastery	Meisterschaft	f	Umfassendes Wissen oder Können in einem Fach oder einer
 mathematics	Mathematik	f	Die abstrakte Wissenschaft von Zahl, Menge und Raum, die an sich oder in Anwendung auf andere Disziplinen studiert wird
 microorganism	Mikroorganismus	m	Ein mikroskopischer Organismus, insbesondere ein Bakterium, Virus oder Pilz, der nur unter dem Mikroskop sichtbar ist
 microscope	Mikroskop	n	Ein optisches Instrument zum Betrachten sehr kleiner Objekte durch Erzeugung eines vergrößerten Bildes
-midnight	Mitternacht	f	Mitternacht
+midnight	Mitternacht	f	Der Zeitpunkt um zwölf Uhr nachts, wenn ein Tag endet und ein neuer beginnt
 midst	Mitte	f	Der mittlere Punkt oder Teil von etwas
 migration	Migration	f	Saisonale Bewegung von Tieren von einer Region zur anderen
 mile	Meile	f	Eine Einheit des linearen Maßes gleich 5.280 Fuß oder 1.760 Yards, ungefähr 1,609 Kilometer
@@ -4138,236 +4138,236 @@ resonance	Resonanz	f	Die Qualität eines Klangs, tief, voll und nachklingend zu 
 resort	Kurort	m	Ein Ort, der für Urlaub oder Erholung aufgesucht wird, typischerweise wegen seiner angenehmen Umgebung
 restoration	Restaurierung	f	Die Handlung, etwas an einen früheren Besitzer, Ort oder Zustand zurückzugeben
 resume	Lebenslauf	m	Ein kurzer Bericht über die eigene Ausbildung, Qualifikationen und frühere Berufserfahrung, der typischerweise mit einer Bewerbung verschickt wird
-resurrection	Auferstehung	f	Auferstehung
-retreat	Rückzug	m	Rückzug
-revenge	Rache	f	Rache
-reverence	Ehrfurcht	f	Ehrfurcht
-reverse	Rückseite	f	Rückseite
-revision	Überarbeitung	f	Überarbeitung
-revival	Wiederbelebung	f	Wiederbelebung
-revolt	Aufstand	m	Aufstand
-rhyme	Reim	m	Reim
-rhythm	Rhythmus	m	Rhythmus
-ribbon	Band	n	Band
-riches	Reichtum	m	Reichtum
-riddle	Rätsel	n	Rätsel
-rifle	Gewehr	n	Gewehr
-rig	Bohrturm	m	Bohrturm
-right	Recht	n	Recht
-riot	Aufruhr	m	Aufruhr
-ripple	Welle	f	Welle
-rise	Aufstieg	m	Aufstieg
-rite	Ritus	m	Ritus
-ritual	Ritual	n	Ritual
-roast	Braten	m	Braten
-robber	Räuber	m	Räuber
-robbery	Raub	m	Raub
-robe	Robe	f	Robe
-rocket	Rakete	f	Rakete
-rod	Stange	f	Stange
-roll	Rolle	f	Rolle
-roman	Römer	m	Römer
-romance	Romanze	f	Romanze
-roof	Dach	n	Dach
-rope	Seil	n	Seil
-rose	Rose	f	Rose
-rot	Fäulnis	f	Fäulnis
-rub	Reiben	n	Reiben
-rubber	Gummi	m	Gummi
-ruby	Rubin	m	Rubin
-seafood	Meeresfrüchte	f	Meeresfrüchte
-seal	Robbe	f	Robbe
-seasoning	Gewürz	n	Gewürz
-seaweed	Seetang	m	Seetang
-sect	Sekte	f	Sekte
-seed	Samen	m	Samen
-segment	Segment	n	Segment
-seizure	Beschlagnahme	f	Beschlagnahme
-semblance	Anschein	m	Anschein
-semiconductor	Halbleiter	m	Halbleiter
-sensation	Sensation	f	Sensation
-sentence	Satz	m	Satz
-sentiment	Gefühl	n	Gefühl
-separation	Trennung	f	Trennung
-September	September	m	September
-seriousness	Ernst	m	Ernst
-serpent	Schlange	f	Schlange
-servant	Diener	m	Diener
-serviceman	Soldat	m	Soldat
-sesame	Sesam	m	Sesam
-set	Satz	m	Satz
-severity	Schwere	f	Schwere
-shaft	Schacht	m	Schacht
-shampoo	Shampoo	n	Shampoo
-shark	Hai	m	Hai
-sheep	Schaf	n	Schaf
-sheet	Blatt	n	Blatt
-shell	Schale	f	Schale
-shellfish	Schalentier	n	Schalentier
-shepherd	Hirte	m	Hirte
-sherbet	Sorbet	n	Sorbet
-sherry	Sherry	m	Sherry
-shield	Schild	m	Schild
-ship	Schiff	n	Schiff
-shiver	Schauer	m	Schauer
-shore	Ufer	n	Ufer
-downsizing	Personalabbau	m	Personalabbau
-downstairs	Erdgeschoss	n	Erdgeschoss
-downturn	Abschwung	m	Abschwung
-doze	Nickerchen	n	Nickerchen
-drag	Ziehen	n	Ziehen
-drawback	Nachteil	m	Nachteil
-droop	Hängen	n	Hängen
-dwarf	Zwerg	m	Zwerg
-dynamic	Dynamik	f	Dynamik
-earnest	Ernst	m	Ernst
-ebb	Ebbe	f	Ebbe
-eccentricity	Exzentrizität	f	Exzentrizität
-economist	Ökonom	m	Ökonom
-ecosystem	Ökosystem	n	Ökosystem
-edible	Essbares	n	Essbares
-eightieth	Achtzigste	n	Achtzigste
-eighty	Achtzig	f	Achtzig
+resurrection	Auferstehung	f	Die Handlung oder Tatsache, von den Toten aufzuerstehen oder zum Leben zurückzukehren
+retreat	Rückzug	m	Ein Rückzug aus einer schwierigen Situation oder das Zurückweichen vor einer Gefahr
+revenge	Rache	f	Die Handlung, jemandem Schaden oder Strafe als Vergeltung für ein erlittenes Unrecht zuzufügen
+reverence	Ehrfurcht	f	Ein Gefühl tiefen Respekts, Ehrfurcht oder Verehrung für jemanden oder etwas
+reverse	Rückseite	f	Eine vollständige Änderung in eine entgegengesetzte Richtung, Position oder Handlungsweise
+revision	Überarbeitung	f	Der Prozess, etwas zu überprüfen und Änderungen vorzunehmen, um es zu verbessern oder zu korrigieren
+revival	Wiederbelebung	f	Eine Verbesserung im Zustand oder in der Stärke von etwas
+revolt	Aufstand	m	Ein gewaltsamer Aufstand gegen eine etablierte Regierung oder Autorität
+rhyme	Reim	m	Eine Übereinstimmung von Lauten zwischen Wörtern oder Wortendungen, besonders in der Poesie
+rhythm	Rhythmus	m	Ein starkes, regelmäßiges, sich wiederholendes Muster von Bewegung oder Klang
+ribbon	Band	n	Ein langer, schmaler Streifen aus Stoff, der zur Dekoration oder zum Binden verwendet wird
+riches	Reichtum	m	Materieller Reichtum oder Wohlstand
+riddle	Rätsel	n	Eine Frage oder Aussage, die absichtlich so formuliert ist, dass Einfallsreichtum erforderlich ist, um die Antwort zu finden
+rifle	Gewehr	n	Eine Schusswaffe, die von der Schulter abgefeuert wird und einen langen spiralförmig gerillten Lauf hat
+rig	Bohrturm	m	Ein großes Gerät oder eine Maschine für einen bestimmten Zweck, besonders beim Bohren
+right	Recht	n	Ein moralischer oder rechtlicher Anspruch, etwas zu haben oder zu tun
+riot	Aufruhr	m	Eine gewaltsame Störung des Friedens durch eine Menschenmenge, die zusammen handelt
+ripple	Welle	f	Eine kleine Welle oder eine Reihe von Wellen auf der Wasseroberfläche
+rise	Aufstieg	m	Eine Aufwärtsbewegung oder ein Anstieg
+rite	Ritus	m	Eine religiöse oder feierliche Zeremonie oder Handlung, besonders eine, die für eine bestimmte Religion oder Kultur charakteristisch ist
+ritual	Ritual	n	Eine Reihe von Handlungen, die in einer vorgeschriebenen Reihenfolge ausgeführt werden, oft für religiöse oder zeremonielle Zwecke
+roast	Braten	m	Ein großes Stück Fleisch, das gebraten wurde oder zum Braten bestimmt ist
+robber	Räuber	m	Eine Person, die Geld oder Eigentum mit Gewalt oder Androhung von Gewalt stiehlt
+robbery	Raub	m	Die Handlung, Eigentum unrechtmäßig mit Gewalt oder Androhung von Gewalt von einer Person oder einem Ort zu nehmen
+robe	Robe	f	Ein langes, loses äußeres Kleidungsstück, das bis zu den Knöcheln reicht und für Wärme oder zeremonielle Zwecke getragen wird
+rocket	Rakete	f	Ein zylindrisches Projektil, das durch die Verbrennung seines Inhalts in große Höhen oder Entfernungen getrieben werden kann
+rod	Stange	f	Ein dünner gerader Stab, besonders aus Holz oder Metall
+roll	Rolle	f	Ein Zylinder, der durch wiederholtes Übereinanderrollen von flexiblem Material ohne Falten gebildet wird
+roman	Römer	m	Ein Bürger oder Soldat der antiken Republik oder des Reiches mit Zentrum in Italien
+romance	Romanze	f	Ein Gefühl von Aufregung und Geheimnis, das mit Liebe verbunden ist
+roof	Dach	n	Die Struktur, die die obere Abdeckung eines Gebäudes oder Fahrzeugs bildet
+rope	Seil	n	Ein Stück starkes Seil, das durch Zusammendrehen von Strängen aus natürlichen Fasern oder synthetischem Material hergestellt wird
+rose	Rose	f	Ein stacheliger Busch oder Strauch, der typischerweise rote, rosa, gelbe oder weiße duftende Blüten trägt
+rot	Fäulnis	f	Der Prozess des Verfalls, der durch bakterielle oder pilzliche Aktivität verursacht wird
+rub	Reiben	n	Die Handlung, festen Druck auf die Oberfläche von etwas mit einer wiederholten Hin- und Herbewegung auszuüben
+rubber	Gummi	m	Eine zähe elastische polymere Substanz, die aus dem Latex einer tropischen Pflanze oder synthetisch hergestellt wird
+ruby	Rubin	m	Ein Edelstein aus Korund in Farbvarianten von tiefem Karmesinrot oder Purpur bis zu blassem Rosa
+seafood	Meeresfrüchte	f	Essbare Fische oder Schalentiere aus dem Meer, die als Nahrung verwendet werden
+seal	Robbe	f	Eine Vorrichtung oder Substanz, die verwendet wird, um zwei Dinge miteinander zu verbinden oder etwas undurchlässig zu machen
+seasoning	Gewürz	n	Salz, Kräuter oder Gewürze, die Lebensmitteln hinzugefügt werden, um ihren Geschmack zu verbessern
+seaweed	Seetang	m	Große Algen, die im Meer oder auf Felsen unterhalb der Hochwassermarke wachsen
+sect	Sekte	f	Eine Gruppe von Menschen mit etwas anderen religiösen Überzeugungen als die einer größeren Gruppe
+seed	Samen	m	Die Fortpflanzungseinheit einer blühenden Pflanze, die sich zu einer anderen solchen Pflanze entwickeln kann
+segment	Segment	n	Jeder der Teile, in die etwas geteilt ist oder geteilt werden kann
+seizure	Beschlagnahme	f	Die Handlung, jemanden oder etwas mit Gewalt zu ergreifen oder zu beschlagnahmen
+semblance	Anschein	m	Das äußere Erscheinungsbild oder die scheinbare Form von etwas, besonders wenn die Realität anders ist
+semiconductor	Halbleiter	m	Ein fester Stoff, der eine Leitfähigkeit zwischen der eines Isolators und der meisten Metalle hat
+sensation	Sensation	f	Ein körperliches Gefühl oder eine Wahrnehmung, die aus etwas resultiert, das dem Körper widerfährt oder mit ihm in Kontakt kommt
+sentence	Satz	m	Eine Gruppe von Wörtern, die in sich vollständig ist und typischerweise ein Subjekt und Prädikat enthält
+sentiment	Gefühl	n	Eine Ansicht oder Haltung gegenüber einer Situation oder einem Ereignis
+separation	Trennung	f	Die Handlung oder der Zustand des Auseinander- oder Getrenntwerdens
+September	September	m	Der neunte Monat des Jahres, der auf der Nordhalbkugel normalerweise als erster Monat des Herbstes betrachtet wird
+seriousness	Ernst	m	Die Qualität oder der Zustand, ernst, gravierend oder ernsthaft in Verhalten, Erscheinung oder Haltung zu sein
+serpent	Schlange	f	Eine große Schlange, besonders eine, die in religiösen oder mythologischen Kontexten dargestellt wird
+servant	Diener	m	Eine Person, die Dienste für andere verrichtet, besonders eine Person, die in einem Haus für häusliche Aufgaben angestellt ist
+serviceman	Soldat	m	Eine Person, die in den Streitkräften dient
+sesame	Sesam	m	Eine hohe einjährige krautige Pflanze aus tropischen und subtropischen Gebieten, die für ihre ölreichen Samen angebaut wird
+set	Satz	m	Eine Sammlung von unterschiedlichen Objekten oder Dingen, die als Gruppe betrachtet werden
+severity	Schwere	f	Die Tatsache oder der Zustand, schwerwiegend oder streng zu sein
+shaft	Schacht	m	Ein langer, schmaler Teil oder Abschnitt, der den Griff eines Werkzeugs oder Schlägers, den Körper eines Speers oder Pfeils bildet
+shampoo	Shampoo	n	Ein flüssiges Präparat mit Seife oder Reinigungsmittel zum Waschen der Haare
+shark	Hai	m	Ein langgestreckter hauptsächlich im Meer lebender Fisch mit einem knorpeligen Skelett, einer markanten Rückenflosse und zahnartigen Schuppen
+sheep	Schaf	n	Ein domestiziertes Wiederkäuersäugetier mit dickem wolligem Fell, das in Herden für seine Wolle oder sein Fleisch gehalten wird
+sheet	Blatt	n	Ein großes rechteckiges Stück Baumwolle oder anderen Stoffs, das auf einem Bett verwendet wird, um die Matratze zu bedecken
+shell	Schale	f	Die harte schützende äußere Hülle einer Muschel oder eines Krebstiers
+shellfish	Schalentier	n	Eine im Wasser lebende Muschel mit Schale oder ein Krebstier, besonders ein essbares
+shepherd	Hirte	m	Eine Person, die Schafe hütet und aufzieht, sie zur Weide führt und sie beschützt
+sherbet	Sorbet	n	Ein gefrorenes Dessert aus Fruchtsaft gemischt mit Milch oder Sahne, Eiweiß oder Gelatine
+sherry	Sherry	m	Ein verstärkter Wein, der ursprünglich und hauptsächlich aus Südspanien stammt und typischerweise als Aperitif getrunken wird
+shield	Schild	m	Ein breites Stück Metall oder anderes geeignetes Material, das durch Riemen oder einen Griff zum Schutz gehalten wird
+ship	Schiff	n	Ein großes seetüchtiges Schiff, das durch Segel oder Motor angetrieben wird, um Menschen oder Fracht zu transportieren
+shiver	Schauer	m	Eine momentane zitternde Bewegung, die durch Kälte oder Angst verursacht wird
+shore	Ufer	n	Das Land entlang des Randes eines Meeres, Sees oder anderen großen Gewässers
+downsizing	Personalabbau	m	Die Handlung, etwas kleiner zu machen oder die Größe einer Belegschaft zu reduzieren
+downstairs	Erdgeschoss	n	Das Erdgeschoss oder die untere Etage eines Gebäudes
+downturn	Abschwung	m	Ein Rückgang in der wirtschaftlichen, geschäftlichen oder anderen Aktivität
+doze	Nickerchen	n	Ein kurzer leichter Schlaf, besonders tagsüber
+drag	Ziehen	n	Die Handlung, etwas mit Kraft oder mit Schwierigkeit zu ziehen
+drawback	Nachteil	m	Ein Merkmal, das etwas weniger akzeptabel macht
+droop	Hängen	n	Ein Abwärtshängen oder Absinken in Haltung oder Position aufgrund von Müdigkeit oder Schwäche
+dwarf	Zwerg	m	Ein Mitglied einer mythischen Rasse von kurzen, stämmigen menschenähnlichen Kreaturen
+dynamic	Dynamik	f	Eine Kraft, die Veränderung oder Fortschritt innerhalb eines Systems oder Prozesses anregt
+earnest	Ernst	m	Etwas, das als Zeichen oder Versprechen dessen angesehen wird, was kommen wird
+ebb	Ebbe	f	Die Bewegung der Gezeiten hinaus zum Meer
+eccentricity	Exzentrizität	f	Die Eigenschaft, unkonventionell und etwas seltsam zu sein
+economist	Ökonom	m	Ein Experte in Wirtschaftswissenschaften
+ecosystem	Ökosystem	n	Eine biologische Gemeinschaft von interagierenden Organismen und ihrer physischen Umgebung
+edible	Essbares	n	Etwas, das geeignet oder passend ist, als Nahrung gegessen zu werden
+eightieth	Achtzigste	n	Die Ordnungszahl, die der Zahl achtzig in einer Sequenz entspricht
+eighty	Achtzig	f	Die Zahl, die dem Produkt von acht und zehn entspricht
 electric	Elektrogerät	n	elektrisches Gerät oder System
-electrolysis	Elektrolyse	f	Elektrolyse
-electrolyte	Elektrolyt	m	Elektrolyt
-electromagnet	Elektromagnet	m	Elektromagnet
-electromagnetism	Elektromagnetismus	m	Elektromagnetismus
-eleven	Elf	f	Elf
-eleventh	Elfte	n	Elfte
-elm	Ulme	f	Ulme
-embarrassment	Verlegenheit	f	Verlegenheit
-enclosure	Gehege	n	Gehege
-encore	Zugabe	f	Zugabe
-encouragement	Ermutigung	f	Ermutigung
-fringe	Rand	m	Rand
-fundamental	Grundlage	f	Grundlage
-fur	Pelz	m	Pelz
-furrow	Furche	f	Furche
-fuse	Sicherung	f	Sicherung
-gallop	Galopp	m	Galopp
-gamble	Glücksspiel	n	Glücksspiel
-ganges	Ganges	m	Ganges
-gape	Starren	n	Starren
-gene	Gen	n	Gen
-generality	Allgemeinheit	f	Allgemeinheit
-generalization	Verallgemeinerung	f	Verallgemeinerung
-genetics	Genetik	f	Genetik
-genome	Genom	n	Genom
-gentry	Adel	m	Adel
-geology	Geologie	f	Geologie
-German	Deutsche	m	Deutsche
-glacier	Gletscher	m	Gletscher
-glare	Blendung	f	Blendung
-glossy	Hochglanz	m	Hochglanz
-goldfish	Goldfisch	m	Goldfisch
-goodness	Güte	f	Güte
-goods	Waren	f	Waren
-goose	Gans	f	Gans
-gorge	Schlucht	f	Schlucht
-grapefruit	Grapefruit	f	Grapefruit
-grasshopper	Heuschrecke	f	Heuschrecke
-gravel	Kies	m	Kies
-gray	Grau	n	Grau
-graze	Weide	f	Weide
-grazing	Beweidung	f	Beweidung
-greenhouse	Gewächshaus	n	Gewächshaus
-greyhound	Windhund	m	Windhund
-grind	Mahlen	n	Mahlen
-grocery	Lebensmittel	n	Lebensmittel
-gross	Gros	n	Gros
-grotesque	Groteske	f	Groteske
-grove	Hain	m	Hain
-grub	Larve	f	Larve
-grumble	Gemurre	n	Gemurre
-guideline	Richtlinie	f	Richtlinie
-guild	Gilde	f	Gilde
-guitarist	Gitarrist	m	Gitarrist
-gunshot	Schuss	m	Schuss
-gush	Schwall	m	Schwall
-gust	Windstoß	m	Windstoß
-half-life	Halbwertszeit	f	Halbwertszeit
-ham	Schinken	m	Schinken
-hamster	Hamster	m	Hamster
-handicraft	Handwerk	n	Handwerk
-hang	Aufhängen	n	Aufhängen
-harassment	Belästigung	f	Belästigung
-hardness	Härte	f	Härte
+electrolysis	Elektrolyse	f	Die chemische Zersetzung, die durch das Leiten eines elektrischen Stroms durch eine Flüssigkeit oder Lösung erzeugt wird
+electrolyte	Elektrolyt	m	Eine Flüssigkeit oder ein Gel, das Ionen enthält und durch Elektrolyse zersetzt werden kann
+electromagnet	Elektromagnet	m	Ein weicher Metallkern, der durch den Durchgang von elektrischem Strom durch eine Spule zu einem Magneten wird
+electromagnetism	Elektromagnetismus	m	Die Wechselwirkung von elektrischen Strömen oder Feldern und magnetischen Feldern
+eleven	Elf	f	Die Zahl, die der Summe von sechs und fünf entspricht
+eleventh	Elfte	n	Die Ordnungszahl für die Nummer elf in einer Sequenz
+elm	Ulme	f	Ein hoher Laubbaum, der typischerweise breite, raue Blätter hat und sich durch Wurzelausläufer vermehrt
+embarrassment	Verlegenheit	f	Ein Gefühl von Selbstbewusstsein, Scham oder Verlegenheit
+enclosure	Gehege	n	Ein Bereich, der von einer Barriere umgeben ist
+encore	Zugabe	f	Eine wiederholte oder zusätzliche Aufführung eines Stücks am Ende eines Konzerts, wie vom Publikum gefordert
+encouragement	Ermutigung	f	Die Handlung, jemandem Unterstützung, Vertrauen oder Hoffnung zu geben
+fringe	Rand	m	Ein dekorativer Rand aus Faden, Schnur oder Material, der lose gelassen oder zu Quasten oder Drehungen geformt wird
+fundamental	Grundlage	f	Eine zentrale oder primäre Regel oder ein Prinzip, auf dem etwas basiert
+fur	Pelz	m	Das kurze, feine, weiche Haar bestimmter Tiere
+furrow	Furche	f	Eine lange schmale Furche, die von einem Pflug im Boden gemacht wird, besonders zum Pflanzen von Samen oder zur Bewässerung
+fuse	Sicherung	f	Eine Sicherheitsvorrichtung bestehend aus einem Drahtstreifen, der schmilzt und einen Stromkreis unterbricht, wenn der Strom einen sicheren Wert überschreitet
+gallop	Galopp	m	Die schnellste Gangart eines Pferdes oder anderen Vierbeiners, bei der alle Füße bei jedem Schritt gleichzeitig vom Boden abheben
+gamble	Glücksspiel	n	Ein Akt des Glücksspiels oder Wettens
+ganges	Ganges	m	Ein großer Fluss auf dem indischen Subkontinent, der für Hindus heilig ist und vom Himalaya zur Bucht von Bengalen fließt
+gape	Starren	n	Ein Starren mit offenem Mund
+gene	Gen	n	Eine Erbeinheit, die von einem Elternteil auf die Nachkommen übertragen wird und bestimmte Merkmale bestimmt
+generality	Allgemeinheit	f	Eine Aussage oder ein Prinzip mit allgemeiner und nicht spezifischer Gültigkeit oder Kraft
+generalization	Verallgemeinerung	f	Eine allgemeine Aussage oder ein Konzept, das durch Schlussfolgerung aus spezifischen Fällen gewonnen wird
+genetics	Genetik	f	Das Studium der Vererbung und der Variation vererbter Merkmale
+genome	Genom	n	Der vollständige Satz von Genen oder genetischem Material, der in einer Zelle oder einem Organismus vorhanden ist
+gentry	Adel	m	Menschen von guter sozialer Position, speziell die Klasse von Menschen direkt unter dem Adel
+geology	Geologie	f	Die Wissenschaft, die sich mit der physischen Struktur und Substanz der Erde, ihrer Geschichte und ihren Prozessen befasst
+German	Deutsche	m	Ein Einheimischer oder Einwohner Deutschlands oder eine Person deutscher Abstammung
+glacier	Gletscher	m	Eine sich langsam bewegende Masse oder ein Fluss aus Eis, der durch die Ansammlung und Verdichtung von Schnee gebildet wird
+glare	Blendung	f	Ein starkes und blendendes Licht
+glossy	Hochglanz	m	Ein Magazin, das auf hochwertigem glänzendem Papier gedruckt ist
+goldfish	Goldfisch	m	Ein kleiner rötlich-goldener eurasischer Karpfen, der in Teichen und Aquarien beliebt ist
+goodness	Güte	f	Die Qualität, gut zu sein, besonders moralische Vortrefflichkeit
+goods	Waren	f	Handelswaren oder Besitztümer
+goose	Gans	f	Ein großer Wasservogel mit langem Hals, kurzen Beinen, Schwimmhäuten und einem kurzen breiten Schnabel
+gorge	Schlucht	f	Ein schmales Tal zwischen Hügeln oder Bergen, typischerweise mit steilen felsigen Wänden und einem durchfließenden Bach
+grapefruit	Grapefruit	f	Eine große runde gelbe Zitrusfrucht mit saurem saftigem Fruchtfleisch und einem leicht bitteren Geschmack
+grasshopper	Heuschrecke	f	Ein pflanzenfressendes Insekt mit langen Hinterbeinen, die zum Springen und zum Erzeugen eines zirpenden Geräuschs verwendet werden
+gravel	Kies	m	Lose abgerundete oder eckige Steine, die größer als Sandkörner, aber kleiner als Kieselsteine sind
+gray	Grau	n	Eine Farbe zwischen Schwarz und Weiß, wie die von Asche oder Blei
+graze	Weide	f	Eine leichte Verletzung, bei der die Haut abgeschürft ist
+grazing	Beweidung	f	Die Handlung von Tieren, die auf einer Wiese oder Weide Gras oder andere Vegetation fressen
+greenhouse	Gewächshaus	n	Eine Struktur aus Glas oder Kunststoff, in der Pflanzen gezüchtet werden, die Schutz vor kaltem Wetter benötigen
+greyhound	Windhund	m	Ein Hund einer großen, schlanken Rasse mit scharfem Sehvermögen und hoher Geschwindigkeit
+grind	Mahlen	n	Die Handlung oder das Ergebnis des Mahlens von etwas
+grocery	Lebensmittel	n	Ein Lebensmittelgeschäft oder -betrieb
+gross	Gros	n	Eine Menge gleich zwölf Dutzend
+grotesque	Groteske	f	Eine sehr hässliche oder komisch verzerrte Figur, Kreatur oder Darstellung
+grove	Hain	m	Ein kleiner Wald oder eine andere Gruppe von Bäumen
+grub	Larve	f	Die Larve eines Insekts, besonders eines Käfers
+grumble	Gemurre	n	Eine Beschwerde, die in einem leisen oder undeutlichen Ton geäußert wird
+guideline	Richtlinie	f	Eine allgemeine Regel, ein Prinzip oder ein Ratschlag zur Orientierung von Verhalten oder Handeln
+guild	Gilde	f	Eine mittelalterliche Vereinigung von Handwerkern oder Kaufleuten, die oft beträchtliche Macht hatte
+guitarist	Gitarrist	m	Eine Person, die Gitarre spielt, besonders professionell
+gunshot	Schuss	m	Ein Schuss, der aus einer Waffe abgefeuert wird
+gush	Schwall	m	Ein schneller und reichlicher Strom oder Ausbruch von etwas
+gust	Windstoß	m	Ein plötzlicher starker Windstoß
+half-life	Halbwertszeit	f	Die Zeit, die benötigt wird, damit die Radioaktivität eines bestimmten Isotops auf die Hälfte seines ursprünglichen Werts fällt
+ham	Schinken	m	Fleisch aus dem oberen Teil des Beins eines Schweins, das gesalzen und getrocknet oder geräuchert wird
+hamster	Hamster	m	Ein kleines Nagetier mit kurzem Schwanz und großen Backentaschen zum Transportieren von Nahrung, das als Haustier gehalten wird
+handicraft	Handwerk	n	Eine Tätigkeit, bei der dekorative häusliche oder andere Gegenstände von Hand hergestellt werden
+hang	Aufhängen	n	Die Art und Weise, wie etwas hängt oder fällt
+harassment	Belästigung	f	Aggressiver Druck oder Einschüchterung
+hardness	Härte	f	Die Qualität oder der Zustand, hart zu sein
 hardy	Robustheit	f	Widerstandsfähigkeit
-harmonica	Mundharmonika	f	Mundharmonika
-haul	Fang	m	Fang
-hawaii	Hawaii	n	Hawaii
-headquarters	Hauptquartier	n	Hauptquartier
-healing	Heilung	f	Heilung
-heath	Heide	f	Heide
-heather	Heidekraut	n	Heidekraut
-heave	Heben	n	Heben
-herbicide	Herbizid	n	Herbizid
-hereafter	Jenseits	n	Jenseits
-heritage	Erbe	n	Erbe
-herring	Hering	m	Hering
-hick	Hinterwäldler	m	Hinterwäldler
-hide	Haut	f	Haut
-hierarchy	Hierarchie	f	Hierarchie
-highness	Hoheit	f	Hoheit
-hike	Wanderung	f	Wanderung
-hiking	Wandern	n	Wandern
-hiss	Zischen	n	Zischen
-historian	Historiker	m	Historiker
-holiness	Heiligkeit	f	Heiligkeit
-hollywood	Hollywood	n	Hollywood
-holocaust	Holocaust	m	Holocaust
-honesty	Ehrlichkeit	f	Ehrlichkeit
-honeymoon	Flitterwochen	f	Flitterwochen
-hoodie	Kapuzenpullover	m	Kapuzenpullover
-hook	Haken	m	Haken
-hostage	Geisel	f	Geisel
-household	Haushalt	m	Haushalt
-housekeeping	Haushaltsführung	f	Haushaltsführung
-housework	Hausarbeit	f	Hausarbeit
-hum	Summen	n	Summen
-humility	Demut	f	Demut
-hundred	Hundert	f	Hundert
-hundredth	Hundertstel	n	Hundertstel
-hunting	Jagd	f	Jagd
-hurdle	Hürde	f	Hürde
-hydrangea	Hortensie	f	Hortensie
-hydroxide	Hydroxid	n	Hydroxid
-hymn	Hymne	f	Hymne
-ideal	Ideal	n	Ideal
-ignition	Zündung	f	Zündung
-immunity	Immunität	f	Immunität
-impeachment	Amtsenthebung	f	Amtsenthebung
-imperfect	Unvollkommenheit	f	Unvollkommenheit
+harmonica	Mundharmonika	f	Ein kleines rechteckiges Blasinstrument mit einer Reihe von Metallzungen entlang seiner Länge
+haul	Fang	m	Eine Menge von etwas, das gestohlen wurde oder illegal besessen wird
+hawaii	Hawaii	n	Ein Bundesstaat der Vereinigten Staaten, der aus einer Inselgruppe im Pazifischen Ozean besteht
+headquarters	Hauptquartier	n	Die Räumlichkeiten, die von einem militärischen Kommandanten und seinem Stab besetzt sind
+healing	Heilung	f	Der Prozess, bei dem etwas gesund oder heil wird oder gemacht wird
+heath	Heide	f	Ein Gebiet offenen unkultivierten Landes, besonders in Großbritannien, typischerweise mit Heidekraut, Ginster und groben Gräsern bedeckt
+heather	Heidekraut	n	Ein lilafarbenes Heidekraut aus Eurasien, das reichlich auf Mooren und Heideland wächst
+heave	Heben	n	Ein Akt des Hebens oder Ziehens von etwas mit großer Anstrengung
+herbicide	Herbizid	n	Eine Substanz, die für Pflanzen giftig ist und zur Zerstörung unerwünschter Vegetation verwendet wird
+hereafter	Jenseits	n	Die Zukunft, besonders nach dem Tod
+heritage	Erbe	n	Eigentum, das vererbt wird oder vererbt werden kann
+herring	Hering	m	Ein silberner Fisch, der am häufigsten in Küstengewässern vorkommt und als Speisefisch von großer kommerzieller Bedeutung ist
+hick	Hinterwäldler	m	Eine Person, die auf dem Land lebt und als ungebildet oder provinziell angesehen wird
+hide	Haut	f	Die Haut eines Tieres, besonders wenn sie gegerbt oder für die Verwendung präpariert ist
+hierarchy	Hierarchie	f	Ein System, in dem Mitglieder einer Organisation nach relativem Status oder Autorität eingestuft werden
+highness	Hoheit	f	Die Qualität, hoch zu sein
+hike	Wanderung	f	Eine lange Wanderung, besonders auf dem Land oder in der Wildnis
+hiking	Wandern	n	Die Aktivität, lange Wanderungen zu unternehmen, besonders auf dem Land oder in den Wäldern
+hiss	Zischen	n	Ein scharfes zischendes Geräusch wie das des Buchstabens 's'
+historian	Historiker	m	Ein Experte oder Student der Geschichte, besonders einer bestimmten Periode, geografischen Region oder eines sozialen Phänomens
+holiness	Heiligkeit	f	Der Zustand, heilig zu sein
+hollywood	Hollywood	n	Ein Stadtteil von Los Angeles, das Hauptzentrum der amerikanischen Filmindustrie
+holocaust	Holocaust	m	Zerstörung oder Massenmord, besonders durch Feuer oder Atomkrieg verursacht
+honesty	Ehrlichkeit	f	Die Qualität, ehrlich zu sein
+honeymoon	Flitterwochen	f	Ein Urlaub, den ein frisch verheiratetes Paar gemeinsam verbringt
+hoodie	Kapuzenpullover	m	Ein Kapuzenpullover, eine Jacke oder ein anderes Kleidungsstück, das lässig getragen wird
+hook	Haken	m	Ein Stück Metall oder anderes Material, das gebogen oder in einem Winkel zurückgebogen ist, um etwas zu fangen oder aufzuhängen
+hostage	Geisel	f	Eine Person, die ergriffen oder als Sicherheit für die Erfüllung einer Bedingung gehalten wird
+household	Haushalt	m	Ein Haus und seine Bewohner, die als Einheit betrachtet werden
+housekeeping	Haushaltsführung	f	Die Verwaltung von Haushaltsangelegenheiten
+housework	Hausarbeit	f	Regelmäßige Arbeit, die bei der Haushaltsführung anfällt, besonders Reinigen und Aufräumen
+hum	Summen	n	Ein niedriges, gleichmäßiges, kontinuierliches Geräusch wie das einer Biene
+humility	Demut	f	Eine bescheidene oder niedrige Ansicht der eigenen Wichtigkeit
+hundred	Hundert	f	Die Zahl, die dem Produkt von zehn und zehn entspricht
+hundredth	Hundertstel	n	Die Ordnungszahl für die Nummer einhundert in einer Sequenz
+hunting	Jagd	f	Die Aktivität, wilde Tiere oder Wild zu verfolgen und zu töten, besonders für Nahrung oder Sport
+hurdle	Hürde	f	Einer aus einer Reihe von aufrechten Rahmen, über die Athleten in einem Rennen springen müssen
+hydrangea	Hortensie	f	Ein Strauch oder eine Kletterpflanze mit abgerundeten oder abgeflachten Blütenköpfen aus kleinen weißen, rosa oder blauen Blüten
+hydroxide	Hydroxid	n	Eine Verbindung eines Metalls mit der Hydroxylgruppe oder mit Sauerstoff und Wasserstoff
+hymn	Hymne	f	Ein religiöses Lied oder Gedicht des Lobes an Gott oder einen Gott
+ideal	Ideal	n	Eine Person oder Sache, die als perfekt angesehen wird
+ignition	Zündung	f	Die Handlung, etwas in Brand zu setzen oder anfangen zu brennen
+immunity	Immunität	f	Die Fähigkeit eines Organismus, einer bestimmten Infektion oder einem Toxin durch die Wirkung spezifischer Antikörper zu widerstehen
+impeachment	Amtsenthebung	f	Die Handlung, die Integrität oder Gültigkeit von etwas in Frage zu stellen
+imperfect	Unvollkommenheit	f	Eine Zeitform von Verben, die verwendet wird, um eine vergangene Handlung zu beschreiben, die unvollständig oder anhaltend ist
 imperial	Imperiales	n	imperiale Sache oder Größe
-impetus	Anstoß	m	Anstoß
-impossibility	Unmöglichkeit	f	Unmöglichkeit
-inadequacy	Unzulänglichkeit	f	Unzulänglichkeit
-inauguration	Amtseinführung	f	Amtseinführung
-incidence	Vorkommen	n	Vorkommen
-incidental	Nebensächlichkeit	f	Nebensächlichkeit
-inclusion	Einbeziehung	f	Einbeziehung
-inconvenience	Unannehmlichkeit	f	Unannehmlichkeit
-India	Indien	n	Indien
-indictment	Anklage	f	Anklage
-indignity	Demütigung	f	Demütigung
-induction	Induktion	f	Induktion
-indulgence	Nachsicht	f	Nachsicht
-inefficiency	Ineffizienz	f	Ineffizienz
-inequality	Ungleichheit	f	Ungleichheit
-inevitable	Unvermeidliche	n	Unvermeidliche
-infantry	Infanterie	f	Infanterie
-inference	Schlussfolgerung	f	Schlussfolgerung
-infinity	Unendlichkeit	f	Unendlichkeit
-inflammation	Entzündung	f	Entzündung
-influx	Zustrom	m	Zustrom
-infrastructure	Infrastruktur	f	Infrastruktur
-initiation	Einweihung	f	Einweihung
-injustice	Ungerechtigkeit	f	Ungerechtigkeit
-ink	Tinte	f	Tinte
-inning	Inning	n	Inning
-insecticide	Insektizid	n	Insektizid
-insecurity	Unsicherheit	f	Unsicherheit
+impetus	Anstoß	m	Die Kraft oder Energie, mit der sich ein Körper bewegt
+impossibility	Unmöglichkeit	f	Der Zustand oder die Tatsache, unmöglich zu sein
+inadequacy	Unzulänglichkeit	f	Der Zustand oder die Qualität, unzureichend zu sein
+inauguration	Amtseinführung	f	Der Beginn oder die Einführung eines Systems, einer Politik oder einer Periode
+incidence	Vorkommen	n	Das Auftreten, die Rate oder Häufigkeit einer Krankheit, eines Verbrechens oder etwas anderem Unerwünschtem
+incidental	Nebensächlichkeit	f	Etwas, das als geringfügige Begleitung zu etwas anderem auftritt
+inclusion	Einbeziehung	f	Die Handlung oder der Zustand des Einschließens oder Eingeschlossen-Seins innerhalb einer Gruppe oder Struktur
+inconvenience	Unannehmlichkeit	f	Schwierigkeiten oder Unannehmlichkeiten, die den persönlichen Anforderungen oder dem Komfort zugefügt werden
+India	Indien	n	Ein Land in Südasien, das den größeren Teil des indischen Subkontinents einnimmt
+indictment	Anklage	f	Eine formelle Anklage oder Beschuldigung eines schweren Verbrechens
+indignity	Demütigung	f	Eine Behandlung oder Umstände, die dazu führen, dass man sich schämt oder seine Würde verliert
+induction	Induktion	f	Die Handlung oder der Prozess, jemanden in eine Position oder Organisation einzuführen
+indulgence	Nachsicht	f	Die Handlung oder Tatsache des Nachgebens oder der Nachsicht
+inefficiency	Ineffizienz	f	Der Zustand, nicht maximale Produktivität zu erreichen
+inequality	Ungleichheit	f	Ein Unterschied in Größe, Grad, Umständen usw.
+inevitable	Unvermeidliche	n	Eine Situation, die unvermeidbar oder sicher eintreten wird
+infantry	Infanterie	f	Soldaten, die zu Fuß marschieren oder kämpfen
+inference	Schlussfolgerung	f	Eine Schlussfolgerung, die auf der Grundlage von Beweisen und Argumentation gezogen wird
+infinity	Unendlichkeit	f	Der Zustand oder die Qualität, unendlich zu sein
+inflammation	Entzündung	f	Ein lokalisierter physischer Zustand, bei dem ein Körperteil gerötet, geschwollen, heiß und oft schmerzhaft wird
+influx	Zustrom	m	Eine Ankunft oder ein Eintreffen großer Mengen von Menschen oder Dingen
+infrastructure	Infrastruktur	f	Die grundlegenden physischen und organisatorischen Strukturen und Einrichtungen, die für den Betrieb einer Gesellschaft erforderlich sind
+initiation	Einweihung	f	Die Handlung, etwas zu beginnen
+injustice	Ungerechtigkeit	f	Ein Mangel an Fairness oder Gerechtigkeit
+ink	Tinte	f	Eine farbige Flüssigkeit oder Paste, die zum Schreiben, Zeichnen, Drucken oder Vervielfältigen verwendet wird
+inning	Inning	n	Jede Abteilung eines Spiels, in der beide Seiten abwechselnd am Schlag sind
+insecticide	Insektizid	n	Eine Substanz, die zum Töten von Insekten verwendet wird
+insecurity	Unsicherheit	f	Unsicherheit oder Angst über sich selbst
 inside	Innenseite	f	Die Innenseite oder Oberfläche einer Sache
 installment	Rate	f	Ein fälliger Geldbetrag als eine von mehreren gleichen Zahlungen für etwas, verteilt über einen vereinbarten Zeitraum
 insulator	Isolator	m	Ein Gegenstand oder eine Substanz, die zur Isolierung verwendet wird, insbesondere ein Gerät, das die Durchleitung von Elektrizität verhindert
