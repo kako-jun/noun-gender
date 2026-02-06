@@ -3908,236 +3908,236 @@ lily	giglio		m
 limb	arto;ramo		m;m
 lime	lime;limetta;calce		m;f;f
 lion	leone		m			
-lip			
-liquid			
-liquor			
-litter			
-liver			
-livestock			
-lizard			
-llama			
-load			
-lobster			
-locality			
-locker			
-locust			
-maker			
-makeup			
-malt			
-mammoth			
-mango			
-manifestation			
-mankind			
-manufacture			
-maple			
-marathon			
-marble			
-mare			
-margin			
-marine			
-marketing			
-marketplace			
-marrow			
-Mars			
-marsh			
-marvel			
-Maryland			
-masculine			
-mask			
-mass			
-massage			
-master			
-masterpiece			
-mastery			
-mathematics			
-microorganism			
-microscope			
-midnight			
-midst			
-migration			
-mile			
-milieu			
-military			
-mill			
-mine			
-mining			
-minister			
-ministry			
-miracle			
-mischief			
-misdemeanor			
-misery			
-misfortune			
-missile			
-missionary			
-mississippi			
-mist			
-mister			
-multitude			
-murderer			
-museum			
-mushroom			
-musical			
-musician			
-muslim			
-mustard			
-mystery			
-myth			
-naan			
-narration			
-narrative			
-nationalist			
-nationality			
-nausea			
-navy			
-necessity			
-neon			
-nerd			
-nerve			
-opera			
-oppression			
-orange			
-orbit			
-ordinance			
-organ			
-organism			
-orient			
-ornament			
-ostrich			
-ounce			
-outbreak			
-outlet			
-outrage			
-outset			
-overcoat			
-overflow			
-oversight			
-overtime			
-overture			
-oxygen			
-oyster			
-pact			
-pad			
-paint			
-painter			
-pal			
-palace			
-palm			
-pan			
-pancake			
-panda			
-panic			
-panther			
-pants			
-paradise			
-paralysis			
-parcel			
-pardon			
-parliament			
-parsley			
-particle			
-particular			
-partition			
-pie			
-pig			
-pigeon			
-pilgrim			
-pill			
-pin			
-pinch			
-pine			
-pineapple			
-pink			
-pipe			
-pit			
-pitchfork			
-pity			
-pizza			
-placement			
-plague			
-plaintiff			
-planet			
-plantation			
-plateau			
-platoon			
-playground			
-plea			
-pledge			
-plow			
-plum			
-plump			
-pocket			
-poetry			
-pointer			
-poison			
-pole			
-policeman			
-politician			
-poll			
-pond			
-pop			
-popcorn			
-pope			
-pork			
-port			
-portion			
-positive			
-possession			
-posture			
-potassium			
-potato			
-potter			
-pottery			
-proton			
-proxy			
-psyche			
-puddle			
-pull			
-pulse			
-pump			
-pumpkin			
-punishment			
-pupil			
-purity			
-purse			
-push			
-puzzle			
-qualification			
-quarrel			
-query			
-quiz			
-quota			
-quotation			
-rabbit			
-rack			
-racket			
-radiation			
-radish			
-raft			
-rage			
-rail			
-railway			
-rainbow			
-raise			
-raisin			
-rally			
-ram			
-ranch			
-raspberry			
-rat			
-ravage			
-raven			
-ray			
-re			
-reader			
-readiness			
-residence			
-resistance			
-resolve			
-resonance			
-resort			
-restoration			
-resume			
+lip	labbro	m	
+liquid	liquido	m	
+liquor	liquore	m	
+litter	lettiera	f	
+liver	fegato	m	
+livestock	bestiame	m	
+lizard	lucertola	f	
+llama	lama	m	
+load	carico	m	
+lobster	aragosta	f	
+locality	località	f	
+locker	armadietto	m	
+locust	locusta	f	
+maker	fabbricante	m	
+makeup	trucco	m	
+malt	malto	m	
+mammoth	mammut	m	
+mango	mango	m	
+manifestation	manifestazione	f	
+mankind	umanità	f	
+manufacture	fabbricazione	f	
+maple	acero	m	
+marathon	maratona	f	
+marble	marmo	m	
+mare	cavalla	f	
+margin	margine	m	
+marine	marine	m	
+marketing	marketing	m	
+marketplace	mercato	m	
+marrow	midollo	m	
+Mars	Marte	m	
+marsh	palude	f	
+marvel	meraviglia	f	
+Maryland	Maryland	m	
+masculine	maschile	m	
+mask	maschera	f	
+mass	messa	f	
+massage	massaggio	m	
+master	maestro	m	
+masterpiece	capolavoro	m	
+mastery	maestria	f	
+mathematics	matematica	f	
+microorganism	microrganismo	m	
+microscope	microscopio	m	
+midnight	mezzanotte	f	
+midst	mezzo	m	
+migration	migrazione	f	
+mile	miglio	m	
+milieu	ambiente	m	
+military	militare	m	
+mill	mulino	m	
+mine	miniera	f	
+mining	estrazione mineraria	f	
+minister	ministro	m	
+ministry	ministero	m	
+miracle	miracolo	m	
+mischief	birichinata	f	
+misdemeanor	reato minore	m	
+misery	miseria	f	
+misfortune	sfortuna	f	
+missile	missile	m	
+missionary	missionario	m	
+mississippi	Mississippi	m	
+mist	foschia	f	
+mister	signore	m	
+multitude	moltitudine	f	
+murderer	assassino	m	
+museum	museo	m	
+mushroom	fungo	m	
+musical	musical	m	
+musician	musicista	m	
+muslim	musulmano	m	
+mustard	senape	f	
+mystery	mistero	m	
+myth	mito	m	
+naan	naan	m	
+narration	narrazione	f	
+narrative	narrativa	f	
+nationalist	nazionalista	m	
+nationality	nazionalità	f	
+nausea	nausea	f	
+navy	marina	f	
+necessity	necessità	f	
+neon	neon	m	
+nerd	secchione	m	
+nerve	nervo	m	
+opera	opera	f	
+oppression	oppressione	f	
+orange	arancia	f	
+orbit	orbita	f	
+ordinance	ordinanza	f	
+organ	organo	m	
+organism	organismo	m	
+orient	oriente	m	
+ornament	ornamento	m	
+ostrich	struzzo	m	
+ounce	oncia	f	
+outbreak	epidemia	f	
+outlet	presa	f	
+outrage	oltraggio	m	
+outset	inizio	m	
+overcoat	soprabito	m	
+overflow	trabocco	m	
+oversight	supervisione	f	
+overtime	straordinario	m	
+overture	ouverture	f	
+oxygen	ossigeno	m	
+oyster	ostrica	f	
+pact	patto	m	
+pad	cuscinetto	m	
+paint	vernice	f	
+painter	pittore	m	
+pal	amico	m	
+palace	palazzo	m	
+palm	palmo	m	
+pan	padella	f	
+pancake	pancake	m	
+panda	panda	m	
+panic	panico	m	
+panther	pantera	f	
+pants	pantaloni	m	
+paradise	paradiso	m	
+paralysis	paralisi	f	
+parcel	pacco	m	
+pardon	perdono	m	
+parliament	parlamento	m	
+parsley	prezzemolo	m	
+particle	particella	f	
+particular	dettaglio	m	
+partition	divisorio	m	
+pie	torta	f	
+pig	maiale	m	
+pigeon	piccione	m	
+pilgrim	pellegrino	m	
+pill	pillola	f	
+pin	spillo	m	
+pinch	pizzico	m	
+pine	pino	m	
+pineapple	ananas	m	
+pink	rosa	m	
+pipe	tubo	m	
+pit	fossa	f	
+pitchfork	forca	f	
+pity	pietà	f	
+pizza	pizza	f	
+placement	collocamento	m	
+plague	peste	f	
+plaintiff	querelante	m	
+planet	pianeta	m	
+plantation	piantagione	f	
+plateau	altopiano	m	
+platoon	plotone	m	
+playground	parco giochi	m	
+plea	appello	m	
+pledge	promessa	f	
+plow	aratro	m	
+plum	prugna	f	
+plump	pienezza	f	
+pocket	tasca	f	
+poetry	poesia	f	
+pointer	puntatore	m	
+poison	veleno	m	
+pole	palo	m	
+policeman	poliziotto	m	
+politician	politico	m	
+poll	sondaggio	m	
+pond	stagno	m	
+pop	pop	m	
+popcorn	popcorn	m	
+pope	papa	m	
+pork	maiale	m	
+port	porto	m	
+portion	porzione	f	
+positive	positivo	m	
+possession	possesso	m	
+posture	postura	f	
+potassium	potassio	m	
+potato	patata	f	
+potter	vasaio	m	
+pottery	ceramica	f	
+proton	protone	m	
+proxy	procura	f	
+psyche	psiche	f	
+puddle	pozzanghera	f	
+pull	trazione	f	
+pulse	polso	m	
+pump	pompa	f	
+pumpkin	zucca	f	
+punishment	punizione	f	
+pupil	alunno	m	
+purity	purezza	f	
+purse	borsetta	f	
+push	spinta	f	
+puzzle	puzzle	m	
+qualification	qualifica	f	
+quarrel	lite	f	
+query	domanda	f	
+quiz	quiz	m	
+quota	quota	f	
+quotation	citazione	f	
+rabbit	coniglio	m	
+rack	scaffale	m	
+racket	racchetta	f	
+radiation	radiazione	f	
+radish	ravanello	m	
+raft	zattera	f	
+rage	rabbia	f	
+rail	rotaia	f	
+railway	ferrovia	f	
+rainbow	arcobaleno	m	
+raise	aumento	m	
+raisin	uva passa	f	
+rally	raduno	m	
+ram	ariete	m	
+ranch	ranch	m	
+raspberry	lampone	m	
+rat	ratto	m	
+ravage	devastazione	f	
+raven	corvo	m	
+ray	raggio	m	
+re	re	m	
+reader	lettore	m	
+readiness	prontezza	f	
+residence	residenza	f	
+resistance	resistenza	f	
+resolve	risoluzione	f	
+resonance	risonanza	f	
+resort	località turistica	f	
+restoration	restauro	m	
+resume	curriculum	m			
 resurrection			
 retreat			
 revenge			
