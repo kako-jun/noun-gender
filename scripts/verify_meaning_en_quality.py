@@ -94,9 +94,9 @@ def check_meaning_quality(
                 issues.append((i, word, "ADVERB", first_meaning[:80]))
                 continue
 
-            # チェック5: 同義語のみ（短すぎる定義）
-            if len(first_meaning) < 20:
-                issues.append((i, word, "TOO_SHORT", first_meaning))
+            # チェック5: 全体が短すぎる（セミコロンなし かつ 20文字未満）
+            if ";" not in meaning and len(meaning) < 20:
+                issues.append((i, word, "TOO_SHORT", meaning))
                 continue
 
             # チェック6: 同じ単語を使っている（定義になっていない）
