@@ -18,14 +18,37 @@
 
 ## 必須ルール（厳格に遵守）
 
-### 1. 名詞としての意味のみ
+### 1. 名詞としての意味のみ（最重要）
 - 英単語の**名詞用法のみ**を説明
-- 動詞・形容詞・副詞の意味は書かない
+- **動詞・形容詞・副詞の意味は絶対に書かない**
+
+**絶対禁止パターン**:
+```
+❌ "To + 動詞" で始まる定義 (例: "To walk", "To encourage")
+❌ 動名詞で始まる定義 (例: "Encouraging", "Promoting", "Causing")
+❌ 形容詞で始まる定義 (例: "Relating to", "Involving", "Characteristic of")
+❌ 副詞句で始まる定義 (例: "Out from a starting point", "Toward the west")
+```
+
+**正しい名詞定義のパターン**:
+```
+✅ "A person who..." (例: "A person who writes books" → author)
+✅ "The act of..." (例: "The act of walking" → walk (noun))
+✅ "A thing that..." (例: "A thing that fastens" → fastener)
+✅ "A place where..." (例: "A place where books are kept" → library)
+✅ 具体的な物・人・場所の説明 (例: "A large marine mammal" → whale)
+```
 
 **例**:
 ```
 ✅ abstract (名詞): "A summary of the contents of a book, article, or formal speech"
 ❌ abstract (形容詞): "Existing in thought or as an idea but not concrete"
+
+✅ forth (名詞): "Forward movement; onward progress from a starting point"
+❌ forth (副詞): "Out from a starting point and forward or into view"
+
+✅ foster (名詞): "A foster parent; a caregiver in the foster care system"
+❌ foster (動詞): "Encouraging or promoting the development of something"
 ```
 
 ### 2. 説明文の形式
@@ -298,20 +321,43 @@ print(f"   失敗: {failed_count}")
 print(f"\n進捗確認: python scripts/progress_manager.py show stage1")
 ```
 
-### ステップ3: 品質チェック
+### ステップ3: 品質チェック（必須）
+
+**品質検証スクリプトを実行**:
+```bash
+python3 scripts/verify_meaning_en_quality.py
+```
+
+このスクリプトは以下をチェックします:
+- ✅ 動詞定義（"To + 動詞"）の検出
+- ✅ 動名詞定義（"Encouraging", "Promoting"）の検出
+- ✅ 形容詞定義（"Relating to", "Involving"）の検出
+- ✅ 副詞定義（"Out from", "Toward"）の検出
+
+**期待される結果**:
+```
+✅ すべての meaning_en が名詞定義です！
+   総単語数: 4592
+```
+
+**エラーが出た場合**:
+1. 問題のある単語をリストで確認
+2. 各単語について名詞の定義に書き直す
+3. 再度検証スクリプトを実行
+4. ✅ が出るまで繰り返す
+
+**手動チェック（追加）**:
 ```python
-# 短すぎる定義をチェック
+# 短すぎる定義をチェック（20文字未満は警告のみ）
 short_defs = []
 for row in rows:
     if len(row['meaning_en']) < 20:
         short_defs.append((row['en'], row['meaning_en'], len(row['meaning_en'])))
 
 if short_defs:
-    print(f"⚠️ 短すぎる定義: {len(short_defs)}件")
+    print(f"⚠️ 短い定義: {len(short_defs)}件（名詞定義なら問題なし）")
     for en, meaning, length in short_defs[:10]:
         print(f"  {en}: {meaning} ({length}文字)")
-else:
-    print("✅ 全ての定義が20文字以上")
 
 # 同義語のみの定義をチェック（簡易判定）
 single_word_defs = []

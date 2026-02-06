@@ -1,7 +1,46 @@
 # Phase 3 完全手順書 - 新CSV構造版
 
 **作成日**: 2025-02-06  
+**更新日**: 2025-02-06（Phase 2品質保証追加）
 **前提**: Phase 2完了（words.csv完成、meaning_en/example_en完備）
+
+---
+
+## ⚠️ Phase 3開始前の必須チェック
+
+### Phase 2品質検証（必須）
+
+Phase 3を開始する前に、**Phase 2のデータ品質を検証**してください：
+
+```bash
+python3 scripts/verify_meaning_en_quality.py
+```
+
+**期待される結果**:
+```
+✅ すべての meaning_en が名詞定義です！
+   総単語数: 4592
+```
+
+**エラーが出た場合**: Phase 3を開始せず、Phase 2に戻って修正してください。
+
+### なぜこのチェックが必要か
+
+Phase 2で`meaning_en`や`example_en`に動詞/副詞/形容詞の定義が混入すると：
+- 翻訳エージェントが混乱し、間違った品詞で翻訳する
+- データの一貫性が失われる
+- 全言語で同じ問題が再発する
+
+**過去の問題例**:
+- `forth` → "Out from a starting point"（副詞定義）
+  - ❌ 翻訳: "en avant"（副詞）
+  - ✅ 正しい翻訳: "mouvement"（名詞）
+  
+- `foster` → "Encouraging or promoting"（動詞定義）
+  - ❌ 翻訳: "favoriser"（動詞）
+  - ✅ 正しい翻訳: "parent d'accueil"（名詞）
+
+このチェックを怠ると、34語×10言語=**340箇所の修正**が必要になります。
 
 ---
 

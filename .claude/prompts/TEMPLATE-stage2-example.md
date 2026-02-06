@@ -36,22 +36,48 @@ meaning_en: "Lack of something; the state of being away from a place; vacancy"
 → ❌ 3番目の意味を使用: "There is a vacancy in the position."
 ```
 
-### 2. 名詞用法のみ
+### 2. 名詞用法のみ（最重要）
 - 英単語を**名詞として**使う例文
-- 動詞・形容詞・副詞用法は禁止
+- **動詞・形容詞・副詞用法は絶対に禁止**
+
+**絶対禁止パターン**:
+```
+❌ 動詞用法: "They fostered creativity" → foster が動詞
+❌ 副詞用法: "The army marched forth" → forth が副詞
+❌ 形容詞用法: "An abstract painting" → abstract が形容詞
+```
+
+**正しい名詞用法のパターン**:
+```
+✅ "The [noun] ..." (例: "The foster provided loving care")
+✅ "A [noun] ..." (例: "A foster parent cares for children")
+✅ 文の主語・目的語として使う (例: "The forth of the expedition began")
+```
 
 **良い例**:
 ```
 en: abstract
 meaning_en: "A summary of the contents of a book, article, or formal speech"
 example_en: "The abstract of the research paper summarized the key findings."
-→ "abstract"を名詞として使用
+→ "abstract"を名詞（要約）として使用 ✅
+
+en: forth
+meaning_en: "Forward movement; onward progress from a starting point"
+example_en: "The forth of the expedition required careful planning."
+→ "forth"を名詞（前進）として使用 ✅
+
+en: foster
+meaning_en: "A foster parent; a caregiver in the foster care system"
+example_en: "The dedicated foster provided a safe home for three children."
+→ "foster"を名詞（里親）として使用 ✅
 ```
 
 **悪い例**:
 ```
 ❌ "The artist created an abstract painting."  ← 形容詞用法
 ❌ "Let me abstract the main points."  ← 動詞用法
+❌ "The army marched forth into battle."  ← 副詞用法
+❌ "The mentor helped foster creativity."  ← 動詞用法
 ```
 
 ### 3. 単数形・複数形の一致

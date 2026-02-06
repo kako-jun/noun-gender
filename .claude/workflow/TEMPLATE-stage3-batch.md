@@ -40,9 +40,28 @@
 3. `data/translations_{LANG_CODE}.csv`の{START_ROW}～{END_ROW}行を更新
 
 ## 重要ルール
-- **セミコロンルール**: `meaning_en`に`;`がある場合、最初の意味のみを翻訳
-- **名詞1語のみ**: {SPECIFIC_REQUIREMENTS}
-- **性別**: {GENDER_OPTIONS}
+
+### 1. セミコロンルール（最重要）
+- `meaning_en`に`;`がある場合、**最初の意味のみ**を翻訳
+- セミコロンの後ろは完全に無視
+
+### 2. 名詞1語のみ
+- {SPECIFIC_REQUIREMENTS}
+- 冠詞なし（例：フランス語なら "abbaye"、"le/la/l'/les" なし）
+- 単数形を使用（複数形でない限り）
+
+### 3. 性別
+- {GENDER_OPTIONS}
+- **必ず指定**（空欄は許可されない）
+
+### 4. 名詞としての翻訳（追加）
+- **`meaning_en`は必ず名詞の定義**になっています（Phase 2で保証済み）
+- 動詞・形容詞・副詞の翻訳は不要
+- 例：
+  - ✅ forth → mouvement (m)  ← 名詞「前進」
+  - ❌ forth → en avant  ← 副詞「前へ」
+  - ✅ foster → parent d'accueil (m)  ← 名詞「里親」
+  - ❌ foster → favoriser  ← 動詞「育成する」
 
 ## 実装方法
 
