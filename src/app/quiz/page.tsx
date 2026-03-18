@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Quiz - Noun Gender | Test your knowledge of noun genders',
     description: 'Test your knowledge of noun genders across 8 languages with our interactive quiz.',
-    url: 'https://noun-gender.com/quiz',
+    url: 'https://noun-gender.llll-ll.com/quiz',
   },
   twitter: {
     title: 'Quiz - Noun Gender | Test your knowledge of noun genders',

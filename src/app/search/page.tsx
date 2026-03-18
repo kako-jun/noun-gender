@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Search - Noun Gender | Find noun genders in 8 languages',
     description: 'Search and find noun genders across 8 languages with over 4,600 words.',
-    url: 'https://noun-gender.com/search',
+    url: 'https://noun-gender.llll-ll.com/search',
   },
   twitter: {
     title: 'Search - Noun Gender | Find noun genders in 8 languages',

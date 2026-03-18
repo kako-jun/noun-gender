@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About - Noun Gender | Learn about our multilingual learning tool',
     description: 'Learn about Noun Gender, a free multilingual tool for mastering noun genders across 8 languages.',
-    url: 'https://noun-gender.com/about',
+    url: 'https://noun-gender.llll-ll.com/about',
   },
   twitter: {
     title: 'About - Noun Gender | Learn about our multilingual learning tool',

@@ -43,13 +43,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://noun-gender.com',
+    url: 'https://noun-gender.llll-ll.com',
     title: 'Noun Gender - Master noun genders across languages',
     description: 'Learn and search noun genders in 8 languages with over 9,000 translations. Supports French, German, Spanish, Italian, Portuguese, Russian, Arabic, and Hindi.',
     siteName: 'Noun Gender',
     images: [
       {
-        url: 'https://noun-gender.com/og-image.png',
+        url: 'https://noun-gender.llll-ll.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Noun Gender - Language Learning App',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Noun Gender - Master noun genders across languages',
     description: 'Learn and search noun genders in 8 languages with over 9,000 translations.',
-    images: ['https://noun-gender.com/og-image.png'],
+    images: ['https://noun-gender.llll-ll.com/og-image.png'],
     creator: '@noun_gender_app',
     site: '@noun_gender_app',
   },
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
       "@type": "WebApplication",
       "name": "Noun Gender",
       "description": "Learn and search noun genders in 8 languages with over 9,000 translations. Supports French, German, Spanish, Italian, Portuguese, Russian, Arabic, and Hindi.",
-      "url": "https://noun-gender.com",
+      "url": "https://noun-gender.llll-ll.com",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
       "offers": {

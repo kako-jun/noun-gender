@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://noun-gender.com/sitemap.xml
+Sitemap: https://noun-gender.llll-ll.com/sitemap.xml
 
 # Allow common crawlers
 User-agent: Googlebot

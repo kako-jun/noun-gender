@@ -50,8 +50,23 @@ function getCache(): KVNamespace | null {
 // キャッシュTTL（1時間）
 const CACHE_TTL = 3600;
 
-// 言語コードのリスト
+// 言語コードのリスト（ホワイトリスト）
 const ALL_LANGUAGES = ['ar', 'fr', 'de', 'hi', 'it', 'pt', 'ru', 'es'] as const;
+
+// 有効な言語テーブル名のセット（SQLインジェクション防止用）
+const VALID_TABLE_NAMES = new Set(ALL_LANGUAGES.map(lang => `words_${lang}`));
+
+/**
+ * 言語コードをバリデーションし、安全なテーブル名を返す。
+ * ホワイトリストに含まれない言語コードが渡された場合はエラーをスローする。
+ */
+function getLanguageTableName(lang: string): string {
+  const tableName = `words_${lang}`;
+  if (!VALID_TABLE_NAMES.has(tableName)) {
+    throw new Error(`Invalid language code: ${lang}`);
+  }
+  return tableName;
+}
 
 // 翻訳があるすべての英単語を取得
 async function getAllEnglishWordsWithTranslations(db: D1Database): Promise<string[]> {
@@ -62,7 +77,7 @@ async function getAllEnglishWordsWithTranslations(db: D1Database): Promise<strin
       .prepare(
         `SELECT DISTINCT we.en
          FROM words_en we
-         JOIN words_${lang} t ON we.en = t.en
+         JOIN ${getLanguageTableName(lang)} t ON we.en = t.en
          WHERE t.translation IS NOT NULL AND t.translation != ''`
       )
       .all();
@@ -107,7 +122,7 @@ export async function getWord(word: string): Promise<WordData | null> {
     const result = await db
       .prepare(
         `SELECT t.translation, t.gender
-         FROM words_${lang} t
+         FROM ${getLanguageTableName(lang)} t
          WHERE LOWER(t.en) = LOWER(?)
            AND t.translation IS NOT NULL AND t.translation != ''`
       )
@@ -246,7 +261,7 @@ export async function getStats(): Promise<{
   for (const lang of ALL_LANGUAGES) {
     const result = await db
       .prepare(
-        `SELECT COUNT(*) as count FROM words_${lang}
+        `SELECT COUNT(*) as count FROM ${getLanguageTableName(lang)}
          WHERE translation IS NOT NULL AND translation != ''`
       )
       .first<{ count: number }>();
@@ -259,7 +274,7 @@ export async function getStats(): Promise<{
     // ユニークな英単語を収集
     const { results } = await db
       .prepare(
-        `SELECT DISTINCT en FROM words_${lang}
+        `SELECT DISTINCT en FROM ${getLanguageTableName(lang)}
          WHERE translation IS NOT NULL AND translation != ''`
       )
       .all();
@@ -331,7 +346,7 @@ export async function search(
     // 翻訳での検索
     const { results: translationMatches } = await db
       .prepare(
-        `SELECT en, translation, gender FROM words_${lang}
+        `SELECT en, translation, gender FROM ${getLanguageTableName(lang)}
          WHERE translation IS NOT NULL AND translation != ''
          AND (LOWER(translation) LIKE ? OR en IN (SELECT en FROM words_en WHERE LOWER(en) LIKE ?))`
       )
@@ -446,7 +461,7 @@ export async function search(
     const { results: transRows } = await db
       .prepare(
         `SELECT t.en, t.translation, t.gender
-         FROM words_${lang} t
+         FROM ${getLanguageTableName(lang)} t
          WHERE t.en IN (${placeholders})
          AND t.translation IS NOT NULL AND t.translation != ''`
       )
@@ -602,7 +617,7 @@ export async function browseWords(options: {
   for (const lang of targetLangs) {
     const { results: langRows } = await db
       .prepare(
-        `SELECT en, translation, gender FROM words_${lang}
+        `SELECT en, translation, gender FROM ${getLanguageTableName(lang)}
          WHERE en IN (${placeholders})
          AND translation IS NOT NULL AND translation != ''`
       )
@@ -730,7 +745,7 @@ export async function getLetterStats(): Promise<LetterStat[]> {
   for (const lang of ALL_LANGUAGES) {
     const { results } = await db
       .prepare(
-        `SELECT DISTINCT en FROM words_${lang}
+        `SELECT DISTINCT en FROM ${getLanguageTableName(lang)}
          WHERE translation IS NOT NULL AND translation != ''`
       )
       .all();
@@ -765,7 +780,7 @@ export async function getLetterStatsDetailed(prefix: string): Promise<{ next_let
   for (const lang of ALL_LANGUAGES) {
     const { results } = await db
       .prepare(
-        `SELECT DISTINCT en FROM words_${lang}
+        `SELECT DISTINCT en FROM ${getLanguageTableName(lang)}
          WHERE translation IS NOT NULL AND translation != ''
          AND LOWER(en) LIKE ?`
       )
@@ -802,7 +817,7 @@ export async function getWordAtOffset(prefix: string, offset: number): Promise<s
   for (const lang of ALL_LANGUAGES) {
     const { results } = await db
       .prepare(
-        `SELECT DISTINCT en FROM words_${lang}
+        `SELECT DISTINCT en FROM ${getLanguageTableName(lang)}
          WHERE translation IS NOT NULL AND translation != ''
          AND en LIKE ?`
       )
@@ -830,7 +845,7 @@ export async function getWordRange(prefix: string): Promise<{ firstWord?: string
   for (const lang of ALL_LANGUAGES) {
     const { results } = await db
       .prepare(
-        `SELECT DISTINCT en FROM words_${lang}
+        `SELECT DISTINCT en FROM ${getLanguageTableName(lang)}
          WHERE translation IS NOT NULL AND translation != ''
          AND en LIKE ?`
       )
@@ -868,7 +883,7 @@ export async function getQuizQuestions(
     const { results } = await db
       .prepare(
         `SELECT en as english, translation, gender
-         FROM words_${lang}
+         FROM ${getLanguageTableName(lang)}
          WHERE translation IS NOT NULL AND translation != ''
          AND gender IN ('m', 'f', 'n')`
       )
