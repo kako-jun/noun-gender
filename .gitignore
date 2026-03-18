@@ -44,7 +44,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 data/translation.db
-.claude/settings.local.json
+.claude/
 .serena/
 .mcp.json
 .wrangler/
+cloudflare-env.d.ts
