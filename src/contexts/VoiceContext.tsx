@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { storage } from '@/lib/storage';
 
 interface VoiceContextType {
   preferFemaleVoice: boolean;
@@ -11,17 +12,11 @@ const VoiceContext = createContext<VoiceContextType | undefined>(undefined);
 
 export function VoiceProvider({ children }: { children: ReactNode }) {
   const [preferFemaleVoice, setPreferFemaleVoice] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('voice-gender-preference');
-      return saved === 'female';
-    }
-    return false;
+    return storage.read().voiceGender === 'female';
   });
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('voice-gender-preference', preferFemaleVoice ? 'female' : 'male');
-    }
+    storage.write({ voiceGender: preferFemaleVoice ? 'female' : 'male' });
   }, [preferFemaleVoice]);
 
   return (

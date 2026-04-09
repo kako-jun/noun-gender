@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { type Locale } from '@/i18n/config';
+import { storage } from '@/lib/storage';
 
 // 翻訳データの型定義
 type Messages = Record<string, unknown>;
@@ -24,7 +25,7 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const loadInitialLocale = async () => {
       try {
-        const savedLocale = localStorage.getItem('preferred-locale') as Locale;
+        const savedLocale = storage.read().locale as Locale;
         const targetLocale = savedLocale || detectBrowserLocale() || 'en';
         
         const response = await fetch(`/messages/${targetLocale}.json`);
@@ -65,7 +66,7 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
         const newMessages = await response.json() as Record<string, unknown>;
         setMessages(newMessages);
         setLocale(newLocale);
-        localStorage.setItem('preferred-locale', newLocale);
+        storage.write({ locale: newLocale });
         console.log('Language changed to:', newLocale);
       } else {
         console.error('Failed to load language:', response.status, response.statusText);
