@@ -54,8 +54,8 @@ export function StatsHeader() {
       </div>
       <div className="flex items-center gap-3">
         <div className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full inline-flex items-center gap-2">
-          <nostalgic-counter id="noun-gender-639f7fa2" type="total" theme="modern" format="text"></nostalgic-counter>
-          <span>visitors</span>
+          <nostalgic-counter id="noun-gender-639f7fa2" type="total" theme="modern" format="text" style={{ fontFamily: 'inherit' }}></nostalgic-counter>
+          <span>visits</span>
         </div>
         <div className="bg-solarized-base3 dark:bg-solarized-base03 px-3 py-1 rounded-full inline-flex items-center gap-2">
           <nostalgic-like id="noun-gender-639f7fa2" theme="modern" format="text"></nostalgic-like>
