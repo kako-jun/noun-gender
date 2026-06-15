@@ -68,32 +68,33 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code',
   },
   category: 'Education',
-  other: {
-    'application/ld+json': JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Noun Gender",
-      "description": "Learn and search noun genders in 8 languages with over 9,000 translations. Supports French, German, Spanish, Italian, Portuguese, Russian, Arabic, and Hindi.",
-      "url": "https://noun-gender.llll-ll.com",
-      "applicationCategory": "EducationalApplication",
-      "operatingSystem": "All",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "creator": {
-        "@type": "Organization",
-        "name": "Noun Gender"
-      },
-      "inLanguage": ["en", "fr", "de", "es", "it", "pt", "ru", "ar", "hi", "ja", "ko"],
-      "audience": {
-        "@type": "Audience",
-        "audienceType": "Language learners"
-      },
-      "keywords": "noun gender, language learning, multilingual, grammar, vocabulary, French, German, Spanish, Italian, Portuguese, Russian, Arabic, Hindi"
-    })
+};
+
+// JSON-LD structured data. Next.js' `metadata.other` would render a <meta> tag,
+// which is NOT recognized as structured data — render a real <script> instead.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Noun Gender",
+  "description": "Learn and search noun genders in 8 languages with over 9,000 translations. Supports French, German, Spanish, Italian, Portuguese, Russian, Arabic, and Hindi.",
+  "url": "https://noun-gender.llll-ll.com",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
   },
+  "creator": {
+    "@type": "Organization",
+    "name": "Noun Gender"
+  },
+  "inLanguage": ["en", "fr", "de", "es", "it", "pt", "ru", "ar", "hi", "ja", "ko"],
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Language learners"
+  },
+  "keywords": "noun gender, language learning, multilingual, grammar, vocabulary, French, German, Spanish, Italian, Portuguese, Russian, Arabic, Hindi"
 };
 
 export default function RootLayout({
@@ -104,6 +105,10 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {/* Nostalgic Counter Web Component */}
         <script src="https://nostalgic.llll-ll.com/components/visit.js" async />
         <script src="https://nostalgic.llll-ll.com/components/like.js" async />
