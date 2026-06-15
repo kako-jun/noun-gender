@@ -1,4 +1,5 @@
 import 'react';
+import type { CSSProperties } from 'react';
 
 declare module 'react' {
   namespace JSX {
@@ -9,12 +10,16 @@ declare module 'react' {
         theme?: 'classic' | 'modern' | 'retro';
         digits?: string;
         format?: 'image' | 'text';
+        style?: CSSProperties;
+        className?: string;
       };
       'nostalgic-like': {
         id?: string;
         theme?: 'classic' | 'modern' | 'retro';
         icon?: 'heart' | 'star' | 'thumb';
         format?: 'interactive' | 'image' | 'text';
+        style?: CSSProperties;
+        className?: string;
       };
     }
   }
