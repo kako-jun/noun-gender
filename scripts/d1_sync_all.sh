@@ -42,7 +42,7 @@ echo "  - words_en deleted"
 # Step 2: CSVからデータ挿入
 echo ""
 echo "Step 2: Inserting data from CSV..."
-python3 "$SCRIPT_DIR/sync_to_d1.py"
+uv run python3 "$SCRIPT_DIR/sync_to_d1.py"
 
 echo ""
 echo "=============================================="

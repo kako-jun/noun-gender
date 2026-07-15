@@ -346,4 +346,4 @@ D1はUNION ALL句に制限があるため、ビューを使用せず以下の戦
 2. 結果をJavaScript側でSet/Mapで統合
 3. ソート・フィルタリングをアプリケーション層で実行
 
-詳細なデータベーススキーマは [ER図](../.claude/er-diagram.md) を参照してください。
+詳細なデータベーススキーマは [scripts/d1_schema.sql](../scripts/d1_schema.sql) と [データパイプライン仕様](data-pipeline.md) を参照してください。

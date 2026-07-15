@@ -44,6 +44,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 data/translation.db
+data/noun_gender.db
 .claude/
 .serena/
 .mcp.json

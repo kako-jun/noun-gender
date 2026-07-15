@@ -18,7 +18,7 @@ npx wrangler d1 execute noun-gender-db --remote --file="$SCRIPT_DIR/d1_schema.sq
 
 echo ""
 echo "Step 2: Syncing data from CSV..."
-python3 "$SCRIPT_DIR/sync_to_d1.py"
+uv run python3 "$SCRIPT_DIR/sync_to_d1.py"
 
 echo ""
 echo "=============================================="
