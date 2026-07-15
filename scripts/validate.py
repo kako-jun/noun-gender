@@ -9,6 +9,8 @@ data/ の全CSV（タブ区切り）の構造・整合性を検査する。
     1 = FAIL（構造的な問題あり）
 
 FAIL（構造）:
+    - \r（CR）の混入（全CSVはLF改行。テキストモードではCRLFが透過変換され
+      見えないため生バイトで検査する）
     - 行数・enキー集合の不一致（words.csv vs 全10 translations ファイル）
     - en の重複
     - アルファベット順（大文字小文字無視）の乱れ
@@ -52,11 +54,23 @@ def warn(msg: str) -> None:
     warnings.append(msg)
 
 
+def check_line_endings() -> None:
+    """data/ の全CSVが LF 改行・\r 混入なしであることをバイトレベルで検査
+
+    テキストモード読みは CRLF を透過的に LF へ変換するため、
+    csv パーサ経由では \r の混入を検出できない。ここで生バイトを見る。
+    """
+    for path in sorted(DATA_DIR.glob("*.csv")):
+        n = path.read_bytes().count(b"\r")
+        if n:
+            fail(f"{path.name}: \\r を {n} 個含む（LF改行に正規化すること）")
+
+
 def read_tsv(path: Path, expected_cols: list[str]) -> list[dict]:
     """タブ区切りCSVを読み、列数・ヘッダーを検査して行リストを返す"""
     rows = []
-    with open(path, encoding="utf-8") as f:
-        reader = csv.reader(f, delimiter="\t")
+    with open(path, encoding="utf-8", newline="") as f:
+        reader = csv.reader(f, delimiter="\t", quoting=csv.QUOTE_NONE)
         header = next(reader)
         if header != expected_cols:
             fail(f"{path.name}: ヘッダー不一致 {header} != {expected_cols}")
@@ -105,6 +119,9 @@ def main() -> int:
     print("=" * 60)
     print("noun-gender データ検証")
     print("=" * 60)
+
+    # 改行コード（生バイト検査）
+    check_line_endings()
 
     # words.csv
     words = read_tsv(DATA_DIR / "words.csv", ["en", "meaning_en", "example_en"])

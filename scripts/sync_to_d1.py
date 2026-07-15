@@ -46,8 +46,8 @@ def esc(value: str | None) -> str:
 
 
 def read_tsv(name: str) -> list[dict]:
-    with open(DATA_DIR / name, encoding="utf-8") as f:
-        return list(csv.DictReader(f, delimiter="\t"))
+    with open(DATA_DIR / name, encoding="utf-8", newline="") as f:
+        return list(csv.DictReader(f, delimiter="\t", quoting=csv.QUOTE_NONE))
 
 
 def execute_batches(label: str, statements: list[str], dry_run: bool) -> bool:
