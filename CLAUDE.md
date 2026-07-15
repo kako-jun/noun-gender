@@ -2,51 +2,18 @@
 
 ## プロジェクト概要
 名詞に性別のある言語（ドイツ語、フランス語、スペイン語など）の学習・検索用Webアプリケーション。
-Next.js 15 (SSR + @opennextjs/cloudflare) + D1 + KV で実装された、4,596語の多言語翻訳・学習ツール。
-
-## 現在の状況（2025-12-29）
-✅ **実装完了**: 基本機能・UI・API・Cloudflare D1/KV・本番デプロイ完了
-✅ **パフォーマンス最適化**: KVキャッシュ導入（レスポンス ~0.5秒）
+Next.js 15 (SSR + @opennextjs/cloudflare) + D1 + KV で実装された、4,592語の多言語翻訳・学習ツール。
 
 ## 📋 プロジェクト文書
 
-### 📊 プロジェクト管理
-- **[作業進捗・タスク管理](.claude/tasks.md)**: 現在の作業状況・Phase別進捗・次ステップ
-- **[データベース設計](.claude/er-diagram.md)**: 正規化スキーマ・ER図・テーブル構造
-- **[CSV管理システム手順書](.claude/csv-management.md)**: 3つのCSVファイルによるデータ管理・更新手順
-
-### 🏗️ 技術仕様
+- **[データパイプライン仕様（正本）](docs/data-pipeline.md)**: CSVスキーマ・二層言語モデル・コンテンツ規則・バッチ規律・D1同期手順
 - **[システムアーキテクチャ](docs/architecture.md)**: 技術スタック・設計原則・パフォーマンス
-- **[API仕様書](docs/api.md)**: 9エンドポイント・型定義・実装例
+- **[API仕様書](docs/api.md)**: エンドポイント・型定義・実装例
 - **[UI設計仕様](docs/ui-spec.md)**: デザインシステム・コンポーネント・レスポンシブ
-
-## 🎯 機能要件分類
-
-### ✅ 実装済み機能
-1. **検索機能**: インクリメンタル検索・多言語対応・あいまい検索
-2. **閲覧機能**: A-Z索引・言語別フィルタリング・無限スクロール
-3. **クイズ機能**: 8言語対応・性別当てゲーム・正解率表示
-4. **UI/UX**: Solarizedテーマ・ダーク/ライトモード・レスポンシブ
-5. **音声機能**: Web Speech API・多言語読み上げ
-6. **学習支援**: 記憶術・暗記ヒント・例文表示
-7. **設定管理**: UI言語11言語対応・LocalStorage保存
-8. **API**: 9エンドポイント・完全仕様書・型安全
-
-### 🔄 実装予定機能
-1. **例文拡充**: 主要単語500-1000語に英語例文・各言語翻訳追加
-2. **お気に入り**: ユーザー登録単語・検索履歴機能
-3. **データ品質**: 残り733語の意味定義・翻訳精度改善
-4. **パフォーマンス**: Core Web Vitals最適化・SEO対応
-
-### 🚫 実装しない機能
-1. **ユーザー認証**: LocalStorageで十分・複雑性回避
-2. **ソーシャル機能**: シンプル学習ツールに集中
-3. **課金システム**: 無料アプリとして提供
-4. **複雑な統計**: 基本的な正解率表示のみ
 
 ## 🏛️ アーキテクチャ概要
 
-### 技術スタック（実装済み）
+### 技術スタック
 - **Frontend**: Next.js 15 (SSR) + TypeScript + Tailwind CSS
 - **UI Components**: shadcn/ui + Solarized Theme
 - **API**: Next.js API Routes
@@ -55,75 +22,52 @@ Next.js 15 (SSR + @opennextjs/cloudflare) + D1 + KV で実装された、4,596�
 - **Deploy**: Cloudflare Workers (@opennextjs/cloudflare)
 
 ### データ概要
-- **英語単語**: 4,651語
-- **翻訳データ**: 30,361件 (8言語対応)
-- **意味定義**: 3,918語 (84.2%完了)
-- **検索インデックス**: 35,012件 (自動更新)
+- **英語単語**: 4,592語（英語ピボット）
+- **性別あり言語（8）**: fr, de, es, it, pt, ru, ar, hi — 訳語+文法性
+- **表示専用言語（2）**: ja, zh — 意味翻訳のみ
+- 詳細は [docs/data-pipeline.md](docs/data-pipeline.md)
 
 ## 🚀 開発ガイド
 
 ### 環境セットアップ
 ```bash
-# 開発サーバー起動
-npm run dev
-
-# テスト実行
-npm test
-
-# 本番ビルド  
-npm run build
+npm run dev    # 開発サーバー起動
+npm test       # テスト実行
+npm run build  # 本番ビルド
 ```
 
 ### 主要ディレクトリ
 ```
-src/
-├── app/           # Next.js App Router (SSR)
-│   ├── api/       # Next.js API Routes (Edge Runtime)
-│   └── word/      # 単語ページ (SSR、SEO対応)
-├── components/    # React コンポーネント
-├── lib/           # ユーティリティ (api.ts, db.ts)
-├── i18n/          # 多言語翻訳ファイル (ソース)
-└── types/         # TypeScript 型定義
+src/               # Next.js アプリ本体
+data/              # CSVマスターデータ（単一の真実の源、全ファイルタブ区切り）
+├── words.csv                  # 英語マスター（en, meaning_en, example_en）
+├── translations_{lang}.csv    # 言語別翻訳（10言語）
+├── example_translations.csv   # 例文翻訳（縦持ち）
+└── memory_tricks_creation.csv # 記憶術作成ワークシート
 
-public/
-└── messages/      # i18n静的JSONファイル
-
-data/              # CSVマスターデータ（単一の真実の源）
-├── word_gender_translations.csv    # 単語・翻訳・性別
-├── word_meaning_translations.csv   # 意味定義（多言語）
-├── word_examples.csv               # 例文
-└── example_translations.csv        # 例文翻訳
-
-scripts/           # D1同期スクリプト
+scripts/           # 検証・D1同期スクリプト
+├── validate.py      # 検証ゲート（コミット前に必ず実行）
+├── sync_to_d1.py    # CSV→D1同期ロジック
 ├── d1_sync_all.sh   # 全削除→全挿入（日常使い）
 ├── d1_reset.sh      # スキーマ再作成→全挿入
-├── d1_schema.sql    # D1スキーマ定義
-└── sync_to_d1.py    # CSV→D1同期ロジック
+└── d1_schema.sql    # D1スキーマ定義
 
-docs/              # プロジェクト文書
-.claude/           # 開発文書・進捗管理
+docs/              # プロジェクト文書（data-pipeline.md が データ正本仕様）
 ```
 
 ### データ更新手順
-CSVを編集したらD1に同期する：
 ```bash
-# 日常的なデータ更新（全削除→全挿入）
+# 1. CSVを編集したら必ず検証（PASS のみコミット可）
+uv run python3 scripts/validate.py
+
+# 2. D1に同期（全削除→全挿入）
 ./scripts/d1_sync_all.sh
 
-# スキーマ変更時のみ
-./scripts/d1_reset.sh
-
-# 特定テーブルのみ更新
-python scripts/sync_to_d1.py --table words_fr
+# 事前確認のみ
+uv run python3 scripts/sync_to_d1.py --dry-run
 ```
 
-## 📧 連絡・質問
-
-プロジェクトに関する質問・提案は [作業進捗管理](.claude/tasks.md) の「次回作業時の確認事項」を参照。
-
----
-
-**最終更新**: 2025-12-29 - OpenNext移行・KVキャッシュ導入
+Python の実行は常に `uv run python3` を使う。
 
 ## デザインシステム
 
